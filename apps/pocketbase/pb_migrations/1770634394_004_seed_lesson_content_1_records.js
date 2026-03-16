@@ -1,0 +1,11 @@
+/// <reference path="../pb_data/types.d.ts" />
+migrate((app) => {
+  const collection = app.findCollectionByNameOrId("lesson_content");
+
+  const record0 = new Record(collection);
+    record0.set("lesson_id", "Lesson 4");
+    record0.set("content_body", "# IFRS 16 vs ASC 842 - Comprehensive Comparative Analysis\n\n## 1. Lease Definition Comparison\n\n### IFRS 16 Definition\n- Control-based approach: A contract conveys the right to control the use of an identified asset\n- Broader definition that captures more arrangements as leases\n- Focuses on whether the customer has the right to direct the use and obtain substantially all benefits\n\n### ASC 842 Definition\n- Right-of-use approach: A contract that conveys the right to use an asset for a period of time\n- Narrower definition with specific criteria for lease identification\n- Requires assessment of control over an identified asset\n\n### Similarities and Differences\n- Both require identification of an underlying asset\n- IFRS 16 is broader in scope and captures more arrangements\n- ASC 842 has more specific guidance on lease identification\n- Impact on lease identification: Companies may classify the same arrangement differently\n\n---\n\n## 2. Recognition and Measurement Differences\n\n### Operating Lease Treatment\n- IFRS 16: Recognizes ROU asset and lease liability for all leases\n- ASC 842: Maintains distinction between operating and finance leases\n- Operating leases under ASC 842 still recognize ROU asset and liability\n\n### Finance/Capital Lease Treatment\n- IFRS 16: Single model - all leases recognized on balance sheet\n- ASC 842: Finance leases similar to IFRS 16; operating leases have different presentation\n- Different expense recognition patterns\n\n### ROU Asset and Liability Measurement\n- IFRS 16: ROU asset = lease liability + initial direct costs - lease incentives\n- ASC 842: ROU asset = lease liability + initial direct costs (included)\n- Different treatment of lease incentives\n\n### Discount Rate Selection\n- IFRS 16: Incremental borrowing rate (IBR) is primary method\n- ASC 842: Implicit rate preferred; IBR used if implicit rate unavailable\n- Different rates can result in different measurements");
+  app.save(record0);
+}, (app) => {
+  // Rollback: record IDs not known, manual cleanup needed
+})

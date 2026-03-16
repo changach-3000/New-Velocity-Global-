@@ -1,0 +1,173 @@
+
+/*
+  TEMPLATE STYLES: These styles are used as a base template.
+  AI is allowed to modify these styles as needed.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	@apply bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 bg-slate-900 text-white;
+	font-family: 'DM Sans', sans-serif;
+}
+
+/* Badge Animations */
+@keyframes badgeGlowPulse {
+  0% {
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
+    opacity: 0.8;
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+    opacity: 1;
+  }
+  100% {
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
+    opacity: 0.8;
+  }
+}
+
+@keyframes badgeRotateHover {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(3deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(-3deg) scale(1.05);
+  }
+}
+
+@keyframes dualGlowPulse {
+  0% {
+    filter: drop-shadow(0 0 5px rgba(229, 228, 226, 0.4)) drop-shadow(0 0 10px rgba(255, 215, 0, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(229, 228, 226, 0.8)) drop-shadow(0 0 30px rgba(255, 215, 0, 0.4));
+  }
+  100% {
+    filter: drop-shadow(0 0 5px rgba(229, 228, 226, 0.4)) drop-shadow(0 0 10px rgba(255, 215, 0, 0.2));
+  }
+}
+
+.badge-hover-effect {
+  transition: all 0.3s ease;
+}
+
+.badge-hover-effect:hover {
+  animation: badgeRotateHover 2s infinite ease-in-out;
+}
+
+.badge-glow {
+  animation: badgeGlowPulse 3s infinite ease-in-out;
+}
+
+.badge-dual-glow {
+  animation: dualGlowPulse 3s infinite ease-in-out;
+}
+
+/*
+  ---break---
+*/
+
+@layer base {
+  :root {
+		--background: 222.2 84% 4.9%;
+		--foreground: 210 40% 98%;
+		--card: 222.2 84% 4.9%;
+		--card-foreground: 210 40% 98%;
+		--popover: 222.2 84% 4.9%;
+		--popover-foreground: 210 40% 98%;
+		--primary: 217.2 91.2% 59.8%;
+		--primary-foreground: 222.2 47.4% 11.2%;
+		--secondary: 217.2 32.6% 17.5%;
+		--secondary-foreground: 210 40% 98%;
+		--muted: 217.2 32.6% 17.5%;
+		--muted-foreground: 215 20.2% 65.1%;
+		--accent: 217.2 32.6% 17.5%;
+		--accent-foreground: 210 40% 98%;
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 210 40% 98%;
+		--border: 217.2 32.6% 17.5%;
+		--input: 217.2 32.6% 17.5%;
+		--ring: 224.3 76.3% 48%;
+		--radius: 0.75rem;
+    
+    /* Custom Tool Properties */
+    --calculator-bg: 222.2 84% 6%;
+    --calculator-border: 217.2 32.6% 25%;
+    --assessment-progress: 217.2 91.2% 59.8%;
+    
+    /* Role Landing Page Properties */
+    --role-hero-bg: 222.2 84% 5%;
+    --role-card-bg: 217.2 32.6% 12%;
+    --role-accent: 217.2 91.2% 59.8%;
+    --role-accent-hover: 217.2 91.2% 65%;
+
+    /* Membership System Properties */
+    --membership-standard: 217.2 91.2% 59.8%; /* Blue */
+    --membership-premium: 270 70% 60%; /* Purple */
+    --membership-elite: 43 96% 58%; /* Gold */
+	}
+  .dark {
+		--background: 222.2 84% 4.9%;
+		--foreground: 210 40% 98%;
+		--card: 222.2 84% 4.9%;
+		--card-foreground: 210 40% 98%;
+		--popover: 222.2 84% 4.9%;
+		--popover-foreground: 210 40% 98%;
+		--primary: 217.2 91.2% 59.8%;
+		--primary-foreground: 222.2 47.4% 11.2%;
+		--secondary: 217.2 32.6% 17.5%;
+		--secondary-foreground: 210 40% 98%;
+		--muted: 217.2 32.6% 17.5%;
+		--muted-foreground: 215 20.2% 65.1%;
+		--accent: 217.2 32.6% 17.5%;
+		--accent-foreground: 210 40% 98%;
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 210 40% 98%;
+		--border: 217.2 32.6% 17.5%;
+		--input: 217.2 32.6% 17.5%;
+		--ring: 224.3 76.3% 48%;
+	}
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-slate-900/60 backdrop-blur-xl border border-slate-800 shadow-2xl;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .calculator-input {
+    @apply bg-slate-950 border-slate-800 text-slate-100 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200;
+  }
+  .calculator-label {
+    @apply text-sm font-medium text-slate-300 mb-1.5 block tracking-wide;
+  }
+  .results-card {
+    @apply bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 shadow-xl;
+  }
+  .role-hero-gradient {
+    @apply bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950;
+  }
+  .role-card-hover {
+    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-blue-500/50;
+  }
+  
+  /* Membership Utilities */
+  .membership-card {
+    @apply relative flex flex-col h-full bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl p-8 shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+  }
+  .membership-card-premium {
+    @apply border-purple-500/50 shadow-[0_0_30px_-10px_rgba(168,85,247,0.3)] hover:shadow-[0_0_40px_-10px_rgba(168,85,247,0.5)];
+  }
+  .membership-card-elite {
+    @apply border-amber-500/50 shadow-[0_0_30px_-10px_rgba(245,158,11,0.3)] hover:shadow-[0_0_40px_-10px_rgba(245,158,11,0.5)];
+  }
+  .tier-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider;
+  }
+}

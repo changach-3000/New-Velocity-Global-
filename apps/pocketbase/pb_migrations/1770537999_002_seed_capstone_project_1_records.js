@@ -1,0 +1,20 @@
+/// <reference path="../pb_data/types.d.ts" />
+migrate((app) => {
+  const collection = app.findCollectionByNameOrId("capstone_project");
+
+  const record0 = new Record(collection);
+    record0.set("title", "Comprehensive Lease Accounting and Financial Analysis for TechVenture Corporation");
+    record0.set("course_id", "practical_leasing_finance");
+    record0.set("project_overview", "Students will complete a comprehensive capstone project that integrates all five course lessons. The project involves analyzing a real-world company's lease portfolio, implementing ASC 842 accounting, performing financial analysis, optimizing tax strategies, and developing an implementation plan.");
+    record0.set("project_objectives", "1. Apply ASC 842 lease accounting principles to a real-world portfolio\n2. Perform comprehensive financial analysis on lease vs buy decisions\n3. Analyze financial statement impacts and prepare adjusted metrics\n4. Develop tax optimization strategies\n5. Design and implement a lease portfolio management system\n6. Present findings and recommendations to stakeholders");
+    record0.set("company_background", "TechVenture Corporation is a mid-sized technology company with Annual Revenue: $250 million, Industry: Software and IT Services, Current Lease Portfolio: $45 million (estimated), Number of Leases: 150+ (equipment, real estate, vehicles), Current Accounting: Using ASC 840 (old lease accounting standard)");
+    record0.set("project_duration", "4-6 weeks (recommended)");
+    record0.set("total_points", 100);
+    record0.set("grading_scale", "90-100: A (Excellent), 80-89: B (Good), 70-79: C (Satisfactory), 60-69: D (Needs Improvement), Below 60: F (Failing)");
+    record0.set("learning_outcomes", "Upon completion of this capstone project, students will be able to: (1) Identify and classify all types of leases, calculate ROU assets and lease liabilities accurately, prepare financial statements under ASC 842, document lease accounting policies and procedures; (2) Perform comprehensive lease vs buy analyses, calculate NPV and IRR for lease decisions, perform sensitivity and scenario analysis, make data-driven lease decisions; (3) Prepare adjusted financial statements, analyze the impact of leases on financial ratios, prepare comprehensive lease disclosures, communicate lease impacts to stakeholders; (4) Analyze tax implications of lease decisions, develop tax optimization strategies, calculate deferred tax impacts, ensure tax compliance; (5) Develop comprehensive implementation plans, design internal controls for lease accounting, select and implement lease accounting systems, manage lease portfolio effectively; (6) Integrate concepts from all five lessons, develop strategic recommendations, present findings to stakeholders, lead organizational change");
+    record0.set("submission_requirements", "Format: Written report (15-20 pages), Presentation (20-30 slides), Spreadsheets with formulas visible. File naming: [Student Name]_Capstone_Report.pdf, [Student Name]_Capstone_Presentation.pptx, [Student Name]_Capstone_Calculations.xlsx. Submit through course platform with cover sheet and table of contents. Due at end of Week 16. Late submissions penalized 10% per day.");
+    record0.set("evaluation_criteria", "Technical Accuracy (30 points): All calculations accurate, assumptions documented, financial statements properly prepared, analyses thorough. Application of Course Concepts (30 points): Mastery of ASC 842, correct financial analysis techniques, understanding of tax implications, understanding of implementation challenges. Quality of Analysis and Recommendations (25 points): Thorough and well-reasoned analysis, recommendations supported by analysis, practical and implementable recommendations, addresses key business challenges. Professional Presentation (15 points): Well-organized written report, visually appealing presentation, proper formatting, proper citations.");
+  app.save(record0);
+}, (app) => {
+  // Rollback: record IDs not known, manual cleanup needed
+})

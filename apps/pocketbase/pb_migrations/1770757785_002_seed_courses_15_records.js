@@ -1,0 +1,216 @@
+/// <reference path="../pb_data/types.d.ts" />
+migrate((app) => {
+  const collection = app.findCollectionByNameOrId("courses");
+
+  const record0 = new Record(collection);
+    record0.set("title", "Mastering Creative Financing to Close Bigger Deals");
+    record0.set("description", "Learn creative financing techniques to close larger deals and expand your business");
+    record0.set("instructor_name", "Finance Expert");
+    record0.set("instructor_bio", "20+ years in creative financing");
+    record0.set("learning_outcomes", "Master creative financing, Close bigger deals, Expand business opportunities");
+    record0.set("duration_hours", 2);
+    record0.set("estimated_hours", 2);
+    record0.set("price", 1);
+    record0.set("curriculum", "4 comprehensive lessons");
+    record0.set("image_url", "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800");
+    record0.set("resources", "{}");
+  app.save(record0);
+
+  const record1 = new Record(collection);
+    record1.set("title", "Practical Leasing for Finance Professionals");
+    record1.set("description", "Comprehensive guide to leasing for finance professionals");
+    record1.set("instructor_name", "Leasing Specialist");
+    record1.set("instructor_bio", "30+ years in equipment leasing");
+    record1.set("learning_outcomes", "Master lease structures, Analyze financial implications, Implement leasing strategies");
+    record1.set("duration_hours", 38);
+    record1.set("estimated_hours", 38);
+    record1.set("price", 279);
+    record1.set("curriculum", "6 comprehensive modules");
+    record1.set("image_url", "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800");
+    record1.set("resources", "{}");
+  app.save(record1);
+
+  const record2 = new Record(collection);
+    record2.set("title", "Equipment Leasing Sales Fundamentals");
+    record2.set("description", "Essential sales techniques for equipment leasing professionals");
+    record2.set("instructor_name", "Sales Director");
+    record2.set("instructor_bio", "25+ years in leasing sales");
+    record2.set("learning_outcomes", "Master sales techniques, Qualify prospects, Close leasing deals");
+    record2.set("duration_hours", 12);
+    record2.set("estimated_hours", 12);
+    record2.set("price", 199);
+    record2.set("curriculum", "6 sales-focused lessons");
+    record2.set("image_url", "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800");
+    record2.set("resources", "{}");
+  app.save(record2);
+
+  const record3 = new Record(collection);
+    record3.set("title", "Lease Accounting Standards (ASC 842 & IFRS 16)");
+    record3.set("description", "Master modern lease accounting standards and compliance");
+    record3.set("instructor_name", "Accounting Expert");
+    record3.set("instructor_bio", "CPA with 20+ years in lease accounting");
+    record3.set("learning_outcomes", "Understand ASC 842, Master IFRS 16, Implement accounting standards");
+    record3.set("duration_hours", 20);
+    record3.set("estimated_hours", 20);
+    record3.set("price", 349);
+    record3.set("curriculum", "6 accounting modules");
+    record3.set("image_url", "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800");
+    record3.set("resources", "{}");
+  app.save(record3);
+
+  const record4 = new Record(collection);
+    record4.set("title", "Negotiation Strategies for Lease Deals");
+    record4.set("description", "Advanced negotiation techniques for lease transactions");
+    record4.set("instructor_name", "Negotiation Coach");
+    record4.set("instructor_bio", "Expert negotiator with 25+ years experience");
+    record4.set("learning_outcomes", "Master negotiation tactics, Handle objections, Close deals successfully");
+    record4.set("duration_hours", 8);
+    record4.set("estimated_hours", 8);
+    record4.set("price", 149);
+    record4.set("curriculum", "6 negotiation lessons");
+    record4.set("image_url", "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800");
+    record4.set("resources", "{}");
+  app.save(record4);
+
+  const record5 = new Record(collection);
+    record5.set("title", "Risk Pricing Models for Lease Portfolios");
+    record5.set("description", "Develop sophisticated risk pricing models for lease portfolios");
+    record5.set("instructor_name", "Risk Analyst");
+    record5.set("instructor_bio", "Quantitative analyst with 20+ years in risk modeling");
+    record5.set("learning_outcomes", "Identify risks, Build pricing models, Manage portfolios");
+    record5.set("duration_hours", 16);
+    record5.set("estimated_hours", 16);
+    record5.set("price", 299);
+    record5.set("curriculum", "6 risk management modules");
+    record5.set("image_url", "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800");
+    record5.set("resources", "{}");
+  app.save(record5);
+
+  const record6 = new Record(collection);
+    record6.set("title", "Portfolio Management & Optimization");
+    record6.set("description", "Optimize and manage lease portfolios effectively");
+    record6.set("instructor_name", "Portfolio Manager");
+    record6.set("instructor_bio", "20+ years in portfolio management");
+    record6.set("learning_outcomes", "Optimize portfolios, Manage performance, Maximize returns");
+    record6.set("duration_hours", 14);
+    record6.set("estimated_hours", 14);
+    record6.set("price", 249);
+    record6.set("curriculum", "6 portfolio management lessons");
+    record6.set("image_url", "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800");
+    record6.set("resources", "{}");
+  app.save(record6);
+
+  const record7 = new Record(collection);
+    record7.set("title", "Legal Compliance in Lease Agreements");
+    record7.set("description", "Ensure legal compliance in all lease agreements");
+    record7.set("instructor_name", "Legal Expert");
+    record7.set("instructor_bio", "Attorney specializing in lease law for 25+ years");
+    record7.set("learning_outcomes", "Understand lease law, Ensure compliance, Manage legal risks");
+    record7.set("duration_hours", 10);
+    record7.set("estimated_hours", 10);
+    record7.set("price", 199);
+    record7.set("curriculum", "6 legal compliance lessons");
+    record7.set("image_url", "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800");
+    record7.set("resources", "{}");
+  app.save(record7);
+
+  const record8 = new Record(collection);
+    record8.set("title", "Understanding Equipment Leasing Basics");
+    record8.set("description", "Introduction to equipment leasing fundamentals");
+    record8.set("instructor_name", "Leasing Educator");
+    record8.set("instructor_bio", "15+ years teaching leasing basics");
+    record8.set("learning_outcomes", "Understand leasing basics, Compare lease types, Make informed decisions");
+    record8.set("duration_hours", 6);
+    record8.set("estimated_hours", 6);
+    record8.set("price", 99);
+    record8.set("curriculum", "6 foundational lessons");
+    record8.set("image_url", "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800");
+    record8.set("resources", "{}");
+  app.save(record8);
+
+  const record9 = new Record(collection);
+    record9.set("title", "Operational Leasing for Business Growth");
+    record9.set("description", "Leverage operational leasing for business expansion");
+    record9.set("instructor_name", "Business Strategist");
+    record9.set("instructor_bio", "20+ years in business strategy and leasing");
+    record9.set("learning_outcomes", "Implement operational leasing, Drive growth, Optimize operations");
+    record9.set("duration_hours", 12);
+    record9.set("estimated_hours", 12);
+    record9.set("price", 229);
+    record9.set("curriculum", "6 operational leasing lessons");
+    record9.set("image_url", "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800");
+    record9.set("resources", "{}");
+  app.save(record9);
+
+  const record10 = new Record(collection);
+    record10.set("title", "Lease vs. Buy: Strategic Decision Framework");
+    record10.set("description", "Make strategic lease vs. buy decisions");
+    record10.set("instructor_name", "Financial Advisor");
+    record10.set("instructor_bio", "CFA with 20+ years in financial decision-making");
+    record10.set("learning_outcomes", "Analyze lease vs buy, Model cash flows, Make strategic decisions");
+    record10.set("duration_hours", 8);
+    record10.set("estimated_hours", 8);
+    record10.set("price", 179);
+    record10.set("curriculum", "6 decision framework lessons");
+    record10.set("image_url", "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800");
+    record10.set("resources", "{}");
+  app.save(record10);
+
+  const record11 = new Record(collection);
+    record11.set("title", "Managing Your Leased Equipment");
+    record11.set("description", "Best practices for managing leased equipment");
+    record11.set("instructor_name", "Operations Manager");
+    record11.set("instructor_bio", "20+ years in equipment management");
+    record11.set("learning_outcomes", "Manage equipment effectively, Ensure compliance, Maximize value");
+    record11.set("duration_hours", 6);
+    record11.set("estimated_hours", 6);
+    record11.set("price", 129);
+    record11.set("curriculum", "6 equipment management lessons");
+    record11.set("image_url", "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800");
+    record11.set("resources", "{}");
+  app.save(record11);
+
+  const record12 = new Record(collection);
+    record12.set("title", "Building Client Value Propositions in Leasing");
+    record12.set("description", "Create compelling value propositions for leasing clients");
+    record12.set("instructor_name", "Sales Strategist");
+    record12.set("instructor_bio", "25+ years in client value creation");
+    record12.set("learning_outcomes", "Build value propositions, Customize solutions, Win clients");
+    record12.set("duration_hours", 10);
+    record12.set("estimated_hours", 10);
+    record12.set("price", 189);
+    record12.set("curriculum", "6 value proposition lessons");
+    record12.set("image_url", "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800");
+    record12.set("resources", "{}");
+  app.save(record12);
+
+  const record13 = new Record(collection);
+    record13.set("title", "Advanced Leasing Strategies");
+    record13.set("description", "Master advanced and complex leasing strategies");
+    record13.set("instructor_name", "Strategy Expert");
+    record13.set("instructor_bio", "30+ years in advanced leasing structures");
+    record13.set("learning_outcomes", "Master complex structures, Optimize strategies, Maximize value");
+    record13.set("duration_hours", 24);
+    record13.set("estimated_hours", 24);
+    record13.set("price", 449);
+    record13.set("curriculum", "6 advanced strategy modules");
+    record13.set("image_url", "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800");
+    record13.set("resources", "{}");
+  app.save(record13);
+
+  const record14 = new Record(collection);
+    record14.set("title", "Lease Securitization & Structured Finance");
+    record14.set("description", "Understand lease securitization and structured finance");
+    record14.set("instructor_name", "Finance Structurer");
+    record14.set("instructor_bio", "20+ years in securitization and structured finance");
+    record14.set("learning_outcomes", "Understand securitization, Structure deals, Manage investor relations");
+    record14.set("duration_hours", 18);
+    record14.set("estimated_hours", 18);
+    record14.set("price", 399);
+    record14.set("curriculum", "6 securitization modules");
+    record14.set("image_url", "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800");
+    record14.set("resources", "{}");
+  app.save(record14);
+}, (app) => {
+  // Rollback: record IDs not known, manual cleanup needed
+})

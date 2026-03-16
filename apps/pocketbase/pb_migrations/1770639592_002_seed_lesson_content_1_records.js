@@ -1,0 +1,11 @@
+/// <reference path="../pb_data/types.d.ts" />
+migrate((app) => {
+  const collection = app.findCollectionByNameOrId("lesson_content");
+
+  const record0 = new Record(collection);
+    record0.set("lesson_id", "{{LESSON_5_ID}}");
+    record0.set("content_body", "LEASE PORTFOLIO OVERVIEW: Understanding your complete lease portfolio, Categorizing leases by type and characteristics, Portfolio composition analysis, Risk assessment across portfolio. PORTFOLIO METRICS AND KPIs: Total lease liability tracking, ROU asset valuation, Lease expense analysis, Debt-to-equity ratio impact, Interest coverage ratio, Lease payment obligations timeline. OPTIMIZATION STRATEGIES: Lease vs Buy analysis, Early termination evaluation, Lease renewal decisions, Refinancing opportunities, Consolidation of similar leases, Renegotiation tactics. FINANCIAL IMPACT ANALYSIS: Cost-benefit analysis of lease modifications, Impact on financial ratios and covenants, Tax implications of lease decisions, Cash flow optimization, Impact on credit ratings. RISK MANAGEMENT: Lease default risk assessment, Counterparty risk evaluation, Market risk considerations, Residual value risk, Interest rate risk, Compliance and regulatory risk. TECHNOLOGY AND SYSTEMS: Lease accounting software solutions, Portfolio management tools, Reporting and analytics platforms, Integration with ERP systems, Automation opportunities. REPORTING AND DISCLOSURE: Internal reporting requirements, External financial statement disclosures, Regulatory compliance reporting, Stakeholder communication, Audit preparation. BEST PRACTICES: Industry benchmarking, Lease portfolio governance, Documentation standards, Process improvements, Continuous monitoring and review. CASE STUDIES: Portfolio optimization examples, Cost savings through renegotiation, Risk mitigation strategies, Successful lease management implementations. FUTURE TRENDS: Emerging lease accounting issues, Technology advancements in lease management, Sustainability considerations in leasing, Impact of economic changes on lease portfolios");
+  app.save(record0);
+}, (app) => {
+  // Rollback: record IDs not known, manual cleanup needed
+})

@@ -1,0 +1,24 @@
+/// <reference path="../pb_data/types.d.ts" />
+migrate((app) => {
+  const collection = app.findCollectionByNameOrId("vendor_leasing_glossaries");
+
+  const record0 = new Record(collection);
+    record0.set("lessonId", "pbc_1014568348_lesson_1");
+    record0.set("termCount", 10);
+    record0.set("terms", "1. Vendor Leasing 2. Lessor 3. Lessee 4. Operating Lease 5. Capital Lease 6. Residual Value 7. Lease Term 8. Fair Market Value 9. Sale-Leaseback 10. Equipment Schedule");
+    record0.set("definitions", "1. A financing arrangement where a vendor provides credit to customers for equipment or services. 2. The owner of the asset in a leasing arrangement. 3. The party that uses the asset under a lease agreement. 4. A lease where the lessor retains ownership and the lessee does not assume the risks and benefits of ownership. 5. A lease that transfers substantially all risks and benefits of ownership to the lessee. 6. The estimated value of an asset at the end of the lease term. 7. The period during which the lease is in effect. 8. The price at which an asset would sell in an open market. 9. A transaction where an owner sells an asset and leases it back from the buyer. 10. A detailed list of equipment included in the lease agreement.");
+    record0.set("examples", "1. A manufacturer offers financing to customers for equipment purchases. 2. The equipment manufacturer in a vendor leasing arrangement. 3. The customer who uses the leased equipment. 4. A three-year equipment lease with ownership retained by the lessor. 5. A five-year equipment lease that transfers ownership to the lessee. 6. Equipment worth $5,000 at the end of a three-year lease. 7. A 36-month lease period for manufacturing equipment. 8. Equipment selling for $50,000 in the open market. 9. A company sells its warehouse and leases it back for 10 years. 10. List of 5 CNC machines, 3 hydraulic presses, and 2 assembly lines.");
+    record0.set("crossReferences", "1. See: Lessor, Lessee, Lease Term 2. See: Lessee, Lease Agreement 3. See: Lessor, Lease Agreement 4. See: Capital Lease, Lease Term 5. See: Operating Lease, Residual Value 6. See: Lease Term, Fair Market Value 7. See: Operating Lease, Capital Lease 8. See: Residual Value, Equipment Schedule 9. See: Lessor, Lessee, Lease Term 10. See: Lease Agreement, Equipment");
+  app.save(record0);
+
+  const record1 = new Record(collection);
+    record1.set("lessonId", "pbc_1014568348_lesson_2");
+    record1.set("termCount", 10);
+    record1.set("terms", "1. Credit Policy 2. Creditworthiness 3. Default 4. Collateral 5. Security Agreement 6. UCC Filing 7. Personal Guarantee 8. Credit Insurance 9. Collections 10. Promissory Note");
+    record1.set("definitions", "1. A set of guidelines for approving and managing customer credit. 2. The ability and willingness of a customer to repay borrowed funds. 3. Failure to make a required payment or meet other lease obligations. 4. Assets pledged as security for a loan or lease. 5. A legal document that grants a creditor a security interest in specific assets. 6. A filing with the state to perfect a security interest in personal property. 7. A personal commitment by an individual to repay a debt if the primary obligor defaults. 8. Insurance that protects against losses from customer defaults. 9. The process of pursuing payment from customers who have defaulted. 10. A written promise to pay a specific amount of money at a future date.");
+    record1.set("examples", "1. A policy requiring 20% down payment and 12-month payment history. 2. A customer with strong credit history and stable income. 3. A customer missing a lease payment by 30 days. 4. Equipment, inventory, or real estate pledged as security. 5. A document securing a lender's interest in equipment. 6. Filing with the Secretary of State to perfect a security interest. 7. A company owner personally guarantees a $100,000 lease. 8. Insurance covering 80% of potential losses from defaults. 9. Sending payment reminders, negotiating payment plans, or pursuing legal action. 10. A signed document promising to pay $50,000 over 36 months.");
+    record1.set("crossReferences", "1. See: Creditworthiness, Default, Collections 2. See: Credit Policy, Default, Collateral 3. See: Default, Collections, Credit Insurance 4. See: Security Agreement, UCC Filing 5. See: Collateral, UCC Filing 6. See: Security Agreement, Collateral 7. See: Credit Policy, Default 8. See: Default, Collections, Credit Insurance 9. See: Default, Credit Policy, Collections 10. See: Security Agreement, Credit Policy");
+  app.save(record1);
+}, (app) => {
+  // Rollback: record IDs not known, manual cleanup needed
+})

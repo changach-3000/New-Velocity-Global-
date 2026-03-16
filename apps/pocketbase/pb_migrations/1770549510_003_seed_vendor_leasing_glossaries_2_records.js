@@ -1,0 +1,24 @@
+/// <reference path="../pb_data/types.d.ts" />
+migrate((app) => {
+  const collection = app.findCollectionByNameOrId("vendor_leasing_glossaries");
+
+  const record0 = new Record(collection);
+    record0.set("lessonId", "lesson-7");
+    record0.set("termCount", 10);
+    record0.set("terms", "[\"Negotiation Strategy\",\"Cost Optimization\",\"Vendor Relationship Management\",\"Contract Optimization\",\"Payment Terms\",\"Residual Value\",\"Lease Modification\",\"Benchmarking\",\"Win-Win Negotiation\",\"Lease Buyout\"]");
+    record0.set("definitions", "[\"A planned approach to negotiating lease terms to achieve desired outcomes\",\"Techniques to reduce total lease costs while maintaining quality\",\"Building and maintaining positive relationships with lease vendors\",\"Structuring lease contracts to maximize benefits and minimize risks\",\"The schedule and conditions for lease payments\",\"The estimated value of equipment at the end of a lease term\",\"Changes made to lease terms during the agreement period\",\"Comparing lease terms and costs against market standards and competitors\",\"A negotiation approach where both parties achieve their key objectives\",\"The option to purchase leased equipment at the end of the lease term\"]");
+    record0.set("examples", "[\"Preparing thoroughly, setting anchors, and using collaborative approaches\",\"Negotiating volume discounts, optimizing payment schedules, and reducing maintenance costs\",\"Regular communication, performance reviews, and conflict resolution\",\"Including flexibility clauses, renewal options, and clear termination provisions\",\"Monthly payments, annual payments, seasonal adjustments, and escalation clauses\",\"Fair market value assessment, guarantees, and buyout provisions\",\"Equipment upgrades, scope changes, and cost impact analysis\",\"Comparing rates with competitors, analyzing industry standards, and reviewing historical data\",\"Both parties gaining significant value from the negotiated agreement\",\"Purchasing equipment at predetermined price at lease end\"]");
+    record0.set("crossReferences", "[\"Contract Optimization, Payment Terms\",\"Cost Optimization, Benchmarking\",\"Negotiation Strategy, Contract Optimization\",\"Payment Terms, Lease Modification\",\"Residual Value, Lease Buyout\",\"Negotiation Strategy, Win-Win Negotiation\",\"Contract Optimization, Flexibility Clause\",\"Cost Optimization, Payment Terms\",\"Negotiation Strategy, Vendor Relationship Management\",\"Residual Value, Contract Optimization\"]");
+  app.save(record0);
+
+  const record1 = new Record(collection);
+    record1.set("lessonId", "lesson-8");
+    record1.set("termCount", 10);
+    record1.set("terms", "[\"Best Practice\",\"Case Study Analysis\",\"Lessons Learned\",\"Implementation Strategy\",\"Risk Mitigation\",\"Industry Trend\",\"Vendor Performance\",\"Lease Portfolio\",\"Compliance\",\"Continuous Improvement\"]");
+    record1.set("definitions", "[\"Proven methods and approaches that consistently deliver successful results\",\"Detailed examination of real-world examples to extract insights\",\"Key takeaways and insights from past experiences\",\"Planned approach to implementing new processes or changes\",\"Actions taken to reduce or eliminate potential risks\",\"Emerging developments and changes in industry practices\",\"Measurement and evaluation of vendor service quality\",\"Collection of all lease agreements managed by an organization\",\"Adherence to regulations, standards, and organizational policies\",\"Ongoing process of identifying and implementing improvements\"]");
+    record1.set("examples", "[\"Standardized contracts, centralized vendor management, regular performance reviews\",\"Examining successful negotiations, cost reductions, and vendor relationships\",\"Avoiding vendor lock-in, importance of flexibility, value of communication\",\"Phased rollout, stakeholder training, process documentation\",\"Diversifying vendors, building contract flexibility, monitoring performance\",\"Sustainability focus, AI optimization, blockchain transparency\",\"On-time delivery, quality standards, responsiveness, cost management\",\"Tracking all leases, consolidating vendors, optimizing terms\",\"Meeting regulatory requirements, audit readiness, documentation standards\",\"Regular process reviews, stakeholder feedback, performance metrics\"]");
+    record1.set("crossReferences", "[\"Best Practice, Industry Trend\",\"Case Study Analysis, Lessons Learned\",\"Lessons Learned, Risk Mitigation\",\"Implementation Strategy, Continuous Improvement\",\"Risk Mitigation, Compliance\",\"Industry Trend, Emerging Technology\",\"Vendor Performance, Lease Portfolio\",\"Lease Portfolio, Compliance\",\"Compliance, Continuous Improvement\",\"Continuous Improvement, Best Practice\"]");
+  app.save(record1);
+}, (app) => {
+  // Rollback: record IDs not known, manual cleanup needed
+})

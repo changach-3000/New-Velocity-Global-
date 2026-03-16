@@ -1,0 +1,33 @@
+/// <reference path="../pb_data/types.d.ts" />
+migrate((app) => {
+  const collection = app.findCollectionByNameOrId("lessons");
+
+  const record0 = new Record(collection);
+    record0.set("course_id", "<COURSE_ID>");
+    record0.set("title", "Lease Portfolio Selection and Due Diligence");
+    record0.set("description", "Master lease portfolio selection criteria and due diligence process. Learn how to assess lease quality, diversification, terms, collateral, and documentation. Develop skills in portfolio analysis and risk assessment.");
+    record0.set("order", 3);
+    record0.set("duration", 60);
+    record0.set("content_type", "text");
+  app.save(record0);
+
+  const record1 = new Record(collection);
+    record1.set("course_id", "<COURSE_ID>");
+    record1.set("title", "Securitization Structuring and Tranching");
+    record1.set("description", "Master securitization structuring techniques and tranching strategies. Learn how to allocate risk across tranches, design credit enhancement, and optimize cash flows. Develop skills in deal structuring and tranche sizing.");
+    record1.set("order", 4);
+    record1.set("duration", 60);
+    record1.set("content_type", "text");
+  app.save(record1);
+
+  const record2 = new Record(collection);
+    record2.set("course_id", "<COURSE_ID>");
+    record2.set("title", "Rating and Pricing Securitized Leases");
+    record2.set("description", "Understand rating methodologies and pricing mechanisms for securitized leases. Learn how rating agencies assess credit risk and how market participants price securities. Develop skills in rating analysis and pricing.");
+    record2.set("order", 5);
+    record2.set("duration", 30);
+    record2.set("content_type", "text");
+  app.save(record2);
+}, (app) => {
+  // Rollback: record IDs not known, manual cleanup needed
+})

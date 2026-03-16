@@ -1,0 +1,11 @@
+/// <reference path="../pb_data/types.d.ts" />
+migrate((app) => {
+  const collection = app.findCollectionByNameOrId("lesson_content");
+
+  const record0 = new Record(collection);
+    record0.set("lesson_id", "{{LESSON_ID}}");
+    record0.set("content_body", "INTRODUCTION TO ACCESS VS OWNERSHIP\nThe fundamental shift in modern business thinking\n- Why customers are moving away from ownership\n- The psychology of access-based models\n- Benefits of selling access instead of ownership\n\nTHE WHY OF LEASING\nUnderstanding the business case for leasing\n- How leasing solves customer pain points\n- Leasing as a strategic business solution\n- Competitive advantages of leasing models\n\nMOVING FROM CAPEX TO OPEX\nUnderstanding Capital Expenditure (CapEx) vs Operational Expenditure (OpEx)\n- Why businesses prefer OpEx models\n- Financial benefits of OpEx approach\n- Impact on balance sheets and cash flow\n- Tax implications of OpEx vs CapEx\n\nCOST OF OBSOLESCENCE\nThe hidden costs of ownership\n- Technology obsolescence and equipment aging\n- Maintenance and repair costs over time\n- Upgrade and replacement cycles\n- How leasing eliminates obsolescence risk\n- Residual value concerns for owners\n\nUSER VS OWNER LOGIC\nThe difference between users and owners\n- Why users benefit more from leasing\n- Owner responsibilities and liabilities\n- Risk transfer through leasing\n- Flexibility advantages for users\n- Long-term cost analysis: user vs owner perspective\n\nREAL-WORLD APPLICATIONS\nIndustry examples of access-based models\n- Case studies of successful transitions from ownership to leasing\n- Customer success stories\n- ROI examples for different industries\n\nSALES MESSAGING\nHow to communicate the mindset shift to customers\n- Overcoming objections about ownership\n- Positioning leasing as the modern solution\n- Building confidence in the access model\n- Creating urgency around the shift to OpEx");
+  app.save(record0);
+}, (app) => {
+  // Rollback: record IDs not known, manual cleanup needed
+})
