@@ -165,7 +165,7 @@ const CheckoutPage = () => {
             Looks like you haven't added any courses yet.
           </p>
           <Link to="/courses">
-            <Button className="w-full bg-[#3b82f6] hover:bg-[#1e3a8a]">
+            <Button className="w-full bg-[#5b97f8]">
               Browse Courses
             </Button>
           </Link>

@@ -9,6 +9,7 @@ import {
   Calculator,
   Building2,
   ArrowRight,
+  Award,
 } from "lucide-react";
 
 const roles = [
@@ -139,7 +140,7 @@ const RolesSection = () => {
                 className="h-full"
               >
                 <Link
-                  to={`/roles/${role.slug}`}
+                  to={`/role/${role.slug}`}
                   className="block h-full group outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-2xl"
                 >
                   <div

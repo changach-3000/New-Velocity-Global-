@@ -450,7 +450,7 @@ const LessonDetailPage = () => {
                             size="sm"
                             onClick={handlePrevPage}
                             disabled={currentPageIndex === 0}
-                            className="gap-1 text-black border border-blue-500/20 hover:text-blue-500"
+                            className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
                           >
                             <ChevronLeft className="w-4 h-4" />
                             Prev Page
@@ -460,7 +460,7 @@ const LessonDetailPage = () => {
                             size="sm"
                             onClick={handleNextPage}
                             disabled={currentPageIndex === pages.length - 1}
-                            className="gap-1 text-black border border-blue-500/20 hover:text-blue-500"
+                            className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
                           >
                             Next Page
                             <ChevronRight className="w-4 h-4" />
@@ -509,7 +509,7 @@ const LessonDetailPage = () => {
                             variant="outline"
                             onClick={handlePrevPage}
                             disabled={currentPageIndex === 0}
-                            className="gap-2 text-black border border-blue-500/20 hover:text-blue-500"
+                            className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
                           >
                             <ChevronLeft className="w-4 h-4" />
                             Previous Page
@@ -521,7 +521,7 @@ const LessonDetailPage = () => {
                             variant="outline"
                             onClick={handleNextPage}
                             disabled={currentPageIndex === pages.length - 1}
-                            className="gap-2 text-black border border-blue-500/20 hover:text-blue-500"
+                            className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
                           >
                             Next Page
                             <ChevronRight className="w-4 h-4" />
