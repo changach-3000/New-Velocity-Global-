@@ -11,7 +11,7 @@ import { ArrowRight, CheckCircle2, BookOpen, TrendingUp, Users, Award, Building2
 // Hardcoded role data with custom hero content
 const rolesData = {
   financier: {
-    name: 'Financier',
+    name: 'Funder',
     icon: TrendingUp,
     courseCount: 14,
     heroHeadline: 'Maximize Yield in Equipment Finance',
