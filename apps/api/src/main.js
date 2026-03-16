@@ -24,6 +24,8 @@ const corsOptions = {
   origin: [
     'https://74009ab1-2c88-4fc5-a76e-4ac0524cf476.app-preview.com',
     'https://velocitygloballeasing.com',
+    'https://new-velocity-global-web.vercel.app', 
+    'https://new-velocity-global-web-changach-3000s-projects.vercel.app', 
     'http://localhost:5173',
     'http://localhost:3000'
   ],
