@@ -14,9 +14,9 @@ const rolesData = {
     name: 'Funder',
     icon: TrendingUp,
     courseCount: 14,
-    heroHeadline: 'Maximize Yield in Equipment Finance',
-    heroSubheading: 'Master advanced financial modeling, risk assessment, and managed services strategies to build a resilient, high-performing portfolio.',
-    ctaText: 'Get Your Risk & Yield Analysis',
+    heroHeadline: 'Build a World-Class Lending Portfolio. Reduce Risk. Grow Revenue.',
+    heroSubheading: 'Most equipment leasing lenders struggle with rising default rates, competitive pressure, and underwriting complexity. Velocity teaches your credit team how to identify quality borrowers, reduce default rates by 20–30%, accelerate underwriting by 50%, and grow origination volume by 40%—while improving risk-adjusted returns.',
+    ctaText: 'Get Your Portfolio Quality Assessment',
     description: 'Master the financial mechanics of equipment leasing. You will study advanced financial modeling, Net Present Value (NPV), Internal Rate of Return (IRR), and comprehensive risk assessment strategies tailored for the leasing industry.',
     topic: 'Topic 4: Financier / Advanced Strategies and Managed Services',
     keyOfferings: [
@@ -31,8 +31,8 @@ const rolesData = {
     name: 'Sales Professional',
     icon: Users,
     courseCount: 18,
-    heroHeadline: 'Close Bigger Deals, Faster',
-    heroSubheading: 'Shift from selling equipment to selling comprehensive financial solutions. Overcome price objections and increase your win rate by leading with ROI.',
+    heroHeadline: 'Accelerate Your Pipeline. Dominate Your Market.',
+    heroSubheading: 'Equipment leasing sales cycles are long. Velocity teaches your team how to close deals 40% faster and increase win rate by 20%—without sacrificing margins.',
     ctaText: 'Get Your Sales Velocity Assessment',
     description: 'Learn how to effectively sell leasing solutions. This track focuses on understanding customer financial needs, overcoming objections, and using leasing as a strategic tool to close larger deals faster.',
     keyOfferings: [
@@ -46,8 +46,8 @@ const rolesData = {
     name: 'Business Owner',
     icon: Briefcase,
     courseCount: 10,
-    heroHeadline: 'Stop Draining Cash on Depreciating Assets',
-    heroSubheading: 'Learn how strategic equipment leasing preserves capital, maximizes tax benefits, and fuels sustainable growth without over-leveraging your balance sheet.',
+    heroHeadline: 'Stop Margin Compression. Start Strategic Profitability.',
+    heroSubheading: 'Most equipment leasing CFOs see margins shrink 1–2% annually. Velocity shows you how to reverse that trend and improve EBITDA by 2–3% in 90 days.',
     ctaText: 'Get Your Profitability Audit',
     description: 'Understand how equipment leasing can preserve your capital, offer significant tax advantages, and fuel your business growth without over-leveraging your balance sheet.',
     keyOfferings: [
@@ -61,9 +61,9 @@ const rolesData = {
     name: 'Vendor',
     icon: Award,
     courseCount: 12,
-    heroHeadline: 'Turn Financing into Your Competitive Advantage',
-    heroSubheading: 'Integrate seamless leasing options into your sales process to increase average order value, eliminate sticker shock, and accelerate closing times.',
-    ctaText: 'Get Your Vendor Program Review',
+    heroHeadline: 'Turn One-Time Deals Into Lifetime Partnerships.',
+    heroSubheading: 'Most equipment vendors work deal-to-deal with razor-thin margins. Velocity teaches you how to build lasting relationships with leasing companies, secure repeat business, and improve margins by 15%.',
+    ctaText: 'Get Your Vendor Profitability Strategy',
     description: 'Leverage leasing as a powerful sales enablement tool. You will study how to integrate finance into your sales process to increase average order value and speed up the sales cycle.',
     topic: 'Vendor Leasing',
     keyOfferings: [
@@ -77,9 +77,9 @@ const rolesData = {
     name: 'Leasing Company',
     icon: Building2,
     courseCount: 22,
-    heroHeadline: 'Scale Your Leasing Enterprise Profitably',
-    heroSubheading: 'Optimize origination, underwriting, and asset management. Discover advanced funding structures to maximize your portfolio yield and operational efficiency.',
-    ctaText: 'Get Your Portfolio Optimization Review',
+    heroHeadline: 'Build a World-Class Portfolio. Reduce Risk. Maximize ROI.',
+    heroSubheading: 'Most lessors struggle with portfolio quality and default rates. Velocity teaches your team how to identify high-quality deals, manage risk effectively, and build a portfolio that delivers consistent ROI.',
+    ctaText: 'Get Your Portfolio Quality Assessment',
     description: 'Deep dive into the operations, legalities, and strategic management of a leasing enterprise. This track covers everything from origination and underwriting to asset management and remarketing.',
     topic: 'The Leasing Company (Lessor)',
     keyOfferings: [
@@ -93,9 +93,9 @@ const rolesData = {
     name: 'Tax Accountant',
     icon: Landmark,
     courseCount: 15,
-    heroHeadline: 'Master the Complexities of Lease Accounting',
-    heroSubheading: 'Navigate ASC 842 and IFRS 16 with absolute confidence. Structure tax-efficient leases and ensure flawless compliance for your clients or organization.',
-    ctaText: 'Get Your Compliance Strategy Session',
+    heroHeadline: 'Become the Tax Expert Your Leasing Clients Trust.',
+    heroSubheading: 'Most CPAs don\'t specialize in equipment leasing tax strategy. Velocity teaches you how to identify $100K+ in tax savings per client and become the go-to tax advisor for leasing companies.',
+    ctaText: 'Get Your Tax Strategy Audit',
     description: 'Navigate the complex tax implications and accounting standards of equipment leases. You will study ASC 842, IFRS 16, deferred taxes, and strategies for structuring tax-efficient leases.',
     topic: 'Tax and Accounting (Lessor & Lessee)',
     keyOfferings: [
@@ -243,7 +243,7 @@ const RoleLandingPage = () => {
                 </Button>
               </a>
               <p className="text-sm text-slate-400 mt-5 italic max-w-md text-center">
-                *Free 15-minute consultation. Extended 60-minute strategy sessions available for $200.*
+               *Free 15-minute call with our lending expert. Extended strategy sessions available for $200.*
               </p>
             </motion.div>
           </motion.div>

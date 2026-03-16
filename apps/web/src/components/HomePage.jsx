@@ -60,7 +60,7 @@ const HomePage = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold tracking-wide uppercase mb-8">
               <Award className="w-4 h-4" />
-              The Industry Standard in Leasing Education
+              The Industry Standard in Leasing
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-white tracking-tight text-balance leading-[1.1]">
