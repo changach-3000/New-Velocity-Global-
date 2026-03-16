@@ -31,11 +31,11 @@ const CourseCatalog = () => {
   };
 
   const roleKeywords = {
-    financier: ['lease securitization', 'structured finance', 'credit evaluation', 'portfolio management', 'financier'],
+    financier: ['lease securitization', 'structured finance', 'credit evaluation', 'portfolio management', 'financier', 'Measuring Financial Performance','Introduction to Managed Services','Comprehensive Risk Analysis','Strategic Funding Options for Managed Services','Legal, Operational, and Asset Readiness','Go-to-Market Strategy'],
     sales: ['closing techniques', 'negotiation', 'value propositions', 'deal management', 'sales'],
     business_owner: ['equipment leasing fundamentals', 'tax optimization', 'financial planning', 'business owner'],
-    vendor: ['vendor leasing programs', 'equipment financing', 'vendor relationships', 'vendor'],
-    tax_accountant: ['tax optimization', 'lease accounting', 'deductions', 'financial strategies', 'tax accountant']
+    vendor: ['vendor leasing programs', 'equipment financing', 'vendor relationships', 'vendor','Foundations of Vendor Leasing','Strategic Program Selection'],
+    tax_accountant: ['tax optimization', 'lease accounting', 'deductions', 'financial strategies', 'tax accountant','Lessee Accounting under IFRS 16 ','Lessor Accounting under IFRS 16','Introduction to IFRS 16','Lessee Accounting under IFRS 16','Lessor Accounting under IFRS 16','Transition and Impact Analysis']
   };
 
   const lessorSpecificCourses = [
@@ -144,7 +144,7 @@ const CourseCatalog = () => {
               <Button 
                 variant="outline" 
                 onClick={() => setRole(null)} 
-                className="flex-1 sm:flex-none border-blue-200 text-blue-700 hover:bg-blue-100"
+                className="flex-1 sm:flex-none border-blue-200 text-blue-700 hover:bg-blue-100 bg-white"
               >
                 View All Courses
               </Button>

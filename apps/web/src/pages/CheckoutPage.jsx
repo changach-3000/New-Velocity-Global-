@@ -259,7 +259,7 @@ const CheckoutPage = () => {
             <Button
               onClick={handleCheckout}
               disabled={loading}
-              className="w-full h-14 text-lg font-bold bg-[#3b82f6] hover:bg-[#1e3a8a] shadow-lg hover:shadow-xl transition-all"
+              className="w-full h-14 text-lg font-bold bg-[#3b82f6] text-white hover:bg-[#1e3a8a] shadow-lg hover:shadow-xl transition-all"
             >
               {loading ? (
                 <>

@@ -335,7 +335,7 @@ const CourseDetail = () => {
               ) : isEnrolled ? (
                 <Button 
                   onClick={handleContinueLearning}
-                  className={`w-full py-6 text-lg font-bold shadow-lg hover:shadow-xl gap-2 ${isCourseComplete ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-blue-600 hover:bg-blue-700'}`}
+                  className={`w-full py-6 text-lg font-bold shadow-lg hover:shadow-xl gap-2 text-white ${isCourseComplete ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-blue-600 hover:bg-blue-700'}`}
                 >
                   {isCourseComplete ? <CheckCircle className="w-6 h-6" /> : <PlayCircle className="w-6 h-6" />}
                   {isCourseComplete ? 'Completed — Review Course' : 'Continue Learning'}
