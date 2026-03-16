@@ -6,7 +6,7 @@ import { TrendingUp, Users, UserCircle, Briefcase, Calculator, Building2, ArrowR
 const roles = [
   {
     title: 'Funder',
-    slug: 'funder',
+    slug: 'financier',
     icon: TrendingUp,
     colorTheme: {
       iconBg: 'bg-blue-500/10',
@@ -30,7 +30,7 @@ const roles = [
   },
   {
     title: 'Customer',
-    slug: 'customer',
+    slug: 'business_owner',
     icon: UserCircle,
     colorTheme: {
       iconBg: 'bg-purple-500/10',
@@ -42,7 +42,7 @@ const roles = [
   },
   {
     title: 'Business Owner',
-    slug: 'business-owner',
+    slug: 'business_owner',
     icon: Briefcase,
     colorTheme: {
       iconBg: 'bg-amber-500/10',
@@ -54,7 +54,7 @@ const roles = [
   },
   {
     title: 'Tax Accountant',
-    slug: 'tax-accountant',
+    slug: 'tax_accountant',
     icon: Calculator,
     colorTheme: {
       iconBg: 'bg-indigo-500/10',
