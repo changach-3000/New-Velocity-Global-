@@ -19,7 +19,6 @@ const MembershipPage = () => {
         'Access to 4 virtual seminars per year',
         'Standard community forum access',
         'Monthly industry newsletter',
-        '10% discount on new courses'
       ]
     },
     {
@@ -34,9 +33,7 @@ const MembershipPage = () => {
       features: [
         'Everything in Standard',
         'Access to seminar recordings archive',
-        'Private Slack community access',
         'Quarterly market benchmarking reports',
-        '20% discount on new courses'
       ]
     },
     {
@@ -52,7 +49,6 @@ const MembershipPage = () => {
         '1-on-1 annual strategy session (60 min)',
         'Priority support & deal structuring Q&A',
         'Exclusive VIP networking events',
-        '30% discount on new courses'
       ]
     }
   ];
