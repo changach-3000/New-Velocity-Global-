@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button.jsx';
@@ -21,27 +20,37 @@ export const MembershipPaymentHandler = ({ tier, price, className, variant = "de
 
     setIsLoading(true);
     try {
+      const requestData = { 
+        tier: tier,
+        userId: currentUser.id,
+        userEmail: currentUser.email 
+      };
+      
+      console.log('Sending request data:', requestData); // Debug log
+      
       const response = await apiServerClient.fetch('/membership/initiate-payment', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tier,
-          userId: currentUser.id,
-          userEmail: currentUser.email
-        })
+        headers: {
+          'Content-Type': 'application/json',  // ← CRITICAL: Add this header
+        },
+        body: JSON.stringify(requestData),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to initiate payment');
+        let errorMsg = 'Failed to initiate payment';
+        try {
+          const errorData = await response.json();
+          errorMsg = errorData.error || errorMsg;
+          console.error('Error response:', errorData); // Debug log
+        } catch (_) {}
+        throw new Error(errorMsg);
       }
 
       const data = await response.json();
-      
+      console.log('Success response:', data); // Debug log
+
       if (data.authorization_url) {
-        // Open Paystack checkout in a new tab as requested
-        window.open(data.authorization_url, '_blank');
-        
+         window.location.href = data.authorization_url;
         toast({
           title: "Payment Initiated",
           description: "Please complete your payment in the new tab.",
@@ -54,7 +63,7 @@ export const MembershipPaymentHandler = ({ tier, price, className, variant = "de
       toast({
         title: "Payment Error",
         description: error.message || "Could not connect to payment provider. Please try again.",
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setIsLoading(false);
@@ -62,9 +71,9 @@ export const MembershipPaymentHandler = ({ tier, price, className, variant = "de
   };
 
   return (
-    <Button 
-      onClick={handlePurchase} 
-      disabled={isLoading} 
+    <Button
+      onClick={handlePurchase}
+      disabled={isLoading}
       className={className}
       variant={variant}
     >
