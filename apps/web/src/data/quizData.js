@@ -1887,5 +1887,2013 @@ export const quizData = [
         correctAnswer: "b"
       }
     ]
+  },
+
+  // ─── NEW COURSES ────────────────────────────────────────────────────────────
+
+  {
+    id: "c17",
+    title: "Legal, Operational, and Asset Readiness",
+    description: "Understand the legal, operational, and asset readiness requirements for launching and managing a leasing operation.",
+    questions: [
+      {
+        id: "q1",
+        text: "What does 'asset readiness' mean before a lease commences?",
+        options: {
+          a: "Confirming the equipment is manufactured",
+          b: "Ensuring the leased asset is fully delivered, installed, tested, and accepted by the lessee as fit for purpose before the lease financial obligations begin",
+          c: "Confirming the lessor has title to the equipment",
+          d: "Verifying the asset's insurance coverage"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What is a 'certificate of acceptance' in a lease transaction?",
+        options: {
+          a: "A document signed by the lessee confirming the equipment has been received and is in satisfactory condition, triggering the start of the lease",
+          b: "A regulatory licence to operate as a lessor",
+          c: "A manufacturer's warranty document",
+          d: "A certificate confirming the lease is legally binding"
+        },
+        correctAnswer: "a"
+      },
+      {
+        id: "q3",
+        text: "Which legal entity structure is most commonly used by independent leasing companies and why?",
+        options: {
+          a: "Sole trader, for simplicity",
+          b: "Partnership, to share risk",
+          c: "Limited liability company or corporation, to separate personal and business liability and attract institutional funding",
+          d: "Trust structure, for tax benefits only"
+        },
+        correctAnswer: "c"
+      },
+      {
+        id: "q4",
+        text: "What is an 'equipment schedule' in a master lease agreement?",
+        options: {
+          a: "A maintenance timetable for the equipment",
+          b: "A separate document that incorporates specific lease terms for each piece of equipment under the master agreement",
+          c: "A delivery schedule provided by the manufacturer",
+          d: "A list of approved equipment types"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What operational readiness element must a leasing company establish before originating leases?",
+        options: {
+          a: "A customer loyalty programme",
+          b: "Credit underwriting policies, documentation standards, and collections procedures",
+          c: "A fleet of replacement equipment",
+          d: "A social media presence"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "Why is title verification critical for the lessor before funding a lease?",
+        options: {
+          a: "To determine the monthly lease payment",
+          b: "To confirm no third party has a prior security interest in the asset that could undermine the lessor's ownership rights",
+          c: "To calculate depreciation",
+          d: "To set the residual value"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What is 'know your customer' (KYC) compliance in a leasing context?",
+        options: {
+          a: "A sales technique for understanding client needs",
+          b: "A process of verifying the identity, legal status, and business legitimacy of lessees to comply with anti-money laundering regulations",
+          c: "A credit scoring model",
+          d: "A customer satisfaction survey process"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is the purpose of an 'insurance assignment' clause in a lease?",
+        options: {
+          a: "To require the lessee to obtain life insurance",
+          b: "To assign the lessee's equipment insurance proceeds to the lessor in the event of total loss, protecting the lessor's financial interest",
+          c: "To transfer the lessor's insurance obligations to the lessee",
+          d: "To lower the lessee's insurance premium"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What does 'lien search' mean and why is it performed before a lease is funded?",
+        options: {
+          a: "A search of the lessee's social media profiles",
+          b: "A credit bureau inquiry",
+          c: "A search of public registries to identify any existing claims or security interests against the lessee or the asset",
+          d: "A search for comparable equipment prices"
+        },
+        correctAnswer: "c"
+      },
+      {
+        id: "q10",
+        text: "What is a 'guaranty' in a lease transaction and when is it typically required?",
+        options: {
+          a: "A warranty provided by the equipment manufacturer",
+          b: "A personal or corporate commitment by a third party to fulfil the lessee's obligations if the lessee defaults; typically required when the lessee's credit is insufficient on its own",
+          c: "An insurance policy covering equipment breakdown",
+          d: "A government-backed credit facility"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c18",
+    title: "Advanced Funding Sources and Structures",
+    description: "Explore advanced funding sources and capital structures available to leasing companies.",
+    questions: [
+      {
+        id: "q1",
+        text: "What is a 'warehouse line of credit' and how do leasing companies use it?",
+        options: {
+          a: "A credit line for purchasing warehouse storage space",
+          b: "A short-term revolving credit facility used to fund lease originations until they are sold or securitised",
+          c: "A government credit facility for equipment manufacturers",
+          d: "A long-term bond issued by a leasing company"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What is 'asset-backed lending' (ABL) in the context of a leasing company's funding?",
+        options: {
+          a: "Lending secured by the leasing company's physical office",
+          b: "A form of borrowing where the leasing company pledges its lease receivables as collateral to obtain funding",
+          c: "Loans made by the leasing company to its clients",
+          d: "Equity funding from asset management firms"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "What is the difference between 'recourse' and 'non-recourse' funding in leasing?",
+        options: {
+          a: "Recourse funding allows the funder to claim against the leasing company if the lessee defaults; non-recourse funding limits recovery to the underlying assets only",
+          b: "Non-recourse funding is always more expensive than recourse",
+          c: "Recourse funding is only available to banks",
+          d: "There is no practical difference"
+        },
+        correctAnswer: "a"
+      },
+      {
+        id: "q4",
+        text: "What is a 'co-investment structure' in leasing fund arrangements?",
+        options: {
+          a: "A structure where two lessees share a single lease",
+          b: "A structure where the leasing company retains a portion of each deal alongside an institutional investor, aligning incentives",
+          c: "A government grant co-funded by private investors",
+          d: "A joint venture between two equipment manufacturers"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What is 'leverage' in the context of a leasing company's capital structure?",
+        options: {
+          a: "The negotiating power of the leasing company",
+          b: "The ratio of debt to equity used to fund the lease portfolio; higher leverage amplifies returns but increases financial risk",
+          c: "The interest rate charged to lessees",
+          d: "The depreciation applied to leased assets"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What is a 'term loan' and how does it differ from a revolving credit facility for a leasing company?",
+        options: {
+          a: "A term loan is disbursed once and repaid over a fixed schedule; a revolving facility can be drawn, repaid, and redrawn repeatedly",
+          b: "A revolving facility is always cheaper than a term loan",
+          c: "Term loans are only available to banks",
+          d: "There is no difference"
+        },
+        correctAnswer: "a"
+      },
+      {
+        id: "q7",
+        text: "What role do insurance companies and pension funds play as funding sources for leasing?",
+        options: {
+          a: "They provide short-term bridge loans only",
+          b: "They act as long-term institutional investors seeking stable, asset-backed returns that match their liability profiles, funding lease portfolios directly or through securitisation",
+          c: "They only fund government-backed leasing programmes",
+          d: "They provide grants to leasing companies"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is 'cost of funds' and why is it central to lease pricing strategy?",
+        options: {
+          a: "The cost of administering the leasing company's operations",
+          b: "The rate at which the leasing company borrows money to fund leases; it forms the floor for lease pricing and directly determines the spread and profitability",
+          c: "The depreciation cost of leased assets",
+          d: "The legal cost of preparing lease agreements"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What is a 'private placement' as a funding mechanism for a leasing company?",
+        options: {
+          a: "Raising capital by selling securities directly to a small number of institutional investors rather than through a public offering",
+          b: "Placing equipment with private clients only",
+          c: "A government placement of surplus equipment",
+          d: "A private sale of leased equipment at end of term"
+        },
+        correctAnswer: "a"
+      },
+      {
+        id: "q10",
+        text: "How does a leasing company manage interest rate mismatches between its fixed-rate lease assets and floating-rate funding?",
+        options: {
+          a: "By only offering floating-rate leases",
+          b: "By avoiding long-term leases",
+          c: "Through hedging instruments such as interest rate swaps that convert floating-rate liabilities to fixed, aligning asset and liability cash flows",
+          d: "By holding excess cash reserves"
+        },
+        correctAnswer: "c"
+      }
+    ]
+  },
+
+  {
+    id: "c19",
+    title: "Comprehensive Risk Analysis",
+    description: "Master the frameworks and techniques used to analyse risk across a leasing portfolio.",
+    questions: [
+      {
+        id: "q1",
+        text: "What are the four primary risk categories a leasing company must analyse?",
+        options: {
+          a: "Sales, marketing, HR, and IT risk",
+          b: "Credit risk, asset/residual value risk, interest rate risk, and operational risk",
+          c: "Equipment, insurance, legal, and tax risk",
+          d: "Liquidity, currency, reputational, and weather risk"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What is 'counterparty risk' in a lease transaction?",
+        options: {
+          a: "The risk of equipment failure",
+          b: "The risk that the other party to the transaction — typically the lessee — fails to fulfil its contractual obligations",
+          c: "The risk of a competitor undercutting rates",
+          d: "The risk of interest rate changes"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "How is 'asset liquidity risk' relevant to a leasing company?",
+        options: {
+          a: "The risk that the lessee cannot pay for liquidity reasons",
+          b: "The risk that upon default or end of term, the leased equipment cannot be quickly sold or re-leased at an acceptable value",
+          c: "The risk that the lessor runs out of cash",
+          d: "The risk of equipment being damaged by liquid spills"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What is 'operational risk' in a leasing company context?",
+        options: {
+          a: "The risk of equipment becoming operationally obsolete",
+          b: "The risk of losses from inadequate or failed internal processes, people, systems, or external events",
+          c: "The risk of operating in multiple countries",
+          d: "The risk of changes to operating lease accounting standards"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What does a 'risk matrix' help a leasing company to do?",
+        options: {
+          a: "Calculate the monthly lease payment",
+          b: "Identify the most creditworthy lessees",
+          c: "Visualise and prioritise risks by mapping their likelihood against their potential impact, enabling focused risk management",
+          d: "Set the interest rate for new leases"
+        },
+        correctAnswer: "c"
+      },
+      {
+        id: "q6",
+        text: "What is 'concentration risk' at the portfolio level and why must it be actively monitored?",
+        options: {
+          a: "The risk that a single asset type dominates sales volumes",
+          b: "Over-exposure to a single lessee, industry, geography, or asset class — amplifying losses if that segment deteriorates",
+          c: "The risk of having too few lessees",
+          d: "The administrative burden of complex leases"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What is 'sensitivity analysis' and how is it applied in lease portfolio risk management?",
+        options: {
+          a: "Analysing how sensitive lessees are to price increases",
+          b: "Testing how changes in a single variable — such as default rate or residual value — affect portfolio performance, isolating the impact of each risk factor",
+          c: "Evaluating the sensitivity of equipment to environmental conditions",
+          d: "Measuring the sensitivity of investors to yield changes"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is 'scenario analysis' in lease risk management?",
+        options: {
+          a: "Analysing different sales scenarios to forecast revenue",
+          b: "Modelling portfolio performance under specific hypothetical economic or market conditions, such as a recession, rising interest rates, or a sector downturn",
+          c: "Analysing the lessee's different use scenarios for the equipment",
+          d: "Evaluating different lease structures for a single client"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What does 'early warning indicator' mean in a lease portfolio risk context?",
+        options: {
+          a: "A notification that a lease is about to expire",
+          b: "A metric or behavioural signal — such as payment delays or covenant breaches — that identifies a lessee at elevated risk of default before it occurs",
+          c: "An alert that interest rates are rising",
+          d: "A signal that equipment maintenance is overdue"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "What is the purpose of a 'risk appetite statement' for a leasing company?",
+        options: {
+          a: "To describe the types of equipment the company prefers to lease",
+          b: "To formally define the level and type of risk the company is willing to accept in pursuit of its strategic objectives, guiding underwriting and portfolio decisions",
+          c: "To set the minimum deal size the company will accept",
+          d: "To document the company's preferred funding sources"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c20",
+    title: "Measuring Financial Performance",
+    description: "Learn to measure, interpret, and improve the financial performance of a leasing business.",
+    questions: [
+      {
+        id: "q1",
+        text: "What is 'net interest margin' (NIM) and why is it a core performance metric for a leasing company?",
+        options: {
+          a: "The total revenue from lease originations in a year",
+          b: "The difference between the yield earned on lease assets and the cost of funds used to finance them, expressed as a percentage — the primary driver of leasing profitability",
+          c: "The margin between the equipment purchase price and the monthly payment",
+          d: "The profit margin on equipment sales at end of lease"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What does 'return on equity' (ROE) measure in a leasing business?",
+        options: {
+          a: "The return generated on total assets",
+          b: "The profitability of the lease portfolio before tax",
+          c: "The net profit generated relative to shareholders' equity, indicating how effectively the company uses shareholder capital",
+          d: "The return on equipment sold at end of lease"
+        },
+        correctAnswer: "c"
+      },
+      {
+        id: "q3",
+        text: "What is the 'efficiency ratio' in financial services and what does it indicate for a leasing company?",
+        options: {
+          a: "The ratio of equipment uptime to total lease term",
+          b: "Operating expenses divided by net revenue — a lower ratio indicates a more cost-efficient operation",
+          c: "The ratio of fixed to variable lease payments in the portfolio",
+          d: "The ratio of new originations to existing portfolio size"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What is 'origination volume' and why is it tracked as a leading indicator?",
+        options: {
+          a: "The total number of employees in the originations team",
+          b: "The value of new leases written in a period — a leading indicator of future portfolio growth, revenue, and profitability",
+          c: "The number of lease renewals in a period",
+          d: "The volume of equipment returned at end of term"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What is 'return on assets' (ROA) and how does it differ from ROE?",
+        options: {
+          a: "ROA and ROE are the same metric",
+          b: "ROA measures net income relative to total assets, reflecting how efficiently assets generate profit; ROE measures returns relative to equity, reflecting leverage impact",
+          c: "ROA measures the return on individual leased assets; ROE measures return on the entire portfolio",
+          d: "ROE is a better metric than ROA in all circumstances"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What is 'provision for credit losses' and how does it affect a leasing company's reported profitability?",
+        options: {
+          a: "A reserve set aside for future equipment purchases",
+          b: "A charge to the income statement reflecting estimated future credit losses on the portfolio; higher provisions reduce reported net income",
+          c: "A regulatory fee paid to licensing authorities",
+          d: "Insurance premium expenses for the lease portfolio"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What does 'portfolio yield' measure?",
+        options: {
+          a: "The percentage of leases that renew at end of term",
+          b: "The total annualised income generated from the lease portfolio as a percentage of the average outstanding balance",
+          c: "The depreciation rate of assets in the portfolio",
+          d: "The interest rate charged on new originations only"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is 'cost per originated dollar' and why is it useful for a leasing company?",
+        options: {
+          a: "The equipment cost per lease dollar outstanding",
+          b: "The total origination and sales cost incurred to generate each dollar of new lease volume, used to assess sales efficiency and pricing adequacy",
+          c: "The administrative cost of managing each dollar of the portfolio",
+          d: "The interest cost per dollar of funding"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "How does 'leverage ratio' affect the risk-return profile of a leasing company?",
+        options: {
+          a: "Higher leverage reduces both risk and return",
+          b: "Leverage has no impact on risk",
+          c: "Higher leverage amplifies both returns on equity and financial risk; a highly leveraged company is more sensitive to portfolio losses",
+          d: "Lower leverage always indicates better performance"
+        },
+        correctAnswer: "c"
+      },
+      {
+        id: "q10",
+        text: "What is 'economic value added' (EVA) and how can it be applied to lease portfolio performance?",
+        options: {
+          a: "The market value of equipment in the portfolio",
+          b: "A measure of the profit generated above the cost of capital employed; positive EVA indicates the portfolio is creating, not destroying, shareholder value",
+          c: "The value added by equipment maintenance programmes",
+          d: "The incremental revenue from upselling bundled services"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c21",
+    title: "Introduction to Managed Services",
+    description: "Understand the fundamentals of managed services and how they intersect with equipment leasing.",
+    questions: [
+      {
+        id: "q1",
+        text: "What is a 'managed service' in the context of equipment and technology?",
+        options: {
+          a: "A government-managed equipment procurement programme",
+          b: "A comprehensive offering where a provider takes responsibility for delivering and managing a specified outcome — such as uptime or print volume — rather than just supplying equipment",
+          c: "An equipment rental with no service component",
+          d: "A maintenance contract purchased separately from the equipment"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "How does a managed service model differ from a traditional equipment lease?",
+        options: {
+          a: "A managed service includes only financing; a lease includes only services",
+          b: "A managed service bundles equipment, maintenance, software, consumables, and support into a single outcome-based contract, whereas a traditional lease typically covers financing only",
+          c: "Managed services are always more expensive than leases",
+          d: "There is no difference"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "What is an 'outcome-based' managed service contract?",
+        options: {
+          a: "A contract where payment is tied to sales outcomes of the lessee",
+          b: "A contract structured around delivering a measurable result — such as a cost-per-page or uptime guarantee — rather than simply providing equipment",
+          c: "A contract with a fixed outcome at end of term",
+          d: "A contract that guarantees equipment purchase at end of term"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What is a 'managed print service' (MPS) and what does it typically include?",
+        options: {
+          a: "A service for printing marketing materials",
+          b: "A comprehensive print management contract covering printers, toner, maintenance, and support, often priced per page printed",
+          c: "A leasing programme for printing presses only",
+          d: "Software for managing print job queues"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What is a 'service level agreement' (SLA) in a managed service context?",
+        options: {
+          a: "A legal clause protecting the provider from liability",
+          b: "A contractual commitment specifying the performance standards, response times, and remedies that the managed service provider must meet",
+          c: "A pricing schedule for additional services",
+          d: "A customer satisfaction survey framework"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "Why do businesses prefer managed services over owning equipment outright in technology-intensive sectors?",
+        options: {
+          a: "Because managed services are always the cheapest option",
+          b: "To convert capital expenditure to predictable operating expenditure, eliminate technology obsolescence risk, and outsource management complexity",
+          c: "Because ownership of technology equipment is illegal",
+          d: "Because managed service contracts are easier to cancel"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What is the role of a 'managed service provider' (MSP) in an equipment financing transaction?",
+        options: {
+          a: "The MSP acts as the lessor providing funding",
+          b: "The MSP delivers and manages the service, while a separate finance company provides the underlying equipment funding — creating a three-party structure",
+          c: "The MSP purchases equipment on behalf of the lessee",
+          d: "The MSP provides insurance for the leased equipment"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is a 'consumption-based' or 'pay-per-use' model in managed services?",
+        options: {
+          a: "A model where clients pay only when they use the equipment, based on actual measured consumption rather than a fixed monthly fee",
+          b: "A model where the provider pays for equipment usage",
+          c: "A model where all costs are paid upfront",
+          d: "A model limited to utility services"
+        },
+        correctAnswer: "a"
+      },
+      {
+        id: "q9",
+        text: "What is 'refresh management' in a managed services context?",
+        options: {
+          a: "Cleaning and refurbishing equipment mid-contract",
+          b: "The planned replacement of equipment at the end of its useful life within the managed service contract, ensuring the client always has current technology",
+          c: "Software updates provided by the MSP",
+          d: "Replacing consumables such as toner"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "What is the primary challenge for a leasing company entering the managed services space?",
+        options: {
+          a: "Finding equipment to lease",
+          b: "Competing on interest rates",
+          c: "Transitioning from a transaction-focused finance model to an ongoing service delivery model, requiring new capabilities in operations, technology, and customer management",
+          d: "Obtaining regulatory approval"
+        },
+        correctAnswer: "c"
+      }
+    ]
+  },
+
+  {
+    id: "c22",
+    title: "Strategic Funding Options for Managed Services",
+    description: "Explore funding strategies and capital structures specifically designed for managed service programmes.",
+    questions: [
+      {
+        id: "q1",
+        text: "Why does funding a managed services contract present different challenges compared to funding a straightforward equipment lease?",
+        options: {
+          a: "Managed services are always funded by government grants",
+          b: "The revenue stream is tied to service performance and consumption rather than fixed equipment lease payments, making cash flow less predictable for funders",
+          c: "Managed services do not require funding",
+          d: "Funders prefer managed services because of their simplicity"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What is a 'blended rate' in the context of funding a managed service contract?",
+        options: {
+          a: "A rate that blends multiple currencies",
+          b: "A single all-inclusive rate that covers both the equipment financing cost and the service component, simplifying billing for the customer",
+          c: "A variable rate that blends fixed and floating interest",
+          d: "A rate that blends costs across multiple clients"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "How can a leasing company 'unbundle' a managed service for funding purposes?",
+        options: {
+          a: "By splitting the equipment financing from the service components and funding only the hard asset finance element",
+          b: "By selling the equipment to the lessee and separately providing maintenance",
+          c: "By offering the service for free and charging only for equipment",
+          d: "By unbundling the lease payments into quarterly instalments"
+        },
+        correctAnswer: "a"
+      },
+      {
+        id: "q4",
+        text: "What is 'vendor recourse' in a managed services funding arrangement?",
+        options: {
+          a: "The funder's right to recover equipment from the lessee upon default",
+          b: "An arrangement where the vendor or MSP agrees to buy back or replace contracts that default, reducing the funder's credit risk",
+          c: "Legal recourse available to the vendor against the funder",
+          d: "The vendor's right to increase prices mid-contract"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What funding structure is most appropriate for a large, multi-year managed IT services contract with predictable monthly fees?",
+        options: {
+          a: "A short-term revolving credit facility",
+          b: "A term note or lease facility matched to the contract duration, providing stable long-term funding aligned with the contract's cash flows",
+          c: "Equity funding from the MSP's shareholders",
+          d: "An overdraft facility"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What is a 'first-loss piece' in a managed services funding structure?",
+        options: {
+          a: "The first payment made under the managed service contract",
+          b: "A credit enhancement mechanism where the MSP or originator absorbs the first tranche of credit losses, reducing risk to the senior funder",
+          c: "The first piece of equipment delivered under the contract",
+          d: "The insurance excess paid in the event of equipment loss"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "How does a funder assess the credit quality of a managed services receivable compared to a traditional lease receivable?",
+        options: {
+          a: "They are assessed identically",
+          b: "Managed services receivables require analysis of service performance risk, customer concentration, contract termination clauses, and the MSP's ability to deliver — in addition to standard credit analysis",
+          c: "Managed services receivables are always lower risk",
+          d: "Funders only assess the equipment value"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is a 'back-to-back' funding structure in vendor-managed services?",
+        options: {
+          a: "A structure where two funders share a single contract equally",
+          b: "A structure where the funder provides finance to the MSP against specific customer contracts, with the MSP acting as both originator and servicer",
+          c: "A structure where funding terms mirror the vendor's supply terms exactly",
+          d: "A structure where the lessee funds the MSP directly"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What covenant is most commonly required by funders of managed service programmes?",
+        options: {
+          a: "A minimum equipment age covenant",
+          b: "A minimum service quality covenant",
+          c: "A portfolio performance covenant — such as minimum portfolio yield, maximum delinquency, or minimum advance rate — triggering remedies if breached",
+          d: "A covenant restricting the MSP from acquiring new clients"
+        },
+        correctAnswer: "c"
+      },
+      {
+        id: "q10",
+        text: "What is the significance of 'contract stickiness' when a funder evaluates a managed services portfolio?",
+        options: {
+          a: "It refers to whether the contracts are legally adhesive to the equipment",
+          b: "High contract stickiness — where customers rarely cancel — reduces prepayment and attrition risk, making the receivables more attractive to funders",
+          c: "It refers to contracts that are difficult to administer",
+          d: "It measures how quickly new contracts are signed"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c23",
+    title: "Transition and Impact Analysis",
+    description: "Analyse the transition to new lease accounting standards and their financial impact on organisations.",
+    questions: [
+      {
+        id: "q1",
+        text: "What is 'transition date' in the context of adopting IFRS 16?",
+        options: {
+          a: "The date a new lease is signed",
+          b: "The date on which an entity first applies IFRS 16 and must recognise existing lease obligations on the balance sheet",
+          c: "The date the lessee returns equipment at end of lease",
+          d: "The date the lessor transfers title to the lessee"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What are the two transition approaches permitted under IFRS 16 on adoption?",
+        options: {
+          a: "Full retrospective and modified retrospective approaches",
+          b: "Operating lease method and finance lease method",
+          c: "On-balance-sheet and off-balance-sheet approaches",
+          d: "Annual and quarterly transition approaches"
+        },
+        correctAnswer: "a"
+      },
+      {
+        id: "q3",
+        text: "Under the modified retrospective approach for IFRS 16 transition, how is the right-of-use asset typically measured?",
+        options: {
+          a: "At the fair value of the underlying asset",
+          b: "At an amount equal to the lease liability, adjusted for any prepaid or accrued lease payments",
+          c: "At the historical cost of the equipment",
+          d: "At zero, with no asset recognised"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What is the impact of IFRS 16 adoption on a lessee's EBITDA?",
+        options: {
+          a: "EBITDA decreases because lease costs are now higher",
+          b: "EBITDA increases because operating lease expenses are replaced by depreciation and interest, which are excluded from EBITDA",
+          c: "EBITDA is unaffected by IFRS 16",
+          d: "EBITDA decreases because more depreciation is charged"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "How does IFRS 16 adoption affect a company's reported net debt?",
+        options: {
+          a: "Net debt decreases because leases are now assets",
+          b: "Net debt increases because lease liabilities are now recognised on the balance sheet",
+          c: "Net debt is unaffected",
+          d: "Net debt decreases because operating leases were previously included"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What is a 'lease inventory exercise' and why is it a critical first step in IFRS 16 transition?",
+        options: {
+          a: "A physical count of all equipment under lease",
+          b: "A systematic identification and cataloguing of all contracts containing a lease to ensure complete and accurate recognition under the new standard",
+          c: "An audit of lease payment schedules",
+          d: "A review of all lease contracts for early termination clauses"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What is the impact of IFRS 16 on a lessee's operating cash flow?",
+        options: {
+          a: "Operating cash flow decreases because lease payments are now higher",
+          b: "Operating cash flow improves because the principal portion of lease payments is reclassified from operating to financing activities",
+          c: "Operating cash flow is unaffected",
+          d: "Operating cash flow decreases because depreciation increases"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "Which key assumption most significantly affects the lease liability recognised at transition?",
+        options: {
+          a: "The equipment's market value",
+          b: "The incremental borrowing rate used to discount future lease payments — a lower IBR results in a higher liability",
+          c: "The frequency of lease payments",
+          d: "The maintenance obligations of the lessee"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "How should a company communicate the impact of IFRS 16 adoption to its lenders and investors?",
+        options: {
+          a: "By restating all prior period financials silently",
+          b: "By providing clear quantitative disclosure of the transition adjustment, the key assumptions used, and the impact on reported financial metrics and loan covenants",
+          c: "By waiting until the first full-year report after adoption",
+          d: "By only disclosing if the impact exceeds a materiality threshold"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "How may IFRS 16 affect a company's existing loan covenants?",
+        options: {
+          a: "Loan covenants are unaffected because funders ignore accounting changes",
+          b: "IFRS 16 can cause covenant breaches if debt-to-equity, interest cover, or leverage ratios are defined using reported balance sheet figures that now include lease liabilities",
+          c: "IFRS 16 always improves covenant compliance",
+          d: "Only new loans entered after IFRS 16 adoption are affected"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c24",
+    title: "Key Financial Ratios for Lessors",
+    description: "Master the financial ratios used to evaluate, manage, and benchmark a leasing company's performance.",
+    questions: [
+      {
+        id: "q1",
+        text: "What does the 'debt-to-equity ratio' indicate for a leasing company?",
+        options: {
+          a: "The proportion of the portfolio that is in arrears",
+          b: "The ratio of borrowed funds to shareholder equity, indicating the company's financial leverage and the relative contribution of debt versus equity in funding the business",
+          c: "The ratio of operating leases to finance leases in the portfolio",
+          d: "The proportion of the portfolio funded by securitisation"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What is the 'net interest margin' (NIM) and why is it a core profitability metric?",
+        options: {
+          a: "The difference between the largest and smallest lease in the portfolio",
+          b: "The spread between the yield earned on the lease portfolio and the cost of funds, expressed as a percentage of average earning assets — the primary driver of a lessor's financial performance",
+          c: "The margin between equipment purchase cost and residual value",
+          d: "The interest rate charged to the highest-risk lessees"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "What does a high 'delinquency ratio' signal about a lease portfolio?",
+        options: {
+          a: "Strong portfolio growth",
+          b: "Deteriorating credit quality — a high proportion of lessees are behind on payments, signalling elevated credit risk and potential future charge-offs",
+          c: "Aggressive origination strategy",
+          d: "High residual value exposure"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What does the 'leverage ratio' measure for a lessor and what is its significance?",
+        options: {
+          a: "The ratio of equipment age to lease term",
+          b: "The ratio of total assets to equity — a higher ratio means the company is more leveraged, amplifying returns but increasing vulnerability to losses",
+          c: "The ratio of fixed to variable rate leases",
+          d: "The ratio of leases originated to leases renewed"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What does 'return on average assets' (ROAA) measure for a leasing company?",
+        options: {
+          a: "The return earned on equity investments",
+          b: "The net income generated per dollar of average total assets, reflecting operational efficiency and asset productivity",
+          c: "The appreciation in value of leased assets",
+          d: "The return earned on assets sold at end of lease"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What is the 'net charge-off ratio' and what does it reveal?",
+        options: {
+          a: "The ratio of new originations to total portfolio",
+          b: "Annualised lease receivables written off as uncollectable (net of recoveries) as a percentage of average portfolio balance — measuring realised credit losses",
+          c: "The ratio of operating costs to total income",
+          d: "The ratio of equipment depreciation to original cost"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What is the 'cost of funds ratio' and how does it affect lease pricing decisions?",
+        options: {
+          a: "The cost of administering the lease portfolio",
+          b: "The blended rate at which the leasing company borrows to fund its portfolio — it sets the floor for lease rates and determines the achievable spread",
+          c: "The cost of originating new leases",
+          d: "The total cost of equipment acquisitions"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What does the 'equity multiplier' reveal about a leasing company's financial structure?",
+        options: {
+          a: "How many times equity has been issued",
+          b: "The extent to which assets are financed by equity versus debt — a higher multiplier indicates greater leverage",
+          c: "The return on equity relative to industry peers",
+          d: "The number of equity investors in the business"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "How is 'portfolio yield' calculated and what does it measure?",
+        options: {
+          a: "Total lease payments divided by number of leases",
+          b: "Total annualised lease income divided by average outstanding portfolio balance — measuring the income-generating efficiency of the portfolio",
+          c: "Residual value divided by original equipment cost",
+          d: "New originations divided by total portfolio"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "What is the 'provision coverage ratio' and why is it important?",
+        options: {
+          a: "The ratio of insurance premiums to total lease payments",
+          b: "The ratio of loan loss provisions to non-performing or delinquent receivables — indicating whether provisions are sufficient to absorb expected losses",
+          c: "The ratio of fixed costs to variable costs",
+          d: "The ratio of secured to unsecured leases"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c25",
+    title: "Funding the Leasing Company",
+    description: "Understand how leasing companies source, structure, and manage their funding to support portfolio growth.",
+    questions: [
+      {
+        id: "q1",
+        text: "What is the primary funding challenge unique to a leasing company compared to a traditional bank?",
+        options: {
+          a: "Leasing companies cannot borrow money",
+          b: "Leasing companies cannot accept deposits and must raise all funding from wholesale markets, institutional investors, or securitisation — making funding cost and availability more variable",
+          c: "Leasing companies are prohibited from issuing bonds",
+          d: "Leasing companies must fund all leases from equity"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What is a 'credit facility' and how does a leasing company typically use one?",
+        options: {
+          a: "A facility for providing credit to lessees",
+          b: "A committed borrowing arrangement with a bank or group of banks that the leasing company draws on to fund new lease originations",
+          c: "A government programme for subsidising lease rates",
+          d: "A facility for managing lease collections"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "What is 'asset-liability management' (ALM) for a leasing company?",
+        options: {
+          a: "Managing equipment purchases and sales",
+          b: "Managing the match between the duration, interest rate, and currency characteristics of lease assets and the funding liabilities that finance them, to control liquidity and rate risk",
+          c: "Managing the company's physical assets and employee liabilities",
+          d: "Managing the residual value of assets against lease liabilities"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What is a 'committed' versus an 'uncommitted' funding facility?",
+        options: {
+          a: "A committed facility is guaranteed by the government; an uncommitted facility is not",
+          b: "A committed facility is a legally binding obligation by the lender to provide funds up to a limit; an uncommitted facility can be withdrawn at the lender's discretion",
+          c: "A committed facility has a fixed interest rate; an uncommitted facility has a variable rate",
+          d: "There is no practical difference"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What is 'diversification of funding sources' and why is it a best practice for leasing companies?",
+        options: {
+          a: "Originating leases across multiple industry sectors",
+          b: "Using multiple funding channels — bank lines, securitisation, bonds, equity — to reduce dependence on any single source and ensure resilience if one source becomes unavailable",
+          c: "Offering leases in multiple currencies",
+          d: "Working with multiple equipment vendors"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What does 'funding tenor' refer to and why does it matter?",
+        options: {
+          a: "The tone used in funding agreements",
+          b: "The duration of the funding facility — matching funding tenor to lease asset duration is critical to avoid maturity mismatches and refinancing risk",
+          c: "The interest rate tenor used for pricing",
+          d: "The number of funding tranches in a securitisation"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What is 'equity capital' and what role does it play in funding a leasing company?",
+        options: {
+          a: "Equity is borrowed from shareholders and must be repaid",
+          b: "Equity provides the foundational permanent capital base that absorbs losses, supports leverage, and gives lenders and investors confidence in the company's financial stability",
+          c: "Equity is only used to fund the company's operating costs",
+          d: "Equity and debt play identical roles in funding a leasing company"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is a 'rating agency' and why do larger leasing companies seek a credit rating?",
+        options: {
+          a: "An agency that rates lease agreements for legal quality",
+          b: "An independent organisation that assesses creditworthiness; a credit rating enables the leasing company to access public debt markets and lower its cost of funds",
+          c: "A government body that regulates leasing companies",
+          d: "An agency that rates the condition of returned equipment"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What is 'liquidity risk' for a leasing company and how is it managed?",
+        options: {
+          a: "The risk that equipment cannot be liquidated",
+          b: "The risk of being unable to meet financial obligations as they fall due; managed through committed credit facilities, liquidity buffers, and staggered maturity profiles",
+          c: "The risk that lease payments are made irregularly",
+          d: "The risk of interest rate fluctuations"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "What is a 'securitisation programme' and how does it benefit a leasing company's funding strategy?",
+        options: {
+          a: "A government programme securing equipment against theft",
+          b: "A structured finance programme that pools lease receivables and issues rated securities to investors, providing access to lower-cost, long-term capital and freeing up the company's balance sheet",
+          c: "A programme for securing IT equipment against data breaches",
+          d: "A legal programme for registering security interests in leased assets"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c26",
+    title: "Strategic Program Selection",
+    description: "Learn how to evaluate, select, and position leasing programmes strategically for maximum business impact.",
+    questions: [
+      {
+        id: "q1",
+        text: "What is the primary criterion for selecting a leasing programme to offer?",
+        options: {
+          a: "Choosing the programme with the lowest interest rate",
+          b: "Aligning the programme structure with the target client's financial needs, equipment type, transaction size, and risk profile",
+          c: "Offering the most complex programme available",
+          d: "Copying the programme offered by the market leader"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What is a 'captive finance programme' and when is it the right strategic choice?",
+        options: {
+          a: "A programme that captures the highest-risk lessees",
+          b: "A financing programme owned and operated by an equipment manufacturer or vendor to support sales of its own products, ideal when the manufacturer wants to control the financing experience",
+          c: "A programme that captures government contracts",
+          d: "A programme that only funds captive equipment types"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "What factors should a leasing company assess when selecting which asset classes to specialise in?",
+        options: {
+          a: "Only the current market interest rate",
+          b: "Asset liquidity, depreciation profile, market demand, the company's ability to manage and remarketed the asset, and the competitive landscape",
+          c: "Only the size of the available market",
+          d: "The preferences of the largest single investor"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What is a 'white label' leasing programme and when is it strategically advantageous?",
+        options: {
+          a: "A programme for leasing white goods only",
+          b: "A programme where a leasing company provides financing under a partner's brand, allowing the partner to offer financing without building their own capabilities",
+          c: "A programme that offers the lowest possible rates",
+          d: "A programme that is not publicly marketed"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "How should a leasing company assess the strategic fit of a new programme before launch?",
+        options: {
+          a: "By launching immediately and adjusting based on results",
+          b: "Through a structured analysis of market size, target client segment, competitive differentiation, risk profile, required capabilities, and projected return on capital",
+          c: "By asking the largest existing client whether they would use it",
+          d: "By copying an existing competitor's programme"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What is 'channel strategy' in the context of leasing programme selection?",
+        options: {
+          a: "The television channels used for marketing",
+          b: "The decision about how to reach target clients — directly, through vendors, brokers, or digital platforms — and aligning the programme structure to the chosen channel",
+          c: "The internal communication channels between departments",
+          d: "The sequence in which programme features are introduced"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "Why is 'scalability' an important criterion when selecting a leasing programme?",
+        options: {
+          a: "To ensure the programme can be cancelled easily",
+          b: "The programme must be capable of growing transaction volume without proportional increases in cost or risk, ensuring long-term profitability",
+          c: "To ensure the programme covers all equipment sizes",
+          d: "To allow the programme to scale to international markets immediately"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is a 'niche programme' strategy in leasing and what are its advantages?",
+        options: {
+          a: "Offering the broadest possible range of lease products",
+          b: "Focusing on a specific industry, asset type, or client segment where the leasing company can develop specialised expertise, build deeper relationships, and achieve pricing power",
+          c: "Offering the lowest rates in a narrow geographic area",
+          d: "Targeting only the largest enterprises"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What is the role of 'pilot programme' testing in strategic programme selection?",
+        options: {
+          a: "Programmes for pilots and aviation equipment",
+          b: "Running a controlled, limited launch to test market response, operational feasibility, and risk metrics before committing to full rollout",
+          c: "Testing the sales team's knowledge before launch",
+          d: "Offering the programme to pilot clients at no cost"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "How does a leasing company use competitive intelligence when selecting a programme strategy?",
+        options: {
+          a: "By copying competitor programmes exactly",
+          b: "By analysing competitor offerings, pricing, target segments, and gaps in the market to identify differentiated positions and underserved opportunities",
+          c: "By avoiding all markets where competitors are active",
+          d: "By using lower rates as the only point of differentiation"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c27",
+    title: "A Taxonomy of Vendor Leasing Programs",
+    description: "Understand the different types of vendor leasing programmes and how to structure and position each effectively.",
+    questions: [
+      {
+        id: "q1",
+        text: "What is a 'vendor leasing programme' in its broadest definition?",
+        options: {
+          a: "A leasing programme exclusively for government vendors",
+          b: "A structured arrangement between a leasing company and an equipment vendor or manufacturer that enables the vendor to offer financing to its customers, typically increasing sales and customer retention",
+          c: "A discount programme offered by equipment vendors to leasing companies",
+          d: "A leasing programme limited to vendor-owned equipment"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What is a 'captive' vendor leasing programme?",
+        options: {
+          a: "A programme that captures government contracts",
+          b: "A financing programme wholly owned and operated by the equipment manufacturer itself, such as Caterpillar Financial Products or John Deere Financial",
+          c: "A programme that captures only the highest-risk customers",
+          d: "A programme operated by a bank on behalf of a vendor"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "What is a 'preferred lender' or 'endorsed' vendor programme?",
+        options: {
+          a: "A programme where the vendor provides the financing directly",
+          b: "An arrangement where the vendor endorses one or more external leasing companies as preferred financing partners, directing customers to those funders",
+          c: "A programme limited to vendors with investment-grade ratings",
+          d: "A government-backed vendor lending scheme"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What is a 'private label' or 'white label' vendor programme?",
+        options: {
+          a: "A programme for leasing privately-labelled equipment brands",
+          b: "A programme where the leasing company provides financing under the vendor's brand name, giving the appearance of an in-house financing solution without the vendor building its own capability",
+          c: "A confidential programme not disclosed to customers",
+          d: "A programme restricted to private companies"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What is a 'dealer finance' programme in the context of vendor leasing?",
+        options: {
+          a: "A programme for financing card dealer businesses",
+          b: "A programme where a leasing company provides funding through a network of authorised dealers who originate transactions with end customers on behalf of the manufacturer or leasing company",
+          c: "A programme where dealers provide their own funding",
+          d: "A programme for financing dealer inventory"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What is a 'floor plan' or 'inventory finance' programme and how does it differ from a customer lease programme?",
+        options: {
+          a: "They are identical programmes",
+          b: "Floor plan finance funds the vendor's or dealer's inventory of equipment before it is sold; a customer lease programme funds the end customer's use of equipment after the sale",
+          c: "Floor plan finance is only available for vehicles",
+          d: "Customer lease programmes always include floor plan elements"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What is a 'recourse' vendor programme and what is the vendor's obligation?",
+        options: {
+          a: "The vendor has no obligations once the sale is made",
+          b: "The vendor agrees to repurchase or replace equipment or contracts that default, providing the leasing company with credit support",
+          c: "The leasing company has recourse to the equipment only",
+          d: "Recourse runs from the vendor to the lessee"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is a 'non-recourse' vendor programme and why would a vendor prefer it?",
+        options: {
+          a: "A programme where the vendor bears all credit losses",
+          b: "A programme where the leasing company bears the full credit risk and the vendor has no obligation beyond the sale; the vendor prefers this as it eliminates credit liability from its balance sheet",
+          c: "A programme where neither party bears credit risk",
+          d: "A programme limited to government customers"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What is a 'vendor subsidy' or 'rate buy-down' programme?",
+        options: {
+          a: "A programme where the government subsidises vendor lease rates",
+          b: "An arrangement where the vendor uses a portion of its profit margin to reduce the customer's lease rate, making the financing more attractive and driving higher equipment sales",
+          c: "A programme where the leasing company subsidises its own rates",
+          d: "A loyalty discount programme for long-term vendors"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "What makes a vendor leasing programme strategically valuable to both the equipment vendor and the leasing company?",
+        options: {
+          a: "It only benefits the leasing company",
+          b: "The vendor gains a financing tool that accelerates sales, improves customer retention, and provides end-of-term refresh opportunities; the leasing company gains a consistent, low-cost deal flow through the vendor's sales network",
+          c: "It only benefits the vendor",
+          d: "It is only valuable for large enterprises"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c28",
+    title: "Go-to-Market Strategy",
+    description: "Develop and execute effective go-to-market strategies for leasing products and programmes.",
+    questions: [
+      {
+        id: "q1",
+        text: "What is a 'go-to-market strategy' (GTM) in the context of a leasing company?",
+        options: {
+          a: "A strategy for taking the company public",
+          b: "A plan that defines how the company will reach its target customers, deliver its value proposition, and achieve competitive advantage through its chosen distribution channels and marketing approach",
+          c: "A strategy for entering new geographic markets only",
+          d: "A product launch timeline"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What is 'target market segmentation' and why is it the foundation of a GTM strategy?",
+        options: {
+          a: "Setting sales targets for each market",
+          b: "Dividing the total addressable market into distinct groups by industry, size, equipment type, or need so that the value proposition and sales approach can be precisely tailored to each segment",
+          c: "Segmenting the sales team by territory",
+          d: "Identifying competitors in each market"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "What is a 'total addressable market' (TAM) and how is it used in GTM planning?",
+        options: {
+          a: "The total number of employees in the leasing company",
+          b: "The total revenue opportunity available if the company captured 100% of its target market; used to size the opportunity and prioritise resource allocation",
+          c: "The total value of leases currently on the company's books",
+          d: "The total number of lessees in the company's existing portfolio"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What is a 'distribution channel strategy' in leasing GTM?",
+        options: {
+          a: "The strategy for distributing equipment to clients",
+          b: "The plan for how the leasing company will reach and serve customers — directly, through brokers, through vendor partnerships, or via digital platforms",
+          c: "The strategy for distributing lease payments to investors",
+          d: "The internal distribution of sales leads"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What is 'competitive positioning' and how does it shape a leasing GTM strategy?",
+        options: {
+          a: "Positioning the company as the only provider in the market",
+          b: "Defining how the leasing company's offering differs from competitors in ways that are meaningful to target customers — such as speed, specialisation, service, or pricing — to create a defensible market position",
+          c: "Monitoring competitor pricing on a weekly basis",
+          d: "Positioning for competitive tender processes only"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What is the role of 'digital channels' in a modern leasing GTM strategy?",
+        options: {
+          a: "Digital channels are irrelevant for B2B leasing",
+          b: "Digital channels — including websites, online application portals, CRM systems, and social media — enable the leasing company to generate leads, streamline originations, and build brand awareness cost-effectively",
+          c: "Digital channels only support consumer leasing programmes",
+          d: "Digital channels replace all human sales roles"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What does 'sales enablement' mean in a leasing GTM context?",
+        options: {
+          a: "Enabling the sales team to work remotely",
+          b: "Providing the sales team with the tools, training, content, and processes they need to effectively communicate the value proposition and convert prospects to clients",
+          c: "Enabling the sales team to set their own targets",
+          d: "Automating the entire sales process"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is a 'launch plan' in a leasing GTM strategy and what should it include?",
+        options: {
+          a: "A plan for launching new equipment models",
+          b: "A phased plan covering target segment selection, value proposition, sales training, marketing collateral, channel activation, pricing, and success metrics for bringing a new programme to market",
+          c: "A plan for launching the company's IPO",
+          d: "A plan for launching a new office location"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What is 'key account management' (KAM) and why is it important in a leasing GTM strategy?",
+        options: {
+          a: "Managing the company's bank accounts",
+          b: "A structured approach to building deep, strategic relationships with the most valuable clients or vendor partners, maximising long-term revenue and retention",
+          c: "Managing the accounts receivable ledger",
+          d: "A programme for new client acquisition only"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "How do 'success metrics' and 'KPIs' function within a leasing GTM plan?",
+        options: {
+          a: "They are optional additions to a GTM plan",
+          b: "They define measurable targets — such as origination volume, conversion rates, cost of acquisition, and customer retention — against which the effectiveness of the GTM strategy is tracked and optimised",
+          c: "They are used only for internal reporting to shareholders",
+          d: "They replace the need for a marketing budget"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c29",
+    title: "Profit Dynamics in Vendor Leasing",
+    description: "Understand the profit drivers, cost structures, and optimisation strategies in vendor leasing programmes.",
+    questions: [
+      {
+        id: "q1",
+        text: "What is the primary source of profit in a vendor leasing programme for the leasing company?",
+        options: {
+          a: "Equipment sales commissions",
+          b: "The spread between the lease rate charged to the customer and the leasing company's cost of funds, plus income from fees and residual value realisation",
+          c: "Insurance premiums collected from lessees",
+          d: "Late payment penalty income"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What is 'deal economics' in the context of a vendor lease transaction?",
+        options: {
+          a: "The macroeconomic environment affecting lease demand",
+          b: "The analysis of the revenue, cost of funds, credit losses, servicing costs, and residual value to determine the net profit contribution of an individual lease transaction",
+          c: "The economics of the vendor's own business",
+          d: "The total economic value of leased equipment"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "How does 'volume' affect profitability in a vendor leasing programme?",
+        options: {
+          a: "Higher volume always reduces profitability",
+          b: "Higher volume spreads fixed operational costs over more transactions, improving the cost per deal and overall programme profitability — provided credit quality is maintained",
+          c: "Volume has no impact on fixed costs",
+          d: "Lower volume always results in higher profit margins"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What is 'residual value income' and how does it contribute to vendor leasing profitability?",
+        options: {
+          a: "Income from charging residual value fees to lessees",
+          b: "The profit realised when equipment returned at end of lease is sold or re-leased at a price exceeding the lessor's book value — a key upside in well-managed operating lease programmes",
+          c: "The income from residual value insurance premiums",
+          d: "The income from the final lease payment"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What is 'fee income' in vendor leasing and how does it enhance programme profitability?",
+        options: {
+          a: "Fees charged by the vendor to the leasing company",
+          b: "Income from documentation fees, origination fees, and ancillary charges that supplement the interest spread and improve the overall economics of each transaction",
+          c: "Fees earned from managing equipment maintenance",
+          d: "Regulatory fees charged to lessees"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "How does credit loss impact vendor leasing programme profitability?",
+        options: {
+          a: "Credit losses have no impact on profitability",
+          b: "Credit losses directly reduce net income and, if unexpected, erode or eliminate the interest spread; pricing must adequately anticipate expected losses to maintain target returns",
+          c: "Credit losses are always covered by insurance",
+          d: "Credit losses only affect the vendor, not the leasing company"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What is 'cost of origination' and how should it be managed in a vendor programme?",
+        options: {
+          a: "The cost of manufacturing the leased equipment",
+          b: "The total cost to source, underwrite, and document a new lease transaction; it must be managed against deal size and margin to ensure each transaction is economically viable",
+          c: "The origination fee charged to the lessee",
+          d: "The cost of the vendor's sales force"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is 'cross-sell and upsell' income in a vendor leasing context?",
+        options: {
+          a: "Income from selling equipment across different vendors",
+          b: "Revenue generated by offering complementary products — such as insurance, maintenance, or extended terms — to existing clients, improving lifetime value per customer",
+          c: "Income from upselling more expensive equipment",
+          d: "Revenue from selling the lease portfolio to another funder"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What is 'portfolio run-off' and how does it affect profitability planning?",
+        options: {
+          a: "Equipment running off the end of the production line",
+          b: "The natural decline in the outstanding portfolio balance as leases mature and are not replaced; without sufficient new originations, income declines and fixed costs represent a larger proportion of revenue",
+          c: "Customers running off to competitors",
+          d: "The decline in residual values over time"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "What is the 'profitability per deal' metric and why is it important for vendor programme management?",
+        options: {
+          a: "The total revenue generated by a vendor programme",
+          b: "The net income contribution per lease transaction after all costs (funding, credit losses, origination, servicing, and tax); it reveals whether the programme is generating adequate returns at the transaction level",
+          c: "The profit shared with the vendor per deal",
+          d: "The gross profit from equipment sales per deal"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c30",
+    title: "Foundations of Vendor Leasing",
+    description: "Build a solid understanding of the fundamentals of vendor leasing and how it creates value for all parties.",
+    questions: [
+      {
+        id: "q1",
+        text: "What is 'vendor leasing' and how does it differ from direct leasing?",
+        options: {
+          a: "Vendor leasing is only available for vehicle fleets",
+          b: "Vendor leasing is a financing arrangement where a leasing company partners with an equipment vendor to offer financing at the point of sale; in direct leasing, the lessor approaches the end customer independently without a vendor intermediary",
+          c: "Vendor leasing is always provided by banks, not leasing companies",
+          d: "There is no difference between vendor and direct leasing"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "What are the three key parties in a typical vendor leasing transaction?",
+        options: {
+          a: "The manufacturer, distributor, and retailer",
+          b: "The vendor (equipment seller), the lessee (customer), and the lessor (financing company)",
+          c: "The bank, the government, and the lessee",
+          d: "The insurance company, the vendor, and the bank"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "How does vendor leasing benefit the equipment vendor?",
+        options: {
+          a: "The vendor earns interest income on the lease",
+          b: "Vendor leasing removes price as a barrier to the sale by converting the upfront cost to affordable monthly payments, accelerating sales cycles and improving customer retention",
+          c: "The vendor retains ownership of the equipment",
+          d: "The vendor avoids all credit risk"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "How does vendor leasing benefit the lessee (customer)?",
+        options: {
+          a: "The lessee receives a discount on the equipment purchase price",
+          b: "The lessee gains access to equipment with minimal upfront cost, predictable payments, and often a convenient one-stop purchase and finance solution through the vendor",
+          c: "The lessee immediately owns the equipment",
+          d: "The lessee avoids all maintenance obligations"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What is a 'vendor agreement' or 'programme agreement' in vendor leasing?",
+        options: {
+          a: "An agreement between the vendor and the equipment manufacturer",
+          b: "A formal contract between the leasing company and the vendor defining the terms of their financing partnership — including the programme structure, vendor responsibilities, recourse arrangements, and pricing parameters",
+          c: "An agreement between the lessee and the vendor for equipment maintenance",
+          d: "A legal agreement governing equipment warranties"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What is 'point of sale financing' in a vendor leasing context?",
+        options: {
+          a: "Financing provided at the point of equipment sale, allowing the customer to apply for and receive a lease decision immediately — removing friction from the purchase process",
+          b: "Financing for the vendor's own purchases",
+          c: "A cash discount offered at the point of sale",
+          d: "Financing for the vendor's retail outlet"
+        },
+        correctAnswer: "a"
+      },
+      {
+        id: "q7",
+        text: "What is the 'end-of-term refresh cycle' and why is it valuable in vendor leasing?",
+        options: {
+          a: "The process of cleaning equipment at end of lease",
+          b: "The natural cycle where leases expire, equipment is returned, and lessees upgrade to new equipment — creating recurring revenue for the vendor and the leasing company",
+          c: "The cycle of refreshing the vendor's product catalogue",
+          d: "The annual programme review process"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is 'application scoring' in a vendor leasing programme?",
+        options: {
+          a: "Scoring the quality of the vendor's application to join the programme",
+          b: "An automated or semi-automated credit evaluation process that quickly assesses a customer's creditworthiness at the point of sale, enabling fast decisions and minimising friction",
+          c: "A scoring system for comparing different vendor programmes",
+          d: "A method for scoring the condition of equipment"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What is 'vendor training' and why is it essential for a successful vendor leasing programme?",
+        options: {
+          a: "Training the vendor on equipment operation",
+          b: "Educating the vendor's sales staff on how to present, position, and originate lease financing to customers — ensuring high-quality deal flow and reducing errors in applications",
+          c: "Training the vendor on accounting standards",
+          d: "Training the vendor to underwrite credit independently"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "What is a 'programme review' in vendor leasing management and why is it conducted regularly?",
+        options: {
+          a: "A review of the vendor's equipment catalogue",
+          b: "A periodic assessment of the programme's performance covering origination volume, credit quality, profitability, and relationship health — enabling the parties to identify improvements and renegotiate terms if necessary",
+          c: "A compliance audit by a regulatory body",
+          d: "A review of the lessee's payment history"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c31",
+    title: "Lessee Accounting under IFRS 16",
+    description: "Master the lessee accounting requirements under IFRS 16, from recognition through to disclosure.",
+    questions: [
+      {
+        id: "q1",
+        text: "What two items must a lessee recognise on the balance sheet at lease commencement under IFRS 16?",
+        options: {
+          a: "A lease expense and a lease creditor",
+          b: "A right-of-use (ROU) asset and a corresponding lease liability",
+          c: "A finance cost and a depreciation charge",
+          d: "A prepayment and a deferred tax liability"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "How is the lease liability initially measured under IFRS 16?",
+        options: {
+          a: "At the total undiscounted future lease payments",
+          b: "At the present value of future lease payments, discounted at the rate implicit in the lease or the lessee's incremental borrowing rate",
+          c: "At the fair value of the underlying asset",
+          d: "At the equipment's purchase price less expected residual value"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "What costs are included in the initial measurement of the right-of-use asset?",
+        options: {
+          a: "Only the initial lease liability",
+          b: "The initial lease liability, lease payments made at or before commencement, initial direct costs, and estimated dismantling/restoration costs",
+          c: "Only the initial direct costs",
+          d: "The fair value of the equipment plus transaction costs"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "How is the right-of-use asset depreciated under IFRS 16?",
+        options: {
+          a: "It is not depreciated — it remains at cost",
+          b: "On a straight-line basis over the shorter of the lease term and the asset's useful life, unless another systematic method is more appropriate",
+          c: "Using the reducing balance method only",
+          d: "It is amortised using the effective interest method"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "How is the lease liability subsequently measured after initial recognition?",
+        options: {
+          a: "It remains at the initial measurement throughout the lease",
+          b: "The liability is increased by interest accrued (unwinding of discount) and reduced by lease payments made, with reassessment when certain events occur",
+          c: "It is reduced on a straight-line basis",
+          d: "It is revalued to fair value at each reporting date"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "What is the income statement impact of a lease under IFRS 16 lessee accounting?",
+        options: {
+          a: "A single operating lease expense on a straight-line basis",
+          b: "Depreciation of the ROU asset (typically in operating expenses) and interest expense on the lease liability (in finance costs), front-loading total expense compared to straight-line",
+          c: "Only a finance cost in the income statement",
+          d: "No income statement impact — only balance sheet effects"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "Under IFRS 16, where are lease payments presented in the cash flow statement?",
+        options: {
+          a: "Entirely within operating activities",
+          b: "The principal component within financing activities and the interest component within either financing or operating activities per the entity's accounting policy",
+          c: "Entirely within investing activities",
+          d: "Entirely within financing activities"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What triggers a remeasurement of the lease liability under IFRS 16?",
+        options: {
+          a: "Every year at the reporting date",
+          b: "Changes in the lease term, changes in the assessment of a purchase option, changes in amounts expected to be payable under residual value guarantees, or changes in the index or rate used for variable payments",
+          c: "Changes in the market value of the underlying asset",
+          d: "Changes in the lessee's incremental borrowing rate only"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What are the two practical expedients available to lessees under IFRS 16?",
+        options: {
+          a: "Exemption for leases of real estate and exemption for leases of vehicles",
+          b: "Exemption for short-term leases (12 months or less at commencement) and exemption for leases of low-value assets",
+          c: "Exemption for variable payment leases and exemption for cross-border leases",
+          d: "Exemption for operating leases and exemption for finance leases"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "What disclosure must a lessee provide in its financial statements under IFRS 16?",
+        options: {
+          a: "Only the total future minimum lease payments",
+          b: "Quantitative and qualitative information enabling users to assess the nature, timing, and amounts of lease transactions — including a maturity analysis of lease liabilities, depreciation charges, interest expense, and total cash outflows",
+          c: "Only the carrying value of right-of-use assets",
+          d: "Only the lease liability balance at year end"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c32",
+    title: "Introduction to IFRS 16",
+    description: "Gain a clear foundational understanding of IFRS 16 — its scope, objectives, and key concepts.",
+    questions: [
+      {
+        id: "q1",
+        text: "What problem did IFRS 16 primarily seek to solve?",
+        options: {
+          a: "To simplify lease documentation for lessees",
+          b: "To bring transparency to lessee financial statements by requiring most leases to be recognised on the balance sheet, eliminating the widespread use of off-balance-sheet operating leases",
+          c: "To standardise lease payment terms globally",
+          d: "To reduce the cost of leasing for small businesses"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "When did IFRS 16 become effective?",
+        options: {
+          a: "1 January 2013",
+          b: "1 January 2019",
+          c: "1 January 2021",
+          d: "1 January 2025"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "Which standard did IFRS 16 replace?",
+        options: {
+          a: "IAS 17",
+          b: "IFRS 9",
+          c: "IAS 39",
+          d: "IFRS 15"
+        },
+        correctAnswer: "a"
+      },
+      {
+        id: "q4",
+        text: "Under IFRS 16, what is the definition of a lease?",
+        options: {
+          a: "Any contract involving the payment of a regular fee for the use of an asset",
+          b: "A contract, or part of a contract, that conveys the right to control the use of an identified asset for a period of time in exchange for consideration",
+          c: "Any contract where title to an asset transfers at the end of the term",
+          d: "A contract for the purchase of an asset through instalment payments"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "What are the two key elements that determine whether a contract contains a lease under IFRS 16?",
+        options: {
+          a: "The contract must be in writing and signed by both parties",
+          b: "There must be an identified asset and the customer must have the right to control the use of that asset throughout the period of use",
+          c: "The contract must specify a fixed term and a fixed payment",
+          d: "The asset must be tangible and the payments must be monthly"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "Which entities are required to apply IFRS 16?",
+        options: {
+          a: "All companies globally",
+          b: "Entities that prepare financial statements in accordance with IFRS, including both lessees and lessors",
+          c: "Only listed companies in the European Union",
+          d: "Only lessors — lessees apply ASC 842"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What are the two types of leases recognised under IFRS 16 for lessors?",
+        options: {
+          a: "Short-term and long-term leases",
+          b: "Finance leases and operating leases",
+          c: "Recognised and unrecognised leases",
+          d: "On-balance-sheet and off-balance-sheet leases"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is meant by 'right of substitution' and how does it affect the lease assessment?",
+        options: {
+          a: "The lessee's right to substitute one piece of equipment for another",
+          b: "If the supplier has a substantive right to substitute the asset throughout the period of use, the contract does not contain a lease — because the customer does not control a specific identified asset",
+          c: "The lessor's right to substitute the lessee",
+          d: "The right to substitute cash payments for equipment returns"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q9",
+        text: "What is the scope exclusion for 'low-value assets' under IFRS 16?",
+        options: {
+          a: "Assets with a cost of less than $1,000",
+          b: "Lessees may apply a practical expedient to not recognise leases of underlying assets that are of low value when new (commonly interpreted as below approximately USD 5,000), expensing payments on a straight-line basis instead",
+          c: "Assets that depreciate to zero within 12 months",
+          d: "All assets under $50,000 original cost"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "Why is IFRS 16 considered a significant improvement in transparency over its predecessor IAS 17?",
+        options: {
+          a: "Because it simplifies lease accounting to a single journal entry",
+          b: "Because it ensures that all material lease obligations are visible on the lessee's balance sheet, allowing investors and analysts to see the true extent of a company's financial commitments rather than relying on footnote disclosures",
+          c: "Because it eliminates the need for lease disclosures",
+          d: "Because it reduces the number of leases companies can enter into"
+        },
+        correctAnswer: "b"
+      }
+    ]
+  },
+
+  {
+    id: "c33",
+    title: "Lessor Accounting under IFRS 16",
+    description: "Understand how lessors classify and account for leases under IFRS 16.",
+    questions: [
+      {
+        id: "q1",
+        text: "How does IFRS 16 lessor accounting differ fundamentally from lessee accounting?",
+        options: {
+          a: "Lessors apply a single model for all leases, just like lessees",
+          b: "IFRS 16 retains the IAS 17 dual classification model for lessors — finance leases and operating leases — with no single on-balance-sheet model, unlike the single lessee model",
+          c: "Lessors are exempt from IFRS 16",
+          d: "Lessor accounting under IFRS 16 is identical to IAS 17"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q2",
+        text: "How does a lessor classify a lease as a finance lease under IFRS 16?",
+        options: {
+          a: "When the lease term is more than 12 months",
+          b: "When the lease transfers substantially all the risks and rewards incidental to ownership of the underlying asset to the lessee",
+          c: "When the lessee has a purchase option",
+          d: "When the lease is for equipment with a value above $50,000"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q3",
+        text: "How does a lessor account for a finance lease on initial recognition?",
+        options: {
+          a: "By keeping the asset on the balance sheet and recognising lease income",
+          b: "By derecognising the underlying asset and recognising a net investment in the lease — the present value of future lease payments — as a financial receivable",
+          c: "By recognising a right-of-use asset and a lease liability",
+          d: "By recording the full lease payments as deferred revenue"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q4",
+        text: "What is the 'net investment in a finance lease' for a lessor?",
+        options: {
+          a: "The lessor's equity investment in the leasing company",
+          b: "The gross investment in the lease (total future lease payments plus unguaranteed residual value) discounted at the rate implicit in the lease",
+          c: "The fair value of the underlying asset at commencement",
+          d: "The outstanding principal on the lessor's borrowings"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q5",
+        text: "How does a lessor recognise income on a finance lease over the lease term?",
+        options: {
+          a: "By recognising equal income in each period",
+          b: "By recognising finance income using the effective interest method, allocating income over the lease term to produce a constant periodic rate of return on the net investment",
+          c: "By recognising all income at commencement",
+          d: "By recognising income only when cash is received"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q6",
+        text: "How does a lessor account for an operating lease?",
+        options: {
+          a: "By derecognising the asset and recognising a receivable",
+          b: "By retaining the underlying asset on the balance sheet, continuing to depreciate it, and recognising lease income on a straight-line or other systematic basis over the lease term",
+          c: "By recognising the present value of future payments as revenue upfront",
+          d: "By recording the equipment at fair value at each reporting date"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q7",
+        text: "What happens when a lessor modifies an operating lease?",
+        options: {
+          a: "The lease must always be reclassified as a finance lease",
+          b: "If the modification expands the scope or extends the term, it is accounted for as a new lease from the effective date of the modification; if not, the lessor adjusts income recognition",
+          c: "All modifications are treated as terminations and new leases",
+          d: "Modifications have no accounting impact on the lessor"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q8",
+        text: "What is a 'manufacturer or dealer lessor' and how is the profit on sale recognised?",
+        options: {
+          a: "A lessor that manufactures or sells goods and uses leasing as a promotional tool; under a finance lease, it recognises revenue and cost of goods sold as if an outright sale occurred, plus finance income over the lease term",
+          b: "A lessor that only leases to manufacturers",
+          c: "A lessor that manufactures its own lease documentation",
+          d: "A dealer that acts as an intermediary but never takes title"
+        },
+        correctAnswer: "a"
+      },
+      {
+        id: "q9",
+        text: "How must lessors present finance lease receivables on the balance sheet?",
+        options: {
+          a: "As a single line item at the gross lease payment amount",
+          b: "As the net investment in the lease, typically split between current and non-current portions, reflecting the present value of future cash flows",
+          c: "As a tangible fixed asset alongside owned equipment",
+          d: "Off-balance-sheet in footnote disclosures only"
+        },
+        correctAnswer: "b"
+      },
+      {
+        id: "q10",
+        text: "What key disclosure must a lessor provide under IFRS 16?",
+        options: {
+          a: "Only the total lease income received in the period",
+          b: "Qualitative and quantitative disclosures enabling users to assess the lessor's risk exposure — including a maturity analysis of lease receivables (finance leases) or undiscounted future payments (operating leases), significant judgements, and risk management information",
+          c: "Only the carrying value of assets under operating leases",
+          d: "Only the identity of major lessees"
+        },
+        correctAnswer: "b"
+      }
+    ]
   }
 ];
