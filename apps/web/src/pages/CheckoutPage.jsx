@@ -323,6 +323,7 @@ import { Button } from "@/components/ui/button";
 const CheckoutPage = () => {
   const { cartItems, cartTotal } = useCart();
   const { currentUser, isAuthenticated } = useAuth();
+  console.log("This is my current user", currentUser)
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
