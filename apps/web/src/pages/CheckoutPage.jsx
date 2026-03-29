@@ -449,7 +449,7 @@ const CheckoutPage = () => {
 
       // Step 2: Open Paystack inline popup — no redirect, no callback_url needed
       const handler = window.PaystackPop.setup({
-        key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
+        key: import.meta.env.PAYSTACK_PUBLIC_KEY,
         email: userEmail,
         amount: Math.round(amount * 129 * 100),
         ref: reference,
