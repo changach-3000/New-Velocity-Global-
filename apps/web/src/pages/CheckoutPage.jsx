@@ -584,6 +584,7 @@ const CheckoutPage = () => {
       const handler = window.PaystackPop.setup({
         key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
         access_code: access_code, // ✅ THIS is the fix
+        email: userEmail,
         callback: onPaymentSuccess,
         onClose: onPaymentClose,
       });
