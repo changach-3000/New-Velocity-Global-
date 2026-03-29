@@ -53,7 +53,7 @@ const CancelPage = () => {
             )}
             
             <Link to={courseId ? `/course/${courseId}` : "/courses"}>
-              <Button variant="outline" className="w-full h-12 text-lg gap-2 border-gray-300 hover:bg-gray-50">
+              <Button variant="outline" className="w-full h-12 text-lg gap-2 border-gray-300">
                 <ArrowLeft className="w-5 h-5" />
                 {courseId ? "Back to Course Details" : "Continue Shopping"}
               </Button>
