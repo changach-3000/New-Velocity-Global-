@@ -39,7 +39,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-blue-500 selection:text-white">
       <Helmet>
-        <title>Velocity Global Leasing - Master Equipment Finance</title>
+        <title>Velocity Global Leasing</title>
         <meta name="description" content="Elevate your career with expert-led courses in equipment leasing and finance." />
       </Helmet>
 
@@ -60,7 +60,7 @@ const HomePage = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold tracking-wide uppercase mb-8">
               <Award className="w-4 h-4" />
-              The Industry Standard in Leasing
+              The Industry Standard in Leasing Training
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-white tracking-tight text-balance leading-[1.1]">
