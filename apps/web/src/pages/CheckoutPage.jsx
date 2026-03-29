@@ -295,18 +295,30 @@
 
 // export default CheckoutPage;
 
-import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { useNavigate, Link, useParams, useSearchParams } from 'react-router-dom';
-import { useCart } from '@/contexts/CartContext';
-import { useAuth } from '@/contexts/AuthContext';
-import PocketBase from 'pocketbase';
-const POCKETBASE_URL = 'https://velocity-global-db-v2.onrender.com';
+import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
+import {
+  useNavigate,
+  Link,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/contexts/AuthContext";
+import PocketBase from "pocketbase";
+const POCKETBASE_URL = "https://velocity-global-db-v2.onrender.com";
 const pb = new PocketBase(POCKETBASE_URL);
-import { motion } from 'framer-motion';
-import { Lock, ShoppingBag, ArrowRight, AlertCircle, RefreshCw, Loader2 } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
-import { Button } from '@/components/ui/button';
+import { motion } from "framer-motion";
+import {
+  Lock,
+  ShoppingBag,
+  ArrowRight,
+  AlertCircle,
+  RefreshCw,
+  Loader2,
+} from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 
 const CheckoutPage = () => {
   const { cartItems, cartTotal } = useCart();
@@ -319,7 +331,7 @@ const CheckoutPage = () => {
   // Support both route params and query params for single course checkout
   const { courseId: paramCourseId } = useParams();
   const [searchParams] = useSearchParams();
-  const queryCourseId = searchParams.get('courseId');
+  const queryCourseId = searchParams.get("courseId");
   const singleCourseId = paramCourseId || queryCourseId;
 
   const [singleCourse, setSingleCourse] = useState(null);
@@ -327,10 +339,10 @@ const CheckoutPage = () => {
 
   // Load Paystack inline script once
   useEffect(() => {
-    if (document.getElementById('paystack-script')) return;
-    const script = document.createElement('script');
-    script.id = 'paystack-script';
-    script.src = 'https://js.paystack.co/v1/inline.js';
+    if (document.getElementById("paystack-script")) return;
+    const script = document.createElement("script");
+    script.id = "paystack-script";
+    script.src = "https://js.paystack.co/v1/inline.js";
     script.async = true;
     document.body.appendChild(script);
   }, []);
@@ -338,7 +350,9 @@ const CheckoutPage = () => {
   // Redirect if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
-      const redirectUrl = singleCourseId ? `/checkout?courseId=${singleCourseId}` : '/checkout';
+      const redirectUrl = singleCourseId
+        ? `/checkout?courseId=${singleCourseId}`
+        : "/checkout";
       navigate(`/login?redirect=${encodeURIComponent(redirectUrl)}`);
     }
   }, [isAuthenticated, navigate, singleCourseId]);
@@ -349,11 +363,13 @@ const CheckoutPage = () => {
       if (!singleCourseId) return;
       try {
         setFetchingCourse(true);
-        const record = await pb.collection('courses').getOne(singleCourseId, { $autoCancel: false });
+        const record = await pb
+          .collection("courses")
+          .getOne(singleCourseId, { $autoCancel: false });
         setSingleCourse(record);
       } catch (err) {
-        console.error('Failed to fetch course for checkout:', err);
-        setError('Failed to load course details. Please try again.');
+        console.error("Failed to fetch course for checkout:", err);
+        setError("Failed to load course details. Please try again.");
       } finally {
         setFetchingCourse(false);
       }
@@ -361,37 +377,148 @@ const CheckoutPage = () => {
     fetchCourse();
   }, [singleCourseId]);
 
+  // const handleCheckout = async () => {
+  //   setLoading(true);
+  //   setError(null);
+
+  //   try {
+  //     if (!currentUser) {
+  //       navigate('/login');
+  //       return;
+  //     }
+
+  //     const userId = currentUser.id;
+  //     const userEmail = currentUser.email;
+  //     const apiBaseUrl = 'https://velocity-global-express.onrender.com/api';
+
+  //     let amount, courseId, courseIds;
+
+  //     if (singleCourseId) {
+  //       if (!singleCourse) throw new Error('Course details not loaded.');
+  //       amount = singleCourse.price;
+  //       courseId = singleCourseId;
+  //       courseIds = [singleCourseId];
+  //     } else {
+  //       if (cartItems.length === 0) throw new Error('Your cart is empty.');
+  //       amount = cartTotal;
+  //       courseIds = cartItems.map(item => item.id);
+  //     }
+
+  //     // Step 1: Initialize transaction on backend to get access_code
+  //     const initResponse = await fetch(`${apiBaseUrl}/paystack/initialize`, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         amount,
+  //         userEmail,
+  //         userId,
+  //         courseId: courseId || null,
+  //         cartItems: courseIds,
+  //       }),
+  //     });
+
+  //     if (!initResponse.ok) {
+  //       const errorData = await initResponse.json().catch(() => ({}));
+  //       throw new Error(errorData.error || 'Payment service is temporarily unavailable.');
+  //     }
+
+  //     const { reference } = await initResponse.json();
+
+  //     if (!reference) throw new Error('No payment reference returned from server.');
+
+  //     setLoading(false);
+
+  //     // Define as plain named functions — Paystack inline requires non-async callback
+  //     function onPaymentSuccess(response) {
+  //       setLoading(true);
+  //       fetch(`${apiBaseUrl}/paystack/verify`, {
+  //         method: 'POST',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify({ reference: response.reference }),
+  //       })
+  //         .then((res) => res.json())
+  //         .then((verifyData) => {
+  //           if (!verifyData.success) {
+  //             throw new Error(verifyData.message || 'Payment verification failed.');
+  //           }
+  //           navigate(`/success?reference=${response.reference}`);
+  //         })
+  //         .catch((err) => {
+  //           console.error('[Checkout] Verify error:', err);
+  //           setError(err.message || 'Payment succeeded but enrollment failed. Please contact support.');
+  //           toast({
+  //             title: 'Enrollment error',
+  //             description: err.message,
+  //             variant: 'destructive',
+  //           });
+  //           setLoading(false);
+  //         });
+  //     }
+
+  //     function onPaymentClose() {
+  //       toast({
+  //         title: 'Payment cancelled',
+  //         description: 'You closed the payment window.',
+  //         variant: 'destructive',
+  //       });
+  //     }
+
+  //     // Step 2: Open Paystack inline popup — no redirect, no callback_url needed
+  //     const handler = window.PaystackPop.setup({
+  //       key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
+  //       email: userEmail,
+  //       amount: Math.round(amount * 129 * 100),
+  //       ref: reference,
+  //       currency: 'KES',
+  //       callback: onPaymentSuccess,
+  //       onClose: onPaymentClose,
+  //     });
+
+  //     handler.openIframe();
+
+  //   } catch (error) {
+  //     console.error('[Checkout] Error:', error);
+  //     setError(error.message || 'Failed to initiate checkout. Please try again.');
+  //     toast({
+  //       title: 'Checkout failed',
+  //       description: error.message || 'Please try again.',
+  //       variant: 'destructive',
+  //     });
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleCheckout = async () => {
     setLoading(true);
     setError(null);
 
     try {
       if (!currentUser) {
-        navigate('/login');
+        navigate("/login");
         return;
       }
 
       const userId = currentUser.id;
       const userEmail = currentUser.email;
-      const apiBaseUrl = 'https://velocity-global-express.onrender.com/api';
+      const apiBaseUrl = "https://velocity-global-express.onrender.com/api";
 
       let amount, courseId, courseIds;
 
       if (singleCourseId) {
-        if (!singleCourse) throw new Error('Course details not loaded.');
+        if (!singleCourse) throw new Error("Course details not loaded.");
         amount = singleCourse.price;
         courseId = singleCourseId;
         courseIds = [singleCourseId];
       } else {
-        if (cartItems.length === 0) throw new Error('Your cart is empty.');
+        if (cartItems.length === 0) throw new Error("Your cart is empty.");
         amount = cartTotal;
-        courseIds = cartItems.map(item => item.id);
+        courseIds = cartItems.map((item) => item.id);
       }
 
-      // Step 1: Initialize transaction on backend to get access_code
+      // 1️⃣ Initialize transaction (backend handles EVERYTHING)
       const initResponse = await fetch(`${apiBaseUrl}/paystack/initialize`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount,
           userEmail,
@@ -403,71 +530,74 @@ const CheckoutPage = () => {
 
       if (!initResponse.ok) {
         const errorData = await initResponse.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Payment service is temporarily unavailable.');
+        throw new Error(errorData.error || "Payment service unavailable.");
       }
 
-      const { reference } = await initResponse.json();
+      const { access_code, reference } = await initResponse.json();
 
-      if (!reference) throw new Error('No payment reference returned from server.');
+      if (!access_code) {
+        throw new Error("No access code returned from server.");
+      }
 
       setLoading(false);
 
-      // Define as plain named functions — Paystack inline requires non-async callback
-      function onPaymentSuccess(response) {
+      // 2️⃣ Success handler
+      const onPaymentSuccess = (response) => {
         setLoading(true);
+
         fetch(`${apiBaseUrl}/paystack/verify`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ reference: response.reference }),
         })
           .then((res) => res.json())
           .then((verifyData) => {
             if (!verifyData.success) {
-              throw new Error(verifyData.message || 'Payment verification failed.');
+              throw new Error(verifyData.message || "Verification failed.");
             }
+
             navigate(`/success?reference=${response.reference}`);
           })
           .catch((err) => {
-            console.error('[Checkout] Verify error:', err);
-            setError(err.message || 'Payment succeeded but enrollment failed. Please contact support.');
+            console.error("[Verify Error]:", err);
+            setError("Payment succeeded but enrollment failed.");
             toast({
-              title: 'Enrollment error',
+              title: "Enrollment issue",
               description: err.message,
-              variant: 'destructive',
+              variant: "destructive",
             });
             setLoading(false);
           });
-      }
+      };
 
-      function onPaymentClose() {
+      // 3️⃣ Close handler
+      const onPaymentClose = () => {
         toast({
-          title: 'Payment cancelled',
-          description: 'You closed the payment window.',
-          variant: 'destructive',
+          title: "Payment cancelled",
+          description: "You closed the payment window.",
+          variant: "destructive",
         });
-      }
+      };
 
-      // Step 2: Open Paystack inline popup — no redirect, no callback_url needed
+      // 4️⃣ Open Paystack popup (CLEAN ✅)
       const handler = window.PaystackPop.setup({
         key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
-        email: userEmail,
-        amount: Math.round(amount * 129 * 100),
-        ref: reference,
-        currency: 'KES',
+        access_code: access_code, // ✅ THIS is the fix
         callback: onPaymentSuccess,
         onClose: onPaymentClose,
       });
 
       handler.openIframe();
-
     } catch (error) {
-      console.error('[Checkout] Error:', error);
-      setError(error.message || 'Failed to initiate checkout. Please try again.');
+      console.error("[Checkout Error]:", error);
+
+      setError(error.message || "Checkout failed.");
       toast({
-        title: 'Checkout failed',
-        description: error.message || 'Please try again.',
-        variant: 'destructive',
+        title: "Checkout failed",
+        description: error.message,
+        variant: "destructive",
       });
+
       setLoading(false);
     }
   };
@@ -487,8 +617,12 @@ const CheckoutPage = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center bg-white p-12 rounded-xl shadow-lg max-w-md w-full">
           <ShoppingBag className="w-20 h-20 text-gray-300 mx-auto mb-6" />
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h1>
-          <p className="text-gray-600 mb-8">Looks like you haven't added any courses yet.</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Your cart is empty
+          </h1>
+          <p className="text-gray-600 mb-8">
+            Looks like you haven't added any courses yet.
+          </p>
           <Link to="/courses">
             <Button className="w-full bg-[#5b97f8]">Browse Courses</Button>
           </Link>
@@ -504,13 +638,20 @@ const CheckoutPage = () => {
     <div className="min-h-screen bg-gray-50">
       <Helmet>
         <title>Checkout - Master the Art of Leasing</title>
-        <meta name="description" content="Complete your purchase securely with Paystack." />
+        <meta
+          name="description"
+          content="Complete your purchase securely with Paystack."
+        />
       </Helmet>
 
       <div className="bg-gradient-to-r from-[#1e3a8a] to-[#3b82f6] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">Checkout</h1>
-          <p className="text-xl text-blue-100">Secure payment powered by Paystack</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+            Checkout
+          </h1>
+          <p className="text-xl text-blue-100">
+            Secure payment powered by Paystack
+          </p>
         </div>
       </div>
 
@@ -522,15 +663,26 @@ const CheckoutPage = () => {
             animate={{ opacity: 1, x: 0 }}
             className="bg-white rounded-xl shadow-lg p-8"
           >
-            <h2 className="text-2xl font-bold text-[#1e3a8a] mb-6">Order Summary</h2>
+            <h2 className="text-2xl font-bold text-[#1e3a8a] mb-6">
+              Order Summary
+            </h2>
             <div className="space-y-4 mb-6">
               {displayItems.map((course) => (
-                <div key={course.id} className="flex justify-between items-start border-b border-gray-100 pb-4 last:border-0">
+                <div
+                  key={course.id}
+                  className="flex justify-between items-start border-b border-gray-100 pb-4 last:border-0"
+                >
                   <div className="flex-1 pr-4">
-                    <h3 className="font-semibold text-gray-900">{course.title}</h3>
-                    <p className="text-sm text-gray-600">{course.instructor_name}</p>
+                    <h3 className="font-semibold text-gray-900">
+                      {course.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {course.instructor_name}
+                    </p>
                   </div>
-                  <div className="font-semibold text-[#1e3a8a]">${course.price?.toFixed(2)}</div>
+                  <div className="font-semibold text-[#1e3a8a]">
+                    ${course.price?.toFixed(2)}
+                  </div>
                 </div>
               ))}
             </div>
@@ -553,10 +705,13 @@ const CheckoutPage = () => {
             <div className="mb-6">
               <div className="flex items-center gap-2 text-gray-600 mb-4 bg-green-50 p-3 rounded-lg border border-green-100">
                 <Lock className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-medium">Secure SSL Encrypted Payment</span>
+                <span className="text-sm font-medium">
+                  Secure SSL Encrypted Payment
+                </span>
               </div>
               <p className="text-gray-600 mb-4">
-                Click below to open our secure payment popup. No card information is stored on our servers.
+                Click below to open our secure payment popup. No card
+                information is stored on our servers.
               </p>
             </div>
 
@@ -594,7 +749,8 @@ const CheckoutPage = () => {
             </Button>
 
             <p className="text-xs text-gray-500 text-center mt-4">
-              By completing this purchase, you agree to our Terms of Service and Refund Policy.
+              By completing this purchase, you agree to our Terms of Service and
+              Refund Policy.
             </p>
           </motion.div>
         </div>
