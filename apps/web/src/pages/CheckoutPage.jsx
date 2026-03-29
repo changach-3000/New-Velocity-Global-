@@ -451,9 +451,9 @@ const CheckoutPage = () => {
       const handler = window.PaystackPop.setup({
         key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
         email: userEmail,
-        // No amount here — backend already set the correct amount when
-        // initializing the transaction. We just reference it by ref.
+        amount: Math.round(amount * 129 * 100),
         ref: reference,
+        currency: 'KES',
         callback: onPaymentSuccess,
         onClose: onPaymentClose,
       });
