@@ -323,7 +323,7 @@ import { Button } from "@/components/ui/button";
 const CheckoutPage = () => {
   const { cartItems, cartTotal } = useCart();
   const { currentUser, isAuthenticated } = useAuth();
-  console.log("This is my current user", currentUser)
+  console.log("This is my current user", currentUser);
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -534,11 +534,7 @@ const CheckoutPage = () => {
         throw new Error(errorData.error || "Payment service unavailable.");
       }
 
-      const { access_code, reference } = await initResponse.json();
-
-      if (!access_code) {
-        throw new Error("No access code returned from server.");
-      }
+      const { reference } = await initResponse.json();
 
       setLoading(false);
 
@@ -583,8 +579,10 @@ const CheckoutPage = () => {
       // 4️⃣ Open Paystack popup (CLEAN ✅)
       const handler = window.PaystackPop.setup({
         key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
-        access_code: access_code, // ✅ THIS is the fix
         email: userEmail,
+        amount: Math.round(amount * 129 * 100),
+        ref: reference,
+        currency: "KES",
         callback: onPaymentSuccess,
         onClose: onPaymentClose,
       });
