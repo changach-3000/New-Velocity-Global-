@@ -293,15 +293,9 @@ const MembershipDashboardWidget = () => {
     const fetchMembershipStatus = async () => {
   if (!currentUser?.id) return;
 
-  try {
-    console.log('Fetching membership for user ID:', currentUser.id);
-    
+  try {    
     const response = await fetch(`${API_BASE_URL}/membership/status?userId=${currentUser.id}`);
     const data = await response.json();
-    
-    console.log('Full API Response:', JSON.stringify(data, null, 2));
-    console.log('Response hasMembership:', data.hasMembership);
-    console.log('Response status:', data.status);
     
     setMembershipData(data);
   } catch (error) {
