@@ -536,14 +536,14 @@ const SuccessPage = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 border-t border-gray-100">
               <Link to="/dashboard" className="flex-1">
-                <Button className="w-full h-12 text-lg gap-2 bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-900/20">
+                <Button className="w-full h-12 text-lg gap-2 bg-blue-600 text-whiteshadow-lg shadow-blue-900/20">
                   Go to Dashboard
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
 
               <Link to="/courses" className="flex-1">
-                <Button variant="outline" className="w-full h-12 text-lg gap-2 border-gray-300 text-black hover:text-black">
+                <Button variant="outline" className="w-full h-12 text-lg gap-2 border-gray-300 text-white">
                   <Home className="w-5 h-5" />
                   Browse More
                 </Button>

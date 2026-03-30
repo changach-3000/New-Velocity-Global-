@@ -627,7 +627,7 @@ const LessonDetailPage = () => {
                     className="w-full gap-2 justify-start text-gray-700 hover:bg-gray-50 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <ChevronLeft className="w-4 h-4" />
-                    <span className="flex-1 text-left">Previous Lesson</span>
+                    <span className="flex-1 text-left bg:hover-none">Previous Lesson</span>
                   </Button>
 
                   <div className="text-center py-2 text-sm text-gray-500">
