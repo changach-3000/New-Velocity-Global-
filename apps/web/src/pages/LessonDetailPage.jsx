@@ -1,102 +1,131 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useCourseLessons } from '@/hooks/useCourseLessons';
-import { useProgressTracking } from '@/hooks/useProgressTracking';
-import { Loader2, ArrowLeft, Download, ChevronLeft, ChevronRight, FileText, Award } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
-import LessonNotFound from '@/components/LessonNotFound';
-import LessonResourceCard from '@/components/LessonResourceCard';
-import { useAuth } from '@/contexts/AuthContext';
-import { generateCertificate } from '@/utils/certificateGenerator';
-import QuizCard from '@/components/QuizCard';
-import { quizData } from '@/data/quizData';
+import React, { useState, useEffect, useRef } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useCourseLessons } from "@/hooks/useCourseLessons";
+import { useProgressTracking } from "@/hooks/useProgressTracking";
+import {
+  Loader2,
+  ArrowLeft,
+  Download,
+  ChevronLeft,
+  ChevronRight,
+  FileText,
+  Award,
+  FileVideo 
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import BreadcrumbNavigation from "@/components/BreadcrumbNavigation";
+import LessonNotFound from "@/components/LessonNotFound";
+import LessonResourceCard from "@/components/LessonResourceCard";
+import { useAuth } from "@/contexts/AuthContext";
+import { generateCertificate } from "@/utils/certificateGenerator";
+import QuizCard from "@/components/QuizCard";
+import { quizData } from "@/data/quizData";
 
 // Helper function to decode HTML entities
 const decodeHtmlEntities = (html) => {
-  if (!html) return '';
-  if (typeof document === 'undefined') return html;
+  if (!html) return "";
+  if (typeof document === "undefined") return html;
   const txt = document.createElement("textarea");
   txt.innerHTML = html;
   return txt.value;
 };
 
 const formatLessonContent = (html) => {
-  if (!html) return '';
+  if (!html) return "";
 
   let content = decodeHtmlEntities(html);
 
-  if (!content.includes('<') && !content.includes('>')) {
-    const lines = content.split('\n');
+
+  if (!content.includes("<") && !content.includes(">")) {
+    const lines = content.split("\n");
     let formattedLines = [];
     let inList = false;
     let listType = null;
 
-    lines.forEach(line => {
+    lines.forEach((line) => {
       const trimmedLine = line.trim();
       if (!trimmedLine) {
         if (inList) {
-          formattedLines.push(listType === 'ul' ? '</ul>' : '</ol>');
+          formattedLines.push(listType === "ul" ? "</ul>" : "</ol>");
           inList = false;
           listType = null;
         }
         return;
       }
 
-      const isAllCaps = trimmedLine === trimmedLine.toUpperCase() && trimmedLine.length > 3;
-      const endsWithColon = trimmedLine.endsWith(':');
+      const isAllCaps =
+        trimmedLine === trimmedLine.toUpperCase() && trimmedLine.length > 3;
+      const endsWithColon = trimmedLine.endsWith(":");
       const isShortLine = trimmedLine.length < 50;
-      const hasNoPunctuation = !trimmedLine.includes('.') && !trimmedLine.includes(',');
+      const hasNoPunctuation =
+        !trimmedLine.includes(".") && !trimmedLine.includes(",");
 
-      if ((isAllCaps || (endsWithColon && isShortLine)) && isShortLine && hasNoPunctuation) {
+      if (
+        (isAllCaps || (endsWithColon && isShortLine)) &&
+        isShortLine &&
+        hasNoPunctuation
+      ) {
         if (inList) {
-          formattedLines.push(listType === 'ul' ? '</ul>' : '</ol>');
+          formattedLines.push(listType === "ul" ? "</ul>" : "</ol>");
           inList = false;
           listType = null;
         }
-        const headerText = trimmedLine.replace(/:$/, '');
+        const headerText = trimmedLine.replace(/:$/, "");
         formattedLines.push(`<h2 class="section-header">${headerText}</h2>`);
-      } else if (trimmedLine.startsWith('•') || trimmedLine.startsWith('- ') || trimmedLine.match(/^\d+\./)) {
+      } else if (
+        trimmedLine.startsWith("•") ||
+        trimmedLine.startsWith("- ") ||
+        trimmedLine.match(/^\d+\./)
+      ) {
         if (trimmedLine.match(/^\d+\./)) {
-          if (!inList || listType !== 'ol') {
-            if (inList) formattedLines.push('</ul>');
-            formattedLines.push('<ol>');
+          if (!inList || listType !== "ol") {
+            if (inList) formattedLines.push("</ul>");
+            formattedLines.push("<ol>");
             inList = true;
-            listType = 'ol';
+            listType = "ol";
           }
-          formattedLines.push(`<li>${trimmedLine.replace(/^\d+\.\s*/, '')}</li>`);
+          formattedLines.push(
+            `<li>${trimmedLine.replace(/^\d+\.\s*/, "")}</li>`,
+          );
         } else {
-          if (!inList || listType !== 'ul') {
-            if (inList) formattedLines.push('</ol>');
-            formattedLines.push('<ul>');
+          if (!inList || listType !== "ul") {
+            if (inList) formattedLines.push("</ol>");
+            formattedLines.push("<ul>");
             inList = true;
-            listType = 'ul';
+            listType = "ul";
           }
-          formattedLines.push(`<li>${trimmedLine.replace(/^[•-]\s*/, '')}</li>`);
+          formattedLines.push(
+            `<li>${trimmedLine.replace(/^[•-]\s*/, "")}</li>`,
+          );
         }
-      } else if (trimmedLine.includes('|') && trimmedLine.split('|').length > 2) {
+      } else if (
+        trimmedLine.includes("|") &&
+        trimmedLine.split("|").length > 2
+      ) {
         if (inList) {
-          formattedLines.push(listType === 'ul' ? '</ul>' : '</ol>');
+          formattedLines.push(listType === "ul" ? "</ul>" : "</ol>");
           inList = false;
           listType = null;
         }
         formattedLines.push(`<p class="table-content">${trimmedLine}</p>`);
-      } else if (trimmedLine.includes(':')) {
+      } else if (trimmedLine.includes(":")) {
         if (inList) {
-          formattedLines.push(listType === 'ul' ? '</ul>' : '</ol>');
+          formattedLines.push(listType === "ul" ? "</ul>" : "</ol>");
           inList = false;
           listType = null;
         }
-        const parts = trimmedLine.split(':');
+        const parts = trimmedLine.split(":");
         if (parts[0].trim().match(/^[A-Z\s]+$/)) {
-          formattedLines.push(`<p><strong>${parts[0].trim()}:</strong>${parts.slice(1).join(':')}</p>`);
+          formattedLines.push(
+            `<p><strong>${parts[0].trim()}:</strong>${parts.slice(1).join(":")}</p>`,
+          );
         } else {
           formattedLines.push(`<p>${trimmedLine}</p>`);
         }
       } else {
         if (inList) {
-          formattedLines.push(listType === 'ul' ? '</ul>' : '</ol>');
+          formattedLines.push(listType === "ul" ? "</ul>" : "</ol>");
           inList = false;
           listType = null;
         }
@@ -105,10 +134,10 @@ const formatLessonContent = (html) => {
     });
 
     if (inList) {
-      formattedLines.push(listType === 'ul' ? '</ul>' : '</ol>');
+      formattedLines.push(listType === "ul" ? "</ul>" : "</ol>");
     }
 
-    content = formattedLines.join('');
+    content = formattedLines.join("");
   }
 
   return content;
@@ -117,63 +146,72 @@ const formatLessonContent = (html) => {
 const splitContentIntoPages = (html) => {
   if (!html) return [];
 
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.innerHTML = html;
 
   const pages = [];
   let currentPage = [];
-  let currentPageTitle = 'Start';
+  let currentPageTitle = "Start";
 
   const children = Array.from(div.childNodes);
 
   children.forEach((node, index) => {
     let isSectionStart = false;
-    let sectionTitle = '';
+    let sectionTitle = "";
 
     if (node.nodeType === 1) {
-      const nodeText = node.textContent?.trim() || '';
-      const isHeading = ['H1', 'H2', 'H3', 'H4'].includes(node.tagName);
-      const isLikelyHeader = !isHeading && node.tagName === 'P' && (
-        (nodeText.length > 3 &&
-          (nodeText.split('').filter(c => c === c.toUpperCase() && c.match(/[A-Z]/)).length /
-            nodeText.split('').filter(c => c.match(/[A-Za-z]/)).length > 0.6))
-        || (nodeText.endsWith(':') && nodeText.length > 4)
-        || (nodeText.length < 30 && nodeText === nodeText.toUpperCase() && nodeText.length > 3)
-      );
+      const nodeText = node.textContent?.trim() || "";
+      const isHeading = ["H1", "H2", "H3", "H4"].includes(node.tagName);
+      const isLikelyHeader =
+        !isHeading &&
+        node.tagName === "P" &&
+        ((nodeText.length > 3 &&
+          nodeText
+            .split("")
+            .filter((c) => c === c.toUpperCase() && c.match(/[A-Z]/)).length /
+            nodeText.split("").filter((c) => c.match(/[A-Za-z]/)).length >
+            0.6) ||
+          (nodeText.endsWith(":") && nodeText.length > 4) ||
+          (nodeText.length < 30 &&
+            nodeText === nodeText.toUpperCase() &&
+            nodeText.length > 3));
 
       if (isHeading || isLikelyHeader) {
         isSectionStart = true;
-        sectionTitle = nodeText.replace(/:$/, '').trim();
+        sectionTitle = nodeText.replace(/:$/, "").trim();
       }
     }
 
     if (isSectionStart && currentPage.length > 0) {
-      const pageDiv = document.createElement('div');
-      currentPage.forEach(n => pageDiv.appendChild(n.cloneNode(true)));
+      const pageDiv = document.createElement("div");
+      currentPage.forEach((n) => pageDiv.appendChild(n.cloneNode(true)));
       pages.push({ content: pageDiv.innerHTML, title: currentPageTitle });
       currentPage = [node];
       currentPageTitle = sectionTitle;
     } else {
       currentPage.push(node);
       if (pages.length === 0 && currentPage.length === 1 && !currentPageTitle) {
-        if (node.nodeType === 1 && node.textContent?.trim().match(/^[A-Z\s]{4,}/)) {
-          currentPageTitle = node.textContent.trim().replace(/:$/, '');
+        if (
+          node.nodeType === 1 &&
+          node.textContent?.trim().match(/^[A-Z\s]{4,}/)
+        ) {
+          currentPageTitle = node.textContent.trim().replace(/:$/, "");
         }
       }
     }
 
     if (index === children.length - 1 && currentPage.length > 0) {
-      const pageDiv = document.createElement('div');
-      currentPage.forEach(n => pageDiv.appendChild(n.cloneNode(true)));
+      const pageDiv = document.createElement("div");
+      currentPage.forEach((n) => pageDiv.appendChild(n.cloneNode(true)));
       pages.push({
         content: pageDiv.innerHTML,
-        title: currentPageTitle || `Page ${pages.length + 1}`
+        title: currentPageTitle || `Page ${pages.length + 1}`,
       });
     }
   });
 
   if (pages.length === 0) {
-    pages.push({ content: html, title: 'Lesson Content' });
+    pages.push({ content: html, title: "Lesson Content" });
   }
 
   return pages;
@@ -182,15 +220,21 @@ const splitContentIntoPages = (html) => {
 const LessonDetailPage = () => {
   const { lesson_id } = useParams();
   const navigate = useNavigate();
-  const { fetchLessonById, fetchLessonContent, fetchLessonResources, fetchCourseById, fetchLessonsByCourse } = useCourseLessons();
+  const {
+    fetchLessonById,
+    fetchLessonContent,
+    fetchLessonResources,
+    fetchCourseById,
+    fetchLessonsByCourse,
+  } = useCourseLessons();
   const { currentUser } = useAuth();
-  
-  const { 
-    savePagePosition, 
-    markLessonComplete, 
-    getResumePoint, 
-    isLessonCompleted, 
-    addTimeSpent 
+
+  const {
+    savePagePosition,
+    markLessonComplete,
+    getResumePoint,
+    isLessonCompleted,
+    addTimeSpent,
   } = useProgressTracking();
 
   const [lesson, setLesson] = useState(null);
@@ -204,22 +248,33 @@ const LessonDetailPage = () => {
   // Page navigation
   const [pages, setPages] = useState([]);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState("video");
   const contentRef = useRef(null);
   const timeTrackerRef = useRef(null);
 
   // Derived progress values
-  const completedCount = courseLessons.filter(l => isLessonCompleted(course?.id, l.id)).length;
+  const completedCount = courseLessons.filter((l) =>
+    isLessonCompleted(course?.id, l.id),
+  ).length;
   const totalLessons = courseLessons.length;
-  const isLastLesson = courseLessons.length > 0 && courseLessons[courseLessons.length - 1]?.id === lesson_id;
-  const allLessonsComplete = courseLessons.length > 0 && courseLessons.every(l => isLessonCompleted(course?.id, l.id));
+  const isLastLesson =
+    courseLessons.length > 0 &&
+    courseLessons[courseLessons.length - 1]?.id === lesson_id;
+  const allLessonsComplete =
+    courseLessons.length > 0 &&
+    courseLessons.every((l) => isLessonCompleted(course?.id, l.id));
 
   // Find matching quiz data for this course
-  const courseQuizData = course ? (quizData.find(q => q.title.toLowerCase() === course.title.toLowerCase()) || quizData[0]) : null;
+  const courseQuizData = course
+    ? quizData.find(
+        (q) => q.title.toLowerCase() === course.title.toLowerCase(),
+      ) || quizData[0]
+    : null;
 
   const handleMarkCourseComplete = () => {
     if (course) {
-      courseLessons.forEach(l => markLessonComplete(course.id, l.id));
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      courseLessons.forEach((l) => markLessonComplete(course.id, l.id));
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -236,7 +291,7 @@ const LessonDetailPage = () => {
         if (lessonData.course_id) {
           const [courseData, allLessons] = await Promise.all([
             fetchCourseById(lessonData.course_id),
-            fetchLessonsByCourse(lessonData.course_id)
+            fetchLessonsByCourse(lessonData.course_id),
           ]);
           setCourse(courseData);
           setCourseLessons(allLessons);
@@ -244,21 +299,27 @@ const LessonDetailPage = () => {
 
         const [contentData, resourcesData] = await Promise.all([
           fetchLessonContent(lesson_id),
-          fetchLessonResources(lesson_id)
+          fetchLessonResources(lesson_id),
         ]);
         setContent(contentData);
         setResources(resourcesData);
-
       } catch (err) {
-        console.error('Failed to load lesson data:', err);
-        setError('Failed to load lesson content.');
+        console.error("Failed to load lesson data:", err);
+        setError("Failed to load lesson content.");
       } finally {
         setLoading(false);
       }
     };
 
     loadData();
-  }, [lesson_id, fetchLessonById, fetchLessonContent, fetchLessonResources, fetchCourseById, fetchLessonsByCourse]);
+  }, [
+    lesson_id,
+    fetchLessonById,
+    fetchLessonContent,
+    fetchLessonResources,
+    fetchCourseById,
+    fetchLessonsByCourse,
+  ]);
 
   // Process content into pages when content loads
   useEffect(() => {
@@ -266,11 +327,15 @@ const LessonDetailPage = () => {
       const formattedContent = formatLessonContent(content.content_body);
       const contentPages = splitContentIntoPages(formattedContent);
       setPages(contentPages);
-      
+
       // Resume from saved position if available
       if (course?.id) {
         const resumePoint = getResumePoint(course.id);
-        if (resumePoint && resumePoint.lessonId === lesson_id && resumePoint.pageNumber < contentPages.length) {
+        if (
+          resumePoint &&
+          resumePoint.lessonId === lesson_id &&
+          resumePoint.pageNumber < contentPages.length
+        ) {
           setCurrentPageIndex(resumePoint.pageNumber);
         } else {
           setCurrentPageIndex(0);
@@ -299,7 +364,7 @@ const LessonDetailPage = () => {
 
   const handleNavigation = (direction) => {
     if (!courseLessons.length) return;
-    const currentIndex = courseLessons.findIndex(l => l.id === lesson_id);
+    const currentIndex = courseLessons.findIndex((l) => l.id === lesson_id);
     if (currentIndex === -1) return;
 
     // Mark current lesson complete when navigating away if not already
@@ -308,9 +373,9 @@ const LessonDetailPage = () => {
     }
 
     let targetLessonId;
-    if (direction === 'next' && currentIndex < courseLessons.length - 1) {
+    if (direction === "next" && currentIndex < courseLessons.length - 1) {
       targetLessonId = courseLessons[currentIndex + 1].id;
-    } else if (direction === 'prev' && currentIndex > 0) {
+    } else if (direction === "prev" && currentIndex > 0) {
       targetLessonId = courseLessons[currentIndex - 1].id;
     }
 
@@ -327,7 +392,10 @@ const LessonDetailPage = () => {
       if (course?.id) {
         savePagePosition(course.id, lesson_id, nextPageIndex);
       }
-      contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      contentRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
@@ -338,7 +406,10 @@ const LessonDetailPage = () => {
       if (course?.id) {
         savePagePosition(course.id, lesson_id, prevPageIndex);
       }
-      contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      contentRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
@@ -354,16 +425,24 @@ const LessonDetailPage = () => {
   }
 
   if (error || !lesson) {
-    return <LessonNotFound title="Lesson Not Found" message="This lesson content is currently unavailable." />;
+    return (
+      <LessonNotFound
+        title="Lesson Not Found"
+        message="This lesson content is currently unavailable."
+      />
+    );
   }
 
   const breadcrumbs = [
-    { label: 'Courses', path: '/courses-lessons' },
-    { label: course?.title || 'Course', path: course ? `/course/${course.id}` : null },
-    { label: lesson.title, path: null }
+    { label: "Courses", path: "/courses-lessons" },
+    {
+      label: course?.title || "Course",
+      path: course ? `/course/${course.id}` : null,
+    },
+    { label: lesson.title, path: null },
   ];
 
-  const currentIndex = courseLessons.findIndex(l => l.id === lesson_id);
+  const currentIndex = courseLessons.findIndex((l) => l.id === lesson_id);
   const hasNext = currentIndex < courseLessons.length - 1;
   const hasPrev = currentIndex > 0;
 
@@ -374,8 +453,11 @@ const LessonDetailPage = () => {
 
         {/* Header */}
         <div className="mb-8">
-          <Link to={course ? `/course/${course.id}` : '/courses-lessons'}>
-            <Button variant="ghost" className="gap-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all">
+          <Link to={course ? `/course/${course.id}` : "/courses-lessons"}>
+            <Button
+              variant="ghost"
+              className="gap-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all"
+            >
               <ArrowLeft className="w-4 h-4" />
               Back to Course
             </Button>
@@ -384,15 +466,22 @@ const LessonDetailPage = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-8 xl:col-span-9 space-y-6" ref={contentRef}>
+          <div
+            className="lg:col-span-8 xl:col-span-9 space-y-6"
+            ref={contentRef}
+          >
             {/* Title Card */}
             <Card className="bg-white border-0 shadow-lg">
               <CardContent className="p-8">
                 <div className="flex justify-between items-start gap-4">
                   <div>
-                    <h1 className="text-4xl font-bold text-gray-900 mb-3 leading-tight">{lesson.title}</h1>
+                    <h1 className="text-4xl font-bold text-gray-900 mb-3 leading-tight">
+                      {lesson.title}
+                    </h1>
                     {lesson.description && (
-                      <p className="text-gray-600 text-lg leading-relaxed border-l-4 border-blue-500 pl-4">{lesson.description}</p>
+                      <p className="text-gray-600 text-lg leading-relaxed border-l-4 border-blue-500 pl-4">
+                        {lesson.description}
+                      </p>
                     )}
                   </div>
                   {course?.id && isLessonCompleted(course.id, lesson_id) && (
@@ -409,66 +498,140 @@ const LessonDetailPage = () => {
               <Card className="bg-white border-0 shadow-lg">
                 <CardContent className="text-center py-16 text-gray-500">
                   <FileText className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                  <p className="text-lg font-medium">No content available for this lesson.</p>
+                  <p className="text-lg font-medium">
+                    No content available for this lesson.
+                  </p>
                 </CardContent>
               </Card>
             ) : (
               <div className="space-y-6">
-                {/* Video */}
-                {content.video_url && (
-                  <Card className="bg-white border-0 shadow-lg overflow-hidden">
-                    <div className="aspect-video bg-black">
+                {/* {content?.video_url && (
+                  <Card className="bg-white border-0 shadow-lg overflow-hidden mb-8">
+                    <div className="aspect-video bg-black rounded-lg overflow-hidden">
                       <iframe
-                        src={content.video_url.replace('watch?v=', 'embed/')}
+                        src={content.video_url}
+                        frameBorder="0"
+                        allowFullScreen
                         className="w-full h-full"
                         title={lesson.title}
-                        allowFullScreen
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        loading="lazy"
+                        sandbox="allow-scripts allow-same-origin allow-presentation"
                       />
                     </div>
                   </Card>
-                )}
-
+                )} */}
                 {/* Content Body with Page Navigation */}
-                {pages.length > 0 && (
-                  <Card className="bg-white border-0 shadow-lg">
-                    <CardContent className="p-8 md:p-10">
-                      {/* Page Navigation Header */}
-                      <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-500">
-                            Page {currentPageIndex + 1} of {pages.length}
-                          </span>
-                          <span className="text-sm text-gray-400">•</span>
-                          <span className="text-sm font-medium text-blue-600">
-                            {pages[currentPageIndex].title}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handlePrevPage}
-                            disabled={currentPageIndex === 0}
-                            className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
-                          >
-                            <ChevronLeft className="w-4 h-4" />
-                            Prev Page
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handleNextPage}
-                            disabled={currentPageIndex === pages.length - 1}
-                            className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
-                          >
-                            Next Page
-                            <ChevronRight className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
 
-                      {/* Page Content */}
+                {/* Tabbed Video/Content */}
+                <Card className="bg-white border-0 shadow-lg">
+                  <CardContent className="p-8 md:p-10">
+                    {/* Tab Buttons */}
+                    <div className="flex bg-gray-100 rounded-lg p-1 mb-6 -mx-2 md:-mx-0 text-black">
+                      <Button
+                        variant={activeTab === "video" ? "default" : "ghost"}
+                        className="flex-1 rounded-lg h-12 font-medium"
+                        onClick={() => setActiveTab("video")}
+                      >
+                        📺 Video
+                      </Button>
+                      <Button
+                        variant={activeTab === "content" ? "default" : "ghost"}
+                        className="flex-1 rounded-lg h-12 font-medium text-black"
+                        onClick={() => setActiveTab("content")}
+                      >
+                        📖 Read
+                      </Button>
+                    </div>
+
+                    {/* VIDEO TAB */}
+                    {activeTab === "video" && (
+                      <>
+                        {content?.video_url ? (
+                          <div className="aspect-video bg-black rounded-lg overflow-hidden shadow-2xl">
+                            <iframe
+                              src={content.video_url}
+                              frameBorder="0"
+                              allowFullScreen
+                              className="w-full h-full"
+                              title={lesson.title}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              referrerPolicy="strict-origin-when-cross-origin"
+                              loading="lazy"
+                              sandbox="allow-scripts allow-same-origin allow-presentation"
+                            />
+                          </div>
+                        ) : (
+                          <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex flex-col items-center justify-center p-8 text-center border-2 border-dashed border-gray-300">
+                            <FileVideo className="w-16 h-16 text-gray-400 mb-4" />
+                            <h3 className="text-xl font-bold text-gray-900 mb-2">
+                              Video Coming Soon
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              This lesson video will be available shortly.
+                            </p>
+                            <Button
+                              variant="outline"
+                              onClick={() => setActiveTab("content")}
+                              className="gap-2"
+                            >
+                              📖 Read Content Instead
+                            </Button>
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {/* CONTENT TAB - Your Existing Code */}
+                    {activeTab === "content" && pages.length > 0 && (
+                      <>
+                        {/* Page Navigation Header - COPY YOUR EXISTING CODE */}
+                        <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-gray-500">
+                              Page {currentPageIndex + 1} of {pages.length}
+                            </span>
+                            <span className="text-sm text-gray-400">•</span>
+                            <span className="text-sm font-medium text-blue-600">
+                              {pages[currentPageIndex].title}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={handlePrevPage}
+                              disabled={currentPageIndex === 0}
+                              className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
+                            >
+                              <ChevronLeft className="w-4 h-4" />
+                              Prev Page
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={handleNextPage}
+                              disabled={currentPageIndex === pages.length - 1}
+                              className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
+                            >
+                              Next Page
+                              <ChevronRight className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Your Existing Content Display */}
+                        {/* <div className="lesson-content-display">
+                         
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: pages[currentPageIndex].content,
+                            }}
+                          />
+                        </div> */}
+
+                         {/* Page Content */}
                       <div className="lesson-content-display">
                         <style>{`
                           .lesson-content-display { color: #1f2937; line-height: 1.75; }
@@ -502,55 +665,56 @@ const LessonDetailPage = () => {
                         <div dangerouslySetInnerHTML={{ __html: pages[currentPageIndex].content }} />
                       </div>
 
-                      {/* Page Navigation Footer */}
-                      {pages.length > 1 && (
-                        <div className="flex items-center justify-between mt-8 pt-4 border-t border-gray-200">
-                          <Button
-                            variant="outline"
-                            onClick={handlePrevPage}
-                            disabled={currentPageIndex === 0}
-                            className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
-                          >
-                            <ChevronLeft className="w-4 h-4" />
-                            Previous Page
-                          </Button>
-                          <span className="text-sm text-gray-500">
-                            Page {currentPageIndex + 1} of {pages.length}
-                          </span>
-                          <Button
-                            variant="outline"
-                            onClick={handleNextPage}
-                            disabled={currentPageIndex === pages.length - 1}
-                            className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
-                          >
-                            Next Page
-                            <ChevronRight className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                )}
+                        {/* Page Navigation Footer - COPY YOUR EXISTING FOOTER */}
+                        {pages.length > 1 && (
+                          <div className="flex items-center justify-between mt-8 pt-4 border-t border-gray-200">
+                            <Button
+                              variant="outline"
+                              onClick={handlePrevPage}
+                              disabled={currentPageIndex === 0}
+                              className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
+                            >
+                              <ChevronLeft className="w-4 h-4" />
+                              Previous Page
+                            </Button>
+                            <span className="text-sm text-gray-500">
+                              Page {currentPageIndex + 1} of {pages.length}
+                            </span>
+                            <Button
+                              variant="outline"
+                              onClick={handleNextPage}
+                              disabled={currentPageIndex === pages.length - 1}
+                              className="gap-1 bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-400 disabled:opacity-50"
+                            >
+                              Next Page
+                              <ChevronRight className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </CardContent>
+                </Card>
               </div>
             )}
 
             {/* Quiz Section - Only show on last lesson if not complete */}
             {isLastLesson && !allLessonsComplete && courseQuizData && (
               <div className="mt-12 pt-8 border-t border-gray-200">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Final Assessment</h2>
-                <QuizCard 
-                  quizData={courseQuizData} 
-                  courseName={course?.title} 
-                  onMarkComplete={handleMarkCourseComplete} 
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                  Final Assessment
+                </h2>
+                <QuizCard
+                  quizData={courseQuizData}
+                  courseName={course?.title}
+                  onMarkComplete={handleMarkCourseComplete}
                 />
               </div>
             )}
-
           </div>
 
           {/* Sidebar */}
           <div className="lg:col-span-4 xl:col-span-3 space-y-6">
-
             {/* Certificate — shown once course is marked complete */}
             {allLessonsComplete && (
               <Card className="bg-gradient-to-br from-green-50 to-green-100 border-0 shadow-lg">
@@ -560,17 +724,23 @@ const LessonDetailPage = () => {
                       <Award className="w-6 h-6 text-green-600" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-green-900">Course Complete!</h3>
-                      <p className="text-sm text-green-700">Download your certificate</p>
+                      <h3 className="font-bold text-green-900">
+                        Course Complete!
+                      </h3>
+                      <p className="text-sm text-green-700">
+                        Download your certificate
+                      </p>
                     </div>
                   </div>
                   <Button
-                    onClick={() => generateCertificate(
-                      currentUser?.name || currentUser?.email || 'Student',
-                      course?.title,
-                      new Date(),
-                      100
-                    )}
+                    onClick={() =>
+                      generateCertificate(
+                        currentUser?.name || currentUser?.email || "Student",
+                        course?.title,
+                        new Date(),
+                        100,
+                      )
+                    }
                     className="w-full gap-2 bg-green-600 hover:bg-green-700 text-white"
                   >
                     <Download className="w-4 h-4" />
@@ -601,11 +771,21 @@ const LessonDetailPage = () => {
             {course && (
               <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-0 shadow-lg">
                 <CardContent className="pt-6">
-                  <p className="text-xs uppercase tracking-wider text-blue-700 font-semibold mb-2">Part of Course</p>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{course.title}</h3>
-                  <p className="text-sm text-gray-700 mb-4">{courseLessons.length} lessons total</p>
+                  <p className="text-xs uppercase tracking-wider text-blue-700 font-semibold mb-2">
+                    Part of Course
+                  </p>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">
+                    {course.title}
+                  </h3>
+                  <p className="text-sm text-gray-700 mb-4">
+                    {courseLessons.length} lessons total
+                  </p>
                   <Link to={`/course/${course.id}`}>
-                    <Button variant="outline" size="sm" className="w-full bg-white hover:bg-gray-50 text-blue-700 border-blue-200">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full bg-white hover:bg-gray-50 text-blue-700 border-blue-200"
+                    >
                       View All Lessons
                     </Button>
                   </Link>
@@ -617,11 +797,13 @@ const LessonDetailPage = () => {
             {courseLessons.length > 1 && (
               <Card className="bg-white border-0 shadow-lg">
                 <CardHeader className="pb-4">
-                  <CardTitle className="text-lg font-semibold text-gray-900">Lesson Navigation</CardTitle>
+                  <CardTitle className="text-lg font-semibold text-gray-900">
+                    Lesson Navigation
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <Button
-                    onClick={() => handleNavigation('prev')}
+                    onClick={() => handleNavigation("prev")}
                     disabled={!hasPrev}
                     variant="outline"
                     className="w-full gap-2 justify-start bg-gray-50 text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -635,7 +817,7 @@ const LessonDetailPage = () => {
                   </div>
 
                   <Button
-                    onClick={() => handleNavigation('next')}
+                    onClick={() => handleNavigation("next")}
                     disabled={!hasNext}
                     className="w-full gap-2 justify-start bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
                   >
