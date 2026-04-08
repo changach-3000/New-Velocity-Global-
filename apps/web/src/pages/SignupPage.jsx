@@ -147,11 +147,12 @@ const SignupPage = () => {
                   onChange={handleChange}
                   className="flex h-11 w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 ring-offset-background focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
                 >
+                    <option value="Customer">Tax Accountant</option>
                   <option value="Customer">Business Owner</option>
                   <option value="Customer">Vendor</option>
-                  <option value="Customer">Tax Consultant</option>
                   <option value="Sales">Sales Professional</option>
                   <option value="Financier">Financier</option>
+                  <option value="Customer">Leasing Company(Lessor)</option>
                 </select>
               </div>
 
