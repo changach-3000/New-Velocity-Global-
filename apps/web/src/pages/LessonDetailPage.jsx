@@ -252,6 +252,7 @@ const LessonDetailPage = () => {
   const contentRef = useRef(null);
   const timeTrackerRef = useRef(null);
 
+
   // Derived progress values
   const completedCount = courseLessons.filter((l) =>
     isLessonCompleted(course?.id, l.id),
@@ -277,7 +278,6 @@ const LessonDetailPage = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
-
   // Load initial data
   useEffect(() => {
     const loadData = async () => {
@@ -366,7 +366,7 @@ const LessonDetailPage = () => {
     if (!courseLessons.length) return;
     const currentIndex = courseLessons.findIndex((l) => l.id === lesson_id);
     if (currentIndex === -1) return;
-
+    console.log('CurrentIndex:', currentIndex);
     // Mark current lesson complete when navigating away if not already
     if (course?.id && !isLessonCompleted(course.id, lesson_id)) {
       markLessonComplete(course.id, lesson_id);
@@ -593,9 +593,9 @@ const LessonDetailPage = () => {
                               Page {currentPageIndex + 1} of {pages.length}
                             </span>
                             <span className="text-sm text-gray-400">•</span>
-                            <span className="text-sm font-medium text-blue-600">
+                            {/* <span className="text-sm font-medium text-blue-600">
                               {pages[currentPageIndex].title}
-                            </span>
+                            </span> */}
                           </div>
                           <div className="flex items-center gap-2">
                             <Button
@@ -699,7 +699,7 @@ const LessonDetailPage = () => {
             )}
 
             {/* Quiz Section - Only show on last lesson if not complete */}
-            {isLastLesson && !allLessonsComplete && courseQuizData && (
+            {isLastLesson && courseQuizData && (
               <div className="mt-12 pt-8 border-t border-gray-200">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Final Assessment
