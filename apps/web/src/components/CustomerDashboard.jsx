@@ -33,10 +33,11 @@ const CustomerDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   const RECOMMENDED_TITLES = [
-    "Understanding Equipment Leasing Basics",
-    "Evaluating Lease vs. Buy Decisions",
-    "Operational Leasing for Business Growth",
-    "Portfolio Management & Optimization",
+    "Introduction to IFRS 16",
+    "Lease Accounting Standards (IFRS 16 & ASC 842)",
+    "Lessee Accounting under IFRS 16",
+    "Lessor Accounting under IFRS 16",
+    "Transition and Impact Analysis"
   ];
 
   useEffect(() => {
