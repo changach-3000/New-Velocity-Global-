@@ -82,7 +82,7 @@ const Header = () => {
 
             {isAuthenticated ? (
               <>
-                <NavLink to="/dashboard" icon={LayoutDashboard}>Dashboard</NavLink>
+                {/* <NavLink to="/dashboard" icon={LayoutDashboard}>Dashboard</NavLink> */}
 
                 {/* User Menu Dropdown - Enhanced */}
                 <div className="relative ml-3">
