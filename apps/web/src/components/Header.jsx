@@ -56,14 +56,14 @@ const Header = () => {
             </div>
             <div className="hidden lg:block">
               <span className="font-bold text-xl text-gray-900 block leading-tight">
-                Velocity Global Leasing
+                Velocity Global Leasing Training
               </span>
               <span className="text-xs text-gray-500 font-medium">
                 Master Equipment Leasing
               </span>
             </div>
             <span className="font-bold text-lg text-gray-900 lg:hidden">
-              VGL
+              VGLT
             </span>
           </Link>
 
