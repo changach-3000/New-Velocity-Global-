@@ -342,11 +342,13 @@ const SuccessPage = () => {
   useEffect(() => {
     // No reference in URL — bail immediately
     if (!reference) {
-      console.error('[SuccessPage] No reference found in URL');
-      setError("Invalid Request: No payment reference found.");
-      setLoading(false);
-      return;
-    }
+    // Free promo — enrollment already done, just show success!
+    console.log('[SuccessPage] No reference = free promo, showing success');
+    setStatusMessage('Welcome! Your free enrollment is confirmed.');
+    setLoading(false);
+    clearCart();  // Clear cart anyway
+    return;
+  }
 
     // Auth is still loading (isAuthenticated is null/undefined) — wait
     if (isAuthenticated === null || isAuthenticated === undefined) {
@@ -366,7 +368,7 @@ const SuccessPage = () => {
       setVerifyStarted(true);
       verifyAndEnroll();
     }
-  }, [reference, isAuthenticated, currentUser]);
+  }, [reference, isAuthenticated, currentUser, clearCart]);
 
   const verifyAndEnroll = async () => {
     try {
