@@ -681,7 +681,7 @@ const CheckoutPage = () => {
             {/* ── Promo Code ── */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Promo / Referral Code
+                Promo/ Referral Code
               </label>
 
               {appliedPromo ? (

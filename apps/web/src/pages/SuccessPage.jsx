@@ -343,7 +343,6 @@ const SuccessPage = () => {
     // No reference in URL — bail immediately
     if (!reference) {
     // Free promo — enrollment already done, just show success!
-    console.log('[SuccessPage] No reference = free promo, showing success');
     setStatusMessage('Welcome! Your free enrollment is confirmed.');
     setLoading(false);
     clearCart();  // Clear cart anyway
