@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deal Profitability Calculator | Velocity Global Leasing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B1F4B;--navy-mid:#1A3666;--navy-light:#243d6e;
+  --gold:#C9A84C;--gold-light:#F0D080;--gold-pale:rgba(201,168,76,0.12);
+  --cream:#FAF8F3;--white:#FFFFFF;--slate:#64748B;
+  --border:#D6DAEA;--light-bg:#EEF1F8;
+  --green:#1A7A4A;--green-bg:#E8F5EE;
+  --red:#C0392B;--red-bg:#FDECEA;
+  --amber:#C97A00;--amber-bg:#FFF9E6;
+  --purple:#5B2D8E;--purple-bg:#F3EEF9;
+  --shadow:0 4px 24px rgba(11,31,75,0.10);
+  --shadow-lg:0 12px 48px rgba(11,31,75,0.16);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);}
+
+/* HEADER */
+.header{background:var(--navy);position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--gold);}
+.header::after{content:'';position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:rgba(201,168,76,0.04);pointer-events:none;}
+.header-inner{max-width:1200px;margin:0 auto;padding:30px 32px 26px 44px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.header-badge{display:inline-block;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.4);color:var(--gold);font-size:10px;font-weight:600;letter-spacing:2.5px;padding:4px 12px;border-radius:2px;margin-bottom:10px;text-transform:uppercase;}
+.header h1{font-family:'Playfair Display',serif;font-size:clamp(18px,2.8vw,28px);font-weight:700;color:var(--white);line-height:1.2;}
+.header h1 span{color:var(--gold);}
+.header-sub{font-size:12px;color:#8899BB;margin-top:4px;}
+.vgl-logo{font-family:'Playfair Display',serif;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:2px;text-align:right;}
+.vgl-tagline{font-size:11px;color:#556688;margin-top:2px;text-align:right;}
+
+/* STRUCTURE SELECTOR */
+.structure-selector{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+.struct-card{background:var(--white);border-radius:10px;padding:16px 18px;border:2px solid var(--border);cursor:pointer;transition:all .2s;text-align:center;box-shadow:var(--shadow);}
+.struct-card:hover{border-color:var(--navy);transform:translateY(-2px);}
+.struct-card.active{border-color:var(--gold);background:var(--navy);}
+.struct-card .s-icon{font-size:24px;margin-bottom:6px;}
+.struct-card .s-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:600;color:var(--navy);}
+.struct-card.active .s-title{color:var(--gold);}
+.struct-card .s-desc{font-size:10px;color:var(--slate);margin-top:3px;}
+.struct-card.active .s-desc{color:#AABBCC;}
+
+/* LAYOUT */
+.app{max-width:1200px;margin:0 auto;padding:24px 18px 80px;}
+.two-panel{display:grid;grid-template-columns:380px 1fr;gap:20px;align-items:start;}
+@media(max-width:900px){.two-panel{grid-template-columns:1fr;}}
+
+/* CARD */
+.card{background:var(--white);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;}
+.card:last-child{margin-bottom:0;}
+.card-hdr{background:var(--navy);padding:13px 20px;display:flex;align-items:center;gap:10px;}
+.card-hdr-icon{width:26px;height:26px;background:var(--gold-pale);border:1px solid rgba(201,168,76,0.3);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+.card-hdr h2{font-size:13px;font-weight:600;color:var(--white);}
+.card-hdr p{font-size:10px;color:#8899BB;margin-top:1px;}
+.card-body{padding:18px 20px;}
+
+/* FORM */
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:10px;font-weight:600;color:var(--slate);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
+.field label .req{color:var(--gold);}
+.field input,.field select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--navy);background:var(--white);transition:border-color .2s;outline:none;appearance:none;}
+.field input:focus,.field select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,31,75,0.08);}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%230B1F4B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px;cursor:pointer;}
+.two-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.three-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.field .hint{font-size:10px;color:var(--slate);margin-top:3px;}
+.section-label{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;margin-top:4px;padding-bottom:6px;border-bottom:1px solid var(--gold-pale);}
+
+/* BUTTONS */
+.btn-calc{width:100%;padding:13px;background:var(--gold);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--navy);cursor:pointer;letter-spacing:.5px;text-transform:uppercase;transition:all .2s;}
+.btn-calc:hover{background:var(--gold-light);box-shadow:0 6px 20px rgba(201,168,76,0.35);transform:translateY(-1px);}
+.btn-reset{width:100%;padding:9px;background:transparent;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--slate);cursor:pointer;margin-top:8px;transition:all .2s;}
+.btn-reset:hover{border-color:var(--navy);color:var(--navy);}
+.error-msg{background:var(--red-bg);border:1px solid var(--red);color:var(--red);border-radius:6px;padding:9px 12px;font-size:12px;margin-top:8px;display:none;}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:70px 24px;color:var(--slate);}
+.empty-state .empty-icon{font-size:44px;margin-bottom:14px;opacity:.4;}
+.empty-state h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);margin-bottom:6px;opacity:.5;}
+.empty-state p{font-size:12px;line-height:1.6;opacity:.6;}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:700px){.kpi-strip{grid-template-columns:1fr 1fr;}}
+.kpi-card{border-radius:8px;padding:14px 16px;border:1.5px solid var(--border);animation:fadeUp .4s ease both;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
+.kpi-card.k-irr::before{background:var(--gold);}
+.kpi-card.k-npv::before{background:var(--green);}
+.kpi-card.k-yield::before{background:var(--navy);}
+.kpi-card.k-spread::before{background:var(--purple);}
+.kpi-label{font-size:10px;font-weight:700;color:var(--slate);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
+.kpi-value{font-family:'DM Mono',monospace;font-size:clamp(14px,2vw,20px);font-weight:500;color:var(--navy);}
+.kpi-sub{font-size:10px;color:var(--slate);margin-top:3px;}
+.kpi-badge{position:absolute;top:8px;right:10px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;}
+.kpi-badge.good{background:var(--green-bg);color:var(--green);}
+.kpi-badge.warn{background:var(--amber-bg);color:var(--amber);}
+.kpi-badge.bad{background:var(--red-bg);color:var(--red);}
+
+/* RESULT TABS */
+.result-tabs{display:flex;gap:0;margin-bottom:16px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border);}
+.result-tab{flex:1;padding:9px 4px;background:var(--white);border:none;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--slate);cursor:pointer;transition:all .2s;border-right:1px solid var(--border);}
+.result-tab:last-child{border-right:none;}
+.result-tab.active{background:var(--navy);color:var(--gold);}
+.result-tab:hover:not(.active){background:var(--light-bg);}
+.result-panel{display:none;}
+.result-panel.active{display:block;animation:fadeUp .3s ease both;}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1.5px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:11px;}
+thead th{background:var(--navy);color:var(--gold);padding:9px 10px;text-align:right;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.8px;white-space:nowrap;}
+thead th:first-child{text-align:left;}
+tbody tr:nth-child(even) td{background:#F7F9FC;}
+tbody tr:hover td{background:var(--light-bg);}
+tbody td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--navy);white-space:nowrap;}
+tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;}
+tfoot td{padding:9px 10px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:var(--navy);background:var(--light-bg);border-top:2px solid var(--navy);}
+tfoot td:first-child{text-align:left;font-family:'DM Sans',sans-serif;}
+
+/* RESIDUAL SCENARIOS */
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+@media(max-width:600px){.scenario-grid{grid-template-columns:1fr;}}
+.scenario-card{border-radius:8px;padding:14px 16px;border:1.5px solid var(--border);text-align:center;}
+.scenario-card.bear{border-color:var(--red);background:var(--red-bg);}
+.scenario-card.base{border-color:var(--navy);background:var(--light-bg);}
+.scenario-card.bull{border-color:var(--green);background:var(--green-bg);}
+.scenario-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.scenario-card.bear .scenario-title{color:var(--red);}
+.scenario-card.base .scenario-title{color:var(--navy);}
+.scenario-card.bull .scenario-title{color:var(--green);}
+.scenario-irr{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:var(--navy);margin-bottom:4px;}
+.scenario-npv{font-size:11px;color:var(--slate);}
+.scenario-rv{font-size:11px;font-weight:600;margin-top:6px;}
+
+/* PERSPECTIVE TOGGLE */
+.perspective-toggle{display:flex;gap:0;margin-bottom:16px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border);}
+.persp-btn{flex:1;padding:10px;background:var(--white);border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--slate);cursor:pointer;transition:all .2s;border-right:1px solid var(--border);}
+.persp-btn:last-child{border-right:none;}
+.persp-btn.active{background:var(--navy);color:var(--gold);}
+.persp-btn:hover:not(.active){background:var(--light-bg);}
+
+/* GAUGE */
+.gauge-wrap{margin-bottom:20px;}
+.gauge-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.gauge-label{font-size:11px;font-weight:600;color:var(--navy);width:140px;flex-shrink:0;}
+.gauge-track{flex:1;height:20px;background:var(--light-bg);border-radius:10px;overflow:hidden;}
+.gauge-fill{height:100%;border-radius:10px;transition:width .6s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;}
+.gauge-val{font-family:'DM Mono',monospace;font-size:10px;color:var(--white);font-weight:500;}
+
+/* SUMMARY BOX */
+.summary-box{background:var(--navy);border-radius:8px;padding:20px 22px;margin-bottom:16px;}
+.summary-box h4{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--gold);margin-bottom:12px;}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sum-item .sum-label{font-size:10px;color:#8899BB;text-transform:uppercase;letter-spacing:.5px;}
+.sum-item .sum-val{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--white);margin-top:2px;}
+.sum-item .sum-val.positive{color:#4ade80;}
+.sum-item .sum-val.negative{color:#f87171;}
+
+/* EXPORT */
+.export-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+.btn-exp{padding:9px 18px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn-exp.primary{background:var(--navy);color:var(--gold);border:none;}
+.btn-exp.primary:hover{background:var(--navy-mid);}
+.btn-exp.secondary{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+.btn-exp.secondary:hover{background:var(--light-bg);}
+
+/* FOOTER */
+.footer-note{margin-top:20px;padding:12px 16px;background:var(--navy);border-radius:8px;}
+.footer-note p{font-size:11px;color:#8899BB;line-height:1.6;}
+.footer-note p strong{color:var(--gold);}
+
+/* VERDICT BANNER */
+.verdict{border-radius:8px;padding:16px 20px;margin-bottom:16px;animation:fadeUp .4s ease both;}
+.verdict.profitable{background:linear-gradient(135deg,#0B3D2E,var(--green));}
+.verdict.marginal{background:linear-gradient(135deg,#7B4A00,var(--amber));}
+.verdict.unprofitable{background:linear-gradient(135deg,#5A0000,var(--red));}
+.verdict-label{font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:5px;}
+.verdict-title{font-family:'Playfair Display',serif;font-size:clamp(16px,2.5vw,22px);font-weight:700;color:var(--white);margin-bottom:5px;}
+.verdict-detail{font-size:12px;color:rgba(255,255,255,0.8);line-height:1.6;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:640px){.app{padding:14px 12px 60px;}.card-body{padding:14px 16px;}.three-fields{grid-template-columns:1fr 1fr;}.kpi-strip{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-badge">Deal Structuring Toolkit — ROI Calculator</div>
+      <h1>Deal <span>Profitability</span> & ROI Calculator</h1>
+      <div class="header-sub">Finance Lease · Operating Lease · Hire Purchase · Lessor & Lessee · Residual Value Risk Analysis</div>
+    </div>
+    <div>
+      <div class="vgl-logo">Velocity Global Leasing</div>
+      <div class="vgl-tagline">Unlocking Africa's $1 Trillion Leasing Opportunity</div>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- STRUCTURE SELECTOR -->
+  <div class="structure-selector">
+    <div class="struct-card active" id="struct-fl" onclick="selectStructure('fl')">
+      <div class="s-icon">🏦</div>
+      <div class="s-title">Finance Lease</div>
+      <div class="s-desc">Lessor transfers risks & rewards to lessee</div>
+    </div>
+    <div class="struct-card" id="struct-ol" onclick="selectStructure('ol')">
+      <div class="s-icon">📋</div>
+      <div class="s-title">Operating Lease</div>
+      <div class="s-desc">Lessor retains asset risk & residual value</div>
+    </div>
+    <div class="struct-card" id="struct-hp" onclick="selectStructure('hp')">
+      <div class="s-icon">🤝</div>
+      <div class="s-title">Hire Purchase</div>
+      <div class="s-desc">Lessee acquires ownership on final payment</div>
+    </div>
+  </div>
+
+  <div class="two-panel">
+
+    <!-- LEFT: INPUTS -->
+    <div>
+
+      <!-- DEAL PARAMETERS -->
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-hdr-icon">📊</div>
+          <div><h2>Deal Parameters</h2><p>Core deal inputs</p></div>
+        </div>
+        <div class="card-body">
+          <div class="section-label">Asset & Currency</div>
+          <div class="two-fields">
+            <div class="field">
+              <label>Currency <span class="req">*</span></label>
+              <select id="currency">
+                <option value="USD">USD — US Dollar</option>
+                <option value="KES">KES — Kenyan Shilling</option>
+                <option value="NGN">NGN — Nigerian Naira</option>
+                <option value="ZAR">ZAR — South African Rand</option>
+                <option value="GHS">GHS — Ghanaian Cedi</option>
+                <option value="TZS">TZS — Tanzanian Shilling</option>
+                <option value="UGX">UGX — Ugandan Shilling</option>
+                <option value="EGP">EGP — Egyptian Pound</option>
+                <option value="MAD">MAD — Moroccan Dirham</option>
+                <option value="ZMW">ZMW — Zambian Kwacha</option>
+                <option value="XOF">XOF — West African CFA</option>
+                <option value="INR">INR — Indian Rupee</option>
+                <option value="SGD">SGD — Singapore Dollar</option>
+                <option value="AED">AED — UAE Dirham</option>
+                <option value="MYR">MYR — Malaysian Ringgit</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Asset Type</label>
+              <select id="assetType">
+                <option value="vehicle">Commercial Vehicle</option>
+                <option value="yellow">Yellow Goods</option>
+                <option value="medical">Medical Equipment</option>
+                <option value="technology">Technology / IT</option>
+                <option value="property">Property</option>
+                <option value="other">Other Equipment</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="section-label">Deal Structure</div>
+          <div class="two-fields">
+            <div class="field">
+              <label>Asset Cost (Capital Outlay) <span class="req">*</span></label>
+              <input type="number" id="assetCost" placeholder="e.g. 5000000" min="0">
+            </div>
+            <div class="field">
+              <label>Lease / HP Term (Years) <span class="req">*</span></label>
+              <input type="number" id="term" placeholder="e.g. 5" min="1" max="30">
+            </div>
+          </div>
+          <div class="two-fields">
+            <div class="field">
+              <label>Annual Rental / Payment <span class="req">*</span></label>
+              <input type="number" id="annualRental" placeholder="e.g. 1400000" min="0">
+              <div class="hint">Total received from lessee per year</div>
+            </div>
+            <div class="field">
+              <label>Payment Frequency</label>
+              <select id="payFreq">
+                <option value="12">Monthly</option>
+                <option value="4">Quarterly</option>
+                <option value="2">Semi-Annual</option>
+                <option value="1" selected>Annual</option>
+              </select>
+            </div>
+          </div>
+          <div class="two-fields">
+            <div class="field">
+              <label>Deposit / Advance Rentals</label>
+              <input type="number" id="deposit" placeholder="e.g. 500000" min="0" value="0">
+            </div>
+            <div class="field">
+              <label>Residual Value (%) <span class="req">*</span></label>
+              <input type="number" id="residualPct" placeholder="e.g. 20" min="0" max="100" value="20">
+              <div class="hint" id="residualHint">% of asset cost at end of term</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LESSOR COSTS -->
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-hdr-icon">🏦</div>
+          <div><h2>Lessor / Funder Costs</h2><p>Cost of funds and deal expenses</p></div>
+        </div>
+        <div class="card-body">
+          <div class="two-fields">
+            <div class="field">
+              <label>Cost of Funds (% p.a.) <span class="req">*</span></label>
+              <input type="number" id="costOfFunds" placeholder="e.g. 12" min="0" max="100" step="0.1">
+              <div class="hint">Borrowing rate / WACC</div>
+            </div>
+            <div class="field">
+              <label>Annual Servicing Cost</label>
+              <input type="number" id="servicingCost" placeholder="e.g. 50000" min="0" value="0">
+              <div class="hint">Admin, monitoring, reporting</div>
+            </div>
+          </div>
+          <div class="two-fields">
+            <div class="field">
+              <label>Initial Setup / Origination Cost</label>
+              <input type="number" id="setupCost" placeholder="e.g. 80000" min="0" value="0">
+            </div>
+            <div class="field">
+              <label>Annual Maintenance Cost (OL only)</label>
+              <input type="number" id="maintCost" placeholder="e.g. 0" min="0" value="0">
+              <div class="hint">For operating leases</div>
+            </div>
+          </div>
+          <div class="two-fields">
+            <div class="field">
+              <label>Insurance Cost (Annual)</label>
+              <input type="number" id="insuranceCost" placeholder="e.g. 60000" min="0" value="0">
+            </div>
+            <div class="field">
+              <label>Corporate Tax Rate (%)</label>
+              <input type="number" id="taxRate" placeholder="e.g. 30" min="0" max="100" step="0.1" value="30">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LESSEE PERSPECTIVE -->
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-hdr-icon">🏢</div>
+          <div><h2>Lessee Cost of Funds</h2><p>For lessee effective rate analysis</p></div>
+        </div>
+        <div class="card-body">
+          <div class="two-fields">
+            <div class="field">
+              <label>Lessee Borrowing Rate (%)</label>
+              <input type="number" id="lesseeBorrRate" placeholder="e.g. 18" min="0" max="100" step="0.1" value="18">
+              <div class="hint">Lessee's alternative cost of funds</div>
+            </div>
+            <div class="field">
+              <label>Lessee Tax Rate (%)</label>
+              <input type="number" id="lesseeTaxRate" placeholder="e.g. 30" min="0" max="100" step="0.1" value="30">
+            </div>
+          </div>
+          <div class="field">
+            <label>Lessee Annual Maintenance Savings (vs Ownership)</label>
+            <input type="number" id="lesseeMaintSaving" placeholder="e.g. 50000" min="0" value="0">
+            <div class="hint">If lease includes maintenance</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESIDUAL VALUE RISK -->
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-hdr-icon">📉</div>
+          <div><h2>Residual Value Risk Analysis</h2><p>Scenario modelling for lessor returns</p></div>
+        </div>
+        <div class="card-body">
+          <div class="section-label">Bear / Base / Bull Scenarios</div>
+          <div class="three-fields">
+            <div class="field">
+              <label>Bear Case RV (%)</label>
+              <input type="number" id="rvBear" placeholder="e.g. 10" min="0" max="100" value="10">
+              <div class="hint">Worst case</div>
+            </div>
+            <div class="field">
+              <label>Base Case RV (%)</label>
+              <input type="number" id="rvBase" placeholder="e.g. 20" min="0" max="100" value="20">
+              <div class="hint">Expected</div>
+            </div>
+            <div class="field">
+              <label>Bull Case RV (%)</label>
+              <input type="number" id="rvBull" placeholder="e.g. 35" min="0" max="100" value="35">
+              <div class="hint">Best case</div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Remarketing / Disposal Cost (%)</label>
+            <input type="number" id="disposalCost" placeholder="e.g. 5" min="0" max="20" step="0.5" value="5">
+            <div class="hint">% of residual value — remarketing, refurbishment, sales cost</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="errorMsg" class="error-msg"></div>
+      <button class="btn-calc" onclick="calculate()">⚡ Calculate Deal ROI</button>
+      <button class="btn-reset" onclick="resetAll()">↺ Reset</button>
+    </div>
+
+    <!-- RIGHT: RESULTS -->
+    <div>
+      <div class="card">
+        <div class="card-body">
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">💹</div>
+            <h3>Deal Analysis Awaiting</h3>
+            <p>Enter deal parameters on the left and click Calculate Deal ROI to see full lessor and lessee profitability analysis including IRR, NPV, yield, spread and residual value risk scenarios.</p>
+          </div>
+
+          <div id="resultsContent" style="display:none">
+
+            <!-- VERDICT -->
+            <div id="verdictBanner"></div>
+
+            <!-- KPI STRIP -->
+            <div class="kpi-strip" id="kpiStrip"></div>
+
+            <!-- PERSPECTIVE TOGGLE -->
+            <div class="perspective-toggle">
+              <button class="persp-btn active" id="persp-lessor" onclick="switchPersp('lessor',this)">🏦 Lessor View</button>
+              <button class="persp-btn" id="persp-lessee" onclick="switchPersp('lessee',this)">🏢 Lessee View</button>
+              <button class="persp-btn" id="persp-rv" onclick="switchPersp('rv',this)">📉 Residual Risk</button>
+            </div>
+
+            <!-- LESSOR VIEW -->
+            <div id="view-lessor" class="persp-view">
+              <div class="result-tabs">
+                <button class="result-tab active" onclick="showTab('cashflow',this,'lessor')">💰 Cash Flows</button>
+                <button class="result-tab" onclick="showTab('returns',this,'lessor')">📈 Returns</button>
+                <button class="result-tab" onclick="showTab('breakeven',this,'lessor')">⚖️ Break-even</button>
+              </div>
+              <div class="result-panel active" id="lessor-tab-cashflow"><div id="lessorCashflow"></div></div>
+              <div class="result-panel" id="lessor-tab-returns"><div id="lessorReturns"></div></div>
+              <div class="result-panel" id="lessor-tab-breakeven"><div id="lessorBreakeven"></div></div>
+            </div>
+
+            <!-- LESSEE VIEW -->
+            <div id="view-lessee" class="persp-view" style="display:none">
+              <div id="lesseeContent"></div>
+            </div>
+
+            <!-- RESIDUAL RISK VIEW -->
+            <div id="view-rv" class="persp-view" style="display:none">
+              <div id="rvContent"></div>
+            </div>
+
+            <div class="export-row">
+              <button class="btn-exp primary" onclick="exportCSV()">⬇ Export (CSV)</button>
+              <button class="btn-exp secondary" onclick="window.print()">🖨 Print Report</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="footer-note" id="footerNote" style="display:none">
+        <p><strong>VGL Deal Structuring Toolkit:</strong> IRR calculated using Newton-Raphson iteration on after-tax cash flows. NPV discounted at cost of funds. Yield = pre-tax. All figures indicative — for final deal structuring consult a qualified financial advisor. <strong>Velocity Global Leasing</strong></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const currSymbols={USD:'$',KES:'KSh',NGN:'₦',ZAR:'R',GHS:'GH₵',TZS:'TSh',UGX:'USh',EGP:'E£',MAD:'MAD',ZMW:'ZK',XOF:'CFA',INR:'₹',SGD:'S$',AED:'AED',MYR:'RM'};
+let structure='fl';
+let calcData=null;
+
+function getCurr(){return document.getElementById('currency').value;}
+function getSym(){return currSymbols[getCurr()]||getCurr();}
+function fmt(n,d=0){if(isNaN(n))return'-';const s=getSym();return(n<0?'-':'')+s+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function fmtPct(n,d=2){if(isNaN(n))return'-';return n.toFixed(d)+'%';}
+function fmtN(n,d=2){if(isNaN(n))return'-';return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+
+function selectStructure(s){
+  structure=s;
+  ['fl','ol','hp'].forEach(x=>document.getElementById('struct-'+x).classList.toggle('active',x===s));
+  const hint=document.getElementById('residualHint');
+  if(s==='hp'){hint.textContent='Usually 0 — lessee acquires asset';}
+  else if(s==='ol'){hint.textContent='Key risk for lessor — model carefully';}
+  else{hint.textContent='% of asset cost at end of term';}
+}
+
+function showErr(msg){const e=document.getElementById('errorMsg');e.textContent=msg;e.style.display='block';}
+
+// IRR via Newton-Raphson
+function calcIRR(cfs,guess=0.1){
+  let r=guess;
+  for(let i=0;i<200;i++){
+    let f=0,df=0;
+    cfs.forEach((cf,t)=>{const d=Math.pow(1+r,t);f+=cf/d;df+=(-t*cf)/Math.pow(1+r,t+1);});
+    const nr=r-f/df;
+    if(Math.abs(nr-r)<1e-8)return nr;
+    r=nr;
+  }
+  return r;
+}
+
+function calcNPV(cfs,rate){return cfs.reduce((s,cf,t)=>s+cf/Math.pow(1+rate,t),0);}
+
+function calculate(){
+  document.getElementById('errorMsg').style.display='none';
+  const assetCost=parseFloat(document.getElementById('assetCost').value);
+  const term=parseInt(document.getElementById('term').value);
+  const annualRental=parseFloat(document.getElementById('annualRental').value);
+  const deposit=parseFloat(document.getElementById('deposit').value)||0;
+  const residualPct=parseFloat(document.getElementById('residualPct').value)||0;
+  const costOfFunds=parseFloat(document.getElementById('costOfFunds').value)/100;
+  const servicingCost=parseFloat(document.getElementById('servicingCost').value)||0;
+  const setupCost=parseFloat(document.getElementById('setupCost').value)||0;
+  const maintCost=parseFloat(document.getElementById('maintCost').value)||0;
+  const insuranceCost=parseFloat(document.getElementById('insuranceCost').value)||0;
+  const taxRate=parseFloat(document.getElementById('taxRate').value)/100||0;
+  const lesseeBorrRate=parseFloat(document.getElementById('lesseeBorrRate').value)/100||0.18;
+  const lesseeTaxRate=parseFloat(document.getElementById('lesseeTaxRate').value)/100||0.30;
+  const lesseeMaintSaving=parseFloat(document.getElementById('lesseeMaintSaving').value)||0;
+  const rvBear=parseFloat(document.getElementById('rvBear').value)||10;
+  const rvBase=parseFloat(document.getElementById('rvBase').value)||20;
+  const rvBull=parseFloat(document.getElementById('rvBull').value)||35;
+  const disposalCostPct=parseFloat(document.getElementById('disposalCost').value)/100||0.05;
+  const freq=parseInt(document.getElementById('payFreq').value);
+
+  if(!assetCost||assetCost<=0){showErr('Please enter a valid Asset Cost.');return;}
+  if(!term||term<=0){showErr('Please enter a valid Term.');return;}
+  if(!annualRental||annualRental<=0){showErr('Please enter a valid Annual Rental.');return;}
+  if(isNaN(costOfFunds)||costOfFunds<=0){showErr('Please enter a valid Cost of Funds.');return;}
+
+  const residualValue=assetCost*residualPct/100;
+  const totalRentals=annualRental*term;
+  const totalDeposit=deposit;
+
+  // ── LESSOR CASH FLOWS (annual) ──
+  // Year 0: outflow = asset cost - deposit received
+  const lessorCFs=[];
+  lessorCFs.push(-(assetCost-deposit)-setupCost); // Year 0
+
+  // Depreciation for tax (straight-line for operating lease)
+  const annualDepr=structure==='ol'?(assetCost-residualValue)/term:0;
+
+  for(let y=1;y<=term;y++){
+    const rentalIncome=annualRental;
+    const opCosts=servicingCost+maintCost+insuranceCost;
+    const fundingCost=assetCost*costOfFunds; // simplified annual funding cost
+    const taxableIncome=rentalIncome-opCosts-fundingCost-(structure==='ol'?annualDepr:0);
+    const tax=Math.max(0,taxableIncome*taxRate);
+    const netCF=rentalIncome-opCosts-fundingCost-tax;
+    lessorCFs.push(netCF);
+  }
+  // Terminal: residual value net of disposal
+  const netRV=residualValue*(1-disposalCostPct);
+  lessorCFs[lessorCFs.length-1]+=netRV;
+
+  // Gross cash flows (pre-tax, for yield)
+  const grossCFs=[-(assetCost-deposit)];
+  for(let y=1;y<=term;y++){
+    grossCFs.push(annualRental-(servicingCost+maintCost+insuranceCost));
+  }
+  grossCFs[grossCFs.length-1]+=netRV;
+
+  // ── LESSOR METRICS ──
+  const lessorIRR=calcIRR(lessorCFs)*100;
+  const lessorNPV=calcNPV(lessorCFs,costOfFunds);
+  const grossYield=calcIRR(grossCFs)*100;
+  const spread=grossYield-(costOfFunds*100);
+  const totalProfit=totalRentals+netRV-(assetCost-deposit)+deposit-setupCost-(servicingCost+maintCost+insuranceCost)*term;
+  const roi=(totalProfit/(assetCost))*100;
+  const profitMargin=(totalProfit/(totalRentals+netRV))*100;
+
+  // ── LESSEE METRICS ──
+  // Effective cost of lease to lessee
+  const lesseeCFs=[deposit>0?deposit:annualRental]; // Year 0 = first payment or deposit
+  const leaseDeductionAnnual=annualRental*lesseeTaxRate;
+  const maintSavingAnnual=lesseeMaintSaving;
+  for(let y=1;y<=term;y++){
+    const netLeasePayment=annualRental-leaseDeductionAnnual-maintSavingAnnual;
+    lesseeCFs.push(netLeasePayment);
+  }
+  lesseeCFs[0]=-(deposit||annualRental);
+  lesseeCFs.push(0); // no residual benefit for lessee (unless HP)
+  if(structure==='hp'){lesseeCFs[lesseeCFs.length-1]=residualValue*0.5;} // HP: lessee gets asset value
+
+  const lesseeEffectiveRate=calcIRR(lesseeCFs.map((cf,i)=>i===0?cf:-lesseeCFs[i]))*100;
+  const lesseeNPVSavingVsLoan=calcNPV(
+    lesseeCFs.map((cf,i)=>{
+      if(i===0)return cf;
+      const loanPayment=assetCost*(lesseeBorrRate*Math.pow(1+lesseeBorrRate,term))/(Math.pow(1+lesseeBorrRate,term)-1);
+      return loanPayment-(-cf);
+    }),lesseeBorrRate);
+
+  const totalLeaseCost=annualRental*term+deposit;
+  const totalLoanCost=assetCost*(lesseeBorrRate*Math.pow(1+lesseeBorrRate,term))/(Math.pow(1+lesseeBorrRate,term)-1)*term;
+  const leaseSaving=totalLoanCost-totalLeaseCost;
+
+  // ── RESIDUAL SCENARIOS ──
+  function calcScenarioIRR(rvPct){
+    const rv=assetCost*rvPct/100*(1-disposalCostPct);
+    const cfs=[-(assetCost-deposit)-setupCost];
+    for(let y=1;y<=term;y++){
+      const rentalIncome=annualRental;
+      const opCosts=servicingCost+maintCost+insuranceCost;
+      const fundingCost=assetCost*costOfFunds;
+      const taxableIncome=rentalIncome-opCosts-fundingCost-(structure==='ol'?annualDepr:0);
+      const tax=Math.max(0,taxableIncome*taxRate);
+      cfs.push(rentalIncome-opCosts-fundingCost-tax);
+    }
+    cfs[cfs.length-1]+=rv;
+    const irr=calcIRR(cfs)*100;
+    const npv=calcNPV(cfs,costOfFunds);
+    return{irr,npv,rv:assetCost*rvPct/100};
+  }
+
+  const scenarioBear=calcScenarioIRR(rvBear);
+  const scenarioBase=calcScenarioIRR(rvBase);
+  const scenarioBull=calcScenarioIRR(rvBull);
+
+  // Breakeven rental
+  const breakevenRental=(assetCost-deposit)*(costOfFunds*Math.pow(1+costOfFunds,term))/(Math.pow(1+costOfFunds,term)-1)+servicingCost+maintCost+insuranceCost-(netRV/term);
+
+  // Year-by-year
+  const yearlyRows=[];
+  let bookVal=assetCost;
+  for(let y=1;y<=term;y++){
+    const depr=structure==='ol'?annualDepr:(assetCost-residualValue)/term;
+    bookVal=Math.max(bookVal-depr,residualValue);
+    const interest=assetCost*costOfFunds;
+    const grossProfit=annualRental-servicingCost-maintCost-insuranceCost-interest;
+    const tax=Math.max(0,grossProfit*taxRate);
+    const netProfit=grossProfit-tax;
+    yearlyRows.push({year:y,rental:annualRental,opCost:servicingCost+maintCost+insuranceCost,interest,depr,grossProfit,tax,netProfit,bookVal,lessorCF:lessorCFs[y]});
+  }
+
+  // Verdict
+  let verdictType='marginal';
+  let verdictTitle='Marginal Deal';
+  let verdictDetail='';
+  if(lessorIRR>=(costOfFunds*100)+5){
+    verdictType='profitable';
+    verdictTitle='Profitable Deal — Proceed';
+    verdictDetail=`IRR of ${fmtPct(lessorIRR)} exceeds cost of funds (${fmtPct(costOfFunds*100)}) by ${fmtPct(spread)} spread. NPV is positive at ${fmt(lessorNPV)}. This deal creates shareholder value.`;
+  } else if(lessorIRR>=(costOfFunds*100)){
+    verdictType='marginal';
+    verdictTitle='Marginal — Review Pricing';
+    verdictDetail=`IRR of ${fmtPct(lessorIRR)} exceeds cost of funds but spread is thin at ${fmtPct(spread)}. Consider increasing rental, reducing costs or improving residual value assumption to enhance returns.`;
+  } else {
+    verdictType='unprofitable';
+    verdictTitle='Unprofitable — Do Not Proceed';
+    verdictDetail=`IRR of ${fmtPct(lessorIRR)} is BELOW cost of funds (${fmtPct(costOfFunds*100)}). This deal destroys value. Breakeven rental is ${fmt(breakevenRental)}/year. Reprice or restructure before proceeding.`;
+  }
+
+  calcData={
+    lessorIRR,lessorNPV,grossYield,spread,totalProfit,roi,profitMargin,
+    lesseeCFs,lesseeEffectiveRate,lesseeNPVSavingVsLoan,totalLeaseCost,totalLoanCost,leaseSaving,
+    scenarioBear,scenarioBase,scenarioBull,
+    yearlyRows,breakevenRental,
+    assetCost,annualRental,term,residualValue,costOfFunds,
+    verdictType,verdictTitle,verdictDetail,
+    leaseDeductionAnnual,rvBear,rvBase,rvBull,structure,
+    lessorCFs,grossCFs
+  };
+
+  renderResults();
+}
+
+function renderResults(){
+  const d=calcData;
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('resultsContent').style.display='block';
+  document.getElementById('footerNote').style.display='block';
+
+  // Verdict
+  document.getElementById('verdictBanner').innerHTML=`
+    <div class="verdict ${d.verdictType}">
+      <div class="verdict-label">VGL Deal Assessment</div>
+      <div class="verdict-title">${d.verdictTitle}</div>
+      <div class="verdict-detail">${d.verdictDetail}</div>
+    </div>`;
+
+  // KPIs
+  const irrBadge=d.lessorIRR>=(d.costOfFunds*100)+5?'good':d.lessorIRR>=(d.costOfFunds*100)?'warn':'bad';
+  const npvBadge=d.lessorNPV>0?'good':'bad';
+  const spreadBadge=d.spread>=5?'good':d.spread>=2?'warn':'bad';
+  const roiBadge=d.roi>=15?'good':d.roi>=5?'warn':'bad';
+  document.getElementById('kpiStrip').innerHTML=`
+    <div class="kpi-card k-irr">
+      <div class="kpi-badge ${irrBadge}">${irrBadge==='good'?'STRONG':irrBadge==='warn'?'MARGINAL':'WEAK'}</div>
+      <div class="kpi-label">Lessor IRR</div>
+      <div class="kpi-value">${fmtPct(d.lessorIRR)}</div>
+      <div class="kpi-sub">After-tax return</div>
+    </div>
+    <div class="kpi-card k-npv">
+      <div class="kpi-badge ${npvBadge}">${d.lessorNPV>0?'POSITIVE':'NEGATIVE'}</div>
+      <div class="kpi-label">Deal NPV</div>
+      <div class="kpi-value">${fmt(d.lessorNPV)}</div>
+      <div class="kpi-sub">At cost of funds</div>
+    </div>
+    <div class="kpi-card k-yield">
+      <div class="kpi-badge ${spreadBadge}">SPREAD ${fmtPct(d.spread,1)}</div>
+      <div class="kpi-label">Gross Yield</div>
+      <div class="kpi-value">${fmtPct(d.grossYield)}</div>
+      <div class="kpi-sub">Pre-tax IRR</div>
+    </div>
+    <div class="kpi-card k-spread">
+      <div class="kpi-badge ${roiBadge}">${d.roi>=15?'STRONG':d.roi>=5?'OK':'WEAK'}</div>
+      <div class="kpi-label">Total ROI</div>
+      <div class="kpi-value">${fmtPct(d.roi,1)}</div>
+      <div class="kpi-sub">On asset deployed</div>
+    </div>`;
+
+  renderLessorView();
+  renderLesseeView();
+  renderRVView();
+}
+
+function renderLessorView(){
+  const d=calcData;
+
+  // Cash flows tab
+  let cfHTML=`<div class="tbl-wrap"><table>
+    <thead><tr><th>Year</th><th>Rental Income</th><th>Op. Costs</th><th>Funding Cost</th><th>Tax</th><th>Net CF</th><th>Book Value</th></tr></thead><tbody>`;
+  d.yearlyRows.forEach(r=>{
+    const tax=Math.max(0,(r.rental-r.opCost-r.interest)*0.3);
+    cfHTML+=`<tr>
+      <td>Year ${r.year}</td>
+      <td>${fmt(r.rental)}</td>
+      <td style="color:var(--red)">(${fmt(r.opCost)})</td>
+      <td style="color:var(--red)">(${fmt(r.interest)})</td>
+      <td style="color:var(--red)">(${fmt(r.tax)})</td>
+      <td style="color:${r.netProfit>0?'var(--green)':'var(--red)'};font-weight:600">${fmt(r.netProfit)}</td>
+      <td>${fmt(r.bookVal)}</td>
+    </tr>`;
+  });
+  const totalNetCF=d.yearlyRows.reduce((s,r)=>s+r.netProfit,0);
+  cfHTML+=`</tbody><tfoot><tr><td>TOTAL</td><td>${fmt(d.annualRental*d.term)}</td><td>—</td><td>—</td><td>—</td><td>${fmt(totalNetCF)}</td><td>—</td></tr></tfoot></table></div>`;
+  document.getElementById('lessorCashflow').innerHTML=cfHTML;
+
+  // Returns tab
+  const maxBar=Math.max(d.grossYield,d.lessorIRR,d.costOfFunds*100,d.spread+d.costOfFunds*100);
+  document.getElementById('lessorReturns').innerHTML=`
+    <div class="summary-box">
+      <h4>Deal Returns Summary — ${structure==='fl'?'Finance Lease':structure==='ol'?'Operating Lease':'Hire Purchase'}</h4>
+      <div class="summary-grid">
+        <div class="sum-item"><div class="sum-label">Gross Yield (Pre-Tax IRR)</div><div class="sum-val">${fmtPct(d.grossYield)}</div></div>
+        <div class="sum-item"><div class="sum-label">Net IRR (After-Tax)</div><div class="sum-val ${d.lessorIRR>d.costOfFunds*100?'positive':'negative'}">${fmtPct(d.lessorIRR)}</div></div>
+        <div class="sum-item"><div class="sum-label">Cost of Funds</div><div class="sum-val">${fmtPct(d.costOfFunds*100)}</div></div>
+        <div class="sum-item"><div class="sum-label">Net Spread</div><div class="sum-val ${d.spread>0?'positive':'negative'}">${fmtPct(d.spread)}</div></div>
+        <div class="sum-item"><div class="sum-label">NPV at Cost of Funds</div><div class="sum-val ${d.lessorNPV>0?'positive':'negative'}">${fmt(d.lessorNPV)}</div></div>
+        <div class="sum-item"><div class="sum-label">Total Profit</div><div class="sum-val ${d.totalProfit>0?'positive':'negative'}">${fmt(d.totalProfit)}</div></div>
+        <div class="sum-item"><div class="sum-label">ROI on Asset</div><div class="sum-val">${fmtPct(d.roi,1)}</div></div>
+        <div class="sum-item"><div class="sum-label">Profit Margin</div><div class="sum-val">${fmtPct(d.profitMargin,1)}</div></div>
+      </div>
+    </div>
+    <div class="gauge-wrap">
+      <div class="gauge-row">
+        <div class="gauge-label">Gross Yield</div>
+        <div class="gauge-track"><div class="gauge-fill" style="width:${Math.min(100,d.grossYield/maxBar*100)}%;background:linear-gradient(90deg,var(--navy),var(--navy-mid))"><span class="gauge-val">${fmtPct(d.grossYield)}</span></div></div>
+      </div>
+      <div class="gauge-row">
+        <div class="gauge-label">Net IRR</div>
+        <div class="gauge-track"><div class="gauge-fill" style="width:${Math.min(100,d.lessorIRR/maxBar*100)}%;background:linear-gradient(90deg,var(--green),#14a85a)"><span class="gauge-val">${fmtPct(d.lessorIRR)}</span></div></div>
+      </div>
+      <div class="gauge-row">
+        <div class="gauge-label">Cost of Funds</div>
+        <div class="gauge-track"><div class="gauge-fill" style="width:${Math.min(100,d.costOfFunds*100/maxBar*100)}%;background:linear-gradient(90deg,var(--red),#e55)"><span class="gauge-val">${fmtPct(d.costOfFunds*100)}</span></div></div>
+      </div>
+    </div>`;
+
+  // Breakeven tab
+  document.getElementById('lessorBreakeven').innerHTML=`
+    <div style="background:var(--amber-bg);border:1.5px solid var(--amber);border-radius:8px;padding:16px 20px;margin-bottom:16px">
+      <div style="font-size:10px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Break-even Analysis</div>
+      <div style="font-size:12px;color:var(--navy);line-height:1.8">
+        <strong>Minimum Annual Rental to Break Even:</strong> <span style="font-family:'DM Mono',monospace;font-size:14px;color:var(--amber)">${fmt(d.breakevenRental)}</span><br>
+        <strong>Current Annual Rental:</strong> <span style="font-family:'DM Mono',monospace">${fmt(d.annualRental)}</span><br>
+        <strong>Rental Cushion:</strong> <span style="font-family:'DM Mono',monospace;color:${d.annualRental>d.breakevenRental?'var(--green)':'var(--red)'}">${fmt(d.annualRental-d.breakevenRental)} (${fmtPct((d.annualRental-d.breakevenRental)/d.breakevenRental*100,1)})</span><br>
+        <strong>Minimum Residual Value to Break Even:</strong> <span style="font-family:'DM Mono',monospace">${fmt(Math.max(0,d.assetCost-(d.annualRental*d.term)))}</span>
+      </div>
+    </div>
+    <div style="padding:12px 16px;background:var(--gold-pale);border-left:4px solid var(--gold);border-radius:0 6px 6px 0;font-size:12px;color:var(--navy);line-height:1.7">
+      <strong>Pricing Guidance:</strong> For a target IRR of ${fmtPct(d.costOfFunds*100+5)}, the annual rental should be at least ${fmt(d.breakevenRental*1.1)}. Always stress test with bear case residual value before committing to a deal.
+    </div>`;
+}
+
+function renderLesseeView(){
+  const d=calcData;
+  const structLabel={fl:'Finance Lease',ol:'Operating Lease',hp:'Hire Purchase'}[d.structure];
+  document.getElementById('lesseeContent').innerHTML=`
+    <div class="summary-box" style="margin-bottom:16px">
+      <h4>Lessee Cost Analysis — ${structLabel}</h4>
+      <div class="summary-grid">
+        <div class="sum-item"><div class="sum-label">Total Lease Cost</div><div class="sum-val">${fmt(d.totalLeaseCost)}</div></div>
+        <div class="sum-item"><div class="sum-label">Total Loan Cost (Alternative)</div><div class="sum-val">${fmt(d.totalLoanCost)}</div></div>
+        <div class="sum-item"><div class="sum-label">Saving vs Loan</div><div class="sum-val ${d.leaseSaving>0?'positive':'negative'}">${fmt(d.leaseSaving)}</div></div>
+        <div class="sum-item"><div class="sum-label">Annual Tax Deduction</div><div class="sum-val positive">${fmt(d.leaseDeductionAnnual)}</div></div>
+      </div>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Year</th><th>Gross Lease Payment</th><th>Tax Deduction</th><th>Net Lease Cost</th><th>Equivalent Loan Payment</th><th>Annual Saving</th></tr></thead>
+      <tbody>
+        ${d.yearlyRows.map(r=>{
+          const grossLoan=d.assetCost*(d.costOfFunds*Math.pow(1+d.costOfFunds,d.term))/(Math.pow(1+d.costOfFunds,d.term)-1);
+          const netLease=d.annualRental-d.leaseDeductionAnnual;
+          const saving=grossLoan-netLease;
+          return `<tr>
+            <td>Year ${r.year}</td>
+            <td>${fmt(d.annualRental)}</td>
+            <td style="color:var(--green)">${fmt(d.leaseDeductionAnnual)}</td>
+            <td style="font-weight:600">${fmt(netLease)}</td>
+            <td>${fmt(grossLoan)}</td>
+            <td style="color:${saving>0?'var(--green)':'var(--red)'};font-weight:600">${fmt(saving)}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+      <tfoot><tr>
+        <td>TOTAL</td>
+        <td>${fmt(d.annualRental*d.term)}</td>
+        <td>${fmt(d.leaseDeductionAnnual*d.term)}</td>
+        <td>${fmt((d.annualRental-d.leaseDeductionAnnual)*d.term)}</td>
+        <td>${fmt(d.totalLoanCost)}</td>
+        <td style="color:${d.leaseSaving>0?'var(--green)':'var(--red)'};font-weight:600">${fmt(d.leaseSaving)}</td>
+      </tr></tfoot>
+    </table></div>
+    <div style="margin-top:14px;padding:12px 16px;background:var(--gold-pale);border-left:4px solid var(--gold);border-radius:0 6px 6px 0;font-size:12px;color:var(--navy);line-height:1.7">
+      <strong>Lessee Key Insight:</strong> Lease payments are fully tax-deductible operating expenses in most African jurisdictions — reducing the effective cost of leasing vs borrowing where only interest (not principal) is deductible. This structural advantage is one of leasing's most powerful selling points.
+    </div>`;
+}
+
+function renderRVView(){
+  const d=calcData;
+  document.getElementById('rvContent').innerHTML=`
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--gold)">Residual Value Risk — Three Scenarios</div>
+      <div class="scenario-grid">
+        <div class="scenario-card bear">
+          <div class="scenario-title">🐻 Bear Case</div>
+          <div class="scenario-irr">${fmtPct(d.scenarioBear.irr)}</div>
+          <div class="scenario-npv">NPV: ${fmt(d.scenarioBear.npv)}</div>
+          <div class="scenario-rv" style="color:var(--red)">RV: ${d.rvBear}% = ${fmt(d.scenarioBear.rv)}</div>
+        </div>
+        <div class="scenario-card base">
+          <div class="scenario-title">📊 Base Case</div>
+          <div class="scenario-irr">${fmtPct(d.scenarioBase.irr)}</div>
+          <div class="scenario-npv">NPV: ${fmt(d.scenarioBase.npv)}</div>
+          <div class="scenario-rv" style="color:var(--navy)">RV: ${d.rvBase}% = ${fmt(d.scenarioBase.rv)}</div>
+        </div>
+        <div class="scenario-card bull">
+          <div class="scenario-title">🐂 Bull Case</div>
+          <div class="scenario-irr">${fmtPct(d.scenarioBull.irr)}</div>
+          <div class="scenario-npv">NPV: ${fmt(d.scenarioBull.npv)}</div>
+          <div class="scenario-rv" style="color:var(--green)">RV: ${d.rvBull}% = ${fmt(d.scenarioBull.rv)}</div>
+        </div>
+      </div>
+    </div>
+    <div class="tbl-wrap" style="margin-bottom:14px"><table>
+      <thead><tr><th>Scenario</th><th>RV %</th><th>Net RV (after disposal)</th><th>IRR</th><th>NPV</th><th>vs Base IRR</th></tr></thead>
+      <tbody>
+        <tr><td>🐻 Bear — Distressed Market</td><td>${d.rvBear}%</td><td>${fmt(d.scenarioBear.rv*(1-0.05))}</td><td style="color:var(--red);font-weight:600">${fmtPct(d.scenarioBear.irr)}</td><td style="color:${d.scenarioBear.npv>0?'var(--green)':'var(--red)'}">${fmt(d.scenarioBear.npv)}</td><td style="color:var(--red)">${fmtPct(d.scenarioBear.irr-d.scenarioBase.irr)}</td></tr>
+        <tr><td>📊 Base — Expected Market</td><td>${d.rvBase}%</td><td>${fmt(d.scenarioBase.rv*(1-0.05))}</td><td style="color:var(--navy);font-weight:600">${fmtPct(d.scenarioBase.irr)}</td><td style="color:${d.scenarioBase.npv>0?'var(--green)':'var(--red)'}">${fmt(d.scenarioBase.npv)}</td><td>—</td></tr>
+        <tr><td>🐂 Bull — Strong Resale Market</td><td>${d.rvBull}%</td><td>${fmt(d.scenarioBull.rv*(1-0.05))}</td><td style="color:var(--green);font-weight:600">${fmtPct(d.scenarioBull.irr)}</td><td style="color:${d.scenarioBull.npv>0?'var(--green)':'var(--red)'}">${fmt(d.scenarioBull.npv)}</td><td style="color:var(--green)">+${fmtPct(d.scenarioBull.irr-d.scenarioBase.irr)}</td></tr>
+      </tbody>
+    </table></div>
+    <div style="padding:12px 16px;background:var(--red-bg);border-left:4px solid var(--red);border-radius:0 6px 6px 0;font-size:12px;color:var(--navy);line-height:1.7;margin-bottom:10px">
+      <strong>⚠️ Residual Value Risk Warning:</strong> For ${d.structure==='ol'?'operating leases':'this structure'}, the lessor bears residual value risk. Yellow goods and commercial vehicles in Africa can depreciate 50–70% over 5 years in distressed market conditions. Always stress test with bear case before committing. Consider residual value guarantees from dealers or manufacturers.
+    </div>
+    <div style="padding:12px 16px;background:var(--green-bg);border-left:4px solid var(--green);border-radius:0 6px 6px 0;font-size:12px;color:var(--navy);line-height:1.7">
+      <strong>✅ IRR Resilience:</strong> ${d.scenarioBear.irr>d.costOfFunds*100?`Even in the bear case (RV = ${d.rvBear}%), IRR of ${fmtPct(d.scenarioBear.irr)} still exceeds cost of funds — this deal is resilient to residual value risk.`:`Bear case IRR of ${fmtPct(d.scenarioBear.irr)} falls below cost of funds. Ensure adequate residual value protection before proceeding.`}
+    </div>`;
+}
+
+function switchPersp(view,btn){
+  document.querySelectorAll('.persp-view').forEach(v=>v.style.display='none');
+  document.querySelectorAll('.persp-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+view).style.display='block';
+  btn.classList.add('active');
+}
+
+function showTab(id,btn,prefix){
+  const tabs=document.querySelectorAll(`#view-${prefix} .result-panel`);
+  const btns=document.querySelectorAll(`#view-${prefix} .result-tab`);
+  tabs.forEach(t=>t.classList.remove('active'));
+  btns.forEach(b=>b.classList.remove('active'));
+  document.getElementById(`${prefix}-tab-${id}`).classList.add('active');
+  btn.classList.add('active');
+}
+
+function exportCSV(){
+  if(!calcData)return;
+  const d=calcData;
+  let csv=`VGL Deal Profitability Analysis\nStructure,${d.structure==='fl'?'Finance Lease':d.structure==='ol'?'Operating Lease':'Hire Purchase'}\nAsset Cost,${d.assetCost}\nAnnual Rental,${d.annualRental}\nTerm,${d.term} years\n\n`;
+  csv+=`LESSOR METRICS\nIRR (After-Tax),${d.lessorIRR.toFixed(2)}%\nGross Yield,${d.grossYield.toFixed(2)}%\nSpread,${d.spread.toFixed(2)}%\nNPV,${d.lessorNPV.toFixed(0)}\nTotal Profit,${d.totalProfit.toFixed(0)}\nROI,${d.roi.toFixed(2)}%\n\n`;
+  csv+=`RESIDUAL SCENARIOS\nScenario,RV%,IRR,NPV\nBear,${d.rvBear}%,${d.scenarioBear.irr.toFixed(2)}%,${d.scenarioBear.npv.toFixed(0)}\nBase,${d.rvBase}%,${d.scenarioBase.irr.toFixed(2)}%,${d.scenarioBase.npv.toFixed(0)}\nBull,${d.rvBull}%,${d.scenarioBull.irr.toFixed(2)}%,${d.scenarioBull.npv.toFixed(0)}\n\n`;
+  csv+=`YEAR BY YEAR\nYear,Rental,Op Costs,Funding Cost,Tax,Net CF\n`;
+  d.yearlyRows.forEach(r=>csv+=`${r.year},${r.rental.toFixed(0)},${r.opCost.toFixed(0)},${r.interest.toFixed(0)},${r.tax.toFixed(0)},${r.netProfit.toFixed(0)}\n`);
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='VGL_Deal_ROI_Analysis.csv';
+  a.click();URL.revokeObjectURL(url);
+}
+
+function resetAll(){
+  document.querySelectorAll('input[type="number"]').forEach(i=>{
+    const defaults={residualPct:20,deposit:0,servicingCost:0,setupCost:0,maintCost:0,insuranceCost:0,taxRate:30,lesseeBorrRate:18,lesseeTaxRate:30,lesseeMaintSaving:0,rvBear:10,rvBase:20,rvBull:35,disposalCost:5};
+    i.value=defaults[i.id]??'';
+  });
+  document.getElementById('errorMsg').style.display='none';
+  document.getElementById('emptyState').style.display='block';
+  document.getElementById('resultsContent').style.display='none';
+  document.getElementById('footerNote').style.display='none';
+  calcData=null;
+}
+</script>
+</body>
+</html>

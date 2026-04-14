@@ -154,27 +154,27 @@ const HomePage = () => {
       </section>
 
       {/* Industry Tools Intro */}
-      <section className="py-20 bg-slate-900 border-t border-slate-800 relative overflow-hidden">
+      {/* <section className="py-20 bg-slate-900 border-t border-slate-800 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-500/10 rounded-2xl mb-6 border border-blue-500/20">
               <Wrench className="w-8 h-8 text-blue-400" />
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Industry Tools & Assessments</h2>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Assessments</h2>
             <p className="text-slate-400 text-lg leading-relaxed">
-              Leverage our proprietary calculators and diagnostic tools to make data-driven decisions and identify your learning opportunities.
+              Leverage our proprietary diagnostic tools to make data-driven decisions and identify your learning opportunities.
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Lease vs Buy Calculator */}
-      <section className="py-12 bg-slate-950">
+      {/* <section className="py-12 bg-slate-950">
         <div className="container mx-auto px-4">
           <LeaseVsBuyCalculator />
         </div>
-      </section>
+      </section> */}
 
       {/* Skills Gap Test */}
       <section className="py-12 bg-slate-900 border-y border-slate-800">
@@ -220,7 +220,7 @@ const HomePage = () => {
               className="bg-slate-800 border border-purple-500/50 rounded-2xl p-8 shadow-[0_0_30px_-10px_rgba(168,85,247,0.2)] transform md:-translate-y-4"
             >
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <span className="bg-purple-500 text-white text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full">Recommended</span>
+                {/* <span className="bg-purple-500 text-white text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full">Recommended</span> */}
               </div>
               <Star className="w-10 h-10 text-purple-400 mb-4" />
               <h3 className="text-2xl font-bold text-white mb-2">Premium</h3>

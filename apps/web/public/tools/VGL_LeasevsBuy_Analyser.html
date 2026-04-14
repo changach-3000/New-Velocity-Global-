@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lease vs Buy Analyser | Velocity Global Leasing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0B1F4B; --navy-mid:#1A3666; --navy-light:#243d6e;
+  --gold:#C9A84C; --gold-light:#F0D080; --gold-pale:rgba(201,168,76,0.12);
+  --cream:#FAF8F3; --white:#FFFFFF; --slate:#64748B;
+  --border:#D6DAEA; --light-bg:#EEF1F8;
+  --green:#1A7A4A; --green-bg:#E8F5EE; --green-light:#c6e8d4;
+  --red:#C0392B; --red-bg:#FDECEA; --red-light:#f5c0bb;
+  --amber:#C97A00; --amber-bg:#FFF3CD;
+  --shadow:0 4px 24px rgba(11,31,75,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;}
+
+/* HEADER */
+.header{background:var(--navy);position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--gold);}
+.header::after{content:'';position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:rgba(201,168,76,0.04);pointer-events:none;}
+.header-inner{max-width:1200px;margin:0 auto;padding:32px 32px 28px 44px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.header-badge{display:inline-block;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.4);color:var(--gold);font-size:10px;font-weight:600;letter-spacing:2.5px;padding:4px 12px;border-radius:2px;margin-bottom:10px;text-transform:uppercase;}
+.header h1{font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,32px);font-weight:700;color:var(--white);line-height:1.2;}
+.header h1 span{color:var(--gold);}
+.header-sub{font-size:12px;color:#8899BB;margin-top:5px;}
+.vgl-logo{font-family:'Playfair Display',serif;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:2px;text-transform:uppercase;text-align:right;}
+.vgl-tagline{font-size:11px;color:#556688;margin-top:2px;text-align:right;}
+
+/* LAYOUT */
+.app{max-width:1200px;margin:0 auto;padding:28px 20px 80px;}
+.three-col{display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start;}
+@media(max-width:860px){.three-col{grid-template-columns:1fr;}}
+
+/* CARD */
+.card{background:var(--white);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px;}
+.card:last-child{margin-bottom:0;}
+.card-header{background:var(--navy);padding:14px 20px;display:flex;align-items:center;gap:10px;}
+.card-icon{width:28px;height:28px;background:var(--gold-pale);border:1px solid rgba(201,168,76,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.card-header h2{font-size:13px;font-weight:600;color:var(--white);}
+.card-header p{font-size:11px;color:#8899BB;margin-top:1px;}
+.card-body{padding:20px;}
+
+/* FORM */
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
+.field label .req{color:var(--gold);margin-left:2px;}
+.field input,.field select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--navy);background:var(--white);transition:border-color .2s,box-shadow .2s;outline:none;appearance:none;}
+.field input:focus,.field select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,31,75,0.08);}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%230B1F4B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px;cursor:pointer;}
+.two-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.field .hint{font-size:10px;color:var(--slate);margin-top:3px;}
+.section-label{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;margin-top:6px;padding-bottom:7px;border-bottom:1px solid var(--gold-pale);}
+
+/* TAX FLAG */
+.tax-flag{background:var(--amber-bg);border:1.5px solid var(--amber);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--amber);font-weight:500;display:flex;gap:8px;align-items:flex-start;}
+.tax-flag span{font-size:14px;}
+
+/* BUTTONS */
+.btn-calc{width:100%;padding:13px;background:var(--gold);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--navy);cursor:pointer;letter-spacing:0.5px;text-transform:uppercase;transition:all .2s;margin-top:4px;}
+.btn-calc:hover{background:var(--gold-light);box-shadow:0 6px 20px rgba(201,168,76,0.35);transform:translateY(-1px);}
+.btn-reset{width:100%;padding:9px;background:transparent;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--slate);cursor:pointer;margin-top:8px;transition:all .2s;}
+.btn-reset:hover{border-color:var(--navy);color:var(--navy);}
+.error-msg{background:var(--red-bg);border:1px solid var(--red);color:var(--red);border-radius:6px;padding:9px 12px;font-size:12px;margin-top:8px;display:none;}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:70px 28px;color:var(--slate);}
+.empty-icon{font-size:44px;margin-bottom:14px;opacity:.4;}
+.empty-state h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);margin-bottom:7px;opacity:.5;}
+.empty-state p{font-size:12px;line-height:1.6;opacity:.6;}
+
+/* RECOMMENDATION BANNER */
+.rec-banner{border-radius:10px;padding:24px 28px;margin-bottom:20px;position:relative;overflow:hidden;animation:fadeUp .4s ease both;}
+.rec-banner.lease{background:linear-gradient(135deg,var(--green),#14623c);}
+.rec-banner.buy{background:linear-gradient(135deg,var(--navy),var(--navy-mid));}
+.rec-banner.neutral{background:linear-gradient(135deg,var(--amber),#a86200);}
+.rec-banner::before{content:'';position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.05);}
+.rec-verdict{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:8px;}
+.rec-title{font-family:'Playfair Display',serif;font-size:clamp(18px,3vw,26px);font-weight:700;color:var(--white);line-height:1.2;margin-bottom:8px;}
+.rec-saving{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.6;}
+.rec-saving strong{color:var(--gold-light);}
+
+/* NPV COMPARISON */
+.npv-compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+@media(max-width:580px){.npv-compare{grid-template-columns:1fr;}}
+.npv-card{border-radius:8px;padding:18px 20px;border:2px solid var(--border);position:relative;transition:all .3s;}
+.npv-card.winner{border-color:var(--green);}
+.npv-card.loser{opacity:.75;}
+.npv-winner-badge{position:absolute;top:10px;right:10px;background:var(--green);color:var(--white);font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px;letter-spacing:0.5px;}
+.npv-label{font-size:11px;font-weight:700;color:var(--slate);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.npv-value{font-family:'DM Mono',monospace;font-size:clamp(16px,2.5vw,24px);font-weight:500;color:var(--navy);margin-bottom:4px;}
+.npv-sub{font-size:11px;color:var(--slate);}
+.npv-breakdown{font-size:11px;color:var(--slate);margin-top:8px;line-height:1.6;border-top:1px solid var(--border);padding-top:8px;}
+
+/* RESULT TABS */
+.result-tabs{display:flex;gap:0;margin-bottom:18px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border);}
+.result-tab{flex:1;padding:9px 6px;background:var(--white);border:none;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--slate);cursor:pointer;transition:all .2s;border-right:1px solid var(--border);}
+.result-tab:last-child{border-right:none;}
+.result-tab.active{background:var(--navy);color:var(--gold);}
+.result-tab:hover:not(.active){background:var(--light-bg);}
+.result-panel{display:none;}
+.result-panel.active{display:block;animation:fadeUp .3s ease both;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;border-radius:8px;border:1.5px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:11px;}
+thead th{background:var(--navy);color:var(--gold);padding:9px 11px;text-align:right;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.8px;white-space:nowrap;}
+thead th:first-child{text-align:left;}
+tbody tr:nth-child(even) td{background:#F7F9FC;}
+tbody tr:hover td{background:var(--light-bg);}
+tbody td{padding:8px 11px;border-bottom:1px solid var(--border);text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--navy);white-space:nowrap;}
+tbody td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;}
+tfoot td{padding:9px 11px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:var(--navy);background:var(--light-bg);border-top:2px solid var(--navy);}
+tfoot td:first-child{text-align:left;font-family:'DM Sans',sans-serif;}
+
+/* CASHFLOW BARS */
+.cashflow-section{margin-bottom:20px;}
+.cashflow-section h4{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:7px;border-bottom:2px solid var(--gold);}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-label{font-size:11px;color:var(--navy);width:120px;flex-shrink:0;font-weight:500;}
+.bar-track{flex:1;height:22px;background:var(--light-bg);border-radius:4px;overflow:hidden;position:relative;}
+.bar-fill{height:100%;border-radius:4px;transition:width .6s ease;display:flex;align-items:center;padding:0 8px;}
+.bar-fill.lease-bar{background:linear-gradient(90deg,var(--green),#14a85a);}
+.bar-fill.buy-bar{background:linear-gradient(90deg,var(--navy),var(--navy-mid));}
+.bar-val{font-family:'DM Mono',monospace;font-size:10px;color:var(--white);font-weight:500;white-space:nowrap;}
+.bar-val-ext{font-family:'DM Mono',monospace;font-size:10px;color:var(--slate);margin-left:6px;}
+
+/* TAX BOX */
+.tax-box{background:var(--amber-bg);border:1.5px solid var(--amber);border-radius:8px;padding:14px 18px;margin-bottom:16px;}
+.tax-box h4{font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.tax-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(201,130,0,0.15);font-size:12px;}
+.tax-row:last-child{border-bottom:none;font-weight:700;}
+.tax-row span:first-child{color:var(--navy);}
+.tax-row span:last-child{font-family:'DM Mono',monospace;color:var(--amber);}
+
+/* EXPORT */
+.export-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+.btn-export{padding:9px 18px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:0.3px;}
+.btn-export.primary{background:var(--navy);color:var(--gold);border:none;}
+.btn-export.primary:hover{background:var(--navy-mid);}
+.btn-export.secondary{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+.btn-export.secondary:hover{background:var(--light-bg);}
+
+/* FOOTER */
+.footer-note{margin-top:24px;padding:14px 18px;background:var(--navy);border-radius:8px;display:flex;gap:10px;align-items:flex-start;}
+.footer-note p{font-size:11px;color:#8899BB;line-height:1.6;}
+.footer-note p strong{color:var(--gold);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* RESPONSIVE */
+@media(max-width:640px){.app{padding:16px 12px 60px;}.card-body{padding:14px;}.header-inner{padding:20px 16px 16px 24px;}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-badge">Deal Structuring Toolkit — Tool 2</div>
+      <h1>Lease vs <span>Buy</span> Decision Analyser</h1>
+      <div class="header-sub">NPV comparison · African & Asian tax treatment · Clear recommendation · Cash flow analysis</div>
+    </div>
+    <div>
+      <div class="vgl-logo">Velocity Global Leasing</div>
+      <div class="vgl-tagline">Unlocking Africa's $1 Trillion Leasing Opportunity</div>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+<div class="three-col">
+
+  <!-- LEFT: INPUTS -->
+  <div>
+
+    <!-- ASSET DETAILS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🏗️</div>
+        <div><h2>Asset & Market Details</h2><p>Define the asset and financial context</p></div>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Asset</div>
+        <div class="field">
+          <label>Asset Type <span class="req">*</span></label>
+          <select id="assetType" onchange="updateTaxHint()">
+            <option value="vehicle">Commercial Vehicle / Fleet</option>
+            <option value="yellow">Yellow Goods (Construction Equipment)</option>
+            <option value="medical">Medical Equipment</option>
+            <option value="technology">Technology / IT Assets</option>
+          </select>
+        </div>
+        <div class="two-fields">
+          <div class="field">
+            <label>Currency <span class="req">*</span></label>
+            <select id="currency">
+              <option value="USD">USD — US Dollar</option>
+              <option value="KES">KES — Kenyan Shilling</option>
+              <option value="NGN">NGN — Nigerian Naira</option>
+              <option value="ZAR">ZAR — South African Rand</option>
+              <option value="GHS">GHS — Ghanaian Cedi</option>
+              <option value="TZS">TZS — Tanzanian Shilling</option>
+              <option value="UGX">UGX — Ugandan Shilling</option>
+              <option value="ETB">ETB — Ethiopian Birr</option>
+              <option value="ZMW">ZMW — Zambian Kwacha</option>
+              <option value="EGP">EGP — Egyptian Pound</option>
+              <option value="MAD">MAD — Moroccan Dirham</option>
+              <option value="XOF">XOF — West African CFA</option>
+              <option value="INR">INR — Indian Rupee</option>
+              <option value="SGD">SGD — Singapore Dollar</option>
+              <option value="AED">AED — UAE Dirham</option>
+              <option value="MYR">MYR — Malaysian Ringgit</option>
+              <option value="PHP">PHP — Philippine Peso</option>
+              <option value="IDR">IDR — Indonesian Rupiah</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Asset Value <span class="req">*</span></label>
+            <input type="number" id="assetValue" placeholder="e.g. 5000000" min="0">
+          </div>
+        </div>
+        <div class="two-fields">
+          <div class="field">
+            <label>Analysis Period (Years) <span class="req">*</span></label>
+            <input type="number" id="analysisPeriod" placeholder="e.g. 5" min="1" max="20">
+          </div>
+          <div class="field">
+            <label>Residual Value (%)</label>
+            <input type="number" id="residualPct" placeholder="e.g. 20" min="0" max="100" value="20">
+            <div class="hint">Asset value at end of period</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Discount Rate / Cost of Capital (%) <span class="req">*</span></label>
+          <input type="number" id="discountRate" placeholder="e.g. 15" min="0" max="100" step="0.1">
+          <div class="hint">Used for NPV calculation (IBR or WACC)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEASING INPUTS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">📄</div>
+        <div><h2>Leasing Option</h2><p>Enter lease structure details</p></div>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label>Annual Lease Payment <span class="req">*</span></label>
+          <input type="number" id="annualLease" placeholder="e.g. 1200000" min="0">
+        </div>
+        <div class="two-fields">
+          <div class="field">
+            <label>Annual Maintenance (Lease)</label>
+            <input type="number" id="leaseMaint" placeholder="e.g. 50000" min="0" value="0">
+            <div class="hint">If lessee bears cost</div>
+          </div>
+          <div class="field">
+            <label>Initial Deposit / Advance</label>
+            <input type="number" id="leaseDeposit" placeholder="e.g. 0" min="0" value="0">
+          </div>
+        </div>
+        <div class="field">
+          <label>Annual Insurance (Lease)</label>
+          <input type="number" id="leaseInsurance" placeholder="e.g. 80000" min="0" value="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- BUYING INPUTS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🏦</div>
+        <div><h2>Buying / Loan Option</h2><p>Enter loan or outright purchase details</p></div>
+      </div>
+      <div class="card-body">
+        <div class="two-fields">
+          <div class="field">
+            <label>Down Payment (%)</label>
+            <input type="number" id="downPaymentPct" placeholder="e.g. 20" min="0" max="100" value="20">
+          </div>
+          <div class="field">
+            <label>Loan Interest Rate (%)</label>
+            <input type="number" id="loanRate" placeholder="e.g. 18" min="0" max="100" step="0.1" value="18">
+          </div>
+        </div>
+        <div class="two-fields">
+          <div class="field">
+            <label>Annual Maintenance (Own)</label>
+            <input type="number" id="buyMaint" placeholder="e.g. 120000" min="0" value="0">
+            <div class="hint">Typically higher when owned</div>
+          </div>
+          <div class="field">
+            <label>Annual Insurance (Own)</label>
+            <input type="number" id="buyInsurance" placeholder="e.g. 100000" min="0" value="0">
+          </div>
+        </div>
+        <div class="field">
+          <label>Annual Operating Costs (Fuel/Other)</label>
+          <input type="number" id="buyOpex" placeholder="e.g. 200000" min="0" value="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- TAX INPUTS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🧾</div>
+        <div><h2>Tax Parameters</h2><p>African / Asian tax treatment</p></div>
+      </div>
+      <div class="card-body">
+        <div id="taxHint" class="tax-flag">
+          <span>⚠️</span>
+          <div id="taxHintText">Select an asset type to see applicable tax treatment guidance.</div>
+        </div>
+        <div class="field">
+          <label>Corporate Tax Rate (%) <span class="req">*</span></label>
+          <input type="number" id="taxRate" placeholder="e.g. 30" min="0" max="100" step="0.1">
+          <div class="hint">e.g. Kenya 30% · Nigeria 30% · South Africa 27% · Ghana 25% · UAE 9%</div>
+        </div>
+        <div class="field">
+          <label>Depreciation Method</label>
+          <select id="deprMethod">
+            <option value="sld">Straight-Line (SLD)</option>
+            <option value="ddb">Double Declining Balance (DDB)</option>
+            <option value="uop">Units of Production (UoP)</option>
+          </select>
+        </div>
+        <div class="two-fields">
+          <div class="field">
+            <label>Lease Tax Deductibility</label>
+            <select id="leaseTaxDeduct">
+              <option value="full">Fully Deductible (Operating)</option>
+              <option value="partial">Partially Deductible</option>
+              <option value="none">Not Deductible</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>VAT / GST on Lease (%)</label>
+            <input type="number" id="leaseVAT" placeholder="e.g. 16" min="0" max="50" step="0.1" value="0">
+            <div class="hint">e.g. Kenya 16% · Nigeria 7.5%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="errorMsg" class="error-msg"></div>
+    <button class="btn-calc" onclick="analyse()">⚡ Analyse Decision</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Reset</button>
+  </div>
+
+  <!-- RIGHT: RESULTS -->
+  <div>
+    <div class="card">
+      <div class="card-body">
+
+        <!-- EMPTY STATE -->
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">⚖️</div>
+          <h3>Awaiting Analysis</h3>
+          <p>Enter your asset details, lease structure, loan parameters and tax rate on the left — then click Analyse Decision for a full NPV comparison with a clear recommendation.</p>
+        </div>
+
+        <!-- RESULTS -->
+        <div id="resultsContent" style="display:none">
+
+          <!-- RECOMMENDATION BANNER -->
+          <div id="recBanner"></div>
+
+          <!-- NPV COMPARISON -->
+          <div class="npv-compare" id="npvCompare"></div>
+
+          <!-- RESULT TABS -->
+          <div class="result-tabs">
+            <button class="result-tab active" onclick="showTab('cashflow',this)">💰 Cash Flow Analysis</button>
+            <button class="result-tab" onclick="showTab('tax',this)">🧾 Tax Analysis</button>
+            <button class="result-tab" onclick="showTab('yearly',this)">📅 Year-by-Year</button>
+            <button class="result-tab" onclick="showTab('summary',this)">📋 Full Summary</button>
+          </div>
+
+          <div class="result-panel active" id="tab-cashflow">
+            <div id="cashflowContent"></div>
+          </div>
+          <div class="result-panel" id="tab-tax">
+            <div id="taxContent"></div>
+          </div>
+          <div class="result-panel" id="tab-yearly">
+            <div id="yearlyContent"></div>
+          </div>
+          <div class="result-panel" id="tab-summary">
+            <div id="summaryContent"></div>
+          </div>
+
+          <div class="export-row">
+            <button class="btn-export primary" onclick="exportCSV()">⬇ Export Analysis (CSV)</button>
+            <button class="btn-export secondary" onclick="window.print()">🖨 Print Report</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note" id="footerNote" style="display:none">
+      <p><strong>Disclaimer:</strong> This tool provides indicative analysis for decision-support purposes. Tax treatment varies by jurisdiction — always verify with a qualified tax advisor. NPV calculations use after-tax cash flows discounted at the specified rate. <strong>Velocity Global Leasing</strong> — Unlocking Africa's $1 Trillion Leasing Opportunity.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+const currSymbols={USD:'$',KES:'KSh',NGN:'₦',ZAR:'R',GHS:'GH₵',TZS:'TSh',UGX:'USh',ETB:'Br',ZMW:'ZK',EGP:'E£',MAD:'MAD',XOF:'CFA',INR:'₹',SGD:'S$',AED:'AED',MYR:'RM',PHP:'₱',IDR:'Rp'};
+
+const taxHints={
+  vehicle:"Commercial vehicles in Africa: Lease payments are typically fully deductible as operating expenses. When buying, claim depreciation (25–33% p.a.) + loan interest. Kenya, Nigeria & SA allow accelerated depreciation on commercial vehicles.",
+  yellow:"Yellow goods / construction equipment: Lease payments deductible as operating expenses. SARS (SA) allows 50:30:20 write-off on new machinery. Nigeria allows initial allowance of 50% + annual allowance of 25% on heavy equipment.",
+  medical:"Medical equipment: Many African tax authorities offer accelerated depreciation (50–100% in year 1) as investment incentives. Lease payments fully deductible. Check country-specific incentives for healthcare investment.",
+  technology:"Technology assets: Short useful life (3–5 yrs) makes leasing tax-efficient. Many jurisdictions allow 100% first-year write-off on ICT equipment. Lease payments deductible as opex. Obsolescence risk favours leasing."
+};
+
+function updateTaxHint(){
+  const t=document.getElementById('assetType').value;
+  document.getElementById('taxHintText').textContent=taxHints[t]||'';
+}
+updateTaxHint();
+
+function getCurr(){return document.getElementById('currency').value;}
+function getSym(){return currSymbols[getCurr()]||getCurr();}
+function fmt(n,d=0){if(isNaN(n))return'-';return getSym()+' '+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function fmtN(n,d=2){if(isNaN(n))return'-';return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function pv(cashflows,rate){return cashflows.reduce((s,cf,i)=>s+cf/Math.pow(1+rate,i+1),0);}
+
+let results=null;
+
+function analyse(){
+  const err=document.getElementById('errorMsg');
+  err.style.display='none';
+
+  const assetValue=parseFloat(document.getElementById('assetValue').value);
+  const analysisPeriod=parseInt(document.getElementById('analysisPeriod').value);
+  const residualPct=parseFloat(document.getElementById('residualPct').value)||20;
+  const discountRate=parseFloat(document.getElementById('discountRate').value)/100;
+  const annualLease=parseFloat(document.getElementById('annualLease').value);
+  const leaseMaint=parseFloat(document.getElementById('leaseMaint').value)||0;
+  const leaseDeposit=parseFloat(document.getElementById('leaseDeposit').value)||0;
+  const leaseInsurance=parseFloat(document.getElementById('leaseInsurance').value)||0;
+  const downPaymentPct=parseFloat(document.getElementById('downPaymentPct').value)||20;
+  const loanRate=parseFloat(document.getElementById('loanRate').value)/100;
+  const buyMaint=parseFloat(document.getElementById('buyMaint').value)||0;
+  const buyInsurance=parseFloat(document.getElementById('buyInsurance').value)||0;
+  const buyOpex=parseFloat(document.getElementById('buyOpex').value)||0;
+  const taxRate=parseFloat(document.getElementById('taxRate').value)/100;
+  const deprMethod=document.getElementById('deprMethod').value;
+  const leaseTaxDeduct=document.getElementById('leaseTaxDeduct').value;
+  const leaseVAT=parseFloat(document.getElementById('leaseVAT').value)/100||0;
+  const assetType=document.getElementById('assetType').value;
+
+  if(!assetValue||assetValue<=0){showErr('Please enter a valid Asset Value.');return;}
+  if(!analysisPeriod||analysisPeriod<=0){showErr('Please enter a valid Analysis Period.');return;}
+  if(isNaN(discountRate)||discountRate<0){showErr('Please enter a valid Discount Rate.');return;}
+  if(!annualLease||annualLease<=0){showErr('Please enter a valid Annual Lease Payment.');return;}
+  if(isNaN(taxRate)||taxRate<0){showErr('Please enter a valid Corporate Tax Rate.');return;}
+
+  const residualValue=assetValue*(residualPct/100);
+  const downPayment=assetValue*(downPaymentPct/100);
+  const loanAmount=assetValue-downPayment;
+  const loanPayment=loanAmount>0?loanAmount*(loanRate*Math.pow(1+loanRate,analysisPeriod))/(Math.pow(1+loanRate,analysisPeriod)-1):0;
+
+  // Annual depreciation
+  let depreciationSchedule=[];
+  let bookValue=assetValue;
+  for(let y=1;y<=analysisPeriod;y++){
+    let depr=0;
+    if(deprMethod==='sld'){
+      depr=(assetValue-residualValue)/analysisPeriod;
+    } else if(deprMethod==='ddb'){
+      const rate=2/analysisPeriod;
+      depr=bookValue*rate;
+      if(y===analysisPeriod) depr=bookValue-residualValue;
+    } else {
+      depr=(assetValue-residualValue)/analysisPeriod;
+    }
+    bookValue=Math.max(bookValue-depr,residualValue);
+    depreciationSchedule.push(depr);
+  }
+
+  // Year-by-year analysis
+  const leaseRows=[];
+  const buyRows=[];
+  let loanBalance=loanAmount;
+
+  for(let y=1;y<=analysisPeriod;y++){
+    // LEASE
+    const leasePaymentVAT=annualLease*(1+leaseVAT);
+    const leaseTaxDeduction=leaseTaxDeduct==='full'?annualLease*taxRate:leaseTaxDeduct==='partial'?annualLease*0.5*taxRate:0;
+    const leaseNetCost=leasePaymentVAT+leaseMaint+leaseInsurance-leaseTaxDeduction;
+    const leaseInitial=y===1?leaseDeposit:0;
+    const leaseTotalCF=leaseNetCost+leaseInitial;
+
+    // BUY
+    const loanInterest=loanBalance*loanRate;
+    const loanPrincipal=loanPayment-loanInterest;
+    loanBalance=Math.max(loanBalance-loanPrincipal,0);
+    const depreciation=depreciationSchedule[y-1];
+    const taxableDeductions=(loanInterest+depreciation)*taxRate;
+    const buyInitial=y===1?downPayment:0;
+    const buyCashPayment=loanPayment+buyMaint+buyInsurance+buyOpex;
+    const buyNetCost=buyCashPayment-taxableDeductions+buyInitial;
+    const residualBenefit=y===analysisPeriod?residualValue:0;
+    const buyTotalCF=buyNetCost-residualBenefit;
+
+    leaseRows.push({year:y,payment:annualLease,vat:annualLease*leaseVAT,maintenance:leaseMaint,insurance:leaseInsurance,taxSaving:leaseTaxDeduction,initial:leaseInitial,netCost:leaseTotalCF});
+    buyRows.push({year:y,loanPayment,interest:loanInterest,principal:loanPrincipal,maintenance:buyMaint,insurance:buyInsurance,opex:buyOpex,depreciation,taxSaving:taxableDeductions,initial:buyInitial,residualBenefit,netCost:buyTotalCF});
+  }
+
+  const leaseCFs=leaseRows.map(r=>r.netCost);
+  const buyCFs=buyRows.map(r=>r.netCost);
+  const leaseNPV=pv(leaseCFs,discountRate)+(leaseDeposit>0?leaseDeposit:0);
+  const buyNPV=pv(buyCFs,discountRate);
+  const leaseTotalUndiscounted=leaseCFs.reduce((a,b)=>a+b,0);
+  const buyTotalUndiscounted=buyCFs.reduce((a,b)=>a+b,0);
+  const leaseTotalTaxSaving=leaseRows.reduce((s,r)=>s+r.taxSaving,0);
+  const buyTotalTaxSaving=buyRows.reduce((s,r)=>s+r.taxSaving,0);
+
+  const saving=Math.abs(leaseNPV-buyNPV);
+  const winner=leaseNPV<buyNPV?'lease':'buy';
+  const savingPct=(saving/Math.max(leaseNPV,buyNPV)*100).toFixed(1);
+
+  results={
+    leaseNPV,buyNPV,saving,winner,savingPct,
+    leaseRows,buyRows,leaseCFs,buyCFs,
+    leaseTotalUndiscounted,buyTotalUndiscounted,
+    leaseTotalTaxSaving,buyTotalTaxSaving,
+    assetValue,annualLease,analysisPeriod,
+    discountRate,taxRate,loanRate,
+    downPayment,residualValue,deprMethod,
+    leaseTaxDeduct,leaseVAT,assetType
+  };
+
+  renderResults();
+}
+
+function showErr(msg){const e=document.getElementById('errorMsg');e.textContent=msg;e.style.display='block';}
+
+function renderResults(){
+  const r=results;
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('resultsContent').style.display='block';
+  document.getElementById('footerNote').style.display='flex';
+
+  renderBanner();
+  renderNPVCards();
+  renderCashflow();
+  renderTax();
+  renderYearly();
+  renderSummary();
+}
+
+function renderBanner(){
+  const r=results;
+  const isLease=r.winner==='lease';
+  const cls=isLease?'lease':'buy';
+  const title=isLease
+    ?`Leasing is the more cost-effective option`
+    :`Buying / Loan financing is the more cost-effective option`;
+  const detail=isLease
+    ?`Leasing saves <strong>${fmt(r.saving)}</strong> (${r.savingPct}%) in net present value terms compared to buying over ${r.analysisPeriod} years. Lease payments are tax-deductible operating expenses — reducing your effective cost significantly.`
+    :`Buying saves <strong>${fmt(r.saving)}</strong> (${r.savingPct}%) in net present value terms compared to leasing over ${r.analysisPeriod} years. Ownership benefits, residual value retention (${fmt(r.residualValue)}) and depreciation tax shields drive this advantage.`;
+
+  document.getElementById('recBanner').innerHTML=`
+    <div class="rec-banner ${cls}" style="animation-delay:.05s">
+      <div class="rec-verdict">VGL Recommendation</div>
+      <div class="rec-title">${title}</div>
+      <div class="rec-saving">${detail}</div>
+    </div>`;
+}
+
+function renderNPVCards(){
+  const r=results;
+  const leaseWin=r.winner==='lease';
+  document.getElementById('npvCompare').innerHTML=`
+    <div class="npv-card ${leaseWin?'winner':'loser'}">
+      ${leaseWin?'<div class="npv-winner-badge">✓ RECOMMENDED</div>':''}
+      <div class="npv-label">📄 Leasing — NPV Cost</div>
+      <div class="npv-value">${fmt(r.leaseNPV)}</div>
+      <div class="npv-sub">Net present value of all lease costs</div>
+      <div class="npv-breakdown">
+        Total undiscounted: ${fmt(r.leaseTotalUndiscounted)}<br>
+        Tax savings: ${fmt(r.leaseTotalTaxSaving)}<br>
+        Annual payment: ${fmt(r.annualLease)}
+      </div>
+    </div>
+    <div class="npv-card ${!leaseWin?'winner':'loser'}">
+      ${!leaseWin?'<div class="npv-winner-badge">✓ RECOMMENDED</div>':''}
+      <div class="npv-label">🏦 Buying / Loan — NPV Cost</div>
+      <div class="npv-value">${fmt(r.buyNPV)}</div>
+      <div class="npv-sub">Net present value of all ownership costs</div>
+      <div class="npv-breakdown">
+        Total undiscounted: ${fmt(r.buyTotalUndiscounted)}<br>
+        Tax savings: ${fmt(r.buyTotalTaxSaving)}<br>
+        Residual value: ${fmt(r.residualValue)}
+      </div>
+    </div>`;
+}
+
+function renderCashflow(){
+  const r=results;
+  const maxVal=Math.max(...r.leaseCFs,...r.buyCFs);
+  let html=`<div class="cashflow-section"><h4>Annual Net Cost Comparison (After Tax)</h4>`;
+
+  r.leaseRows.forEach((lr,i)=>{
+    const br=r.buyRows[i];
+    const lW=(lr.netCost/maxVal*100).toFixed(1);
+    const bW=(br.netCost/maxVal*100).toFixed(1);
+    html+=`
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:var(--slate);margin-bottom:5px;letter-spacing:.5px">YEAR ${lr.year}</div>
+        <div class="bar-row">
+          <div class="bar-label">Lease</div>
+          <div class="bar-track">
+            <div class="bar-fill lease-bar" style="width:${lW}%">
+              <span class="bar-val">${fmt(lr.netCost)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Buy</div>
+          <div class="bar-track">
+            <div class="bar-fill buy-bar" style="width:${bW}%">
+              <span class="bar-val">${fmt(br.netCost)}</span>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  html+=`</div>
+  <div class="cashflow-section"><h4>Key Cash Flow Metrics</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Metric</th><th>Lease</th><th>Buy</th><th>Difference</th></tr></thead>
+    <tbody>
+      <tr><td>Total Payments</td><td>${fmt(r.annualLease*r.analysisPeriod)}</td><td>${fmt(r.buyRows.reduce((s,rr)=>s+rr.loanPayment,0))}</td><td>—</td></tr>
+      <tr><td>Total Tax Savings</td><td>${fmt(r.leaseTotalTaxSaving)}</td><td>${fmt(r.buyTotalTaxSaving)}</td><td>${fmt(r.buyTotalTaxSaving-r.leaseTotalTaxSaving)}</td></tr>
+      <tr><td>Total Net Cost (Undiscounted)</td><td>${fmt(r.leaseTotalUndiscounted)}</td><td>${fmt(r.buyTotalUndiscounted)}</td><td>${fmt(r.buyTotalUndiscounted-r.leaseTotalUndiscounted)}</td></tr>
+      <tr><td><strong>NPV of Costs</strong></td><td><strong>${fmt(r.leaseNPV)}</strong></td><td><strong>${fmt(r.buyNPV)}</strong></td><td><strong style="color:${r.winner==='lease'?'var(--green)':'var(--red)'}">Lease saves ${fmt(r.saving)}</strong></td></tr>
+    </tbody>
+  </table></div></div>`;
+  document.getElementById('cashflowContent').innerHTML=html;
+}
+
+function renderTax(){
+  const r=results;
+  const leaseDeductLabel={'full':'Fully Deductible (100%)','partial':'Partially Deductible (50%)','none':'Not Deductible (0%)'}[r.leaseTaxDeduct];
+  const totalLeaseTax=r.leaseTotalTaxSaving;
+  const totalBuyTax=r.buyTotalTaxSaving;
+  const deprLabel={'sld':'Straight-Line','ddb':'Double Declining Balance','uop':'Units of Production'}[r.deprMethod];
+
+  const typeLabel={vehicle:'Commercial Vehicle / Fleet',yellow:'Yellow Goods',medical:'Medical Equipment',technology:'Technology Assets'}[r.assetType];
+
+  let html=`
+  <div class="tax-box">
+    <h4>Tax Treatment Summary — ${typeLabel}</h4>
+    <div class="tax-row"><span>Corporate Tax Rate Applied</span><span>${(r.taxRate*100).toFixed(1)}%</span></div>
+    <div class="tax-row"><span>Lease Payment Deductibility</span><span>${leaseDeductLabel}</span></div>
+    <div class="tax-row"><span>Depreciation Method (Buy)</span><span>${deprLabel}</span></div>
+    <div class="tax-row"><span>Total Tax Saving — Lease</span><span>${fmt(totalLeaseTax)}</span></div>
+    <div class="tax-row"><span>Total Tax Saving — Buy (Interest + Depr)</span><span>${fmt(totalBuyTax)}</span></div>
+    <div class="tax-row"><span>Net Tax Advantage</span><span>${totalLeaseTax>totalBuyTax?'Lease':'Buy'} by ${fmt(Math.abs(totalLeaseTax-totalBuyTax))}</span></div>
+  </div>
+  <div class="cashflow-section"><h4>Year-by-Year Tax Savings</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Year</th><th>Lease Tax Saving</th><th>Buy: Depr Tax Shield</th><th>Buy: Interest Tax Shield</th><th>Buy Total Tax</th></tr></thead>
+    <tbody>`;
+
+  r.leaseRows.forEach((lr,i)=>{
+    const br=r.buyRows[i];
+    const intrTax=br.interest*r.taxRate;
+    const depTax=br.depreciation*r.taxRate;
+    html+=`<tr>
+      <td>Year ${lr.year}</td>
+      <td>${fmt(lr.taxSaving)}</td>
+      <td>${fmt(depTax)}</td>
+      <td>${fmt(intrTax)}</td>
+      <td>${fmt(br.taxSaving)}</td>
+    </tr>`;
+  });
+
+  html+=`</tbody>
+    <tfoot><tr><td>TOTAL</td><td>${fmt(totalLeaseTax)}</td><td>—</td><td>—</td><td>${fmt(totalBuyTax)}</td></tr></tfoot>
+  </table></div></div>
+  <div style="padding:12px 14px;background:var(--gold-pale);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:11px;color:var(--navy);line-height:1.7;margin-top:14px">
+    <strong>African Tax Context:</strong> Most African jurisdictions treat lease payments as fully deductible operating expenses (Kenya Income Tax Act s.15, Nigeria CITA, South Africa ITA s.11). Under ownership, only loan interest and depreciation are deductible — not the principal repayment. This structural difference often makes leasing more tax-efficient for businesses without large tax losses to shelter.
+  </div>`;
+
+  document.getElementById('taxContent').innerHTML=html;
+}
+
+function renderYearly(){
+  const r=results;
+  let html=`<div class="table-wrap"><table>
+    <thead><tr>
+      <th>Year</th>
+      <th>Lease Payment</th><th>Lease Tax Saving</th><th>Lease Net Cost</th>
+      <th>Loan Payment</th><th>Buy Tax Saving</th><th>Residual</th><th>Buy Net Cost</th>
+      <th>Advantage</th>
+    </tr></thead><tbody>`;
+
+  r.leaseRows.forEach((lr,i)=>{
+    const br=r.buyRows[i];
+    const adv=br.netCost-lr.netCost;
+    const advColor=adv>0?'var(--green)':'var(--red)';
+    const advLabel=adv>0?`Lease +${fmt(adv)}`:`Buy +${fmt(-adv)}`;
+    html+=`<tr>
+      <td>Year ${lr.year}</td>
+      <td>${fmt(lr.payment+lr.vat)}</td>
+      <td style="color:var(--green)">${fmt(lr.taxSaving)}</td>
+      <td><strong>${fmt(lr.netCost)}</strong></td>
+      <td>${fmt(br.loanPayment+br.maintenance+br.insurance+br.opex)}</td>
+      <td style="color:var(--green)">${fmt(br.taxSaving)}</td>
+      <td style="color:var(--amber)">${br.residualBenefit>0?fmt(br.residualBenefit):'—'}</td>
+      <td><strong>${fmt(br.netCost)}</strong></td>
+      <td style="color:${advColor};font-weight:600">${advLabel}</td>
+    </tr>`;
+  });
+
+  html+=`</tbody><tfoot><tr>
+    <td>TOTAL</td>
+    <td>—</td><td>${fmt(r.leaseTotalTaxSaving)}</td><td><strong>${fmt(r.leaseTotalUndiscounted)}</strong></td>
+    <td>—</td><td>${fmt(r.buyTotalTaxSaving)}</td><td>—</td><td><strong>${fmt(r.buyTotalUndiscounted)}</strong></td>
+    <td>—</td>
+  </tr></tfoot></table></div>`;
+
+  document.getElementById('yearlyContent').innerHTML=html;
+}
+
+function renderSummary(){
+  const r=results;
+  const assetLabels={vehicle:'Commercial Vehicle / Fleet',yellow:'Yellow Goods (Construction Equipment)',medical:'Medical Equipment',technology:'Technology / IT Assets'};
+  document.getElementById('summaryContent').innerHTML=`
+  <div class="table-wrap" style="margin-bottom:16px"><table>
+    <thead><tr><th style="text-align:left">Parameter</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Asset Type</td><td>${assetLabels[r.assetType]}</td></tr>
+      <tr><td>Currency</td><td>${getCurr()}</td></tr>
+      <tr><td>Asset Value</td><td>${fmt(r.assetValue)}</td></tr>
+      <tr><td>Analysis Period</td><td>${r.analysisPeriod} years</td></tr>
+      <tr><td>Discount Rate</td><td>${(r.discountRate*100).toFixed(2)}%</td></tr>
+      <tr><td>Residual Value</td><td>${fmt(r.residualValue)}</td></tr>
+      <tr><td>Annual Lease Payment</td><td>${fmt(r.annualLease)}</td></tr>
+      <tr><td>Loan Interest Rate</td><td>${(r.loanRate*100).toFixed(2)}%</td></tr>
+      <tr><td>Down Payment</td><td>${fmt(r.downPayment)}</td></tr>
+      <tr><td>Corporate Tax Rate</td><td>${(r.taxRate*100).toFixed(1)}%</td></tr>
+      <tr><td>Lease Tax Deductibility</td><td>${{'full':'Fully Deductible','partial':'Partial (50%)','none':'Not Deductible'}[r.leaseTaxDeduct]}</td></tr>
+      <tr><td><strong>NPV of Lease Costs</strong></td><td><strong>${fmt(r.leaseNPV)}</strong></td></tr>
+      <tr><td><strong>NPV of Buy Costs</strong></td><td><strong>${fmt(r.buyNPV)}</strong></td></tr>
+      <tr><td><strong>Cost Saving (NPV)</strong></td><td><strong style="color:var(--green)">${fmt(r.saving)} (${r.savingPct}%)</strong></td></tr>
+      <tr><td><strong>VGL Recommendation</strong></td><td><strong style="color:${r.winner==='lease'?'var(--green)':'var(--navy)'}">${r.winner==='lease'?'✓ LEASE':'✓ BUY / LOAN'}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <div style="padding:14px 16px;background:var(--gold-pale);border-left:4px solid var(--gold);border-radius:0 6px 6px 0;font-size:12px;color:var(--navy);line-height:1.8">
+    <strong>Key Insight:</strong> The NPV methodology accounts for the time value of money — a payment today costs more in real terms than the same payment in future years. After-tax cash flows are used to reflect the true economic cost of each option. The option with the lower NPV cost is the more financially rational choice under these assumptions.
+  </div>`;
+}
+
+function showTab(id,btn){
+  document.querySelectorAll('.result-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.result-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function exportCSV(){
+  if(!results)return;
+  const r=results;
+  let csv=`VGL Lease vs Buy Analysis\nCurrency,${getCurr()}\nAsset Value,${r.assetValue}\nAnalysis Period,${r.analysisPeriod} years\n\n`;
+  csv+=`Year,Lease Net Cost,Buy Net Cost,Advantage\n`;
+  r.leaseRows.forEach((lr,i)=>{
+    const br=r.buyRows[i];
+    const adv=br.netCost>lr.netCost?`Lease by ${(br.netCost-lr.netCost).toFixed(2)}`:`Buy by ${(lr.netCost-br.netCost).toFixed(2)}`;
+    csv+=`${lr.year},${lr.netCost.toFixed(2)},${br.netCost.toFixed(2)},${adv}\n`;
+  });
+  csv+=`\nNPV Lease,${r.leaseNPV.toFixed(2)}\nNPV Buy,${r.buyNPV.toFixed(2)}\nRecommendation,${r.winner.toUpperCase()}\n`;
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='VGL_LeasevsBuy_Analysis.csv';
+  a.click();URL.revokeObjectURL(url);
+}
+
+function resetAll(){
+  document.querySelectorAll('input[type="number"]').forEach(i=>i.value='');
+  document.getElementById('residualPct').value='20';
+  document.getElementById('downPaymentPct').value='20';
+  document.getElementById('loanRate').value='18';
+  document.getElementById('leaseVAT').value='0';
+  document.getElementById('buyMaint').value='0';
+  document.getElementById('buyInsurance').value='0';
+  document.getElementById('buyOpex').value='0';
+  document.getElementById('leaseMaint').value='0';
+  document.getElementById('leaseInsurance').value='0';
+  document.getElementById('leaseDeposit').value='0';
+  document.getElementById('errorMsg').style.display='none';
+  document.getElementById('emptyState').style.display='block';
+  document.getElementById('resultsContent').style.display='none';
+  document.getElementById('footerNote').style.display='none';
+  results=null;
+  updateTaxHint();
+}
+</script>
+</body>
+</html>

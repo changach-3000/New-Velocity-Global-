@@ -47,7 +47,7 @@ const MembershipPage = () => {
       features: [
         'Everything in Premium',
         '1-on-1 annual strategy session (60 min)',
-        'Priority support & deal structuring Q&A',
+        'Access to Digital Tools',
         'Exclusive VIP networking events',
       ]
     }

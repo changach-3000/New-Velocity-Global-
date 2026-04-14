@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFRS 16 Lease Classification | Velocity Global Leasing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0B1F4B; --navy-mid:#1A3666;
+  --gold:#C9A84C; --gold-light:#F0D080; --gold-pale:rgba(201,168,76,0.12);
+  --cream:#FAF8F3; --white:#FFFFFF; --slate:#64748B;
+  --border:#D6DAEA; --light-bg:#EEF1F8;
+  --green:#1A7A4A; --green-bg:#E8F5EE;
+  --red:#C0392B; --red-bg:#FDECEA;
+  --amber:#C97A00; --amber-bg:#FFF9E6;
+  --purple:#5B2D8E; --purple-bg:#F3EEF9;
+  --shadow:0 4px 24px rgba(11,31,75,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;}
+
+/* ── HEADER ── */
+.header{background:var(--navy);position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--gold);}
+.header-inner{max-width:960px;margin:0 auto;padding:32px 32px 28px 44px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.header-badge{display:inline-block;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.4);color:var(--gold);font-size:10px;font-weight:600;letter-spacing:2.5px;padding:4px 12px;border-radius:2px;margin-bottom:10px;text-transform:uppercase;}
+.header h1{font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,30px);font-weight:700;color:var(--white);line-height:1.2;}
+.header h1 span{color:var(--gold);}
+.header-sub{font-size:12px;color:#8899BB;margin-top:5px;}
+.vgl-logo{font-family:'Playfair Display',serif;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:2px;text-align:right;}
+.vgl-tagline{font-size:11px;color:#556688;margin-top:2px;text-align:right;}
+
+/* ── APP ── */
+.app{max-width:960px;margin:0 auto;padding:28px 20px 80px;}
+
+/* ── ROLE SELECTOR ── */
+.role-selector{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;}
+.role-card{background:var(--white);border-radius:10px;padding:20px 22px;border:2px solid var(--border);cursor:pointer;transition:all .2s;text-align:center;box-shadow:var(--shadow);}
+.role-card:hover{border-color:var(--navy);transform:translateY(-2px);}
+.role-card.active{border-color:var(--gold);background:linear-gradient(135deg,var(--navy),var(--navy-mid));}
+.role-card .role-icon{font-size:28px;margin-bottom:8px;}
+.role-card .role-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--navy);margin-bottom:4px;}
+.role-card.active .role-title{color:var(--gold);}
+.role-card .role-desc{font-size:11px;color:var(--slate);}
+.role-card.active .role-desc{color:#AABBCC;}
+
+/* ── CONTRACT DETAILS ── */
+.details-card{background:var(--white);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:24px;}
+.details-header{background:var(--navy);padding:14px 22px;display:flex;align-items:center;gap:10px;}
+.details-header h2{font-size:13px;font-weight:600;color:var(--white);}
+.details-header p{font-size:11px;color:#8899BB;margin-top:1px;}
+.dh-icon{width:28px;height:28px;background:var(--gold-pale);border:1px solid rgba(201,168,76,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.details-body{padding:22px;}
+.two-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.field input,.field select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--navy);background:var(--white);transition:border-color .2s;outline:none;appearance:none;}
+.field input:focus,.field select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,31,75,0.08);}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%230B1F4B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px;cursor:pointer;}
+
+/* ── DECISION TREE ── */
+.tree-card{background:var(--white);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:24px;}
+.tree-header{background:var(--navy);padding:14px 22px;display:flex;align-items:center;gap:10px;}
+.tree-header h2{font-size:13px;font-weight:600;color:var(--white);}
+.tree-header p{font-size:11px;color:#8899BB;margin-top:1px;}
+.tree-body{padding:22px;}
+
+/* PROGRESS BAR */
+.progress-wrap{margin-bottom:20px;}
+.progress-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.progress-label{font-size:11px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.5px;}
+.progress-step{font-size:11px;color:var(--gold);font-weight:600;}
+.progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--gold));border-radius:2px;transition:width .4s ease;}
+
+/* QUESTION NODE */
+.question-node{animation:fadeUp .35s ease both;}
+.q-number{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.q-text{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--navy);line-height:1.4;margin-bottom:6px;}
+.q-ref{font-size:11px;color:var(--slate);margin-bottom:18px;}
+.q-help{background:var(--light-bg);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:10px 14px;font-size:12px;color:var(--navy);line-height:1.6;margin-bottom:18px;}
+
+/* ANSWER BUTTONS */
+.answer-grid{display:grid;gap:10px;}
+.answer-btn{padding:14px 18px;border-radius:8px;border:2px solid var(--border);background:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--navy);cursor:pointer;text-align:left;transition:all .2s;display:flex;align-items:center;gap:10px;}
+.answer-btn:hover{border-color:var(--navy);background:var(--light-bg);transform:translateX(3px);}
+.answer-btn.yes-btn:hover{border-color:var(--green);background:var(--green-bg);}
+.answer-btn.no-btn:hover{border-color:var(--red);background:var(--red-bg);}
+.answer-btn .btn-icon{font-size:16px;flex-shrink:0;}
+.answer-btn .btn-text{font-size:13px;}
+.answer-btn .btn-sub{font-size:11px;color:var(--slate);display:block;margin-top:2px;}
+
+/* BREADCRUMB */
+.breadcrumb{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+.crumb{font-size:11px;padding:3px 10px;background:var(--light-bg);border-radius:20px;color:var(--slate);cursor:pointer;transition:all .2s;border:1px solid var(--border);}
+.crumb:hover{background:var(--navy);color:var(--white);}
+.crumb.current{background:var(--navy);color:var(--gold);}
+
+/* BACK BTN */
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--border);border-radius:6px;background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--slate);cursor:pointer;transition:all .2s;margin-top:16px;}
+.back-btn:hover{border-color:var(--navy);color:var(--navy);}
+
+/* ── RESULT ── */
+.result-card{border-radius:10px;overflow:hidden;box-shadow:var(--shadow-lg);margin-bottom:24px;animation:fadeUp .4s ease both;}
+.result-banner{padding:28px 30px;position:relative;overflow:hidden;}
+.result-banner::after{content:'';position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.06);}
+.result-banner.lease{background:linear-gradient(135deg,#0B3D2E,var(--green));}
+.result-banner.finance-lease{background:linear-gradient(135deg,var(--navy),var(--navy-mid));}
+.result-banner.short-term{background:linear-gradient(135deg,#7B4A00,var(--amber));}
+.result-banner.low-value{background:linear-gradient(135deg,var(--purple),#8B47C8);}
+.result-banner.not-lease{background:linear-gradient(135deg,#5A0000,var(--red));}
+.result-banner.lessor-operating{background:linear-gradient(135deg,#0B3D2E,var(--green));}
+.result-banner.lessor-finance{background:linear-gradient(135deg,var(--navy),var(--navy-mid));}
+.result-type{font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:8px;}
+.result-title{font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,28px);font-weight:700;color:var(--white);line-height:1.2;margin-bottom:8px;}
+.result-subtitle{font-size:13px;color:rgba(255,255,255,0.8);line-height:1.6;}
+
+.result-body{background:var(--white);padding:24px 28px;}
+.result-section{margin-bottom:22px;}
+.result-section h4{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--gold);}
+.implication-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.implication-list li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--navy);line-height:1.5;}
+.implication-list li::before{content:'→';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px;}
+.ref-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.ref-tag{background:var(--navy);color:var(--gold);font-size:10px;font-weight:600;padding:3px 10px;border-radius:3px;letter-spacing:.5px;}
+.exemption-box{background:var(--amber-bg);border:1.5px solid var(--amber);border-radius:8px;padding:14px 18px;margin-top:14px;}
+.exemption-box h5{font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.exemption-box p{font-size:12px;color:var(--navy);line-height:1.6;}
+
+/* ANSWER TRAIL */
+.trail-section{margin-bottom:20px;}
+.trail-section h4{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--gold);}
+.trail-item{display:flex;gap:10px;padding:8px 12px;border-radius:6px;margin-bottom:6px;font-size:12px;background:var(--light-bg);}
+.trail-q{color:var(--slate);flex:1;}
+.trail-a{font-weight:600;color:var(--navy);flex-shrink:0;}
+
+/* CERTIFICATE */
+.cert-section{margin-top:20px;}
+.cert-section h4{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--gold);}
+
+/* BUTTONS */
+.action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+.btn-primary{padding:12px 24px;background:var(--gold);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--navy);cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.5px;}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,0.3);}
+.btn-secondary{padding:12px 20px;background:transparent;border:2px solid var(--navy);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--navy);cursor:pointer;transition:all .2s;}
+.btn-secondary:hover{background:var(--light-bg);}
+
+/* PRINT STYLES */
+@media print {
+  .header,.role-selector,.details-card,.tree-card,.action-row,.back-btn{display:none!important;}
+  .result-card{box-shadow:none;border:2px solid var(--navy);}
+  body{background:white;}
+  .app{padding:0;}
+  .cert-watermark{display:block!important;}
+}
+.cert-watermark{display:none;text-align:center;margin-top:20px;font-size:11px;color:var(--slate);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* RESPONSIVE */
+@media(max-width:580px){
+  .role-selector{grid-template-columns:1fr;}
+  .two-fields{grid-template-columns:1fr;}
+  .app{padding:16px 14px 60px;}
+  .result-body{padding:18px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-badge">Deal Structuring Toolkit — Tool 3</div>
+      <h1>IFRS 16 Lease <span>Classification</span> Decision Tree</h1>
+      <div class="header-sub">Lessee & Lessor · Short-term & Low-value exemptions · Printable audit certificate</div>
+    </div>
+    <div>
+      <div class="vgl-logo">Velocity Global Leasing</div>
+      <div class="vgl-tagline">Unlocking Africa's $1 Trillion Leasing Opportunity</div>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- ROLE SELECTOR -->
+  <div class="role-selector">
+    <div class="role-card active" id="role-lessee" onclick="selectRole('lessee')">
+      <div class="role-icon">🏢</div>
+      <div class="role-title">I am the Lessee</div>
+      <div class="role-desc">I am using / renting the asset from a lessor</div>
+    </div>
+    <div class="role-card" id="role-lessor" onclick="selectRole('lessor')">
+      <div class="role-icon">🏦</div>
+      <div class="role-title">I am the Lessor</div>
+      <div class="role-desc">I am providing / financing the asset to a lessee</div>
+    </div>
+  </div>
+
+  <!-- CONTRACT DETAILS -->
+  <div class="details-card">
+    <div class="details-header">
+      <div class="dh-icon">📝</div>
+      <div><h2>Contract Details</h2><p>Used for classification certificate — optional but recommended</p></div>
+    </div>
+    <div class="details-body">
+      <div class="two-fields">
+        <div class="field">
+          <label>Contract Reference / Name</label>
+          <input type="text" id="contractName" placeholder="e.g. Vehicle Lease — ABC Ltd">
+        </div>
+        <div class="field">
+          <label>Asset Description</label>
+          <input type="text" id="assetDesc" placeholder="e.g. 10-tonne truck, medical scanner">
+        </div>
+      </div>
+      <div class="two-fields">
+        <div class="field">
+          <label>Counterparty Name</label>
+          <input type="text" id="counterparty" placeholder="e.g. Lessor / Lessee name">
+        </div>
+        <div class="field">
+          <label>Classification Date</label>
+          <input type="date" id="classDate">
+        </div>
+      </div>
+      <div class="two-fields">
+        <div class="field">
+          <label>Lease Term (Months)</label>
+          <input type="number" id="leaseTerm" placeholder="e.g. 36" min="1" onchange="checkExemptions()">
+        </div>
+        <div class="field">
+          <label>Annual Lease Payments (USD equiv.)</label>
+          <input type="number" id="annualPayment" placeholder="e.g. 5000" min="0" onchange="checkExemptions()">
+          <div style="font-size:10px;color:var(--slate);margin-top:3px">For low-value exemption check (threshold ~$5,000/yr)</div>
+        </div>
+      </div>
+      <div id="exemptionAlert" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- DECISION TREE -->
+  <div class="tree-card" id="treeCard">
+    <div class="tree-header">
+      <div class="dh-icon">🌳</div>
+      <div>
+        <h2 id="treeTitle">Lessee Classification Tree</h2>
+        <p>Answer each question to determine the correct IFRS 16 classification</p>
+      </div>
+    </div>
+    <div class="tree-body">
+      <div class="progress-wrap">
+        <div class="progress-info">
+          <span class="progress-label">Classification Progress</span>
+          <span class="progress-step" id="progressStep">Step 1</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width:10%"></div>
+        </div>
+      </div>
+
+      <div class="breadcrumb" id="breadcrumb"></div>
+
+      <div id="questionArea"></div>
+
+      <div id="resultArea"></div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────────────────
+let role = 'lessee';
+let currentStep = 0;
+let trail = []; // [{q, a, label}]
+
+// ── ROLE ──────────────────────────────────────────────────────────────
+function selectRole(r) {
+  role = r;
+  document.getElementById('role-lessee').classList.toggle('active', r==='lessee');
+  document.getElementById('role-lessor').classList.toggle('active', r==='lessor');
+  document.getElementById('treeTitle').textContent = r==='lessee' ? 'Lessee Classification Tree' : 'Lessor Classification Tree';
+  resetTree();
+}
+
+// ── EXEMPTION ALERTS ──────────────────────────────────────────────────
+function checkExemptions() {
+  const months = parseInt(document.getElementById('leaseTerm').value) || 0;
+  const annual = parseFloat(document.getElementById('annualPayment').value) || 0;
+  const alerts = [];
+  if(months > 0 && months <= 12) alerts.push(`⚡ <strong>Potential Short-Term Exemption:</strong> Lease term ≤ 12 months. IFRS 16.B34 allows lessee to elect not to recognise on balance sheet.`);
+  if(annual > 0 && annual <= 5000) alerts.push(`⚡ <strong>Potential Low-Value Exemption:</strong> Annual payment ≤ $5,000. IFRS 16.5(b) allows lessee to elect operating lease treatment.`);
+  const el = document.getElementById('exemptionAlert');
+  if(alerts.length) {
+    el.style.display = 'block';
+    el.innerHTML = alerts.map(a=>`<div style="background:var(--amber-bg);border:1.5px solid var(--amber);border-radius:6px;padding:10px 14px;margin-top:8px;font-size:12px;color:var(--amber);line-height:1.6">${a}</div>`).join('');
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+// ── LESSEE QUESTIONS ──────────────────────────────────────────────────
+const lesseeTree = [
+  {
+    id: 'q1',
+    num: 'Question 1 of 8',
+    progress: 12,
+    text: 'Does the contract involve an identified asset?',
+    ref: 'IFRS 16.B13–B20',
+    help: 'An identified asset is a physically distinct asset or substantially all the capacity of an asset. The supplier must NOT have a substantive substitution right throughout the period of use.',
+    answers: [
+      { label: 'Yes', sub: 'There is a specific, identifiable asset', icon: '✅', next: 'q2', value: 'Yes — Identified asset present' },
+      { label: 'No', sub: 'Supplier can substitute an equivalent asset at any time', icon: '❌', next: 'result-not-lease', value: 'No — No identified asset' }
+    ]
+  },
+  {
+    id: 'q2',
+    num: 'Question 2 of 8',
+    progress: 25,
+    text: 'Does the customer have the right to obtain substantially all of the economic benefits from use of the asset throughout the period of use?',
+    ref: 'IFRS 16.B21–B23',
+    help: 'Consider benefits from primary use of the asset and any by-products. The customer must capture substantially all (not just some) of the benefits.',
+    answers: [
+      { label: 'Yes', sub: 'Customer captures substantially all economic benefits', icon: '✅', next: 'q3', value: 'Yes — All economic benefits to customer' },
+      { label: 'No', sub: 'Benefits shared significantly with supplier or third parties', icon: '❌', next: 'result-not-lease', value: 'No — Benefits not substantially to customer' }
+    ]
+  },
+  {
+    id: 'q3',
+    num: 'Question 3 of 8',
+    progress: 37,
+    text: 'Does the customer have the right to direct HOW and FOR WHAT PURPOSE the asset is used throughout the period of use?',
+    ref: 'IFRS 16.B24–B30',
+    help: 'The customer must be able to change HOW (operating decisions) and FOR WHAT PURPOSE the asset is used. If these are predetermined, consider whether the customer directs operation of the asset.',
+    answers: [
+      { label: 'Yes', sub: 'Customer directs how and for what purpose asset is used', icon: '✅', next: 'q4', value: 'Yes — Customer directs use' },
+      { label: 'No', sub: 'Supplier controls how and for what purpose asset is used', icon: '❌', next: 'result-not-lease', value: 'No — Supplier directs use' }
+    ]
+  },
+  {
+    id: 'q4',
+    num: 'Question 4 of 8',
+    progress: 50,
+    text: 'This contract CONTAINS A LEASE. Does the lessee elect to apply the short-term lease exemption?',
+    ref: 'IFRS 16.5(a), IFRS 16.B34',
+    help: 'The short-term exemption applies if: (1) The lease term at commencement is 12 months or less, AND (2) The lease does not contain a purchase option. This election is made by class of underlying asset.',
+    answers: [
+      { label: 'Yes — Short-term exemption elected', sub: 'Lease term ≤ 12 months & no purchase option', icon: '⏱️', next: 'result-short-term', value: 'Yes — Short-term exemption elected' },
+      { label: 'No — Does not qualify or not electing', sub: 'Lease term > 12 months or purchase option exists', icon: '➡️', next: 'q5', value: 'No — Proceeding to full IFRS 16 classification' }
+    ]
+  },
+  {
+    id: 'q5',
+    num: 'Question 5 of 8',
+    progress: 62,
+    text: 'Does the lessee elect to apply the low-value asset exemption?',
+    ref: 'IFRS 16.5(b), IFRS 16.BC98–BC104',
+    help: 'Low-value assets have an underlying asset value of approximately USD 5,000 or less when new. Examples: laptops, small office furniture, phones. Assessment is based on absolute value, not materiality. Applies lease-by-lease.',
+    answers: [
+      { label: 'Yes — Low-value exemption elected', sub: 'Asset value new ≤ USD 5,000 approximately', icon: '📦', next: 'result-low-value', value: 'Yes — Low-value exemption elected' },
+      { label: 'No — Does not qualify or not electing', sub: 'Asset value > USD 5,000 when new', icon: '➡️', next: 'q6', value: 'No — Proceeding to full IFRS 16 recognition' }
+    ]
+  },
+  {
+    id: 'q6',
+    num: 'Question 6 of 8',
+    progress: 72,
+    text: 'Does the lease transfer ownership of the underlying asset to the lessee by the end of the lease term?',
+    ref: 'IFRS 16.63(a) — Finance Lease Indicator',
+    help: 'If the lease agreement explicitly states that legal title transfers to the lessee at the end of the lease term (or earlier), this is a strong indicator of a finance lease.',
+    answers: [
+      { label: 'Yes', sub: 'Ownership transfers to lessee at end of lease', icon: '🔑', next: 'result-finance-lease', value: 'Yes — Ownership transfers' },
+      { label: 'No', sub: 'No transfer of ownership at end', icon: '➡️', next: 'q7', value: 'No — No ownership transfer' }
+    ]
+  },
+  {
+    id: 'q7',
+    num: 'Question 7 of 8',
+    progress: 84,
+    text: 'Does the lessee have a purchase option that it is reasonably certain to exercise?',
+    ref: 'IFRS 16.19, IFRS 16.63(b)',
+    help: '"Reasonably certain" is a high threshold — significantly more likely than probable. Consider: purchase price relative to fair value, remaining useful life, importance to lessee\'s operations, and history of similar leases.',
+    answers: [
+      { label: 'Yes — Reasonably certain to exercise', sub: 'Purchase option exists and is likely to be exercised', icon: '🛒', next: 'result-finance-lease', value: 'Yes — Purchase option reasonably certain' },
+      { label: 'No — Not reasonably certain', sub: 'No purchase option or unlikely to exercise', icon: '➡️', next: 'q8', value: 'No — Purchase option not reasonably certain' }
+    ]
+  },
+  {
+    id: 'q8',
+    num: 'Question 8 of 8',
+    progress: 94,
+    text: 'Does the lease cover the major part of the economic life of the underlying asset?',
+    ref: 'IFRS 16.63(c)',
+    help: 'If the lease term represents the major part (generally 75%+) of the asset\'s remaining economic life at inception, this indicates the lessee bears substantially all economic risks. For IFRS 16, ALL leases (unless exempted) are recognised on balance sheet.',
+    answers: [
+      { label: 'Yes — Major part of economic life', sub: 'Lease term ≥ 75% of asset\'s economic life', icon: '⏳', next: 'result-finance-lease', value: 'Yes — Major part of economic life' },
+      { label: 'No — Minor part only', sub: 'Lease term < 75% of asset\'s economic life', icon: '📋', next: 'result-operating-lease', value: 'No — Minor part of economic life' }
+    ]
+  }
+];
+
+// ── LESSOR QUESTIONS ──────────────────────────────────────────────────
+const lessorTree = [
+  {
+    id: 'q1',
+    num: 'Question 1 of 7',
+    progress: 14,
+    text: 'Does the lease transfer substantially all the risks and rewards incidental to ownership of the underlying asset?',
+    ref: 'IFRS 16.61–63',
+    help: 'This is the primary classification test for lessors. Assess all facts and circumstances. Look at the indicators in IFRS 16.63 — any one indicator alone, or combination, may lead to finance lease classification.',
+    answers: [
+      { label: 'Yes — Risks and rewards substantially transferred', sub: 'Strongly suggests Finance Lease', icon: '🏦', next: 'result-lessor-finance', value: 'Yes — Risks & rewards substantially transferred' },
+      { label: 'Not clearly — Need to assess indicators', sub: 'Proceed to detailed indicator assessment', icon: '🔍', next: 'q2', value: 'Unclear — Assessing indicators' }
+    ]
+  },
+  {
+    id: 'q2',
+    num: 'Question 2 of 7',
+    progress: 28,
+    text: 'Does the lease transfer ownership of the underlying asset to the lessee by the end of the lease term?',
+    ref: 'IFRS 16.63(a)',
+    help: 'Legal title passing to the lessee — whether at end of lease or during the lease — is the strongest indicator of a finance lease.',
+    answers: [
+      { label: 'Yes', sub: 'Legal title transfers to lessee', icon: '🔑', next: 'result-lessor-finance', value: 'Yes — Ownership transfers to lessee' },
+      { label: 'No', sub: 'Title remains with lessor', icon: '➡️', next: 'q3', value: 'No — Title remains with lessor' }
+    ]
+  },
+  {
+    id: 'q3',
+    num: 'Question 3 of 7',
+    progress: 42,
+    text: 'Does the lessee have a bargain purchase option (reasonably certain to exercise)?',
+    ref: 'IFRS 16.63(b)',
+    help: 'A bargain purchase option allows the lessee to purchase at a price sufficiently below expected fair value that exercise is reasonably certain at lease inception.',
+    answers: [
+      { label: 'Yes', sub: 'Bargain purchase option — reasonably certain to exercise', icon: '🛒', next: 'result-lessor-finance', value: 'Yes — Bargain purchase option exists' },
+      { label: 'No', sub: 'No bargain purchase option', icon: '➡️', next: 'q4', value: 'No — No bargain purchase option' }
+    ]
+  },
+  {
+    id: 'q4',
+    num: 'Question 4 of 7',
+    progress: 56,
+    text: 'Is the lease term for the major part of the economic life of the underlying asset?',
+    ref: 'IFRS 16.63(c)',
+    help: 'Even without ownership transfer, if the lessee uses the asset for most of its useful life, substantially all risks and rewards have passed. General benchmark: ≥ 75% of economic life.',
+    answers: [
+      { label: 'Yes — ≥ 75% of economic life', sub: 'Major part of asset life covered', icon: '⏳', next: 'result-lessor-finance', value: 'Yes — Major part of economic life' },
+      { label: 'No — < 75% of economic life', sub: 'Asset retains significant life post-lease', icon: '➡️', next: 'q5', value: 'No — Minor part of economic life' }
+    ]
+  },
+  {
+    id: 'q5',
+    num: 'Question 5 of 7',
+    progress: 70,
+    text: 'Is the present value of minimum lease payments substantially equal to the fair value of the underlying asset?',
+    ref: 'IFRS 16.63(d)',
+    help: 'If the PV of lease payments equals substantially all (≥ 90%) of the asset\'s fair value, the lessor has effectively transferred the economic value of the asset. Use the rate implicit in the lease.',
+    answers: [
+      { label: 'Yes — PV ≥ 90% of fair value', sub: 'Lessor recovers substantially all investment', icon: '💰', next: 'result-lessor-finance', value: 'Yes — PV substantially equals fair value' },
+      { label: 'No — PV < 90% of fair value', sub: 'Significant residual retained by lessor', icon: '➡️', next: 'q6', value: 'No — Significant residual value retained' }
+    ]
+  },
+  {
+    id: 'q6',
+    num: 'Question 6 of 7',
+    progress: 84,
+    text: 'Is the underlying asset of such a specialised nature that only the lessee can use it without major modifications?',
+    ref: 'IFRS 16.63(e)',
+    help: 'Specialised assets (custom-built equipment, bespoke technology, fitted machinery) have limited alternative use for the lessor — suggesting the lessee bears the asset risk.',
+    answers: [
+      { label: 'Yes — Specialised asset', sub: 'Asset has no alternative use for lessor', icon: '⚙️', next: 'result-lessor-finance', value: 'Yes — Specialised asset, no alternative use' },
+      { label: 'No — Generic asset', sub: 'Lessor can re-lease or sell to others', icon: '➡️', next: 'q7', value: 'No — Asset has alternative use' }
+    ]
+  },
+  {
+    id: 'q7',
+    num: 'Question 7 of 7',
+    progress: 96,
+    text: 'Considering all facts and circumstances, does the overall substance of the arrangement transfer substantially all risks and rewards of ownership to the lessee?',
+    ref: 'IFRS 16.62, IAS 8',
+    help: 'Even if no single indicator is conclusive, the combination of circumstances may indicate finance lease treatment. Apply professional judgement and consider substance over form.',
+    answers: [
+      { label: 'Yes — Substance indicates transfer', sub: 'Overall arrangement transfers risks & rewards', icon: '📊', next: 'result-lessor-finance', value: 'Yes — Overall substance: finance lease' },
+      { label: 'No — Risks & rewards retained', sub: 'Lessor retains substantial risks of ownership', icon: '📋', next: 'result-lessor-operating', value: 'No — Risks & rewards retained: operating lease' }
+    ]
+  }
+];
+
+// ── RESULTS ───────────────────────────────────────────────────────────
+const results = {
+  'result-not-lease': {
+    type: 'not-lease',
+    banner: 'not-lease',
+    typeLabel: 'Classification Result',
+    title: 'This is NOT a Lease',
+    subtitle: 'This contract does not contain a lease under IFRS 16. It should be accounted for as a service agreement.',
+    implications: [
+      'Do NOT recognise a Right-of-Use Asset or Lease Liability on the balance sheet',
+      'Payments should be expensed on a straight-line basis as a service cost (P&L)',
+      'No IFRS 16 disclosures required for this contract',
+      'Review the contract to confirm it is correctly structured as a service agreement',
+      'Document your assessment and retain for audit purposes'
+    ],
+    refs: ['IFRS 16.9', 'IFRS 16.B13', 'IFRS 16.B16'],
+    exemption: null,
+    journalNote: 'Dr Service Expense / Cr Cash — each payment period'
+  },
+  'result-short-term': {
+    type: 'short-term',
+    banner: 'short-term',
+    typeLabel: 'Exemption Applied',
+    title: 'Short-Term Lease Exemption',
+    subtitle: 'This lease qualifies for the short-term exemption. The lessee may elect not to recognise on the balance sheet.',
+    implications: [
+      'Lessee may elect NOT to recognise ROU Asset and Lease Liability',
+      'Lease payments recognised as an expense on a straight-line or systematic basis',
+      'Election must be made by class of underlying asset — not lease by lease',
+      'If the lease is subsequently modified with a new term > 12 months, full IFRS 16 recognition applies',
+      'Disclosure required: total short-term lease expense for the period (IFRS 16.53)'
+    ],
+    refs: ['IFRS 16.5(a)', 'IFRS 16.B34', 'IFRS 16.53(c)'],
+    exemption: 'SHORT-TERM EXEMPTION: Lessee can treat as operating lease. Payments expensed as incurred. No balance sheet recognition required. Must disclose total short-term lease expense in the notes.',
+    journalNote: 'Dr Lease Expense / Cr Cash — each payment (no balance sheet entries)'
+  },
+  'result-low-value': {
+    type: 'low-value',
+    banner: 'low-value',
+    typeLabel: 'Exemption Applied',
+    title: 'Low-Value Asset Exemption',
+    subtitle: 'This lease qualifies for the low-value exemption (underlying asset ≤ USD ~5,000 when new).',
+    implications: [
+      'Lessee may elect NOT to recognise ROU Asset and Lease Liability',
+      'Applies on a lease-by-lease basis — no class election required',
+      'Assessment based on asset\'s absolute value when new, not current value or materiality',
+      'Examples: laptops, small printers, tablets, small office furniture, mobile phones',
+      'Disclosure required: total low-value asset lease expense (IFRS 16.53)'
+    ],
+    refs: ['IFRS 16.5(b)', 'IFRS 16.BC98', 'IFRS 16.53(d)'],
+    exemption: 'LOW-VALUE EXEMPTION: Based on IASB guidance, assets with value ≤ USD 5,000 when new qualify. Assessment is made independently for each lease. Payments expensed on straight-line basis.',
+    journalNote: 'Dr Lease Expense / Cr Cash — each payment (no balance sheet entries)'
+  },
+  'result-operating-lease': {
+    type: 'lease',
+    banner: 'lease',
+    typeLabel: 'Lessee Classification',
+    title: 'Operating Lease — Full IFRS 16 Recognition',
+    subtitle: 'This contract contains a lease. Under IFRS 16, ALL leases (unless exempted) are recognised on the balance sheet.',
+    implications: [
+      'Recognise a Right-of-Use (ROU) Asset on initial measurement',
+      'Recognise a corresponding Lease Liability at the present value of future lease payments',
+      'ROU Asset depreciated on straight-line basis over the lease term',
+      'Lease liability unwound using the effective interest method (IBR)',
+      'Disclose: maturity analysis, carrying amounts, depreciation, interest expense (IFRS 16.51–60)',
+      'Note: Under IFRS 16, there is no longer a distinction between "operating" and "finance" lease for lessees — all go on balance sheet'
+    ],
+    refs: ['IFRS 16.22', 'IFRS 16.26', 'IFRS 16.31', 'IFRS 16.36', 'IFRS 16.51'],
+    exemption: null,
+    journalNote: 'Day 1: Dr ROU Asset / Cr Lease Liability | Periodic: Dr Interest Expense + Dr Lease Liability / Cr Cash | Annual: Dr Depreciation / Cr Accumulated Depreciation'
+  },
+  'result-finance-lease': {
+    type: 'finance-lease',
+    banner: 'finance-lease',
+    typeLabel: 'Lessee Classification',
+    title: 'Finance Lease — Full IFRS 16 Recognition',
+    subtitle: 'This lease has finance lease characteristics. Under IFRS 16, it is recognised identically to an operating lease on the lessee\'s balance sheet.',
+    implications: [
+      'Recognise a Right-of-Use (ROU) Asset at commencement date',
+      'Recognise Lease Liability at present value of remaining lease payments',
+      'Finance lease indicators present — consider whether transfer of ownership or purchase option affects accounting',
+      'ROU Asset depreciated over the shorter of the lease term or useful life (if ownership transfers: over useful life)',
+      'Higher front-loaded interest expense compared to straight-line operating lease expense',
+      'Full IFRS 16 disclosures required including maturity analysis and sensitivity analysis'
+    ],
+    refs: ['IFRS 16.22', 'IFRS 16.26', 'IFRS 16.63', 'IFRS 16.51'],
+    exemption: null,
+    journalNote: 'Day 1: Dr ROU Asset / Cr Lease Liability | If ownership transfers at end: depreciate over useful life, not lease term'
+  },
+  'result-lessor-finance': {
+    type: 'lessor-finance',
+    banner: 'lessor-finance',
+    typeLabel: 'Lessor Classification',
+    title: 'Finance Lease — Lessor Accounting',
+    subtitle: 'This is a finance lease. The lessor transfers substantially all risks and rewards to the lessee and should derecognise the asset.',
+    implications: [
+      'Derecognise the underlying asset from the balance sheet at commencement date',
+      'Recognise a Finance Lease Receivable equal to the net investment in the lease',
+      'Net investment = present value of lease payments + unguaranteed residual value, discounted at rate implicit in the lease',
+      'Recognise finance income using the effective interest method (constant periodic rate on net investment)',
+      'Initial direct costs included in net investment measurement',
+      'Disclose: maturity analysis of undiscounted payments, credit risk exposure, reconciliation of net investment (IFRS 16.89–97)'
+    ],
+    refs: ['IFRS 16.67', 'IFRS 16.68', 'IFRS 16.75', 'IFRS 16.89'],
+    exemption: null,
+    journalNote: 'Day 1: Dr Finance Lease Receivable / Cr Asset | Periodic: Dr Finance Lease Receivable (interest) / Cr Finance Income | Cash receipt: Dr Cash / Cr Finance Lease Receivable'
+  },
+  'result-lessor-operating': {
+    type: 'lessor-operating',
+    banner: 'lessor-operating',
+    typeLabel: 'Lessor Classification',
+    title: 'Operating Lease — Lessor Accounting',
+    subtitle: 'This is an operating lease. The lessor retains the underlying asset on its balance sheet and recognises income over the lease term.',
+    implications: [
+      'Retain the underlying asset on the balance sheet — continue depreciating it',
+      'Recognise lease income on a straight-line basis (or another systematic basis) over the lease term',
+      'Initial direct costs deferred and added to the carrying amount of the leased asset',
+      'Any lease incentives given reduce income recognised over the lease term',
+      'Disclose: maturity analysis of undiscounted future lease payments, narrative about risk management (IFRS 16.89–97)',
+      'Residual value risk remains with the lessor — monitor asset condition and market value'
+    ],
+    refs: ['IFRS 16.81', 'IFRS 16.83', 'IFRS 16.84', 'IFRS 16.89'],
+    exemption: null,
+    journalNote: 'Continue: Dr Depreciation / Cr Accumulated Depreciation | Income: Dr Cash/Receivable / Cr Lease Income (straight-line)'
+  }
+};
+
+// ── TREE ENGINE ────────────────────────────────────────────────────────
+let currentQuestions = [];
+
+function resetTree() {
+  currentStep = 0;
+  trail = [];
+  currentQuestions = role === 'lessee' ? lesseeTree : lessorTree;
+  document.getElementById('breadcrumb').innerHTML = '';
+  document.getElementById('resultArea').innerHTML = '';
+  renderQuestion(0);
+}
+
+function renderQuestion(idx) {
+  const q = currentQuestions[idx];
+  if(!q) return;
+  currentStep = idx;
+
+  document.getElementById('progressFill').style.width = q.progress + '%';
+  document.getElementById('progressStep').textContent = q.num;
+
+  updateBreadcrumb();
+
+  let html = `<div class="question-node">
+    <div class="q-number">${q.num}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="q-ref">📖 ${q.ref}</div>
+    <div class="q-help">${q.help}</div>
+    <div class="answer-grid">`;
+
+  q.answers.forEach(ans => {
+    const cls = ans.label.startsWith('Yes') ? 'yes-btn' : ans.label.startsWith('No') ? 'no-btn' : '';
+    html += `<button class="answer-btn ${cls}" onclick="answer('${q.id}', '${ans.next}', '${escQ(q.text)}', '${escQ(ans.value)}')">
+      <span class="btn-icon">${ans.icon}</span>
+      <span>
+        <span class="btn-text">${ans.label}</span>
+        <span class="btn-sub">${ans.sub}</span>
+      </span>
+    </button>`;
+  });
+
+  html += `</div>`;
+  if(trail.length > 0) {
+    html += `<button class="back-btn" onclick="goBack()">← Back</button>`;
+  }
+  html += `</div>`;
+
+  document.getElementById('questionArea').innerHTML = html;
+  document.getElementById('resultArea').innerHTML = '';
+}
+
+function escQ(s) { return s.replace(/'/g,"&#39;").replace(/"/g,"&quot;"); }
+
+function answer(qId, next, qText, ansValue) {
+  trail.push({ q: qText, a: ansValue });
+
+  if(next.startsWith('result-')) {
+    showResult(next);
+  } else {
+    const idx = currentQuestions.findIndex(q => q.id === next);
+    if(idx >= 0) renderQuestion(idx);
+  }
+}
+
+function goBack() {
+  trail.pop();
+  const prevIdx = Math.max(0, currentStep - 1);
+  renderQuestion(prevIdx);
+}
+
+function updateBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  if(trail.length === 0) { bc.innerHTML = ''; return; }
+  bc.innerHTML = trail.map((t,i) => {
+    const short = t.a.length > 30 ? t.a.substring(0,30)+'…' : t.a;
+    return `<span class="crumb" onclick="jumpTo(${i})">${short}</span>`;
+  }).join('') + `<span class="crumb current">Current</span>`;
+}
+
+function jumpTo(idx) {
+  trail = trail.slice(0, idx);
+  const targetIdx = Math.max(0, idx);
+  renderQuestion(targetIdx);
+}
+
+// ── SHOW RESULT ────────────────────────────────────────────────────────
+function showResult(resultKey) {
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressStep').textContent = 'Complete ✓';
+  document.getElementById('questionArea').innerHTML = '';
+
+  const res = results[resultKey];
+  if(!res) return;
+
+  const contract = document.getElementById('contractName').value || 'Unnamed Contract';
+  const asset = document.getElementById('assetDesc').value || 'Not specified';
+  const counterparty = document.getElementById('counterparty').value || 'Not specified';
+  const classDate = document.getElementById('classDate').value || new Date().toISOString().split('T')[0];
+
+  let implHTML = res.implications.map(i => `<li>${i}</li>`).join('');
+  let refHTML = res.refs.map(r => `<span class="ref-tag">${r}</span>`).join('');
+  let trailHTML = trail.map(t => `<div class="trail-item"><span class="trail-q">${t.q}</span><span class="trail-a">${t.a}</span></div>`).join('');
+  let exemHTML = res.exemption ? `<div class="exemption-box"><h5>⚡ Exemption Details</h5><p>${res.exemption}</p></div>` : '';
+
+  const html = `
+  <div class="result-card" id="classificationResult">
+    <div class="result-banner ${res.banner}">
+      <div class="result-type">${res.typeLabel}</div>
+      <div class="result-title">${res.title}</div>
+      <div class="result-subtitle">${res.subtitle}</div>
+    </div>
+    <div class="result-body">
+
+      <div class="result-section">
+        <h4>Accounting Implications</h4>
+        <ul class="implication-list">${implHTML}</ul>
+        ${exemHTML}
+      </div>
+
+      <div class="result-section">
+        <h4>Indicative Journal Entry</h4>
+        <div style="background:var(--light-bg);border-left:3px solid var(--navy);border-radius:0 6px 6px 0;padding:10px 14px;font-size:12px;font-family:'DM Mono',monospace;color:var(--navy);line-height:1.8">${res.journalNote}</div>
+      </div>
+
+      <div class="result-section">
+        <h4>IFRS 16 Standard References</h4>
+        <div class="ref-tags">${refHTML}</div>
+      </div>
+
+      <div class="trail-section">
+        <h4>Your Classification Path</h4>
+        ${trailHTML}
+      </div>
+
+      <!-- CERTIFICATE -->
+      <div class="cert-section" id="certSection">
+        <h4>📜 Classification Certificate</h4>
+        <div style="border:2px solid var(--navy);border-radius:8px;overflow:hidden;">
+          <div style="background:var(--navy);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:600;color:var(--gold)">VELOCITY GLOBAL LEASING</div>
+            <div style="font-size:10px;color:#8899BB;letter-spacing:1px">IFRS 16 CLASSIFICATION CERTIFICATE</div>
+          </div>
+          <div style="padding:20px 24px;background:var(--white);">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+              <div><div style="font-size:10px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Contract</div><div style="font-size:13px;font-weight:600;color:var(--navy)">${contract}</div></div>
+              <div><div style="font-size:10px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Asset</div><div style="font-size:13px;color:var(--navy)">${asset}</div></div>
+              <div><div style="font-size:10px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Counterparty</div><div style="font-size:13px;color:var(--navy)">${counterparty}</div></div>
+              <div><div style="font-size:10px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Classification Date</div><div style="font-size:13px;color:var(--navy)">${classDate}</div></div>
+              <div><div style="font-size:10px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Role Assessed</div><div style="font-size:13px;color:var(--navy)">${role==='lessee'?'Lessee':'Lessor'}</div></div>
+              <div><div style="font-size:10px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Classification</div><div style="font-size:13px;font-weight:700;color:var(--green)">${res.title}</div></div>
+            </div>
+            <div style="background:var(--light-bg);border-radius:6px;padding:12px 16px;font-size:12px;color:var(--navy);line-height:1.6;margin-bottom:14px">
+              <strong>Classification Basis:</strong> ${res.subtitle}
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;padding-top:12px;border-top:1px solid var(--border);">
+              <div>
+                <div style="font-size:10px;color:var(--slate);margin-bottom:4px">Prepared by Velocity Global Leasing Deal Structuring Toolkit</div>
+                <div style="font-size:10px;color:var(--slate)">This certificate is for educational and decision-support purposes only.</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:var(--gold)">VGL</div>
+                <div style="font-size:9px;color:var(--slate)">Velocity Global Leasing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn-primary" onclick="window.print()">🖨 Print Certificate</button>
+        <button class="btn-secondary" onclick="resetTree()">↺ Classify Another Contract</button>
+        <button class="btn-secondary" onclick="selectRole('${role==='lessee'?'lessor':'lessee'}');resetTree()">Switch to ${role==='lessee'?'Lessor':'Lessee'} View</button>
+      </div>
+
+      <div class="cert-watermark">
+        Velocity Global Leasing — IFRS 16 Classification Certificate | ${contract} | ${classDate} | ${res.title}
+      </div>
+
+    </div>
+  </div>`;
+
+  document.getElementById('resultArea').innerHTML = html;
+  document.getElementById('resultArea').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────
+resetTree();
+</script>
+</body>
+</html>

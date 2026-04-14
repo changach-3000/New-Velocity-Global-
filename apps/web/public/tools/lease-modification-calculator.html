@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lease Modification Impact Calculator — IFRS 16</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111418;
+    --surface2: #181c22;
+    --border: #232830;
+    --accent: #d4a853;
+    --accent2: #e8c87a;
+    --text: #e8eaed;
+    --muted: #6b7280;
+    --green: #34d399;
+    --red: #f87171;
+    --blue: #60a5fa;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-block { display: flex; flex-direction: column; gap: 4px; }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 4vw, 38px);
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  h1 em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .badge {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    color: #0a0c0f;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 6px 14px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+    align-self: flex-start;
+  }
+
+  /* Layout */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    header { flex-direction: column; gap: 12px; }
+  }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 28px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .card:nth-child(2) { animation-delay: 0.08s; }
+  .card:nth-child(3) { animation-delay: 0.16s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Form fields */
+  .field { margin-bottom: 18px; }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  input[type="number"], select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    -moz-appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  input[type="number"]:focus, select:focus {
+    border-color: var(--accent);
+  }
+
+  select option { background: var(--surface2); }
+
+  .prefix-wrap {
+    position: relative;
+  }
+
+  .prefix-wrap span {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    pointer-events: none;
+  }
+
+  .prefix-wrap input { padding-left: 28px; }
+
+  /* Modification type toggle */
+  .toggle-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .toggle-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.18s;
+    letter-spacing: 0.04em;
+  }
+
+  .toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .toggle-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0a0c0f;
+  }
+
+  /* Calculate button */
+  .calc-btn {
+    width: 100%;
+    background: var(--accent);
+    border: none;
+    border-radius: 3px;
+    color: #0a0c0f;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 16px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .calc-btn:hover { background: var(--accent2); transform: translateY(-1px); }
+  .calc-btn:active { transform: translateY(0); }
+
+  .calc-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+  }
+
+  .calc-btn:hover::after { transform: translateX(100%); }
+
+  /* Results */
+  .results-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 28px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.5s 0.24s ease both;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  @media (max-width: 600px) {
+    .results-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .metric {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 18px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metric::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .metric.highlight::before { transform: scaleX(1); }
+
+  .metric-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .metric-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .metric-delta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    margin-top: 5px;
+  }
+
+  .pos { color: var(--red); }
+  .neg { color: var(--green); }
+  .neutral { color: var(--blue); }
+
+  /* Journal entries */
+  .journal-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .journal-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+  }
+
+  th {
+    text-align: left;
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(35,40,48,0.6);
+    color: var(--text);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  td.dr { color: var(--accent2); padding-left: 24px; }
+  td.cr { color: var(--muted); padding-left: 44px; }
+  td.amount { text-align: right; }
+  td.dr-amt { color: var(--accent2); text-align: right; }
+  td.cr-amt { color: var(--muted); text-align: right; }
+
+  /* IFRS note */
+  .ifrs-note {
+    background: rgba(212,168,83,0.06);
+    border: 1px solid rgba(212,168,83,0.2);
+    border-radius: 3px;
+    padding: 16px 20px;
+    margin-top: 20px;
+  }
+
+  .ifrs-note-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .ifrs-note p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* Waterfall chart */
+  .waterfall { margin-top: 24px; }
+
+  .wf-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .wf-label {
+    font-size: 11px;
+    color: var(--muted);
+    width: 160px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .wf-track {
+    flex: 1;
+    height: 22px;
+    background: var(--surface2);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wf-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.7s cubic-bezier(0.22,1,0.36,1);
+    position: relative;
+  }
+
+  .wf-fill.gold { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .wf-fill.red { background: linear-gradient(90deg, #b45309, var(--red)); }
+  .wf-fill.green { background: linear-gradient(90deg, #065f46, var(--green)); }
+
+  .wf-amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    width: 100px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--muted);
+  }
+
+  .empty-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    opacity: 0.3;
+  }
+
+  .empty-state p { font-size: 13px; line-height: 1.6; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="logo-block">
+      <span class="eyebrow">Velocity Global Leasing · IFRS 16</span>
+      <h1>Lease Modification<br><em>Impact Calculator</em></h1>
+    </div>
+    <div class="badge">IFRS 16 Compliant</div>
+  </header>
+
+  <div class="grid">
+    <!-- Original Lease -->
+    <div class="card">
+      <div class="card-label">01 — Original Lease</div>
+
+      <div class="field">
+        <label>Asset Type</label>
+        <select id="assetType">
+          <option value="vehicle">Commercial Vehicle (NMR / NQR / Tipper / TFR)</option>
+          <option value="equipment">Plant & Equipment</option>
+          <option value="property">Property / Real Estate</option>
+          <option value="other">Other Asset</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Original Lease Term (months)</label>
+          <input type="number" id="origTerm" value="48" min="1" max="360">
+        </div>
+        <div class="field">
+          <label>Elapsed Months</label>
+          <input type="number" id="elapsed" value="12" min="0" max="360">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Original Monthly Payment</label>
+        <div class="prefix-wrap">
+          <span>KES</span>
+          <input type="number" id="origPayment" value="120000" min="0">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Original Discount Rate (IBR) %</label>
+        <input type="number" id="origRate" value="14" min="0" max="50" step="0.1">
+      </div>
+
+      <div class="field">
+        <label>Original Residual / Balloon Value</label>
+        <div class="prefix-wrap">
+          <span>KES</span>
+          <input type="number" id="origResidual" value="0" min="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- Modification Parameters -->
+    <div class="card">
+      <div class="card-label">02 — Modification Terms</div>
+
+      <div class="field">
+        <label>Modification Type</label>
+        <div class="toggle-group">
+          <button class="toggle-btn active" onclick="setModType('extend', this)">Term Extension</button>
+          <button class="toggle-btn" onclick="setModType('reduce', this)">Early Termination</button>
+          <button class="toggle-btn" onclick="setModType('payment', this)">Payment Change</button>
+          <button class="toggle-btn" onclick="setModType('rate', this)">Rate Revision</button>
+        </div>
+      </div>
+
+      <div id="modInputs">
+        <!-- Dynamic based on mod type -->
+        <div class="field">
+          <label>New Lease Term (months from modification date)</label>
+          <input type="number" id="newTerm" value="60" min="1" max="360">
+        </div>
+        <div class="field">
+          <label>New Monthly Payment</label>
+          <div class="prefix-wrap">
+            <span>KES</span>
+            <input type="number" id="newPayment" value="120000" min="0">
+          </div>
+        </div>
+        <div class="field">
+          <label>Revised Discount Rate (IBR) %</label>
+          <input type="number" id="newRate" value="14" min="0" max="50" step="0.1">
+        </div>
+        <div class="field">
+          <label>Termination Penalty (if applicable)</label>
+          <div class="prefix-wrap">
+            <span>KES</span>
+            <input type="number" id="penalty" value="0" min="0">
+          </div>
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calculate()">Calculate IFRS 16 Impact →</button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-card" id="resultsCard">
+    <div class="card-label">03 — IFRS 16 Impact Analysis</div>
+
+    <div id="resultsContent">
+      <div class="empty-state">
+        <div class="empty-icon">⬡</div>
+        <p>Enter your lease parameters above and click<br><strong style="color:var(--accent)">Calculate IFRS 16 Impact</strong> to generate the analysis.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Velocity Global Leasing · IFRS 16 Tool · For advisory use — consult your auditor for final figures
+  </footer>
+
+</div>
+
+<script>
+let modType = 'extend';
+
+function setModType(type, btn) {
+  modType = type;
+  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function fmt(n) {
+  return 'KES ' + Math.abs(n).toLocaleString('en-KE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+function fmtShort(n) {
+  if (Math.abs(n) >= 1e6) return 'KES ' + (n / 1e6).toFixed(2) + 'M';
+  if (Math.abs(n) >= 1e3) return 'KES ' + (n / 1e3).toFixed(1) + 'K';
+  return fmt(n);
+}
+
+// PV of annuity
+function pvAnnuity(pmt, rate, n, residual = 0) {
+  if (rate === 0) return pmt * n + residual;
+  const r = rate / 12 / 100;
+  const pv = pmt * (1 - Math.pow(1 + r, -n)) / r;
+  const pvResidual = residual / Math.pow(1 + r, n);
+  return pv + pvResidual;
+}
+
+function calculate() {
+  const origTerm = +document.getElementById('origTerm').value;
+  const elapsed = +document.getElementById('elapsed').value;
+  const origPayment = +document.getElementById('origPayment').value;
+  const origRate = +document.getElementById('origRate').value;
+  const origResidual = +document.getElementById('origResidual').value;
+  const newTerm = +document.getElementById('newTerm').value;
+  const newPayment = +document.getElementById('newPayment').value;
+  const newRate = +document.getElementById('newRate').value;
+  const penalty = +document.getElementById('penalty').value;
+
+  const remaining = origTerm - elapsed;
+  if (remaining <= 0 || elapsed > origTerm) {
+    alert('Elapsed months cannot exceed original term.');
+    return;
+  }
+
+  // Carrying amount at modification date (PV of remaining payments at original rate)
+  const carryingLiability = pvAnnuity(origPayment, origRate, remaining, origResidual);
+
+  // ROU asset carrying amount (straight-line depreciation of original ROU)
+  const origROU = pvAnnuity(origPayment, origRate, origTerm, origResidual);
+  const rouCarrying = origROU * (remaining / origTerm);
+
+  // New lease liability (PV of revised future payments at revised rate)
+  let effectiveTerm = newTerm;
+  let effectivePayment = newPayment;
+  let effectiveRate = newRate;
+
+  if (modType === 'extend') {
+    effectiveTerm = remaining + newTerm;
+  } else if (modType === 'reduce') {
+    effectiveTerm = Math.min(remaining, newTerm);
+    effectivePayment = newPayment || origPayment;
+  } else if (modType === 'payment') {
+    effectiveTerm = remaining;
+  } else if (modType === 'rate') {
+    effectiveTerm = remaining;
+    effectivePayment = origPayment;
+  }
+
+  const newLiability = pvAnnuity(effectivePayment, effectiveRate, effectiveTerm, 0) + penalty;
+
+  // Remeasurement gain/loss
+  const remeasurement = newLiability - carryingLiability;
+
+  // New ROU asset
+  let newROU = rouCarrying + remeasurement;
+  if (modType === 'reduce') {
+    newROU = rouCarrying * (effectiveTerm / remaining);
+  }
+
+  // Total payments
+  const totalOrigPayments = origPayment * origTerm + origResidual;
+  const totalNewPayments = effectivePayment * effectiveTerm + penalty;
+  const paymentDelta = totalNewPayments - totalOrigPayments;
+
+  // Interest (IFRS 16 finance cost for Year 1 post-modification)
+  const year1Interest = newLiability * (effectiveRate / 100);
+  const year1Principal = (effectivePayment * 12) - year1Interest;
+
+  // Depreciation
+  const newDepreciation = newROU / effectiveTerm * 12; // annual
+
+  // P&L impact
+  const plImpact = -(newDepreciation + year1Interest);
+
+  const resultsEl = document.getElementById('resultsContent');
+
+  const remSign = remeasurement >= 0 ? '+' : '-';
+  const remClass = remeasurement >= 0 ? 'pos' : 'neg';
+
+  // Waterfall max
+  const maxVal = Math.max(origROU, newROU, carryingLiability, newLiability, Math.abs(remeasurement)) * 1.1;
+
+  const pct = (v) => Math.min(100, Math.abs(v) / maxVal * 100);
+
+  resultsEl.innerHTML = `
+    <div class="results-grid">
+      <div class="metric highlight">
+        <div class="metric-label">Carrying Lease Liability<br>(Pre-Modification)</div>
+        <div class="metric-value">${fmtShort(carryingLiability)}</div>
+        <div class="metric-delta neutral">Remaining: ${remaining} mths</div>
+      </div>
+      <div class="metric highlight">
+        <div class="metric-label">New Lease Liability<br>(Post-Modification)</div>
+        <div class="metric-value">${fmtShort(newLiability)}</div>
+        <div class="metric-delta ${remClass}">${remSign}${fmtShort(Math.abs(remeasurement))} remeasurement</div>
+      </div>
+      <div class="metric highlight">
+        <div class="metric-label">ROU Asset<br>(Post-Modification)</div>
+        <div class="metric-value">${fmtShort(newROU)}</div>
+        <div class="metric-delta neutral">Depreciated over ${effectiveTerm} mths</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Annual Depreciation<br>(IFRS 16)</div>
+        <div class="metric-value">${fmtShort(newDepreciation)}</div>
+        <div class="metric-delta neutral">Per annum</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Year 1 Finance Cost<br>(Interest Expense)</div>
+        <div class="metric-value">${fmtShort(year1Interest)}</div>
+        <div class="metric-delta neutral">@ ${effectiveRate}% IBR</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Estimated P&L Impact<br>(Year 1, Total)</div>
+        <div class="metric-value">${fmtShort(Math.abs(plImpact))}</div>
+        <div class="metric-delta pos">Charge to P&L</div>
+      </div>
+    </div>
+
+    <div class="waterfall">
+      <div class="journal-title">Balance Sheet Movement</div>
+      <div class="wf-bar-row">
+        <div class="wf-label">Original ROU Asset</div>
+        <div class="wf-track"><div class="wf-fill gold" style="width:${pct(origROU)}%"></div></div>
+        <div class="wf-amount">${fmtShort(origROU)}</div>
+      </div>
+      <div class="wf-bar-row">
+        <div class="wf-label">ROU Carrying Value</div>
+        <div class="wf-track"><div class="wf-fill gold" style="width:${pct(rouCarrying)}%"></div></div>
+        <div class="wf-amount">${fmtShort(rouCarrying)}</div>
+      </div>
+      <div class="wf-bar-row">
+        <div class="wf-label">New ROU Asset</div>
+        <div class="wf-track"><div class="wf-fill ${remeasurement >= 0 ? 'red' : 'green'}" style="width:${pct(newROU)}%"></div></div>
+        <div class="wf-amount">${fmtShort(newROU)}</div>
+      </div>
+      <div class="wf-bar-row">
+        <div class="wf-label">Pre-Mod Liability</div>
+        <div class="wf-track"><div class="wf-fill gold" style="width:${pct(carryingLiability)}%"></div></div>
+        <div class="wf-amount">${fmtShort(carryingLiability)}</div>
+      </div>
+      <div class="wf-bar-row">
+        <div class="wf-label">Post-Mod Liability</div>
+        <div class="wf-track"><div class="wf-fill ${newLiability > carryingLiability ? 'red' : 'green'}" style="width:${pct(newLiability)}%"></div></div>
+        <div class="wf-amount">${fmtShort(newLiability)}</div>
+      </div>
+    </div>
+
+    <div style="margin-top:28px">
+      <div class="journal-title">Journal Entry — At Modification Date</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Account</th>
+            <th style="text-align:right">Dr</th>
+            <th style="text-align:right">Cr</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${remeasurement >= 0 ? `
+          <tr>
+            <td class="dr">Right-of-Use Asset</td>
+            <td class="dr-amt">${fmt(remeasurement)}</td>
+            <td class="cr-amt">—</td>
+          </tr>
+          <tr>
+            <td class="cr">Lease Liability</td>
+            <td class="dr-amt">—</td>
+            <td class="cr-amt">${fmt(remeasurement)}</td>
+          </tr>
+          <tr>
+            <td colspan="3" style="color:var(--muted);font-size:10px;padding-top:4px">
+              ↳ Increase in liability remeasured to ROU asset (IFRS 16.45a)
+            </td>
+          </tr>
+          ` : `
+          <tr>
+            <td class="dr">Lease Liability</td>
+            <td class="dr-amt">${fmt(Math.abs(remeasurement))}</td>
+            <td class="cr-amt">—</td>
+          </tr>
+          <tr>
+            <td class="cr">Right-of-Use Asset</td>
+            <td class="dr-amt">—</td>
+            <td class="cr-amt">${fmt(Math.abs(remeasurement))}</td>
+          </tr>
+          <tr>
+            <td colspan="3" style="color:var(--muted);font-size:10px;padding-top:4px">
+              ↳ Decrease in liability reduces ROU asset (IFRS 16.45b)
+            </td>
+          </tr>
+          `}
+          ${penalty > 0 ? `
+          <tr>
+            <td class="dr">Lease Modification Expense</td>
+            <td class="dr-amt">${fmt(penalty)}</td>
+            <td class="cr-amt">—</td>
+          </tr>
+          <tr>
+            <td class="cr">Cash / Payable</td>
+            <td class="dr-amt">—</td>
+            <td class="cr-amt">${fmt(penalty)}</td>
+          </tr>
+          ` : ''}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ifrs-note">
+      <div class="ifrs-note-title">IFRS 16 Compliance Note</div>
+      <p>
+        This modification is treated as a <strong style="color:var(--accent)">${getModLabel()}</strong> under IFRS 16.
+        The lease liability is remeasured at the modification date using the ${modType === 'rate' ? 'revised' : 'original'} IBR of <strong style="color:var(--accent)">${effectiveRate}%</strong>.
+        The corresponding ROU asset is adjusted by the same amount (IFRS 16.44–46).
+        ${modType === 'extend' || modType === 'reduce' ? ' A change in lease scope requires reassessment of variable payments and residual value guarantees.' : ''}
+        Total future cash commitment changes by <strong style="color:${paymentDelta >= 0 ? 'var(--red)' : 'var(--green)'}">${paymentDelta >= 0 ? '+' : '-'}${fmt(Math.abs(paymentDelta))}</strong>.
+      </p>
+    </div>
+  `;
+
+  // Animate metrics
+  setTimeout(() => {
+    document.querySelectorAll('.metric').forEach((m, i) => {
+      setTimeout(() => m.classList.add('highlight'), i * 80);
+    });
+  }, 100);
+
+  document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function getModLabel() {
+  const labels = {
+    extend: 'Lease Extension (Scope Increase)',
+    reduce: 'Lease Curtailment (Scope Decrease)',
+    payment: 'Payment Modification (No Scope Change)',
+    rate: 'Interest Rate Revision'
+  };
+  return labels[modType] || 'Modification';
+}
+</script>
+</body>
+</html>
