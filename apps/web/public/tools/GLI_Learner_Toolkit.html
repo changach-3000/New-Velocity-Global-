@@ -1,0 +1,2353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenLedger Institute — Learner Toolkit</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #005B5E;
+  --teal-dark: #003D40;
+  --teal-light: #E0F4F4;
+  --gold: #B8962E;
+  --gold-light: #F5EDD0;
+  --gold-bright: #D4AF55;
+  --green: #1B7A4A;
+  --green-light: #E8F5EE;
+  --red: #C0272D;
+  --red-light: #FAE8E8;
+  --navy: #0D1B3E;
+  --charcoal: #1A2E2E;
+  --grey: #F4F7F7;
+  --mid-grey: #8A9BAA;
+  --white: #FFFFFF;
+  --border: #D0E0E0;
+  --shadow: 0 4px 24px rgba(0,91,94,0.10);
+  --shadow-lg: 0 8px 40px rgba(0,91,94,0.16);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #F2F8F8;
+  color: var(--charcoal);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--teal-dark);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-icon {
+  width: 40px; height: 40px;
+  background: var(--gold);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+.logo-text { color: var(--white); }
+.logo-text .brand { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; }
+.logo-text .sub { font-size: 10px; letter-spacing: 2px; color: #80BABB; text-transform: uppercase; }
+.nav {
+  display: flex; gap: 4px;
+}
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: #80BABB;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+.nav-btn:hover, .nav-btn.active {
+  background: rgba(184,150,46,0.15);
+  color: var(--gold-bright);
+}
+.nav-btn.active { background: var(--gold); color: var(--teal-dark); font-weight: 600; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 60%, #007A7E 100%);
+  padding: 60px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(184,150,46,0.12) 0%, transparent 60%);
+}
+.hero-content { position: relative; max-width: 800px; margin: 0 auto; }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 48px);
+  color: var(--white);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero h1 span { color: var(--gold-bright); }
+.hero p {
+  color: #B0D4D5;
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.hero-badges {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+}
+.badge {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+}
+.badge.gold { background: rgba(184,150,46,0.25); border-color: var(--gold); color: var(--gold-bright); }
+
+/* ── MAIN CONTENT ── */
+.main { max-width: 1400px; margin: 0 auto; padding: 40px 32px; }
+.section { display: none; }
+.section.active { display: block; }
+
+.section-header {
+  margin-bottom: 32px;
+}
+.section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--teal-dark);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.section-header p { color: var(--mid-grey); font-size: 14px; }
+
+/* ── TOOL CARDS GRID ── */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 24px;
+}
+
+.tool-card {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border);
+}
+.tool-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+.tool-card-header {
+  padding: 24px;
+  display: flex; align-items: flex-start; gap: 16px;
+}
+.tool-icon {
+  width: 52px; height: 52px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+.tool-icon.teal { background: var(--teal-light); }
+.tool-icon.gold { background: var(--gold-light); }
+.tool-icon.green { background: var(--green-light); }
+.tool-icon.red { background: var(--red-light); }
+
+.tool-info h3 {
+  font-size: 16px; font-weight: 600; color: var(--teal-dark); margin-bottom: 4px;
+}
+.tool-info p { font-size: 13px; color: var(--mid-grey); line-height: 1.5; }
+
+.tool-body { padding: 0 24px 24px; }
+.tool-module {
+  font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+}
+
+/* ── CALCULATOR STYLES ── */
+.calc-row {
+  display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-end;
+}
+.calc-group { flex: 1; }
+.calc-group label {
+  display: block; font-size: 11px; font-weight: 600; color: var(--teal); margin-bottom: 6px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.calc-group input, .calc-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--charcoal);
+  background: var(--grey);
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.calc-group input:focus, .calc-group select:focus {
+  outline: none; border-color: var(--teal);
+  background: var(--white);
+}
+.calc-btn {
+  background: var(--teal);
+  color: var(--white);
+  border: none;
+  padding: 11px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 4px;
+  transition: background 0.2s;
+}
+.calc-btn:hover { background: var(--teal-dark); }
+.calc-btn.gold-btn { background: var(--gold); }
+.calc-btn.gold-btn:hover { background: #9A7A20; }
+
+.result-box {
+  background: var(--teal-light);
+  border: 1px solid var(--teal);
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 16px;
+  display: none;
+}
+.result-box.show { display: block; }
+.result-title { font-size: 11px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.result-item { }
+.result-item .label { font-size: 11px; color: var(--mid-grey); }
+.result-item .value { font-size: 16px; font-weight: 700; color: var(--teal-dark); font-family: 'DM Mono', monospace; }
+.result-item .value.highlight { color: var(--green); font-size: 20px; }
+.result-full { grid-column: 1/-1; }
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; }
+.checklist li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 13px; color: var(--charcoal); line-height: 1.5;
+  cursor: pointer; transition: color 0.2s;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li .check-box {
+  width: 18px; height: 18px; border-radius: 4px;
+  border: 2px solid var(--teal);
+  flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  background: var(--white);
+}
+.checklist li.checked .check-box {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+.checklist li.checked .check-box::after { content: '✓'; font-size: 11px; font-weight: 700; }
+.checklist li.checked > span { text-decoration: line-through; color: var(--mid-grey); }
+
+.checklist-progress {
+  background: var(--grey);
+  border-radius: 50px;
+  height: 6px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.checklist-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--green));
+  border-radius: 50px;
+  transition: width 0.4s ease;
+}
+.checklist-counter {
+  font-size: 12px; color: var(--mid-grey); text-align: right; margin-bottom: 8px;
+}
+
+/* ── TABS ── */
+.tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mid-grey);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab-btn:hover { border-color: var(--teal); color: var(--teal); }
+.tab-btn.active { background: var(--teal); color: var(--white); border-color: var(--teal); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ── GLOSSARY ── */
+.glossary-search-wrap {
+  position: relative; margin-bottom: 24px;
+}
+.glossary-search {
+  width: 100%;
+  padding: 14px 48px 14px 20px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--charcoal);
+  background: var(--white);
+  transition: border-color 0.2s;
+}
+.glossary-search:focus { outline: none; border-color: var(--teal); }
+.search-icon {
+  position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+  color: var(--mid-grey); font-size: 18px;
+}
+.glossary-filter {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.filter-btn {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  background: var(--white);
+  font-size: 12px; font-weight: 500;
+  color: var(--mid-grey);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn:hover { border-color: var(--teal); color: var(--teal); }
+.filter-btn.active { background: var(--teal); color: var(--white); border-color: var(--teal); }
+
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+.glossary-item {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,91,94,0.06);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.glossary-item:hover { box-shadow: var(--shadow); border-color: var(--teal); }
+.glossary-abbr {
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: 2px;
+}
+.glossary-full {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal-dark);
+  margin-bottom: 6px;
+}
+.glossary-def {
+  font-size: 12px;
+  color: var(--mid-grey);
+  line-height: 1.6;
+}
+.glossary-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 50px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+.glossary-tag.carbon { background: #E8F5E9; color: #2E7D32; }
+.glossary-tag.esg { background: var(--teal-light); color: var(--teal-dark); }
+.glossary-tag.finance { background: var(--gold-light); color: #7A5C10; }
+.glossary-tag.reporting { background: #EDE7F6; color: #512DA8; }
+.glossary-tag.kenya { background: #FFF3E0; color: #E65100; }
+.glossary-tag.solar { background: #FFFDE7; color: #F57F17; }
+.glossary-hidden { display: none; }
+
+.glossary-count {
+  font-size: 13px; color: var(--mid-grey); margin-bottom: 16px;
+}
+.glossary-count span { color: var(--teal); font-weight: 600; }
+
+/* ── TEMPLATE CARDS ── */
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+.template-card {
+  background: var(--white);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.2s;
+  box-shadow: var(--shadow);
+}
+.template-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.template-header {
+  padding: 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.template-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.template-meta h3 { font-size: 15px; font-weight: 600; color: var(--teal-dark); margin-bottom: 2px; }
+.template-meta p { font-size: 12px; color: var(--mid-grey); }
+.template-body { padding: 0 20px 20px; }
+.template-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.t-tag {
+  padding: 3px 10px; border-radius: 50px;
+  font-size: 11px; font-weight: 500;
+  background: var(--grey); color: var(--mid-grey);
+}
+.template-preview {
+  background: var(--grey);
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 12px;
+  color: var(--charcoal);
+  line-height: 1.6;
+  font-family: 'DM Mono', monospace;
+  max-height: 120px;
+  overflow: hidden;
+  position: relative;
+}
+.template-preview::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 40px;
+  background: linear-gradient(transparent, var(--grey));
+}
+.template-download {
+  display: flex; gap: 8px; margin-top: 14px;
+}
+.dl-btn {
+  flex: 1; padding: 9px;
+  border-radius: 8px;
+  border: 1.5px solid var(--teal);
+  background: transparent;
+  color: var(--teal);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.dl-btn:hover { background: var(--teal); color: var(--white); }
+.dl-btn.primary { background: var(--teal); color: var(--white); }
+.dl-btn.primary:hover { background: var(--teal-dark); }
+
+/* ── DECISION TREES ── */
+.decision-tree {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.dt-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--teal-dark);
+  font-weight: 600;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+.dt-options { display: flex; flex-direction: column; gap: 10px; }
+.dt-option {
+  padding: 14px 18px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--charcoal);
+  transition: all 0.2s;
+  background: var(--white);
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  display: flex; align-items: center; gap: 10px;
+}
+.dt-option:hover { border-color: var(--teal); background: var(--teal-light); }
+.dt-option .opt-icon { font-size: 18px; }
+.dt-result {
+  background: var(--green-light);
+  border: 2px solid var(--green);
+  border-radius: 12px;
+  padding: 20px;
+  display: none;
+}
+.dt-result.show { display: block; }
+.dt-result h4 { font-size: 16px; color: var(--green); font-weight: 700; margin-bottom: 8px; }
+.dt-result p { font-size: 13px; color: var(--charcoal); line-height: 1.6; }
+.dt-reset {
+  background: none; border: none; color: var(--teal); font-size: 13px;
+  cursor: pointer; text-decoration: underline; margin-top: 12px;
+  font-family: 'DM Sans', sans-serif;
+}
+.breadcrumb {
+  font-size: 12px; color: var(--mid-grey); margin-bottom: 16px;
+  display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+}
+.breadcrumb span { color: var(--teal); font-weight: 500; }
+
+/* ── QUICK REFERENCE TABLES ── */
+.ref-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ref-table th {
+  background: var(--teal-dark);
+  color: var(--white);
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.ref-table th:first-child { border-radius: 8px 0 0 0; }
+.ref-table th:last-child { border-radius: 0 8px 0 0; }
+.ref-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.ref-table tr:nth-child(even) td { background: var(--grey); }
+.ref-table tr:last-child td { border-bottom: none; }
+.ref-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+.ref-table tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+.table-wrap {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+
+/* ── PROGRESS TRACKER ── */
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.module-item {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 14px;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.module-item.completed { border-color: var(--green); background: var(--green-light); }
+.module-item.in-progress { border-color: var(--gold); background: var(--gold-light); }
+.module-item:hover { border-color: var(--teal); }
+.module-num { font-size: 22px; font-weight: 800; color: var(--teal); font-family: 'Playfair Display', serif; }
+.module-item.completed .module-num { color: var(--green); }
+.module-title { font-size: 11px; color: var(--mid-grey); margin-top: 4px; line-height: 1.4; }
+.module-status {
+  font-size: 10px; font-weight: 600; margin-top: 6px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.module-item.completed .module-status { color: var(--green); }
+.module-item.in-progress .module-status { color: var(--gold); }
+.overall-progress {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  margin-bottom: 28px;
+}
+.progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.progress-header h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--teal-dark); }
+.progress-pct { font-size: 32px; font-weight: 800; color: var(--teal); font-family: 'DM Mono', monospace; }
+.progress-bar-wrap { background: var(--grey); border-radius: 50px; height: 10px; overflow: hidden; margin-bottom: 20px; }
+.progress-bar { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--teal), var(--green)); transition: width 1s ease; }
+.progress-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.p-stat { text-align: center; }
+.p-stat .num { font-size: 24px; font-weight: 700; color: var(--teal-dark); font-family: 'DM Mono', monospace; }
+.p-stat .lbl { font-size: 11px; color: var(--mid-grey); }
+
+/* ── FORMULA CARDS ── */
+.formula-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,91,94,0.06);
+  margin-bottom: 16px;
+}
+.formula-name { font-size: 14px; font-weight: 700; color: var(--teal-dark); margin-bottom: 10px; }
+.formula-equation {
+  background: var(--teal-dark);
+  color: var(--gold-bright);
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+.formula-note { font-size: 12px; color: var(--mid-grey); line-height: 1.6; }
+.formula-note strong { color: var(--teal); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .header-inner { padding: 12px 16px; }
+  .nav { display: none; }
+  .hero { padding: 40px 16px; }
+  .main { padding: 24px 16px; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .glossary-grid { grid-template-columns: 1fr; }
+  .template-grid { grid-template-columns: 1fr; }
+  .progress-stats { grid-template-columns: repeat(2,1fr); }
+  .result-grid { grid-template-columns: 1fr; }
+  .module-grid { grid-template-columns: repeat(3,1fr); }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.4s ease forwards; }
+.section.active { animation: fadeIn 0.3s ease; }
+
+/* ── MOBILE NAV ── */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--teal-dark);
+  padding: 8px;
+  gap: 4px;
+  z-index: 200;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+@media (max-width: 768px) {
+  .mobile-nav { display: flex; }
+  body { padding-bottom: 80px; }
+}
+.mob-btn {
+  flex: 1; background: none; border: none;
+  color: #80BABB; font-size: 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 6px 4px; border-radius: 8px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+}
+.mob-btn .icon { font-size: 18px; }
+.mob-btn.active { color: var(--gold-bright); background: rgba(184,150,46,0.15); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🌿</div>
+      <div class="logo-text">
+        <div class="brand">GreenLedger Institute</div>
+        <div class="sub">Learner Toolkit</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" onclick="showSection('tools')">🔧 Tools</button>
+      <button class="nav-btn" onclick="showSection('calculators')">🧮 Calculators</button>
+      <button class="nav-btn" onclick="showSection('checklists')">✅ Checklists</button>
+      <button class="nav-btn" onclick="showSection('glossary')">📖 Glossary</button>
+      <button class="nav-btn" onclick="showSection('formulas')">📐 Formulas</button>
+      <button class="nav-btn" onclick="showSection('progress')">📊 Progress</button>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>Your ESG <span>Professional Toolkit</span></h1>
+    <p>Interactive calculators, due diligence checklists, decision trees, quick-reference tables, and a comprehensive glossary — built specifically for GLI learners across all 20 modules.</p>
+    <div class="hero-badges">
+      <span class="badge">20 Modules</span>
+      <span class="badge">23.5 CPD Hours</span>
+      <span class="badge gold">🌍 Kenya & Africa Focused</span>
+      <span class="badge">Interactive Tools</span>
+      <span class="badge">250+ Abbreviations</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ════════════════════════════════ TOOLS SECTION ════════════════════════════════ -->
+<div id="tools" class="section active">
+  <div class="section-header">
+    <h2>Digital Tools & Decision Aids</h2>
+    <p>Interactive tools to support your learning and professional practice across all modules.</p>
+  </div>
+
+  <div class="tools-grid">
+
+    <!-- TOOL 1: ESG Materiality Scorer -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon teal">🎯</div>
+        <div class="tool-info">
+          <h3>ESG Materiality Quick Scorer</h3>
+          <p>Score any ESG topic on financial and stakeholder significance to determine materiality priority.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Module 7 & 14</div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>ESG Topic</label>
+            <input type="text" id="mat-topic" placeholder="e.g. Carbon Emissions" />
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>Financial Significance (1–5)</label>
+            <select id="mat-fin">
+              <option value="1">1 — Negligible</option>
+              <option value="2">2 — Low</option>
+              <option value="3">3 — Moderate</option>
+              <option value="4">4 — High</option>
+              <option value="5">5 — Very High</option>
+            </select>
+          </div>
+          <div class="calc-group">
+            <label>Stakeholder Significance (1–5)</label>
+            <select id="mat-stake">
+              <option value="1">1 — Negligible</option>
+              <option value="2">2 — Low</option>
+              <option value="3">3 — Moderate</option>
+              <option value="4">4 — High</option>
+              <option value="5">5 — Very High</option>
+            </select>
+          </div>
+        </div>
+        <button class="calc-btn" onclick="scoreMateriality()">Score Materiality</button>
+        <div class="result-box" id="mat-result"></div>
+      </div>
+    </div>
+
+    <!-- TOOL 2: Carbon Footprint Calculator -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon green">🌡️</div>
+        <div class="tool-info">
+          <h3>Carbon Footprint Calculator</h3>
+          <p>Calculate Scope 1 and Scope 2 emissions for a Kenyan business using local emission factors.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Modules 3, 9 & 14</div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>Diesel consumed (litres/yr)</label>
+            <input type="number" id="cf-diesel" placeholder="0" />
+          </div>
+          <div class="calc-group">
+            <label>Petrol consumed (litres/yr)</label>
+            <input type="number" id="cf-petrol" placeholder="0" />
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>LPG consumed (kg/yr)</label>
+            <input type="number" id="cf-lpg" placeholder="0" />
+          </div>
+          <div class="calc-group">
+            <label>Grid electricity (kWh/yr)</label>
+            <input type="number" id="cf-elec" placeholder="0" />
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calcCarbon()">Calculate Footprint</button>
+        <div class="result-box" id="cf-result"></div>
+      </div>
+    </div>
+
+    <!-- TOOL 3: Solar Lease Analyser -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon gold">☀️</div>
+        <div class="tool-info">
+          <h3>Solar Lease Analyser</h3>
+          <p>Model electricity savings, lease payment, client ROI, and lessor return for a C&I solar lease.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Modules 10 & 15</div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>System size (kWp)</label>
+            <input type="number" id="sol-kwp" placeholder="200" />
+          </div>
+          <div class="calc-group">
+            <label>Electricity tariff (KES/kWh)</label>
+            <input type="number" id="sol-tariff" placeholder="22" />
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>System cost (KES million)</label>
+            <input type="number" id="sol-cost" step="0.1" placeholder="18" />
+          </div>
+          <div class="calc-group">
+            <label>Lease term (years)</label>
+            <input type="number" id="sol-term" placeholder="7" />
+          </div>
+        </div>
+        <button class="calc-btn gold-btn" onclick="calcSolar()">Analyse Lease</button>
+        <div class="result-box" id="sol-result"></div>
+      </div>
+    </div>
+
+    <!-- TOOL 4: Carbon Credit Valuation -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon green">💎</div>
+        <div class="tool-info">
+          <h3>Carbon Credit Valuation Tool</h3>
+          <p>Estimate carbon credit value using market price reference and Kenya's 25/25/50 revenue sharing.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Modules 4, 11 & 16</div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>Annual credits (tonnes CO2e)</label>
+            <input type="number" id="cc-vol" placeholder="100000" />
+          </div>
+          <div class="calc-group">
+            <label>Price (USD/tonne)</label>
+            <input type="number" id="cc-price" placeholder="15" step="0.5" />
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>Market type</label>
+            <select id="cc-type">
+              <option value="voluntary">Voluntary Market</option>
+              <option value="article6">Article 6 ITMO</option>
+            </select>
+          </div>
+          <div class="calc-group">
+            <label>Production cost (USD/tonne)</label>
+            <input type="number" id="cc-cost" placeholder="4" step="0.5" />
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calcCarbon2()">Calculate Revenue</button>
+        <div class="result-box" id="cc-result"></div>
+      </div>
+    </div>
+
+    <!-- TOOL 5: ESG Risk Scorer -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon red">⚠️</div>
+        <div class="tool-info">
+          <h3>ESG Risk Residual Scorer</h3>
+          <p>Apply the Module 9 ESG risk framework to calculate residual risk across E, S, and G dimensions.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Module 9</div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>E — Exposure (1–5)</label>
+            <select id="esg-e-exp">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+          <div class="calc-group">
+            <label>E — Management (1–5)</label>
+            <select id="esg-e-mgmt">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>S — Exposure (1–5)</label>
+            <select id="esg-s-exp">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+          <div class="calc-group">
+            <label>S — Management (1–5)</label>
+            <select id="esg-s-mgmt">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>G — Exposure (1–5)</label>
+            <select id="esg-g-exp">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+          <div class="calc-group">
+            <label>G — Management (1–5)</label>
+            <select id="esg-g-mgmt">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calcESGRisk()">Calculate Risk</button>
+        <div class="result-box" id="esg-result"></div>
+      </div>
+    </div>
+
+    <!-- TOOL 6: SLL Margin Calculator -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon gold">📊</div>
+        <div class="tool-info">
+          <h3>SLL Margin Ratchet Calculator</h3>
+          <p>Model the interest rate impact of KPI achievement on a Sustainability-Linked Loan.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Module 18</div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>Loan amount (KES million)</label>
+            <input type="number" id="sll-amount" placeholder="500" />
+          </div>
+          <div class="calc-group">
+            <label>Base margin (%)</label>
+            <input type="number" id="sll-margin" placeholder="3.5" step="0.1" />
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-group">
+            <label>Step-down per KPI (bps)</label>
+            <input type="number" id="sll-step" placeholder="10" />
+          </div>
+          <div class="calc-group">
+            <label>Number of KPIs achieved</label>
+            <select id="sll-kpis">
+              <option value="0">0 — None achieved</option>
+              <option value="1">1 — One KPI</option>
+              <option value="2">2 — Two KPIs</option>
+              <option value="3">3 — All three</option>
+            </select>
+          </div>
+        </div>
+        <button class="calc-btn gold-btn" onclick="calcSLL()">Calculate Margin</button>
+        <div class="result-box" id="sll-result"></div>
+      </div>
+    </div>
+
+  </div><!-- /tools-grid -->
+
+  <!-- Decision Trees -->
+  <div class="section-header" style="margin-top: 48px;">
+    <h2>Decision Trees</h2>
+    <p>Step-by-step guidance for key professional decisions.</p>
+  </div>
+
+  <div class="tools-grid">
+    <!-- DT1: Lease Classification -->
+    <div class="decision-tree" id="dt1">
+      <div class="tool-module">Module 10 — IFRS 16</div>
+      <div class="breadcrumb" id="dt1-bc">Start</div>
+      <div class="dt-question" id="dt1-q">Does the lease transfer ownership of the asset to the lessee at end of term?</div>
+      <div class="dt-options" id="dt1-opts">
+        <button class="dt-option" onclick="dtStep('dt1',1,'yes','Yes — ownership transfers')"><span class="opt-icon">✅</span> Yes — ownership transfers at end</button>
+        <button class="dt-option" onclick="dtStep('dt1',1,'no','No — ownership retained')"><span class="opt-icon">❌</span> No — lessor retains ownership</button>
+      </div>
+      <div class="dt-result" id="dt1-result"></div>
+      <button class="dt-reset" onclick="dtReset('dt1')">↺ Start over</button>
+    </div>
+
+    <!-- DT2: Green Finance Product -->
+    <div class="decision-tree" id="dt2">
+      <div class="tool-module">Module 18 — Product Selection</div>
+      <div class="breadcrumb" id="dt2-bc">Start</div>
+      <div class="dt-question" id="dt2-q">Does the borrower have specific green capital expenditure to finance?</div>
+      <div class="dt-options" id="dt2-opts">
+        <button class="dt-option" onclick="dtStep('dt2',1,'yes','Yes — specific green capex')"><span class="opt-icon">✅</span> Yes — clear green project</button>
+        <button class="dt-option" onclick="dtStep('dt2',1,'no','No — general purpose')"><span class="opt-icon">❌</span> No — general corporate use</button>
+      </div>
+      <div class="dt-result" id="dt2-result"></div>
+      <button class="dt-reset" onclick="dtReset('dt2')">↺ Start over</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ CALCULATORS SECTION ════════════════════════════════ -->
+<div id="calculators" class="section">
+  <div class="section-header">
+    <h2>Financial Calculators</h2>
+    <p>Advanced calculations for solar finance, IFRS 16, carbon markets, and green bond pricing.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('calculators','ifrs16')">IFRS 16 Lease</button>
+    <button class="tab-btn" onclick="showTab('calculators','dscr')">DSCR Monitor</button>
+    <button class="tab-btn" onclick="showTab('calculators','sroi')">SROI Calculator</button>
+    <button class="tab-btn" onclick="showTab('calculators','sbt')">SBTi Target</button>
+    <button class="tab-btn" onclick="showTab('calculators','icp')">Internal Carbon Price</button>
+  </div>
+
+  <!-- IFRS 16 -->
+  <div id="calc-ifrs16" class="tab-content active">
+    <div class="tools-grid">
+      <div class="tool-card" style="grid-column: 1/-1; max-width: 700px;">
+        <div class="tool-card-header">
+          <div class="tool-icon teal">📋</div>
+          <div class="tool-info">
+            <h3>IFRS 16 Lease Liability Calculator</h3>
+            <p>Calculate initial lease liability, Year 1 finance charge, depreciation, and key ratio impacts.</p>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-module">Module 10 — IFRS 16</div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Monthly lease payment (KES)</label>
+              <input type="number" id="ifrs-pmt" placeholder="396667" />
+            </div>
+            <div class="calc-group">
+              <label>Lease term (months)</label>
+              <input type="number" id="ifrs-n" placeholder="84" />
+            </div>
+          </div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Incremental borrowing rate (%/yr)</label>
+              <input type="number" id="ifrs-rate" placeholder="14" step="0.5" />
+            </div>
+          </div>
+          <button class="calc-btn" onclick="calcIFRS16()">Calculate IFRS 16</button>
+          <div class="result-box" id="ifrs-result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DSCR -->
+  <div id="calc-dscr" class="tab-content">
+    <div class="tools-grid">
+      <div class="tool-card" style="grid-column: 1/-1; max-width: 700px;">
+        <div class="tool-card-header">
+          <div class="tool-icon green">📈</div>
+          <div class="tool-info">
+            <h3>DSCR Covenant Monitor</h3>
+            <p>Calculate Debt Service Coverage Ratio and check covenant compliance for solar project finance.</p>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-module">Module 15 — Project Finance</div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Annual lease income (KES)</label>
+              <input type="number" id="dscr-income" placeholder="12320000" />
+            </div>
+            <div class="calc-group">
+              <label>Annual O&M costs (KES)</label>
+              <input type="number" id="dscr-om" placeholder="900000" />
+            </div>
+          </div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Annual interest (KES)</label>
+              <input type="number" id="dscr-int" placeholder="3780000" />
+            </div>
+            <div class="calc-group">
+              <label>Annual principal (KES)</label>
+              <input type="number" id="dscr-prin" placeholder="3150000" />
+            </div>
+          </div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Minimum DSCR covenant</label>
+              <input type="number" id="dscr-min" placeholder="1.25" step="0.05" />
+            </div>
+          </div>
+          <button class="calc-btn" onclick="calcDSCR()">Check Covenant</button>
+          <div class="result-box" id="dscr-result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SROI -->
+  <div id="calc-sroi" class="tab-content">
+    <div class="tools-grid">
+      <div class="tool-card" style="grid-column: 1/-1; max-width: 700px;">
+        <div class="tool-card-header">
+          <div class="tool-icon gold">💚</div>
+          <div class="tool-info">
+            <h3>SROI Calculator</h3>
+            <p>Calculate Social Return on Investment with adjustments for deadweight, attribution, displacement and drop-off.</p>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-module">Module 13 — Social Impact</div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Total investment (KES)</label>
+              <input type="number" id="sroi-inv" placeholder="12000000" />
+            </div>
+            <div class="calc-group">
+              <label>Gross social value (KES)</label>
+              <input type="number" id="sroi-gross" placeholder="27000000" />
+            </div>
+          </div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Deadweight (%)</label>
+              <input type="number" id="sroi-dw" placeholder="20" max="100" />
+            </div>
+            <div class="calc-group">
+              <label>Attribution (%)</label>
+              <input type="number" id="sroi-attr" placeholder="80" max="100" />
+            </div>
+          </div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Displacement (%)</label>
+              <input type="number" id="sroi-disp" placeholder="5" max="100" />
+            </div>
+            <div class="calc-group">
+              <label>Drop-off (%)</label>
+              <input type="number" id="sroi-drop" placeholder="10" max="100" />
+            </div>
+          </div>
+          <button class="calc-btn gold-btn" onclick="calcSROI()">Calculate SROI</button>
+          <div class="result-box" id="sroi-result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SBTi Target -->
+  <div id="calc-sbt" class="tab-content">
+    <div class="tools-grid">
+      <div class="tool-card" style="grid-column: 1/-1; max-width: 700px;">
+        <div class="tool-card-header">
+          <div class="tool-icon green">🎯</div>
+          <div class="tool-info">
+            <h3>SBTi Target Calculator</h3>
+            <p>Calculate your 2030 science-based emissions reduction target using the Absolute Contraction methodology.</p>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-module">Module 14 — ESG Strategy</div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Baseline year Scope 1 (tCO2e)</label>
+              <input type="number" id="sbt-s1" placeholder="50000" />
+            </div>
+            <div class="calc-group">
+              <label>Baseline year Scope 2 (tCO2e)</label>
+              <input type="number" id="sbt-s2" placeholder="8000" />
+            </div>
+          </div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Baseline year</label>
+              <input type="number" id="sbt-base-yr" placeholder="2022" />
+            </div>
+            <div class="calc-group">
+              <label>Required reduction (%)</label>
+              <select id="sbt-pct">
+                <option value="42">42% — 1.5°C pathway (SBTi standard)</option>
+                <option value="50">50% — Enhanced ambition</option>
+                <option value="25">25% — Sectoral minimum</option>
+                <option value="30">30% — Custom</option>
+              </select>
+            </div>
+          </div>
+          <button class="calc-btn" onclick="calcSBTi()">Set Target</button>
+          <div class="result-box" id="sbt-result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ICP -->
+  <div id="calc-icp" class="tab-content">
+    <div class="tools-grid">
+      <div class="tool-card" style="grid-column: 1/-1; max-width: 700px;">
+        <div class="tool-card-header">
+          <div class="tool-icon teal">💰</div>
+          <div class="tool-info">
+            <h3>Internal Carbon Price Adjuster</h3>
+            <p>Adjust project NPV for carbon costs using an internal carbon price to support green capital allocation.</p>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-module">Module 14 — ESG Strategy</div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Project NPV (KES million)</label>
+              <input type="number" id="icp-npv" placeholder="80" step="0.5" />
+            </div>
+            <div class="calc-group">
+              <label>Annual emissions (tCO2e)</label>
+              <input type="number" id="icp-ems" placeholder="15000" />
+            </div>
+          </div>
+          <div class="calc-row">
+            <div class="calc-group">
+              <label>Internal carbon price (USD/tonne)</label>
+              <input type="number" id="icp-price" placeholder="30" />
+            </div>
+            <div class="calc-group">
+              <label>Assessment horizon (years)</label>
+              <input type="number" id="icp-yrs" placeholder="10" />
+            </div>
+          </div>
+          <button class="calc-btn gold-btn" onclick="calcICP()">Adjust NPV</button>
+          <div class="result-box" id="icp-result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ CHECKLISTS SECTION ════════════════════════════════ -->
+<div id="checklists" class="section">
+  <div class="section-header">
+    <h2>Professional Checklists</h2>
+    <p>Due diligence, quality assessment, and readiness checklists — interactive and trackable.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('checklists','esgdd')">ESG Due Diligence</button>
+    <button class="tab-btn" onclick="showTab('checklists','greenwash')">Greenwashing Detection</button>
+    <button class="tab-btn" onclick="showTab('checklists','carboncredit')">Carbon Credit Quality</button>
+    <button class="tab-btn" onclick="showTab('checklists','gbcheck')">Green Bond Readiness</button>
+    <button class="tab-btn" onclick="showTab('checklists','assurance')">ESG Assurance Prep</button>
+  </div>
+
+  <!-- ESG DUE DILIGENCE -->
+  <div id="checklist-esgdd" class="tab-content active">
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon teal">🔍</div>
+        <div class="tool-info">
+          <h3>ESG Due Diligence Checklist</h3>
+          <p>Complete environmental, social, and governance due diligence for lending, investment, or advisory mandates.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Module 9</div>
+        <div class="checklist-counter" id="dd-counter">0 / 24 items completed</div>
+        <div class="checklist-progress"><div class="checklist-progress-bar" id="dd-progress" style="width:0%"></div></div>
+
+        <div style="font-size: 12px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin: 16px 0 8px;">🌿 Environmental</div>
+        <ul class="checklist" id="dd-env">
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Does the company operate in an environmentally sensitive sector or location?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Has the company calculated its carbon footprint — Scope 1, 2, and 3?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>What is the company's exposure to physical climate risks — flooding, drought?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>What is the company's exposure to transition risks — carbon regulation, fuel cost?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Are there current or pending environmental regulatory actions from NEMA?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Does the company have an environmental management system — ISO 14001?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Has the company set emissions reduction targets with a costed plan?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Does capex support or undermine environmental commitments?</span></li>
+        </ul>
+
+        <div style="font-size: 12px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin: 16px 0 8px;">👥 Social</div>
+        <ul class="checklist" id="dd-soc">
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>What is the company's health and safety record — LTIFR, fatalities?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Does the company have a published human rights policy covering operations and supply chain?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>What is the company's relationship with the communities where it operates?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Are workers' rights respected — fair wages, freedom of association?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Does the company have a formal grievance mechanism for employees and communities?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>What is the company's gender diversity profile at all levels?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Are there data privacy or consumer protection risks?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Does the company assess supply chain social risk through supplier audits?</span></li>
+        </ul>
+
+        <div style="font-size: 12px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin: 16px 0 8px;">🏛️ Governance</div>
+        <ul class="checklist" id="dd-gov">
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>What is the board composition — size, independence, diversity, expertise?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Is there a functioning audit committee with independent members?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Are financial statements audited by a reputable firm, free of qualifications?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>What is the ownership structure — any concentrated ownership concerns?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Is there a published anti-corruption policy and whistleblowing mechanism?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Are executive remuneration structures aligned with long-term ESG performance?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Are related party transactions fully disclosed and independently approved?</span></li>
+          <li onclick="toggleCheck(this,'dd')"><div class="check-box"></div><span>Is ESG governance embedded at board level — dedicated committee or champion?</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- GREENWASHING DETECTION -->
+  <div id="checklist-greenwash" class="tab-content">
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon red">🚨</div>
+        <div class="tool-info">
+          <h3>Greenwashing Detection Checklist</h3>
+          <p>Apply the 5-step greenwashing detection framework to any ESG claim or financial product.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Module 8</div>
+        <div class="checklist-counter" id="gw-counter">0 / 15 items completed</div>
+        <div class="checklist-progress"><div class="checklist-progress-bar" id="gw-progress" style="width:0%"></div></div>
+        <ul class="checklist">
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 1 — Identify:</strong> Have you written down the exact environmental claim being assessed?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 1:</strong> Is the claim specific and falsifiable — or vague and unmeasurable?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 1:</strong> Does the claim contain potentially greenwashing terms — "eco-friendly," "sustainable," "green," "natural"?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 2 — Scope:</strong> What is included and excluded from the scope of the claim?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 2:</strong> Has the boundary been chosen to maximise positive impression — hidden trade-off?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 2:</strong> For carbon claims — which scopes are included and which are excluded?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 3 — Verify:</strong> Is the claim independently verified? By whom? Using what standard?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 3:</strong> For green bonds — is there a Second Party Opinion from a recognised provider?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 3:</strong> For carbon offsets — are credits verified under Verra VCS, Gold Standard, or Plan Vivo?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 4 — Benchmark:</strong> How does this claim compare to sector peers and recognised standards?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 4:</strong> Is there a rating from BeZero, Sylvera, or Calyx Global for carbon credits?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 4:</strong> Does the claim significantly exceed peer performance — warranting extra scrutiny?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 5 — Conclude:</strong> Does the evidence support the claim on balance?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 5:</strong> Have you documented your analysis including the claim, evidence, and conclusion?</span></li>
+          <li onclick="toggleCheck(this,'gw')"><div class="check-box"></div><span><strong>Step 5:</strong> If the claim is not supportable — have you identified the required remediation?</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARBON CREDIT QUALITY -->
+  <div id="checklist-carboncredit" class="tab-content">
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon green">🌳</div>
+        <div class="tool-info">
+          <h3>Carbon Credit Quality Assessment</h3>
+          <p>Six-point quality assessment framework for evaluating voluntary carbon credits — especially African projects.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Modules 11 & 16</div>
+        <div class="checklist-counter" id="cc-counter">0 / 18 items completed</div>
+        <div class="checklist-progress"><div class="checklist-progress-bar" id="cc-progress" style="width:0%"></div></div>
+        <ul class="checklist">
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Standard:</strong> Is the project registered under Verra VCS, Gold Standard, or Plan Vivo?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Standard:</strong> Is the methodology approved, widely used, and not under review?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Standard:</strong> Is the project publicly listed on the standard's registry with full documentation?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Additionality:</strong> Is the baseline deforestation rate or counterfactual independently and conservatively established?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Additionality:</strong> Is there a credible threat to the ecosystem being protected without the project?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Additionality:</strong> Is the methodology recent — post-2020 — and not subject to current challenges?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Permanence:</strong> Is the buffer pool adequately sized — typically 15–25% for nature-based projects?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Permanence:</strong> Are there robust mechanisms for addressing reversal events — fire, drought, political change?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Permanence:</strong> Is there insurance or a replacement credit mechanism for permanence risk?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Verification:</strong> Has an accredited ANSI VVB conducted the most recent verification?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Verification:</strong> Are verification reports publicly available and recent — within 24 months?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Verification:</strong> Are there any outstanding non-conformances or corrective action requests?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Community:</strong> What percentage of carbon revenues flows to the host community?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Community:</strong> Is benefit sharing documented, transparent, and independently monitored?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Community:</strong> Are there any outstanding community disputes or complaints about benefit sharing?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Rating:</strong> Has the credit been rated by BeZero Carbon, Sylvera, or Calyx Global?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Rating:</strong> If rated — is the rating B or above — BeZero — or equivalent quality level?</span></li>
+          <li onclick="toggleCheck(this,'cc')"><div class="check-box"></div><span><strong>Kenya specific:</strong> For Kenyan projects — is the project approved under the Climate Change Amendment Act 2023?</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- GREEN BOND READINESS -->
+  <div id="checklist-gbcheck" class="tab-content">
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon gold">💚</div>
+        <div class="tool-info">
+          <h3>Green Bond Readiness Checklist</h3>
+          <p>Assess readiness for green bond issuance in Kenya — covering ICMA GBP alignment and CMA requirements.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Module 18</div>
+        <div class="checklist-counter" id="gb-counter">0 / 20 items completed</div>
+        <div class="checklist-progress"><div class="checklist-progress-bar" id="gb-progress" style="width:0%"></div></div>
+        <ul class="checklist">
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Use of Proceeds:</strong> Are eligible project categories clearly defined with specific criteria?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Use of Proceeds:</strong> Are exclusions documented — fossil fuels, contested land, etc.?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Evaluation:</strong> Is a Green Bond Committee established with documented governance?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Evaluation:</strong> Is the project evaluation process documented with an eligibility checklist?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Proceeds:</strong> Is a dedicated green bond account established or planned?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Proceeds:</strong> Is a project register for tracking allocation to eligible projects in place?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Proceeds:</strong> Is there a policy for unallocated proceeds — temporary investment in low-carbon instruments?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Reporting:</strong> Is an annual allocation report template prepared?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Reporting:</strong> Are environmental impact metrics defined for each eligible category?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Reporting:</strong> Is an independent limited assurance engagement planned for the allocation report?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>SPO:</strong> Has a Second Party Opinion provider been selected — Sustainalytics, CICERO, ISS ESG?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>SPO:</strong> Has the green bond framework been submitted to the SPO provider?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>CMA:</strong> Has the Information Memorandum or Prospectus been prepared?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>CMA:</strong> Has a credit rating been obtained from GCR or Agusto & Co?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>CMA:</strong> Has pre-engagement with CMA Capital Markets Development department occurred?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>NSE:</strong> Has the NSE listing application been prepared and reviewed?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Legal:</strong> Have legal advisors reviewed the green bond framework for regulatory compliance?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Investor:</strong> Have target institutional investors been identified and pre-marketing conversations held?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Investor:</strong> Does the framework meet the ESG requirements of target investors?</span></li>
+          <li onclick="toggleCheck(this,'gb')"><div class="check-box"></div><span><strong>Timeline:</strong> Is a project timeline from engagement to listing prepared — 6–12 months budgeted?</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESG ASSURANCE PREP -->
+  <div id="checklist-assurance" class="tab-content">
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon teal">✅</div>
+        <div class="tool-info">
+          <h3>ESG Assurance Readiness Checklist</h3>
+          <p>Prepare for your first ISAE 3000 limited assurance engagement — data systems, controls, and reporting.</p>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-module">Module 17</div>
+        <div class="checklist-counter" id="ea-counter">0 / 16 items completed</div>
+        <div class="checklist-progress"><div class="checklist-progress-bar" id="ea-progress" style="width:0%"></div></div>
+        <ul class="checklist">
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Data Collection:</strong> Are all material ESG metrics collected systematically — not from ad hoc spreadsheets?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Data Collection:</strong> Is data collected from all relevant facilities with consistent methodology?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Emission Factors:</strong> Are current, Kenya-specific emission factors used — not global averages?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Boundaries:</strong> Is the reporting boundary consistent with the financial reporting boundary?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Definitions:</strong> Are all metric definitions aligned with GRI or other applicable framework standards?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Controls:</strong> Is there segregation of duties in ESG data collection and reporting?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Controls:</strong> Is there a management review and sign-off process for ESG data?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Restated Data:</strong> Are all prior year restatements documented with explanations?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Disclosure:</strong> Are all material ESG metrics reported — including negative performance metrics?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Disclosure:</strong> Are all material claims in the sustainability report substantiated with evidence?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Scope 3:</strong> Have all material Scope 3 emission categories been identified and estimated?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Governance:</strong> Are governance disclosures specific and verifiable — not vague aspirations?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Standard:</strong> Has the applicable assurance standard been agreed — ISAE 3000 or AA1000AS?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Provider:</strong> Has an independent assurance provider been selected and their independence confirmed?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Scope:</strong> Have the metrics to be assured been agreed with the assurance provider?</span></li>
+          <li onclick="toggleCheck(this,'ea')"><div class="check-box"></div><span><strong>Budget:</strong> Has a budget of KES 2–5M for limited assurance been approved by management?</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ GLOSSARY SECTION ════════════════════════════════ -->
+<div id="glossary" class="section">
+  <div class="section-header">
+    <h2>Abbreviations & Glossary</h2>
+    <p>250+ ESG, carbon market, finance, regulatory, and Kenya-specific abbreviations used throughout the GLI programme.</p>
+  </div>
+
+  <div class="glossary-search-wrap">
+    <input class="glossary-search" type="text" id="glossary-search" placeholder="Search abbreviations or terms..." oninput="filterGlossary()" />
+    <span class="search-icon">🔍</span>
+  </div>
+
+  <div class="glossary-filter">
+    <button class="filter-btn active" onclick="filterByTag('all')">All</button>
+    <button class="filter-btn" onclick="filterByTag('esg')">ESG</button>
+    <button class="filter-btn" onclick="filterByTag('carbon')">Carbon</button>
+    <button class="filter-btn" onclick="filterByTag('finance')">Finance</button>
+    <button class="filter-btn" onclick="filterByTag('reporting')">Reporting</button>
+    <button class="filter-btn" onclick="filterByTag('solar')">Solar</button>
+    <button class="filter-btn" onclick="filterByTag('kenya')">Kenya</button>
+  </div>
+
+  <div class="glossary-count" id="glossary-count">Showing <span id="g-count">250</span> abbreviations</div>
+
+  <div class="glossary-grid" id="glossary-grid">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- ════════════════════════════════ FORMULAS SECTION ════════════════════════════════ -->
+<div id="formulas" class="section">
+  <div class="section-header">
+    <h2>Key Formulas & Quick Reference</h2>
+    <p>Essential formulas, benchmarks, and reference tables for professional ESG and sustainable finance practice.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('formulas','fin')">Finance Formulas</button>
+    <button class="tab-btn" onclick="showTab('formulas','carbon')">Carbon Benchmarks</button>
+    <button class="tab-btn" onclick="showTab('formulas','frameworks')">Framework Guide</button>
+    <button class="tab-btn" onclick="showTab('formulas','kenya')">Kenya Specifics</button>
+  </div>
+
+  <div id="formula-fin" class="tab-content active">
+    <div class="formula-card">
+      <div class="formula-name">ESG Residual Risk Score</div>
+      <div class="formula-equation">Residual Risk = Exposure × (6 − Management) ÷ 5</div>
+      <div class="formula-note">Where <strong>Exposure</strong> and <strong>Management</strong> are scored 1–5. A score of 5 Exposure + 1 Management = 5.0 (Severe). A score of 5 Exposure + 5 Management = 1.0 (Low). Applied separately to E, S, and G dimensions.</div>
+    </div>
+    <div class="formula-card">
+      <div class="formula-name">IFRS 16 Lease Liability (PV of Annuity)</div>
+      <div class="formula-equation">PV = PMT × [1 − (1 + r)^−n] ÷ r</div>
+      <div class="formula-note">Where <strong>PMT</strong> = monthly payment, <strong>r</strong> = monthly rate (annual ÷ 12), <strong>n</strong> = number of months. Year 1 Finance Charge = Opening Liability × Annual Rate. Depreciation = PV ÷ lease term in years.</div>
+    </div>
+    <div class="formula-card">
+      <div class="formula-name">Debt Service Coverage Ratio (DSCR)</div>
+      <div class="formula-equation">DSCR = Net Operating Cash Flow ÷ (Interest + Principal)</div>
+      <div class="formula-note">Minimum covenant typically <strong>1.25x</strong> for Kenyan solar leases. Below 1.25x = distribution restriction. Below 1.10x = event of default. EBITDA is used as proxy for NOCF in early-stage project models.</div>
+    </div>
+    <div class="formula-card">
+      <div class="formula-name">Solar Lease Monthly Payment Target</div>
+      <div class="formula-equation">Lease Payment = Monthly Electricity Savings × 75%–85%</div>
+      <div class="formula-note">Ensures <strong>day-one positive cash flow</strong> for lessee. Monthly Savings = (System Size kWp × 1,400 kWh/yr ÷ 12) × KES tariff. Adjust for location — Nairobi 1,400, Mombasa 1,500, Eldoret 1,250 kWh/kWp/yr.</div>
+    </div>
+    <div class="formula-card">
+      <div class="formula-name">SROI Ratio</div>
+      <div class="formula-equation">SROI = Net Present Value of Social Value ÷ Total Investment</div>
+      <div class="formula-note">Net Social Value = Gross Value × (1 − Deadweight%) × Attribution% × (1 − Displacement%) × (1 − Drop-off%). A ratio above <strong>1:1</strong> indicates positive social return. M-KOPA example: 2.25:1.</div>
+    </div>
+    <div class="formula-card">
+      <div class="formula-name">Carbon Intensity (Cement Example)</div>
+      <div class="formula-equation">Carbon Intensity = Total CO2e ÷ Production Volume (tonnes)</div>
+      <div class="formula-note">Global average cement intensity: <strong>0.62 tCO2e/t cement</strong>. Bahari Cement baseline: 1.15 tCO2e/t — 85% above benchmark. SBTi 2030 target for cement: reduce intensity to 0.46 tCO2e/t (25% reduction from 2022 global average).</div>
+    </div>
+    <div class="formula-card">
+      <div class="formula-name">Blended Cost of Capital</div>
+      <div class="formula-equation">WACC = Σ (Weight_i × Cost_i) for each capital tranche</div>
+      <div class="formula-note">Example: 40% senior @ 12.5% + 30% DFI @ 7.5% + 15% mezz @ 18% + 15% equity @ 22% = <strong>11.2% blended WACC</strong>. Compare to pure commercial: ~16%. Blending reduces WACC by ~5 percentage points.</div>
+    </div>
+    <div class="formula-card">
+      <div class="formula-name">Internal Carbon Price NPV Adjustment</div>
+      <div class="formula-equation">Adjusted NPV = Base NPV − (Annual Emissions × ICP × KES/USD × Years)</div>
+      <div class="formula-note">Where <strong>ICP</strong> = Internal Carbon Price in USD/tonne. At ICP = USD 30, KES 130/USD, 15,000 tCO2e/yr, 10 years: Carbon cost = USD 4.5M = KES 585M. Apply to compare green vs. brown investment options.</div>
+    </div>
+  </div>
+
+  <div id="formula-carbon" class="tab-content">
+    <div class="table-wrap">
+      <table class="ref-table">
+        <thead><tr><th>Fuel / Activity</th><th>Unit</th><th>Emission Factor</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>Diesel</td><td>per litre</td><td>2.68 kg CO2e</td><td>IPCC 2006</td></tr>
+          <tr><td>Petrol / Gasoline</td><td>per litre</td><td>2.31 kg CO2e</td><td>IPCC 2006</td></tr>
+          <tr><td>LPG</td><td>per kg</td><td>2.98 kg CO2e</td><td>IPCC 2006</td></tr>
+          <tr><td>Coal (thermal)</td><td>per tonne</td><td>2,420 kg CO2e</td><td>IPCC 2006</td></tr>
+          <tr><td>Heavy Fuel Oil</td><td>per tonne</td><td>3,150 kg CO2e</td><td>IPCC 2006</td></tr>
+          <tr><td>Kenya Power (grid electricity)</td><td>per kWh</td><td>0.102 kg CO2e</td><td>Kenya — Renewable-dominant</td></tr>
+          <tr><td>Sub-Saharan Africa grid average</td><td>per kWh</td><td>0.636 kg CO2e</td><td>IEA 2022</td></tr>
+          <tr><td>Global grid average</td><td>per kWh</td><td>0.491 kg CO2e</td><td>IEA 2022</td></tr>
+          <tr><td>Cement production (calcination)</td><td>per tonne clinker</td><td>530 kg CO2e</td><td>IPCC / GNR</td></tr>
+          <tr><td>Clinker import (production)</td><td>per tonne</td><td>860 kg CO2e</td><td>GNR Database</td></tr>
+          <tr><td>Sea freight (general cargo)</td><td>per tonne-km</td><td>0.012 kg CO2e</td><td>GLEC 2023</td></tr>
+          <tr><td>Road freight (HGV, full load)</td><td>per tonne-km</td><td>0.096 kg CO2e</td><td>GLEC 2023</td></tr>
+          <tr><td>Air freight</td><td>per tonne-km</td><td>0.602 kg CO2e</td><td>GLEC 2023</td></tr>
+          <tr><td>Business air travel (economy)</td><td>per passenger-km</td><td>0.151 kg CO2e</td><td>DEFRA 2023</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="height: 20px;"></div>
+    <div class="table-wrap">
+      <table class="ref-table">
+        <thead><tr><th>Carbon Market</th><th>Credit Type</th><th>Price Range (USD/t)</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>EU ETS (compliance)</td><td>EUA</td><td>50–80</td><td>Highly liquid futures market</td></tr>
+          <tr><td>Voluntary — Direct Air Capture</td><td>Technology removal</td><td>300–1,000</td><td>Permanent, high quality</td></tr>
+          <tr><td>Voluntary — Blue Carbon</td><td>Nature-based</td><td>30–80</td><td>Coastal mangrove / seagrass</td></tr>
+          <tr><td>Voluntary — Gold Standard cookstoves</td><td>Nature-based</td><td>20–40</td><td>Health co-benefits premium</td></tr>
+          <tr><td>Voluntary — REDD+ (BeZero A)</td><td>Nature-based</td><td>20–50</td><td>High additionality confidence</td></tr>
+          <tr><td>Kenya grassland VCS</td><td>Nature-based</td><td>10–30</td><td>Pastoral community projects</td></tr>
+          <tr><td>Article 6 ITMO — Kenya</td><td>ITMO</td><td>20–50</td><td>Govt approved, premium pricing</td></tr>
+          <tr><td>Renewable energy (old vintage)</td><td>Energy</td><td>1–5</td><td>Additionality concerns</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="formula-frameworks" class="tab-content">
+    <div class="table-wrap">
+      <table class="ref-table">
+        <thead><tr><th>Framework</th><th>Full Name</th><th>Primary Focus</th><th>Mandatory?</th><th>Relevant Modules</th></tr></thead>
+        <tbody>
+          <tr><td>GRI</td><td>Global Reporting Initiative</td><td>Comprehensive stakeholder ESG reporting</td><td>Voluntary (JSE mandatory)</td><td>7, 13, 14</td></tr>
+          <tr><td>TCFD</td><td>Task Force on Climate-related Financial Disclosures</td><td>Climate risk — financial focus</td><td>Mandatory UK/EU, CBK guidance KE</td><td>7, 14, 17, 19</td></tr>
+          <tr><td>SASB</td><td>Sustainability Accounting Standards Board</td><td>Industry-specific financial materiality</td><td>Voluntary (investor-driven)</td><td>7, 14</td></tr>
+          <tr><td>IFRS S1</td><td>IFRS Sustainability Disclosure Standard 1</td><td>General sustainability disclosure</td><td>Mandatory trajectory globally</td><td>7, 14, 17</td></tr>
+          <tr><td>IFRS S2</td><td>IFRS Sustainability Disclosure Standard 2</td><td>Climate-specific disclosure</td><td>Mandatory trajectory globally</td><td>7, 14, 17</td></tr>
+          <tr><td>IR Framework</td><td>Integrated Reporting Framework</td><td>Six capitals value creation narrative</td><td>Mandatory JSE, voluntary elsewhere</td><td>7, 14</td></tr>
+          <tr><td>UNPRI</td><td>UN Principles for Responsible Investment</td><td>Institutional investor ESG integration</td><td>Voluntary commitment</td><td>19</td></tr>
+          <tr><td>ICMA GBP</td><td>Green Bond Principles</td><td>Green bond issuance framework</td><td>Voluntary (market standard)</td><td>5, 18</td></tr>
+          <tr><td>LMA SLLP</td><td>Sustainability-Linked Loan Principles</td><td>SLL product design standards</td><td>Voluntary (market standard)</td><td>18</td></tr>
+          <tr><td>ISAE 3000</td><td>International Standard on Assurance Engagements</td><td>ESG assurance by accountants</td><td>Standard for ESG assurance</td><td>17</td></tr>
+          <tr><td>AA1000AS</td><td>AccountAbility 1000 Assurance Standard</td><td>Sustainability process assurance</td><td>Voluntary</td><td>17</td></tr>
+          <tr><td>Equator Principles</td><td>Equator Principles</td><td>Project finance E&S risk management</td><td>Voluntary (IFC-linked)</td><td>15, 19</td></tr>
+          <tr><td>UNGPs</td><td>UN Guiding Principles on Business & Human Rights</td><td>Corporate human rights due diligence</td><td>Voluntary (regulatory trend)</td><td>13</td></tr>
+          <tr><td>SBTi</td><td>Science Based Targets initiative</td><td>Corporate emissions reduction targets</td><td>Voluntary (investor-driven)</td><td>14</td></tr>
+          <tr><td>VCS</td><td>Verified Carbon Standard (Verra)</td><td>Voluntary carbon credit verification</td><td>Market standard</td><td>4, 11, 16</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="formula-kenya" class="tab-content">
+    <div class="table-wrap">
+      <table class="ref-table">
+        <thead><tr><th>Regulatory Body</th><th>Full Name</th><th>ESG Relevance</th><th>Key ESG Instrument</th></tr></thead>
+        <tbody>
+          <tr><td>CBK</td><td>Central Bank of Kenya</td><td>Green lending, climate risk, bank ESG</td><td>Climate Risk Guidelines 2021</td></tr>
+          <tr><td>CMA</td><td>Capital Markets Authority</td><td>Green bond approval, ESG disclosure</td><td>NSE ESG Guidance Manual 2021</td></tr>
+          <tr><td>NSE</td><td>Nairobi Securities Exchange</td><td>Listed company ESG reporting</td><td>ESG Disclosure Guidance Manual</td></tr>
+          <tr><td>NEMA</td><td>National Environment Management Authority</td><td>Environmental compliance, EMCA</td><td>Environmental Impact Assessments</td></tr>
+          <tr><td>EPRA</td><td>Energy & Petroleum Regulatory Authority</td><td>Renewable energy licensing</td><td>Solar generation licences</td></tr>
+          <tr><td>RBA</td><td>Retirement Benefits Authority</td><td>Pension fund ESG investment</td><td>Climate & Sustainability Guidance 2022</td></tr>
+          <tr><td>ICPAK</td><td>Institute of CPAs of Kenya</td><td>ESG assurance professional standards</td><td>IFRS S1/S2 adoption pathway</td></tr>
+          <tr><td>KRA</td><td>Kenya Revenue Authority</td><td>Carbon credit taxation</td><td>Income Tax Act application</td></tr>
+          <tr><td>KenInvest</td><td>Kenya Investment Authority</td><td>Investment protection for SPVs</td><td>Investment certificates</td></tr>
+          <tr><td>ATI</td><td>Africa Trade Insurance Agency</td><td>Political risk insurance for projects</td><td>Credit guarantees for solar projects</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="height: 20px;"></div>
+    <div class="table-wrap">
+      <table class="ref-table">
+        <thead><tr><th>Tax Item</th><th>Rate / Treatment</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Corporate tax rate</td><td>30%</td><td>Standard rate for resident companies</td></tr>
+          <tr><td>Investment deduction — solar equipment</td><td>100% year of purchase</td><td>Machinery used in manufacture</td></tr>
+          <tr><td>Solar equipment imports — VAT</td><td>VAT Exempt</td><td>Listed in VAT Act exempt schedule</td></tr>
+          <tr><td>Installation services — VAT</td><td>16%</td><td>Standard VAT rate applies</td></tr>
+          <tr><td>Lease payments — VAT</td><td>16%</td><td>Where lessor is VAT registered</td></tr>
+          <tr><td>Non-resident withholding tax (lease)</td><td>15%</td><td>On payments to foreign lessors</td></tr>
+          <tr><td>Carbon credit revenue (domestic)</td><td>30% on taxable income</td><td>Treated as business income</td></tr>
+          <tr><td>Kenya Climate Change Act — govt share</td><td>25% of net revenues</td><td>Carbon project revenue sharing</td></tr>
+          <tr><td>Kenya Climate Change Act — community share</td><td>25% of net revenues</td><td>Host community benefit sharing</td></tr>
+          <tr><td>Developer net share</td><td>50% of net revenues</td><td>After govt and community shares</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ PROGRESS SECTION ════════════════════════════════ -->
+<div id="progress" class="section">
+  <div class="section-header">
+    <h2>Programme Progress Tracker</h2>
+    <p>Track your journey through all 20 GLI modules and 23.5 CPD hours.</p>
+  </div>
+
+  <div class="overall-progress">
+    <div class="progress-header">
+      <h3>Overall Progress</h3>
+      <div class="progress-pct" id="prog-pct">0%</div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="prog-bar" style="width:0%"></div>
+    </div>
+    <div class="progress-stats">
+      <div class="p-stat"><div class="num" id="prog-done">0</div><div class="lbl">Modules Complete</div></div>
+      <div class="p-stat"><div class="num" id="prog-hrs">0.0</div><div class="lbl">CPD Hours</div></div>
+      <div class="p-stat"><div class="num" id="prog-certs">0</div><div class="lbl">Certificates</div></div>
+      <div class="p-stat"><div class="num" id="prog-remaining">20</div><div class="lbl">Remaining</div></div>
+    </div>
+  </div>
+
+  <!-- Level 1 -->
+  <div style="margin-bottom: 8px; font-size: 12px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 1px;">🟢 Level 1 — Beginner (6.5 hrs)</div>
+  <div class="module-grid" id="level1-grid"></div>
+
+  <!-- Level 2 -->
+  <div style="margin-bottom: 8px; font-size: 12px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 1px;">🔵 Level 2 — Intermediate (8 hrs)</div>
+  <div class="module-grid" id="level2-grid"></div>
+
+  <!-- Level 3 -->
+  <div style="margin-bottom: 8px; font-size: 12px; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: 1px;">🔴 Level 3 — Master (9 hrs)</div>
+  <div class="module-grid" id="level3-grid"></div>
+</div>
+
+</div><!-- /main -->
+
+<!-- Mobile Nav -->
+<div class="mobile-nav">
+  <button class="mob-btn active" onclick="showSection('tools')"><span class="icon">🔧</span>Tools</button>
+  <button class="mob-btn" onclick="showSection('calculators')"><span class="icon">🧮</span>Calc</button>
+  <button class="mob-btn" onclick="showSection('checklists')"><span class="icon">✅</span>Lists</button>
+  <button class="mob-btn" onclick="showSection('glossary')"><span class="icon">📖</span>Glossary</button>
+  <button class="mob-btn" onclick="showSection('formulas')"><span class="icon">📐</span>Ref</button>
+  <button class="mob-btn" onclick="showSection('progress')"><span class="icon">📊</span>Progress</button>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════════
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn, .mob-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll(`[onclick="showSection('${id}')"]`).forEach(b => b.classList.add('active'));
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function showTab(section, tabId) {
+  const parentSection = document.getElementById(section);
+  if (!parentSection) {
+    // find by content
+    parentSection && parentSection.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  }
+  document.querySelectorAll(`#${section} .tab-content, #calc-${tabId}, #checklist-${tabId}, #formula-${tabId}`).forEach(t => t.classList.remove('active'));
+  // Better approach: toggle within context
+  const allTabs = document.querySelectorAll('.tab-content');
+  allTabs.forEach(t => { if (t.id.startsWith('calc-') || t.id.startsWith('checklist-') || t.id.startsWith('formula-')) t.classList.remove('active'); });
+  const target = document.getElementById(`${section==='calculators'?'calc':section==='checklists'?'checklist':'formula'}-${tabId}`);
+  if (target) target.classList.add('active');
+  event.target.closest('.tabs').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════════
+// CALCULATORS
+// ══════════════════════════════════════════════════════════
+function fmt(n) { return Math.round(n).toLocaleString('en-KE'); }
+function fmtD(n,d=1) { return n.toFixed(d); }
+
+function showResult(id, html) {
+  const el = document.getElementById(id);
+  el.innerHTML = html;
+  el.classList.add('show');
+}
+
+function scoreMateriality() {
+  const topic = document.getElementById('mat-topic').value || 'Topic';
+  const fin = parseInt(document.getElementById('mat-fin').value);
+  const stake = parseInt(document.getElementById('mat-stake').value);
+  const combined = (fin + stake) / 2;
+  let priority, color, advice;
+  if (combined >= 4.5) { priority = 'HIGHEST PRIORITY'; color = '#C0272D'; advice = 'Must be a core pillar of the ESG strategy. Immediate action required.'; }
+  else if (combined >= 3.5) { priority = 'HIGH PRIORITY'; color = '#E65100'; advice = 'Include in top 8–12 material topics. Assign clear ownership and targets.'; }
+  else if (combined >= 2.5) { priority = 'MEDIUM PRIORITY'; color = '#B8962E'; advice = 'Monitor and report. May be elevated if regulatory or market context changes.'; }
+  else { priority = 'LOWER PRIORITY'; color = '#1B7A4A'; advice = 'Report if stakeholders request. Not a strategic focus area at this time.'; }
+  showResult('mat-result', `
+    <div class="result-title">Materiality Assessment: ${topic}</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Financial Significance</div><div class="value">${fin}/5</div></div>
+      <div class="result-item"><div class="label">Stakeholder Significance</div><div class="value">${stake}/5</div></div>
+      <div class="result-item"><div class="label">Combined Score</div><div class="value highlight">${fmtD(combined,1)}/5</div></div>
+      <div class="result-item"><div class="label">Priority Level</div><div class="value" style="color:${color};font-size:13px">${priority}</div></div>
+      <div class="result-item result-full"><div class="label">Advisory Note</div><div style="font-size:12px;color:var(--charcoal);margin-top:4px">${advice}</div></div>
+    </div>`);
+}
+
+function calcCarbon() {
+  const diesel = parseFloat(document.getElementById('cf-diesel').value)||0;
+  const petrol = parseFloat(document.getElementById('cf-petrol').value)||0;
+  const lpg = parseFloat(document.getElementById('cf-lpg').value)||0;
+  const elec = parseFloat(document.getElementById('cf-elec').value)||0;
+  const s1 = diesel*2.68 + petrol*2.31 + lpg*2.98;
+  const s2 = elec*0.102;
+  const total = s1+s2;
+  showResult('cf-result', `
+    <div class="result-title">Carbon Footprint (Kenya Emission Factors)</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Scope 1 (tCO2e)</div><div class="value">${fmtD(s1/1000,2)}</div></div>
+      <div class="result-item"><div class="label">Scope 2 — Kenya grid (tCO2e)</div><div class="value">${fmtD(s2/1000,2)}</div></div>
+      <div class="result-item"><div class="label">Total (tCO2e)</div><div class="value highlight">${fmtD(total/1000,2)}</div></div>
+      <div class="result-item"><div class="label">Note: Kenya grid = 0.102 kg/kWh (renewable)</div><div class="value" style="font-size:11px;color:var(--teal)">✓ Low Scope 2</div></div>
+    </div>`);
+}
+
+function calcSolar() {
+  const kwp = parseFloat(document.getElementById('sol-kwp').value)||200;
+  const tariff = parseFloat(document.getElementById('sol-tariff').value)||22;
+  const cost = parseFloat(document.getElementById('sol-cost').value)*1000000||18000000;
+  const term = parseFloat(document.getElementById('sol-term').value)||7;
+  const annualGen = kwp * 1400; // Nairobi
+  const annualSaving = annualGen * tariff;
+  const monthlySaving = annualSaving/12;
+  const leasePayment = monthlySaving * 0.82;
+  const netMonthly = monthlySaving - leasePayment;
+  const totalReceipts = leasePayment*12*term;
+  const residual = cost*0.4;
+  const grossProfit = totalReceipts+residual-cost-cost*0.02*term;
+  const simpleIRR = (grossProfit/(cost*term))*100;
+  showResult('sol-result', `
+    <div class="result-title">Solar Lease Analysis — ${kwp}kWp System</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Annual generation (kWh)</div><div class="value">${fmt(annualGen)}</div></div>
+      <div class="result-item"><div class="label">Monthly saving (KES)</div><div class="value">${fmt(monthlySaving)}</div></div>
+      <div class="result-item"><div class="label">Recommended lease pmt/mo</div><div class="value">${fmt(leasePayment)}</div></div>
+      <div class="result-item"><div class="label">Client net saving/mo</div><div class="value highlight">KES ${fmt(netMonthly)}</div></div>
+      <div class="result-item"><div class="label">Total lessor receipts (${term}yr)</div><div class="value">${fmt(totalReceipts)}</div></div>
+      <div class="result-item"><div class="label">Approx lessor gross profit</div><div class="value">${fmt(Math.max(0,grossProfit))}</div></div>
+    </div>`);
+}
+
+function calcCarbon2() {
+  const vol = parseFloat(document.getElementById('cc-vol').value)||100000;
+  const price = parseFloat(document.getElementById('cc-price').value)||15;
+  const type = document.getElementById('cc-type').value;
+  const costPerT = parseFloat(document.getElementById('cc-cost').value)||4;
+  const usd2kes = 130;
+  const grossRev = vol * price;
+  const govtShare = grossRev * 0.25;
+  const commShare = grossRev * 0.25;
+  const devGross = grossRev * 0.50;
+  const prodCost = vol * costPerT;
+  const devNet = devGross - prodCost;
+  const revenueKES = grossRev * usd2kes;
+  const note = type === 'article6' ? '🌟 Article 6 ITMO — premium pricing. Requires Kenyan govt approval & corresponding adjustment.' : '📊 Standard voluntary market pricing.';
+  showResult('cc-result', `
+    <div class="result-title">Carbon Revenue — 25/25/50 Distribution (Kenya)</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Gross revenue (USD)</div><div class="value">${fmt(grossRev)}</div></div>
+      <div class="result-item"><div class="label">Gross revenue (KES)</div><div class="value">${fmt(revenueKES)}</div></div>
+      <div class="result-item"><div class="label">Government 25% (USD)</div><div class="value">${fmt(govtShare)}</div></div>
+      <div class="result-item"><div class="label">Community 25% (USD)</div><div class="value">${fmt(commShare)}</div></div>
+      <div class="result-item"><div class="label">Developer gross 50% (USD)</div><div class="value">${fmt(devGross)}</div></div>
+      <div class="result-item"><div class="label">Developer net after cost</div><div class="value highlight">USD ${fmt(devNet)}</div></div>
+      <div class="result-item result-full" style="font-size:11px;color:var(--teal);margin-top:4px">${note}</div>
+    </div>`);
+}
+
+function calcESGRisk() {
+  function rr(exp,mgmt) { return parseFloat(exp) * (6-parseFloat(mgmt)) / 5; }
+  const eR = rr(document.getElementById('esg-e-exp').value, document.getElementById('esg-e-mgmt').value);
+  const sR = rr(document.getElementById('esg-s-exp').value, document.getElementById('esg-s-mgmt').value);
+  const gR = rr(document.getElementById('esg-g-exp').value, document.getElementById('esg-g-mgmt').value);
+  const overall = (eR+sR+gR)/3;
+  function label(r) {
+    if(r>=4) return '<span style="color:#C0272D;font-weight:700">SEVERE</span>';
+    if(r>=3) return '<span style="color:#E65100;font-weight:700">HIGH</span>';
+    if(r>=2) return '<span style="color:#B8962E;font-weight:700">MODERATE</span>';
+    return '<span style="color:#1B7A4A;font-weight:700">LOW</span>';
+  }
+  showResult('esg-result', `
+    <div class="result-title">ESG Residual Risk Scores</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Environmental Residual Risk</div><div class="value">${fmtD(eR,2)} ${label(eR)}</div></div>
+      <div class="result-item"><div class="label">Social Residual Risk</div><div class="value">${fmtD(sR,2)} ${label(sR)}</div></div>
+      <div class="result-item"><div class="label">Governance Residual Risk</div><div class="value">${fmtD(gR,2)} ${label(gR)}</div></div>
+      <div class="result-item"><div class="label">Overall ESG Risk</div><div class="value highlight">${fmtD(overall,2)} ${label(overall)}</div></div>
+    </div>`);
+}
+
+function calcSLL() {
+  const amount = parseFloat(document.getElementById('sll-amount').value)||500;
+  const margin = parseFloat(document.getElementById('sll-margin').value)||3.5;
+  const step = parseFloat(document.getElementById('sll-step').value)||10;
+  const kpis = parseInt(document.getElementById('sll-kpis').value)||0;
+  const achieved = kpis >= 3;
+  const adj = kpis === 3 ? -step*3 : kpis === 2 ? -step : kpis === 1 ? 0 : step*3;
+  const newMargin = margin + adj/100;
+  const annualInterest = amount * newMargin / 100;
+  const baseInterest = amount * margin / 100;
+  const saving = baseInterest - annualInterest;
+  showResult('sll-result', `
+    <div class="result-title">SLL Margin Ratchet Result</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Base margin</div><div class="value">${fmtD(margin,2)}%</div></div>
+      <div class="result-item"><div class="label">Adjustment (bps)</div><div class="value">${adj > 0?'+':''}${adj} bps</div></div>
+      <div class="result-item"><div class="label">Adjusted margin</div><div class="value highlight">${fmtD(newMargin,3)}%</div></div>
+      <div class="result-item"><div class="label">Annual interest (KES M)</div><div class="value">${fmtD(annualInterest,2)}M</div></div>
+      <div class="result-item result-full"><div class="label">Annual saving vs base</div><div class="value" style="color:${saving>0?'var(--green)':'var(--red)'}">KES ${fmtD(Math.abs(saving),2)}M ${saving>=0?'saving':'additional cost'}</div></div>
+    </div>`);
+}
+
+function calcIFRS16() {
+  const pmt = parseFloat(document.getElementById('ifrs-pmt').value)||396667;
+  const n = parseInt(document.getElementById('ifrs-n').value)||84;
+  const annualRate = parseFloat(document.getElementById('ifrs-rate').value)||14;
+  const r = annualRate / 100 / 12;
+  const pv = pmt * (1 - Math.pow(1+r, -n)) / r;
+  const y1Finance = pv * (annualRate/100);
+  const y1Depr = pv / (n/12);
+  const y1Total = y1Finance + y1Depr;
+  const y1PrincipalReduction = pmt*12 - y1Finance;
+  showResult('ifrs-result', `
+    <div class="result-title">IFRS 16 Lease Accounting — Year 1</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Initial Lease Liability (PV)</div><div class="value highlight">KES ${fmt(pv)}</div></div>
+      <div class="result-item"><div class="label">ROU Asset at Commencement</div><div class="value">KES ${fmt(pv)}</div></div>
+      <div class="result-item"><div class="label">Year 1 Finance Charge</div><div class="value">KES ${fmt(y1Finance)}</div></div>
+      <div class="result-item"><div class="label">Year 1 Depreciation</div><div class="value">KES ${fmt(y1Depr)}</div></div>
+      <div class="result-item"><div class="label">Year 1 Total P&L Charge</div><div class="value">KES ${fmt(y1Total)}</div></div>
+      <div class="result-item"><div class="label">Liability Reduction Yr 1</div><div class="value">KES ${fmt(y1PrincipalReduction)}</div></div>
+      <div class="result-item result-full" style="font-size:11px;color:var(--teal);margin-top:4px">⚠️ Under IFRS 16 — the D/E ratio increases (liability recognised), EBITDA improves (lease payments replaced by D&A), and ROA decreases initially (ROU asset added).</div>
+    </div>`);
+}
+
+function calcDSCR() {
+  const income = parseFloat(document.getElementById('dscr-income').value)||12320000;
+  const om = parseFloat(document.getElementById('dscr-om').value)||900000;
+  const interest = parseFloat(document.getElementById('dscr-int').value)||3780000;
+  const principal = parseFloat(document.getElementById('dscr-prin').value)||3150000;
+  const minCovenant = parseFloat(document.getElementById('dscr-min').value)||1.25;
+  const nocf = income - om;
+  const ds = interest + principal;
+  const dscr = nocf / ds;
+  const compliant = dscr >= minCovenant;
+  const warning = dscr >= 1.10 && dscr < minCovenant;
+  showResult('dscr-result', `
+    <div class="result-title">DSCR Covenant Analysis</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Net Operating Cash Flow</div><div class="value">KES ${fmt(nocf)}</div></div>
+      <div class="result-item"><div class="label">Total Debt Service</div><div class="value">KES ${fmt(ds)}</div></div>
+      <div class="result-item"><div class="label">DSCR</div><div class="value highlight">${fmtD(dscr,2)}x</div></div>
+      <div class="result-item"><div class="label">Minimum Covenant</div><div class="value">${fmtD(minCovenant,2)}x</div></div>
+      <div class="result-item result-full"><div class="label">Status</div><div style="margin-top:4px;font-weight:700;color:${compliant?'var(--green)':warning?'var(--gold)':'var(--red)'}">${compliant?'✅ COVENANT COMPLIANT — distributions permitted':warning?'⚠️ WARNING — distributions restricted, not yet in default':'🚨 COVENANT BREACH — event of default triggered'}</div></div>
+    </div>`);
+}
+
+function calcSROI() {
+  const inv = parseFloat(document.getElementById('sroi-inv').value)||12000000;
+  const gross = parseFloat(document.getElementById('sroi-gross').value)||27000000;
+  const dw = parseFloat(document.getElementById('sroi-dw').value)||20;
+  const attr = parseFloat(document.getElementById('sroi-attr').value)||80;
+  const disp = parseFloat(document.getElementById('sroi-disp').value)||5;
+  const drop = parseFloat(document.getElementById('sroi-drop').value)||10;
+  const net = gross * (1-dw/100) * (attr/100) * (1-disp/100) * (1-drop/100);
+  const sroi = net/inv;
+  showResult('sroi-result', `
+    <div class="result-title">Social Return on Investment</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Gross Social Value</div><div class="value">KES ${fmt(gross)}</div></div>
+      <div class="result-item"><div class="label">Net Social Value (adjusted)</div><div class="value">KES ${fmt(net)}</div></div>
+      <div class="result-item"><div class="label">Total Investment</div><div class="value">KES ${fmt(inv)}</div></div>
+      <div class="result-item"><div class="label">SROI Ratio</div><div class="value highlight">${fmtD(sroi,2)}:1</div></div>
+      <div class="result-item result-full" style="font-size:11px;color:var(--teal);margin-top:4px">${sroi>2?'🌟 Strong social return — above 2:1 threshold typically required by impact investors.':sroi>1?'✅ Positive social return — investment generates more value than it costs.':'⚠️ Below 1:1 — social investment may not be justified. Review programme design.'}</div>
+    </div>`);
+}
+
+function calcSBTi() {
+  const s1 = parseFloat(document.getElementById('sbt-s1').value)||50000;
+  const s2 = parseFloat(document.getElementById('sbt-s2').value)||8000;
+  const baseYr = parseInt(document.getElementById('sbt-base-yr').value)||2022;
+  const pct = parseFloat(document.getElementById('sbt-pct').value)||42;
+  const baseline = s1+s2;
+  const target = baseline * (1-pct/100);
+  const reduction = baseline - target;
+  const yrsTo2030 = 2030-baseYr;
+  const annualReduction = reduction/yrsTo2030;
+  showResult('sbt-result', `
+    <div class="result-title">SBTi Science-Based Target (Absolute Contraction)</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Baseline Scope 1+2 (${baseYr})</div><div class="value">${fmt(baseline)} tCO2e</div></div>
+      <div class="result-item"><div class="label">Required reduction</div><div class="value">${fmt(reduction)} tCO2e</div></div>
+      <div class="result-item"><div class="label">2030 SBTi Target</div><div class="value highlight">${fmt(Math.round(target))} tCO2e</div></div>
+      <div class="result-item"><div class="label">Annual reduction needed</div><div class="value">${fmt(Math.round(annualReduction))} tCO2e/yr</div></div>
+      <div class="result-item result-full" style="font-size:11px;color:var(--teal);margin-top:4px">📋 Submit to SBTi within 24 months of commitment. Choose methodology (Absolute Contraction for most sectors; Sectoral Decarbonisation for cement, steel, aviation). Annual disclosure via CDP required.</div>
+    </div>`);
+}
+
+function calcICP() {
+  const npv = parseFloat(document.getElementById('icp-npv').value)||80;
+  const ems = parseFloat(document.getElementById('icp-ems').value)||15000;
+  const price = parseFloat(document.getElementById('icp-price').value)||30;
+  const yrs = parseFloat(document.getElementById('icp-yrs').value)||10;
+  const usd2kes = 130;
+  const carbonCostUSD = ems * price * yrs;
+  const carbonCostKES = carbonCostUSD * usd2kes / 1000000;
+  const adjustedNPV = npv - carbonCostKES;
+  showResult('icp-result', `
+    <div class="result-title">ICP-Adjusted NPV Analysis</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="label">Base NPV</div><div class="value">KES ${fmtD(npv,1)}M</div></div>
+      <div class="result-item"><div class="label">Carbon cost (${yrs}yr @ USD ${price}/t)</div><div class="value">KES ${fmtD(carbonCostKES,1)}M</div></div>
+      <div class="result-item"><div class="label">ICP-Adjusted NPV</div><div class="value highlight ${adjustedNPV>=0?'':''}">KES ${fmtD(adjustedNPV,1)}M</div></div>
+      <div class="result-item"><div class="label">Decision</div><div class="value" style="font-size:12px;color:${adjustedNPV>0?'var(--green)':'var(--red)'}">${adjustedNPV>0?'✅ Proceed — positive after carbon cost':'🚨 Reconsider — negative after carbon cost'}</div></div>
+    </div>`);
+}
+
+// ══════════════════════════════════════════════════════════
+// CHECKLISTS
+// ══════════════════════════════════════════════════════════
+const checkCounts = {dd:0,gw:0,cc:0,gb:0,ea:0};
+const checkTotals = {dd:24,gw:15,cc:18,gb:20,ea:16};
+
+function toggleCheck(el, prefix) {
+  el.classList.toggle('checked');
+  // Recount all checked in this checklist group
+  let count = 0;
+  // Find all checklists in this tab
+  const allItems = document.querySelectorAll(`[onclick*="toggleCheck"][onclick*="'${prefix}'"]`);
+  allItems.forEach(item => { if(item.classList.contains('checked')) count++; });
+  const total = checkTotals[prefix] || allItems.length;
+  const pct = (count/total*100).toFixed(0);
+  const counter = document.getElementById(`${prefix}-counter`);
+  const progress = document.getElementById(`${prefix}-progress`);
+  if(counter) counter.textContent = `${count} / ${total} items completed`;
+  if(progress) progress.style.width = pct+'%';
+}
+
+// ══════════════════════════════════════════════════════════
+// DECISION TREES
+// ══════════════════════════════════════════════════════════
+const dtData = {
+  dt1: {
+    0: { q: 'Does the lease transfer ownership of the asset to the lessee at end of term?', opts: [{t:'Yes — ownership transfers at end',v:'yes'},{t:'No — lessor retains ownership',v:'no'}] },
+    '1yes': { q: 'Does the lease contain a bargain purchase option — price well below fair value?', opts:[{t:'Yes — below-market purchase option',v:'yes'},{t:'No — no such option',v:'no'}] },
+    '1no': { q: 'Does the lease term cover the major part of the asset\'s economic life (75%+)?', opts:[{t:'Yes — major part of useful life',v:'yes'},{t:'No — shorter than major part',v:'no'}] },
+    '1yes_yes': { result: true, title:'Finance Lease', text:'Ownership transfer at end + purchase option → Finance Lease under IFRS 16. Lessee recognises ROU Asset and Lease Liability. Both depreciation and finance charges appear in P&L.' },
+    '1yes_no': { result: true, title:'Finance Lease', text:'Ownership transfers at end of lease → Finance Lease under IFRS 16. The risks and rewards of ownership have transferred to the lessee. ROU Asset recognised and depreciated over asset life.' },
+    '1no_yes': { result: true, title:'Finance Lease', text:'Lease covers major part of asset life → Finance Lease. The present value of minimum lease payments is likely close to fair value. Recognise ROU Asset and Lease Liability.' },
+    '1no_no': { q: 'Is the PV of minimum lease payments substantially all of the asset\'s fair value (90%+)?', opts:[{t:'Yes — PV approaches fair value',v:'yes'},{t:'No — PV well below fair value',v:'no'}] },
+    '1no_no_yes': { result: true, title:'Finance Lease', text:'PV of lease payments ≥ 90% of fair value → Finance Lease. Economic substance is equivalent to purchase. Recognise ROU Asset at PV of lease payments and corresponding Lease Liability.' },
+    '1no_no_no': { result: true, title:'Operating Lease (IFRS 16 still applies)', text:'None of the finance lease indicators are met → Operating Lease. Under IFRS 16 — the lessee still recognises an ROU Asset and Lease Liability (unlike old IAS 17). The key difference: depreciation is on straight-line basis and no front-loading of P&L charge.' }
+  },
+  dt2: {
+    0: { q: 'Does the borrower have specific green capital expenditure to finance?', opts:[{t:'Yes — clear green project (solar, EV, efficiency)',v:'yes'},{t:'No — general corporate use',v:'no'}] },
+    '1yes': { q: 'Is the green capex for a designated project with measurable environmental outcomes?', opts:[{t:'Yes — specific projects with impact metrics',v:'yes'},{t:'No — broad green initiatives',v:'no'}] },
+    '1no': { q: 'Does the borrower have material ESG improvements they want to be held accountable for?', opts:[{t:'Yes — specific ESG KPIs and targets',v:'yes'},{t:'No — no specific ESG commitments',v:'no'}] },
+    '1yes_yes': { result: true, title:'Green Loan (GLP-aligned)', text:'Specific green project with measurable outcomes → Green Loan under LMA Green Loan Principles. Ring-fence proceeds, establish eligible project criteria, report annually on use and impact. Consider SPO to validate framework.' },
+    '1yes_no': { result: true, title:'Green Bond or Green Loan', text:'Green capex but broader in scope → Green Bond (if raising from capital markets) or Green Loan (if bilateral). Define eligible categories carefully. Build a use-of-proceeds register. Obtain SPO for credibility.' },
+    '1no_yes': { result: true, title:'Sustainability-Linked Loan (SLL)', text:'No specific green capex but clear ESG ambition → SLL under LMA SLLP. Proceeds for any purpose. Design 2–3 material, measurable KPIs. Set ambitious SPTs. Apply two-way margin ratchet. Annual third-party KPI verification required.' },
+    '1no_no': { result: true, title:'Conventional Loan (ESG Advisory Needed First)', text:'No green capex and no ESG commitments → Conventional loan product. Recommend the borrower first develops a materiality assessment and ESG strategy before attempting sustainable finance products. A Sustainability-Linked Loan will be available once KPIs are established.' }
+  }
+};
+
+let dtState = {};
+
+function dtStep(id, step, answer, label) {
+  if (!dtState[id]) dtState[id] = {path:[], bc:[]};
+  const key = step + answer;
+  dtState[id].path.push(answer);
+  dtState[id].bc.push(label);
+  const nextKey = dtState[id].path.map((a,i)=>(i+1)+a).join('_');
+  const node = dtData[id][nextKey];
+  const bc = document.getElementById(`${id}-bc`);
+  bc.innerHTML = 'Start → ' + dtState[id].bc.map(b=>`<span>${b}</span>`).join(' → ');
+  if (!node) {
+    document.getElementById(`${id}-q`).textContent = 'Classification complete.';
+    document.getElementById(`${id}-opts`).innerHTML = '';
+    return;
+  }
+  if (node.result) {
+    document.getElementById(`${id}-q`).textContent = '';
+    document.getElementById(`${id}-opts`).innerHTML = '';
+    const res = document.getElementById(`${id}-result`);
+    res.innerHTML = `<h4>📋 ${node.title}</h4><p>${node.text}</p>`;
+    res.classList.add('show');
+  } else {
+    document.getElementById(`${id}-q`).textContent = node.q;
+    document.getElementById(`${id}-opts`).innerHTML = node.opts.map(o=>
+      `<button class="dt-option" onclick="dtStep('${id}',${step+1},'${o.v}','${o.t}')"><span class="opt-icon">→</span>${o.t}</button>`
+    ).join('');
+    document.getElementById(`${id}-result`).classList.remove('show');
+  }
+}
+
+function dtReset(id) {
+  dtState[id] = null;
+  const node = dtData[id][0];
+  document.getElementById(`${id}-bc`).innerHTML = 'Start';
+  document.getElementById(`${id}-q`).textContent = node.q;
+  document.getElementById(`${id}-opts`).innerHTML = node.opts.map(o=>
+    `<button class="dt-option" onclick="dtStep('${id}',1,'${o.v}','${o.t}')"><span class="opt-icon">→</span>${o.t}</button>`
+  ).join('');
+  document.getElementById(`${id}-result`).classList.remove('show');
+}
+
+// ══════════════════════════════════════════════════════════
+// GLOSSARY DATA
+// ══════════════════════════════════════════════════════════
+const glossaryData = [
+  // ESG
+  {a:'ESG',f:'Environmental, Social and Governance',d:'Framework for evaluating how companies manage impact beyond financial performance across three dimensions.',t:'esg'},
+  {a:'CSR',f:'Corporate Social Responsibility',d:'Voluntary corporate initiatives to give back to society — broader and less structured than ESG.',t:'esg'},
+  {a:'SBTi',f:'Science Based Targets initiative',d:'Partnership providing framework for setting corporate emissions targets aligned with Paris Agreement pathways.',t:'esg'},
+  {a:'TCFD',f:'Task Force on Climate-related Financial Disclosures',d:'FSB-established framework for consistent climate-related financial risk disclosure across four pillars.',t:'esg'},
+  {a:'GRI',f:'Global Reporting Initiative',d:'World\'s most widely used ESG reporting framework — comprehensive, stakeholder-focused, with Universal, Sector, and Topic Standards.',t:'reporting'},
+  {a:'SASB',f:'Sustainability Accounting Standards Board',d:'Industry-specific sustainability standards focused on financially material ESG topics for investors.',t:'reporting'},
+  {a:'ISSB',f:'International Sustainability Standards Board',d:'IFRS Foundation body that published IFRS S1 and S2 sustainability disclosure standards in 2023.',t:'reporting'},
+  {a:'IFRS S1',f:'IFRS Sustainability Disclosure Standard 1',d:'General requirements for disclosure of sustainability-related financial information — the sustainability equivalent of IAS 1.',t:'reporting'},
+  {a:'IFRS S2',f:'IFRS Sustainability Disclosure Standard 2',d:'Climate-related disclosure standard building on TCFD — requiring scenario analysis and emissions reporting.',t:'reporting'},
+  {a:'IR',f:'Integrated Reporting',d:'Reporting framework combining financial and sustainability information through the six capitals model.',t:'reporting'},
+  {a:'CSRD',f:'Corporate Sustainability Reporting Directive',d:'EU regulation requiring ~50,000 companies to report on sustainability with limited assurance from 2024.',t:'reporting'},
+  {a:'SFDR',f:'Sustainable Finance Disclosure Regulation',d:'EU regulation classifying investment products into Article 6, 8, or 9 based on ESG objectives.',t:'finance'},
+  {a:'SDGs',f:'Sustainable Development Goals',d:'17 UN goals adopted in 2015 — the universal blueprint for ending poverty, protecting the planet, and ensuring prosperity by 2030.',t:'esg'},
+  {a:'NDC',f:'Nationally Determined Contribution',d:'Each country\'s climate action plan submitted under the Paris Agreement — Kenya targets 32% emission reduction by 2030.',t:'esg'},
+  {a:'UNPRI',f:'UN Principles for Responsible Investment',d:'Leading responsible investment initiative with 5,000+ signatories managing USD 120T+ in assets.',t:'esg'},
+  {a:'ICVCM',f:'Integrity Council for Voluntary Carbon Markets',d:'Body developing Core Carbon Principles — quality standards for voluntary carbon credits.',t:'carbon'},
+  {a:'DEI',f:'Diversity, Equity and Inclusion',d:'Social ESG dimension covering representation and fair treatment of all groups within an organisation.',t:'esg'},
+  {a:'SLO',f:'Social Licence to Operate',d:'Ongoing acceptance and approval of a company\'s activities by affected communities — earned not granted.',t:'esg'},
+  {a:'FPIC',f:'Free, Prior and Informed Consent',d:'Gold standard for community consultation before operations affecting land or natural resources.',t:'esg'},
+  {a:'LTIFR',f:'Lost Time Injury Frequency Rate',d:'Key social safety metric: number of lost-time injuries per 200,000 hours worked.',t:'esg'},
+  {a:'SROI',f:'Social Return on Investment',d:'Methodology quantifying social value in financial terms — ratio of net social value to total investment.',t:'esg'},
+  {a:'UNGPs',f:'UN Guiding Principles on Business and Human Rights',d:'Framework for corporate human rights due diligence across operations and supply chains.',t:'esg'},
+  // Carbon
+  {a:'VCS',f:'Verified Carbon Standard',d:'World\'s most widely used voluntary carbon standard — managed by Verra with 900M+ credits issued.',t:'carbon'},
+  {a:'REDD+',f:'Reducing Emissions from Deforestation and Forest Degradation',d:'UN framework for crediting countries and projects that protect forests from deforestation.',t:'carbon'},
+  {a:'ITMO',f:'Internationally Transferred Mitigation Outcome',d:'Carbon credits transferred between countries under Article 6.2 of the Paris Agreement with corresponding adjustment.',t:'carbon'},
+  {a:'VVB',f:'Validation and Verification Body',d:'Independent accredited organisation that validates and verifies carbon projects and credits.',t:'carbon'},
+  {a:'PDD',f:'Project Design Document',d:'Technical document describing a carbon project — methodology, baseline, monitoring plan, and expected credits.',t:'carbon'},
+  {a:'GHG',f:'Greenhouse Gas',d:'Gases that trap heat in the atmosphere — CO2, CH4, N2O, and fluorinated gases. Measured in CO2 equivalent (CO2e).',t:'carbon'},
+  {a:'CO2e',f:'Carbon Dioxide Equivalent',d:'Standard unit for comparing greenhouse gases based on global warming potential over 100 years.',t:'carbon'},
+  {a:'PAYG',f:'Pay As You Go',d:'Solar financing model where customers make small periodic payments via mobile money until ownership transfers.',t:'solar'},
+  {a:'CCB',f:'Climate, Community and Biodiversity Standard',d:'Add-on certification for carbon projects demonstrating strong social and biodiversity co-benefits.',t:'carbon'},
+  {a:'NDA',f:'National Designated Authority',d:'Government body responsible for approving Article 6 carbon project authorisations — Ministry of Environment in Kenya.',t:'carbon'},
+  {a:'CDM',f:'Clean Development Mechanism',d:'Kyoto Protocol mechanism allowing developed countries to fund emission reductions in developing countries.',t:'carbon'},
+  {a:'CER',f:'Certified Emission Reduction',d:'Credit issued under the CDM — predecessor to voluntary carbon market credits.',t:'carbon'},
+  {a:'A6.4ER',f:'Article 6.4 Emission Reduction',d:'Credit to be issued under the UN-supervised Article 6.4 mechanism — the successor to CDM.',t:'carbon'},
+  {a:'DAC',f:'Direct Air Capture',d:'Technology that removes CO2 directly from ambient air — highest quality carbon removal, USD 300–1,000/t.',t:'carbon'},
+  // Finance
+  {a:'DSCR',f:'Debt Service Coverage Ratio',d:'Net operating cash flow divided by debt service (interest + principal). Minimum 1.25x for Kenyan solar projects.',t:'finance'},
+  {a:'IRR',f:'Internal Rate of Return',d:'Discount rate at which NPV of cash flows equals zero — primary return metric for project finance.',t:'finance'},
+  {a:'NPV',f:'Net Present Value',d:'Sum of discounted future cash flows minus initial investment — positive NPV indicates value creation.',t:'finance'},
+  {a:'WACC',f:'Weighted Average Cost of Capital',d:'Blended cost of all capital sources weighted by their proportion — used as hurdle rate for investment decisions.',t:'finance'},
+  {a:'LTV',f:'Loan to Value Ratio',d:'Loan amount as a percentage of asset value — typically 60–75% for Kenyan solar project finance.',t:'finance'},
+  {a:'PPA',f:'Power Purchase Agreement',d:'Long-term contract where solar SPV sells electricity to an offtaker at a pre-agreed price per kWh.',t:'solar'},
+  {a:'SPV',f:'Special Purpose Vehicle',d:'Legally separate entity created to own and operate a single project — isolating project risk from sponsor balance sheet.',t:'finance'},
+  {a:'EPC',f:'Engineering, Procurement and Construction',d:'Fixed-price construction contract allocating construction risk to the contractor in project finance.',t:'finance'},
+  {a:'O&M',f:'Operations and Maintenance',d:'Service contract governing solar system performance — typically includes availability guarantees of 97–98%.',t:'solar'},
+  {a:'DFI',f:'Development Finance Institution',d:'Specialised institution providing concessional financing for development projects — IFC, AfDB, PROPARCO.',t:'finance'},
+  {a:'IFC',f:'International Finance Corporation',d:'World Bank Group private sector arm — major green finance provider in Africa through programmes including MSME Green Finance.',t:'finance'},
+  {a:'AfDB',f:'African Development Bank',d:'Africa\'s premier multilateral development bank — 40% of annual approvals committed to climate finance.',t:'finance'},
+  {a:'MDB',f:'Multilateral Development Bank',d:'International financial institution owned by member countries — World Bank, AfDB, ADB, EBRD.',t:'finance'},
+  {a:'GBP',f:'Green Bond Principles',d:'ICMA voluntary guidelines for green bond issuance — four components: use of proceeds, evaluation, management, reporting.',t:'finance'},
+  {a:'SPO',f:'Second Party Opinion',d:'Independent review of a green/sustainability finance framework by a specialist ESG research firm.',t:'finance'},
+  {a:'SLL',f:'Sustainability-Linked Loan',d:'Loan where interest rate is linked to borrower achievement of pre-agreed ESG Sustainability Performance Targets.',t:'finance'},
+  {a:'SLB',f:'Sustainability-Linked Bond',d:'Bond instrument where coupon is linked to issuer ESG performance targets — bond market equivalent of SLL.',t:'finance'},
+  {a:'KPI',f:'Key Performance Indicator',d:'Specific, measurable metric used to track progress towards ESG targets in SLL and SLB structures.',t:'finance'},
+  {a:'SPT',f:'Sustainability Performance Target',d:'Pre-agreed ESG target in an SLL — achieving it triggers margin step-down, missing it triggers step-up.',t:'finance'},
+  {a:'LMA',f:'Loan Market Association',d:'Industry body that publishes Green Loan Principles and Sustainability-Linked Loan Principles.',t:'finance'},
+  {a:'ICMA',f:'International Capital Market Association',d:'Association that maintains the Green Bond Principles, Social Bond Principles, and Sustainability Bond Guidelines.',t:'finance'},
+  {a:'OTC',f:'Over the Counter',d:'Bilateral financial transactions negotiated directly between parties — not through an exchange.',t:'finance'},
+  {a:'NAV',f:'Net Asset Value',d:'Total assets minus total liabilities of a fund or portfolio — used in REIT and fund valuation.',t:'finance'},
+  {a:'REIT',f:'Real Estate Investment Trust',d:'Investment vehicle holding income-producing real estate — Acorn DREIT and IREIT are Kenya\'s first green REITs.',t:'finance'},
+  {a:'DREIT',f:'Development Real Estate Investment Trust',d:'Kenyan REIT structure financing property under development — used in Acorn Holdings green bond.',t:'finance'},
+  // Solar
+  {a:'kWp',f:'Kilowatt-Peak',d:'Maximum electricity output of a solar system under standard test conditions — headline sizing metric.',t:'solar'},
+  {a:'kWh',f:'Kilowatt-Hour',d:'Unit of energy — 1 kW of power used for 1 hour. Annual generation in kWh = system size × 1,400 (Nairobi).',t:'solar'},
+  {a:'PV',f:'Photovoltaic',d:'Technology converting sunlight directly into electricity through the photovoltaic effect in silicon solar cells.',t:'solar'},
+  {a:'PAYG',f:'Pay As You Go',d:'Solar financing model common in East Africa — small daily/weekly M-Pesa payments unlock continued use.',t:'solar'},
+  {a:'C&I',f:'Commercial and Industrial',d:'Solar segment serving businesses — fastest growing in Kenya, driven by high grid tariffs (KES 16–25/kWh).',t:'solar'},
+  {a:'EDGE',f:'Excellence in Design for Greater Efficiencies',d:'IFC green building certification requiring 20%+ reduction in energy, water, and embodied energy.',t:'solar'},
+  {a:'EPC',f:'Engineering, Procurement and Construction',d:'Turnkey solar installation contract — contractor delivers commissioned system at fixed price.',t:'solar'},
+  {a:'HFO',f:'Heavy Fuel Oil',d:'Industrial fuel used in kilns and boilers — emission factor 3.15 tCO2e/tonne.',t:'solar'},
+  {a:'EV',f:'Electric Vehicle',d:'Vehicle powered by electric motor — zero direct emissions. Key clean asset for Kenyan fleet financing.',t:'solar'},
+  {a:'HVAC',f:'Heating, Ventilation and Air Conditioning',d:'Building climate control systems — major energy consumer and energy efficiency target in C&I buildings.',t:'solar'},
+  // Reporting
+  {a:'ISAE 3000',f:'International Standard on Assurance Engagements 3000',d:'IAASB standard for assurance on non-financial information — primary standard for ESG assurance by accountants.',t:'reporting'},
+  {a:'AA1000AS',f:'AccountAbility 1000 Assurance Standard',d:'Assurance standard assessing both information quality and process quality — inclusivity, materiality, responsiveness.',t:'reporting'},
+  {a:'IAASB',f:'International Auditing and Assurance Standards Board',d:'Independent standard-setting body that publishes ISAE 3000 and other assurance standards.',t:'reporting'},
+  {a:'IESBA',f:'International Ethics Standards Board for Accountants',d:'Body publishing the Code of Ethics governing independence requirements for assurance practitioners.',t:'reporting'},
+  {a:'ESRS',f:'European Sustainability Reporting Standards',d:'EU reporting standards under CSRD — aligned with IFRS S1/S2 and GRI.',t:'reporting'},
+  {a:'SEMP',f:'Social and Environmental Management Plan',d:'Action plan required by IFC for projects to address environmental and social risks under Performance Standards.',t:'reporting'},
+  {a:'ESAP',f:'Environmental and Social Action Plan',d:'IFC due diligence output documenting corrective actions required before or during project financing.',t:'reporting'},
+  {a:'TCFD',f:'Task Force on Climate-related Financial Disclosures',d:'Four-pillar climate risk framework: Governance, Strategy, Risk Management, Metrics & Targets.',t:'reporting'},
+  {a:'CDP',f:'Carbon Disclosure Project',d:'World\'s largest environmental disclosure platform — scores companies from A (leadership) to D- (disclosure only).',t:'reporting'},
+  {a:'GCP',f:'Global Carbon Project',d:'Scientific partnership tracking global carbon cycle — provides official global emissions data referenced in IPCC reports.',t:'carbon'},
+  // Kenya specific
+  {a:'CBK',f:'Central Bank of Kenya',d:'Kenya\'s central bank — issued climate risk guidelines 2021, developing mandatory ESG disclosure framework.',t:'kenya'},
+  {a:'CMA',f:'Capital Markets Authority',d:'Kenya\'s capital markets regulator — approves green bonds and NSE listings. Published ESG Guidance Manual 2021.',t:'kenya'},
+  {a:'NSE',f:'Nairobi Securities Exchange',d:'Kenya\'s primary stock exchange — published ESG Disclosure Guidance Manual, hosts Acorn green REITs.',t:'kenya'},
+  {a:'NEMA',f:'National Environment Management Authority',d:'Kenya\'s environmental regulator — enforces EMCA, requires EIAs, issues environmental compliance certificates.',t:'kenya'},
+  {a:'EPRA',f:'Energy and Petroleum Regulatory Authority',d:'Kenya\'s energy regulator — issues solar generation licences, regulates electricity tariffs.',t:'kenya'},
+  {a:'RBA',f:'Retirement Benefits Authority',d:'Kenya\'s pension regulator — issued Climate Change Guidance 2022, developing ESG investment requirements.',t:'kenya'},
+  {a:'NSSF',f:'National Social Security Fund',d:'Kenya\'s largest institutional investor — KES 300B AUM — mandatory contributions from formal sector workers.',t:'kenya'},
+  {a:'ICPAK',f:'Institute of Certified Public Accountants of Kenya',d:'Kenya\'s professional accountancy body — monitoring IFRS S1/S2 for incorporation into professional standards.',t:'kenya'},
+  {a:'KRA',f:'Kenya Revenue Authority',d:'Kenya\'s tax authority — applies income tax to carbon credit revenues, oversees investment deduction claims.',t:'kenya'},
+  {a:'KCB',f:'Kenya Commercial Bank',d:'Kenya\'s largest bank by assets — IFC green lending partner, developing ESG credit integration.',t:'kenya'},
+  {a:'EMCA',f:'Environment Management and Coordination Act',d:'Kenya\'s primary environmental legislation — requires Environmental Impact Assessments for major projects.',t:'kenya'},
+  {a:'KenInvest',f:'Kenya Investment Authority',d:'Provides investment certificates protecting projects against expropriation under Kenya\'s investment framework.',t:'kenya'},
+  {a:'ATI',f:'Africa Trade Insurance Agency',d:'Pan-African agency providing political risk insurance and credit guarantees — supports Kenyan solar project finance.',t:'kenya'},
+  {a:'GuarantCo',f:'GuarantCo',d:'DFI-backed guarantee facility for infrastructure in developing countries — provides first-loss guarantees for Kenyan projects.',t:'kenya'},
+  {a:'KBRR',f:'Kenya Banks Reference Rate',d:'Benchmark interest rate for Kenyan shilling loans — referenced in SLL margin ratchet structures.',t:'kenya'},
+  {a:'KETRACO',f:'Kenya Electricity Transmission Company',d:'State-owned electricity transmission company — manages Kenya\'s national grid and emission factor data.',t:'kenya'},
+  {a:'MTC',f:'Mobile Transaction Capability',d:'M-Pesa-based payment infrastructure enabling PAYG solar and carbon project community payments.',t:'kenya'},
+  {a:'NDC',f:'Nationally Determined Contribution',d:'Kenya targets 32% emission reduction by 2030 vs BAU under Paris Agreement — driven by renewable energy and clean transport.',t:'kenya'},
+  {a:'Vision 2030',f:'Kenya Vision 2030',d:'Kenya\'s long-term development blueprint — aligned with sustainable development across economic, social, and environmental pillars.',t:'kenya'},
+  // More ESG
+  {a:'ICP',f:'Internal Carbon Price',d:'Financial cost per tonne CO2e assigned internally to adjust NPV calculations — embeds climate into capital allocation.',t:'esg'},
+  {a:'WACC',f:'Weighted Average Cost of Capital',d:'Blended financing cost — critical for project finance. Blended finance can reduce WACC from ~16% to ~11%.',t:'finance'},
+  {a:'ETS',f:'Emissions Trading System',d:'Cap-and-trade compliance carbon market — EU ETS is the world\'s largest, with prices EUR 50–80/tonne.',t:'carbon'},
+  {a:'NZE',f:'Net Zero Emissions',d:'State where GHG emissions released equal emissions removed — target year typically 2050 for corporates.',t:'esg'},
+  {a:'SBTN',f:'Science Based Targets Network',d:'Extension of SBTi covering nature targets (water, biodiversity, land) alongside climate.',t:'esg'},
+  {a:'TCFD',f:'Task Force on Climate-related Financial Disclosures',d:'FSB framework — Governance, Strategy, Risk Management, Metrics & Targets. CBK references TCFD for Kenyan banks.',t:'reporting'},
+  {a:'GFANZ',f:'Glasgow Financial Alliance for Net Zero',d:'Coalition of financial institutions committed to net zero financing — includes NZBA, NZAMI, NZIOA.',t:'finance'},
+  {a:'NZBA',f:'Net Zero Banking Alliance',d:'UN-convened bank coalition committing to align lending/investment portfolios with net zero by 2050.',t:'finance'},
+  {a:'IPCC',f:'Intergovernmental Panel on Climate Change',d:'UN body providing scientific assessments of climate change — primary source for emission factors and climate scenarios.',t:'esg'},
+  {a:'IIGCC',f:'Institutional Investors Group on Climate Change',d:'European investor network on climate change with USD 51T in AUM — drives engagement on climate.',t:'esg'},
+  {a:'CA100+',f:'Climate Action 100+',d:'Investor coalition engaging world\'s largest GHG emitters on climate governance — major ESG engagement platform.',t:'esg'},
+  {a:'GPIF',f:'Government Pension Investment Fund',d:'World\'s largest pension fund — Japan — USD 1.5T AUM — global ESG investment benchmark with USD 80B in ESG indices.',t:'finance'},
+  {a:'NBIM',f:'Norges Bank Investment Management',d:'Norwegian sovereign wealth fund — USD 1.7T AUM — global ESG leader voting at 10,000+ AGMs annually.',t:'finance'},
+  {a:'ISS',f:'Institutional Shareholder Services',d:'Leading proxy advisory firm — negative ISS recommendation can swing 20–30% of shareholder votes against management.',t:'esg'},
+  {a:'IMP',f:'Impact Management Project',d:'Framework for measuring and managing impact across five dimensions — now housed at IFRS Foundation.',t:'esg'},
+  {a:'GIIN',f:'Global Impact Investing Network',d:'Body tracking and promoting impact investing — estimates USD 60B annually deployed to sub-Saharan Africa.',t:'finance'},
+  {a:'LCA',f:'Life Cycle Assessment',d:'Environmental impact analysis of a product from raw material extraction to end of life — used in green product design.',t:'esg'},
+  {a:'SEEA',f:'System of Environmental Economic Accounting',d:'UN statistical framework for integrating environmental and economic data — used in natural capital accounting.',t:'reporting'},
+  {a:'PRI',f:'Principles for Responsible Investment',d:'UNPRI signatories commit to six principles integrating ESG into investment analysis and active ownership.',t:'esg'},
+  {a:'ESRS',f:'European Sustainability Reporting Standards',d:'EU mandatory sustainability reporting standards under CSRD — aligning with IFRS S1/S2 and GRI.',t:'reporting'},
+  {a:'WACI',f:'Weighted Average Carbon Intensity',d:'Portfolio-level metric measuring carbon intensity of equity/bond holdings — key for TCFD institutional reporting.',t:'esg'},
+  {a:'PCAF',f:'Partnership for Carbon Accounting Financials',d:'Global standard for financial institutions to measure and disclose financed emissions (Scope 3, Category 15).',t:'reporting'},
+  {a:'FCA',f:'Financial Conduct Authority',d:'UK financial regulator — introduced Sustainability Disclosure Requirements (SDR) for investment products.',t:'finance'},
+  {a:'SEC',f:'Securities and Exchange Commission',d:'US financial regulator — Climate and ESG Task Force has fined BNY Mellon (USD 1.5M) and Goldman (USD 4M) for ESG misrepresentation.',t:'finance'},
+  {a:'FSCA',f:'Financial Sector Conduct Authority',d:'South Africa\'s financial regulator — issued greenwashing guidance and developing sustainable finance framework.',t:'finance'},
+  {a:'JSE',f:'Johannesburg Stock Exchange',d:'Africa\'s largest stock exchange — required integrated reporting since 2010, most advanced ESG disclosure in Africa.',t:'finance'},
+  {a:'SKI',f:'Kenya Sustainable Finance Initiative',d:'CBK-led initiative bringing together banks, regulators, and development partners to build green lending infrastructure.',t:'kenya'},
+  {a:'SCMs',f:'Supplementary Cementitious Materials',d:'Fly ash, slag, calcined clay that partially replace clinker in cement — reduces Scope 1 process emissions.',t:'esg'},
+  {a:'RDF',f:'Refuse-Derived Fuel',d:'Alternative kiln fuel from processed municipal and industrial waste — reduces coal dependency and Scope 1 emissions.',t:'esg'},
+  {a:'PBSA',f:'Purpose-Built Student Accommodation',d:'Asset class developed by Acorn Holdings — Kenya\'s first green bond financed EDGE-certified student housing.',t:'finance'},
+  {a:'GCR',f:'Global Credit Rating Company',d:'African credit rating agency — recognised by CMA Kenya for green bond credit ratings.',t:'kenya'},
+  {a:'GLI',f:'GreenLedger Institute',d:'ESG and Sustainable Finance education institute — provider of this programme and three professional certificates.',t:'kenya'},
+  {a:'VGL',f:'Velocity Global Leasing',d:'Equipment leasing eLearning platform — host platform for GLI as a branded ESG education category.',t:'kenya'},
+  {a:'CLBP',f:'Certified Leasing Business Professional',d:'VGL professional certification for equipment leasing practitioners across all industry personas.',t:'kenya'},
+];
+
+let currentTag = 'all';
+
+function renderGlossary(data) {
+  const grid = document.getElementById('glossary-grid');
+  const count = document.getElementById('g-count');
+  const visible = data.filter(item => {
+    const tagMatch = currentTag === 'all' || item.t === currentTag;
+    return tagMatch;
+  });
+  count.textContent = visible.length;
+  grid.innerHTML = visible.map(item => `
+    <div class="glossary-item">
+      <div class="glossary-abbr">${item.a}</div>
+      <div class="glossary-full">${item.f}</div>
+      <div class="glossary-def">${item.d}</div>
+      <span class="glossary-tag ${item.t}">${item.t.charAt(0).toUpperCase()+item.t.slice(1)}</span>
+    </div>
+  `).join('');
+}
+
+function filterGlossary() {
+  const q = document.getElementById('glossary-search').value.toLowerCase();
+  const filtered = glossaryData.filter(item =>
+    (currentTag === 'all' || item.t === currentTag) &&
+    (item.a.toLowerCase().includes(q) || item.f.toLowerCase().includes(q) || item.d.toLowerCase().includes(q))
+  );
+  document.getElementById('g-count').textContent = filtered.length;
+  document.getElementById('glossary-grid').innerHTML = filtered.map(item => `
+    <div class="glossary-item">
+      <div class="glossary-abbr">${item.a}</div>
+      <div class="glossary-full">${item.f}</div>
+      <div class="glossary-def">${item.d}</div>
+      <span class="glossary-tag ${item.t}">${item.t.charAt(0).toUpperCase()+item.t.slice(1)}</span>
+    </div>
+  `).join('');
+}
+
+function filterByTag(tag) {
+  currentTag = tag;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  filterGlossary();
+}
+
+// ══════════════════════════════════════════════════════════
+// PROGRESS TRACKER
+// ══════════════════════════════════════════════════════════
+const modules = [
+  {n:1,t:'Introduction to ESG',l:1,h:1},
+  {n:2,t:'ESG & the Financial System',l:1,h:1},
+  {n:3,t:'Climate Science for Finance',l:1,h:1},
+  {n:4,t:'Introduction to Carbon Markets',l:1,h:1},
+  {n:5,t:'Green Finance & Sustainable Lending',l:1,h:1},
+  {n:6,t:'Solar Energy & Clean Assets',l:1,h:1.5},
+  {n:7,t:'ESG Reporting Frameworks',l:2,h:1},
+  {n:8,t:'Greenwashing: Identification & Risk',l:2,h:1},
+  {n:9,t:'ESG Due Diligence & Risk Assessment',l:2,h:1},
+  {n:10,t:'Solar Asset Leasing — Applied Finance',l:2,h:1.5},
+  {n:11,t:'Carbon Credits — Applied Finance',l:2,h:1.5},
+  {n:12,t:'ESG & Corporate Governance',l:2,h:1},
+  {n:13,t:'Social Impact Measurement',l:2,h:1},
+  {n:14,t:'ESG Strategy for Corporates',l:3,h:1.5},
+  {n:15,t:'Advanced Solar Leasing',l:3,h:1.5},
+  {n:16,t:'Advanced Carbon Markets',l:3,h:1.5},
+  {n:17,t:'ESG Audit, Assurance & Advisory',l:3,h:1.5},
+  {n:18,t:'Sustainable Finance Product Design',l:3,h:1.5},
+  {n:19,t:'ESG & Institutional Investors',l:3,h:1.5},
+  {n:20,t:'Capstone — ESG Advisory Simulation',l:3,h:1.5},
+];
+
+let moduleStatus = JSON.parse(localStorage.getItem('gli-progress') || '{}');
+
+function buildProgressGrid() {
+  ['level1','level2','level3'].forEach((level, li) => {
+    const grid = document.getElementById(`${level}-grid`);
+    const levelMods = modules.filter(m=>m.l===li+1);
+    grid.innerHTML = levelMods.map(m => {
+      const status = moduleStatus[m.n] || 'pending';
+      return `<div class="module-item ${status}" onclick="toggleModule(${m.n})">
+        <div class="module-num">${m.n < 10 ? '0'+m.n : m.n}</div>
+        <div class="module-title">${m.t}</div>
+        <div class="module-status">${status==='completed'?'✓ Done':status==='in-progress'?'→ In Progress':'○ Not started'}</div>
+      </div>`;
+    }).join('');
+  });
+  updateProgressStats();
+}
+
+function toggleModule(num) {
+  const current = moduleStatus[num] || 'pending';
+  const next = current === 'pending' ? 'in-progress' : current === 'in-progress' ? 'completed' : 'pending';
+  moduleStatus[num] = next;
+  localStorage.setItem('gli-progress', JSON.stringify(moduleStatus));
+  buildProgressGrid();
+}
+
+function updateProgressStats() {
+  const completed = modules.filter(m=>moduleStatus[m.n]==='completed').length;
+  const hrs = modules.filter(m=>moduleStatus[m.n]==='completed').reduce((s,m)=>s+m.h,0);
+  const certs = completed>=6?completed>=13?completed>=20?3:2:1:0;
+  const pct = Math.round(completed/20*100);
+  document.getElementById('prog-pct').textContent = pct+'%';
+  document.getElementById('prog-bar').style.width = pct+'%';
+  document.getElementById('prog-done').textContent = completed;
+  document.getElementById('prog-hrs').textContent = fmtD(hrs,1);
+  document.getElementById('prog-certs').textContent = certs;
+  document.getElementById('prog-remaining').textContent = 20-completed;
+}
+
+// ══════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderGlossary(glossaryData);
+  buildProgressGrid();
+  // Init decision trees
+  Object.keys(dtData).forEach(id => {
+    const node = dtData[id][0];
+    if (node) {
+      document.getElementById(`${id}-opts`).innerHTML = node.opts.map(o=>
+        `<button class="dt-option" onclick="dtStep('${id}',1,'${o.v}','${o.t}')"><span class="opt-icon">→</span>${o.t}</button>`
+      ).join('');
+    }
+  });
+});
+</script>
+</body>
+</html>
