@@ -10,6 +10,7 @@ import {
   Building2,
   ArrowRight,
   Award,
+  Globe
 } from "lucide-react";
 
 const roles = [
@@ -85,6 +86,19 @@ const roles = [
       shadowHover: "hover:shadow-cyan-900/20",
     },
     description: "Scale your operations and manage portfolio risk.",
+  },
+  {
+    title: "ESG and Sustainable Finance Programme",
+    slug: "esg",
+    icon: Globe,
+    colorTheme: {
+      iconBg: "bg-green-500/10",
+      iconText: "text-green-400",
+      borderHover: "hover:border-green-500/30",
+      shadowHover: "hover:shadow-green-900/20",
+    },
+    description:
+      "Learn how environmental stewardship, social responsibility, and governance shape smarter, greener leasing decisions.",
   },
 ];
 

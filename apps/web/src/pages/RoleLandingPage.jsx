@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx';
 import { Skeleton } from '@/components/ui/skeleton.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
-import { ArrowRight, CheckCircle2, BookOpen, TrendingUp, Users, Award, Building2, AlertCircle, Briefcase, Calculator, Landmark, Calendar } from 'lucide-react';
+import { ArrowRight, CheckCircle2, BookOpen, TrendingUp, Users, Award, Building2, AlertCircle, Briefcase, Calculator, Landmark, Calendar, Globe } from 'lucide-react';
 
 // Hardcoded role data with custom hero content
 const rolesData = {
@@ -104,7 +104,36 @@ const rolesData = {
       { title: 'Lessor Accounting under IFRS 16' },
       { title: 'Transition and Impact Analysis' }
     ]
-  }
+  },
+  esg: {
+  name: 'ESG and Sustainable Finance Programme',
+  icon: Globe,
+  courseCount: 20,
+  heroHeadline: 'Finance the Net Zero Transition. Mitigate Climate Risk. Generate Sustainable Returns.',
+  // heroSubheading: 'Most financiers lack the ESG tools to evaluate clean asset portfolios, carbon credits, and green leasing opportunities. Velocity teaches your credit and investment teams how to identify high-quality sustainable assets, reduce climate-related credit risk, structure green finance products, and build a future-proof lending portfolio aligned with global net zero commitments.',
+  ctaText: 'Get Your ESG Portfolio Assessment',
+  description: 'Master the intersection of ESG and equipment finance. You will learn how to integrate climate risk into credit assessment, structure green leases and PPAs, value carbon credits under IFRS, and build sustainable lending portfolios that deliver competitive risk-adjusted returns while meeting evolving regulatory and investor expectations.',
+  topic: ' ESG-Integrated Lending & Sustainable Asset Finance',
+  keyOfferings: [
+    // Beginner Level
+    { title: 'ESG and the Financial System' },
+    { title: 'Introduction to Carbon Markets' },
+    { title: 'Introduction to Green Finance & Sustainable Lending' },
+    { title: 'Introduction to Solar Energy & Clean Assets' },
+    
+    // Intermediate Level
+    { title: 'ESG Due Diligence & Risk Assessment' },
+    { title: 'Solar Asset Leasing — Applied Finance' },
+    { title: 'Carbon Credits — Applied Finance & Accounting' },
+    { title: 'Greenwashing — Identification & Risk' },
+    
+    // Mastery Level
+    { title: 'Sustainable Finance Product Design' },
+    { title: 'Advanced Solar Leasing — Deal Structuring & Project Finance' },
+    { title: 'Advanced Carbon Markets — Trading, Strategy & Portfolio Management' },
+    { title: 'ESG Strategy for Corporates & Financial Institutions' }
+  ]
+}
 };
 
 const RoleLandingPage = () => {
