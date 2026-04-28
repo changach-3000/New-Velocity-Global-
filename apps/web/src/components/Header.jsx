@@ -347,7 +347,7 @@ const Header = () => {
   ];
 
   const authLinks = [
-    { to: '/courses-lessons', label: 'Lessons', icon: Library },
+    // { to: '/courses-lessons', label: 'Lessons', icon: Library },
     { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { to: '/seminars', label: 'Member Portal', icon: BookCheckIcon },
   ];
