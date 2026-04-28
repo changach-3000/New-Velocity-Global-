@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGL Tool 2 — Lease Credit Appraisal Template</title>
+<style>
+:root{--navy:#0B1F3A;--teal:#005B5E;--gold:#C9922A;--red:#C0272D;--green:#1B7A4A;
+  --dfi:#004F3F;--white:#fff;--off:#F4F7FA;--border:#D0DDE8;--char:#1A2535;--mid:#6A7F96;--lgrey:#EEF3F8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--off);color:var(--char);font-size:13px;}
+.header{background:var(--navy);border-bottom:3px solid var(--gold);padding:20px 28px;}
+.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;}
+.badge{background:rgba(201,146,42,.18);border:1px solid var(--gold);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:2px;text-transform:uppercase;display:inline-block;margin-bottom:8px;}
+.h1{font-size:20px;color:#fff;font-weight:700;}
+.h1 span{color:var(--gold);}
+.sub{font-size:11px;color:#7A9BBB;margin-top:4px;}
+.brand{text-align:right;}.brand-name{font-size:13px;color:var(--gold);font-weight:700;}
+.main{max-width:960px;margin:0 auto;padding:24px 24px 60px;}
+/* PROGRESS */
+.prog-bar{background:#fff;border-radius:8px;border:1px solid var(--border);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 8px rgba(11,31,58,.05);}
+.prog-track{flex:1;height:6px;background:var(--lgrey);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .4s;}
+.prog-label{font-size:12px;color:var(--mid);font-weight:600;white-space:nowrap;}
+/* SECTIONS */
+.section-card{background:#fff;border-radius:10px;border:1px solid var(--border);margin-bottom:18px;overflow:hidden;box-shadow:0 2px 10px rgba(11,31,58,.05);}
+.section-header{display:flex;align-items:center;gap:14px;padding:14px 20px;background:var(--navy);cursor:pointer;user-select:none;}
+.sec-num{width:30px;height:30px;border-radius:50%;border:2px solid rgba(201,146,42,.4);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gold);font-weight:700;flex-shrink:0;}
+.sec-num.done{background:var(--green);border-color:var(--green);color:#fff;}
+.sec-title-wrap{flex:1;}
+.sec-title{font-size:14px;font-weight:600;color:#fff;}
+.sec-sub{font-size:11px;color:#5A7A9A;margin-top:2px;}
+.sec-chevron{color:#3A5A7A;font-size:16px;transition:transform .3s;flex-shrink:0;}
+.section-card.open .sec-chevron{transform:rotate(180deg);}
+.section-body{display:none;padding:20px 22px;}
+.section-card.open .section-body{display:block;}
+/* FIELDS */
+.field-row{display:grid;gap:14px;margin-bottom:14px;}
+.field-row.cols2{grid-template-columns:1fr 1fr;}
+.field-row.cols3{grid-template-columns:1fr 1fr 1fr;}
+.field-row.cols4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.field label{display:block;font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:8px 11px;font-family:inherit;font-size:13px;color:var(--char);background:#fff;transition:border-color .15s;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal);}
+.field textarea{resize:vertical;min-height:70px;}
+.calc-result{background:var(--lgrey);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:13px;font-weight:700;color:var(--navy);min-height:36px;display:flex;align-items:center;}
+.calc-result.pass{background:#E8F5EE;border-color:#B4DCC5;color:var(--green);}
+.calc-result.warn{background:#FFF3E0;border-color:#FBDDB0;color:#B8640A;}
+.calc-result.fail{background:#FDE8E8;border-color:#F5C6C6;color:var(--red);}
+.section-nav{display:flex;justify-content:flex-end;margin-top:18px;gap:10px;}
+.btn-save{background:var(--navy);color:#fff;border:none;padding:10px 24px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;}
+.btn-save:hover{background:var(--teal);}
+.btn-calc{background:var(--teal);color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;margin-top:8px;}
+.info-note{background:var(--lgrey);border-left:3px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 14px;font-size:12px;color:var(--mid);margin-bottom:14px;line-height:1.5;}
+/* RECOMMENDATION */
+#rec-section{display:none;}
+#rec-section.show{display:block;}
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.rec-kpi{background:#fff;border-radius:8px;border:1px solid var(--border);padding:14px 16px;}
+.rec-kpi-label{font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.rec-kpi-val{font-size:20px;font-weight:700;line-height:1;}
+.rec-kpi-sub{font-size:11px;color:var(--mid);margin-top:3px;}
+.decision-box{border-radius:10px;padding:20px 22px;margin-bottom:18px;}
+.decision-box.approve{background:var(--green);color:#fff;}
+.decision-box.decline{background:var(--red);color:#fff;}
+.decision-box.conditional{background:var(--gold);color:var(--navy);}
+.decision-box h3{font-size:16px;font-weight:700;margin-bottom:8px;}
+.decision-box p{font-size:13px;line-height:1.6;opacity:.9;}
+.cp-list{background:#fff;border-radius:8px;border:1px solid var(--border);padding:16px 18px;margin-bottom:16px;}
+.cp-list h4{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px;}
+.cp-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:7px;font-size:13px;color:var(--char);}
+.cp-item::before{content:'☐';flex-shrink:0;color:var(--teal);font-size:14px;margin-top:1px;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="badge">Bank Credit Tool 2 of 5</div>
+      <div class="h1">Lease Credit Appraisal <span>Memo Template</span></div>
+      <div class="sub">Nine-section lease credit framework — Sections 1–8 standard lease appraisal · Section 9 DFI ESG Compliance (IFC / AfDB / PROPARCO)</div>
+    </div>
+    <div class="brand"><div class="brand-name">Velocity Global Leasing</div></div>
+  </div>
+</div>
+<div class="main">
+  <!-- PROGRESS -->
+  <div class="prog-bar">
+    <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+    <div class="prog-label" id="progLabel">0 of 8 sections complete</div>
+  </div>
+
+  <!-- S1 TRANSACTION SUMMARY -->
+  <div class="section-card open" id="s1">
+    <div class="section-header" onclick="toggle('s1')">
+      <div class="sec-num" id="n1">01</div>
+      <div class="sec-title-wrap"><div class="sec-title">Transaction Summary</div><div class="sec-sub">Product type, asset, term, rate, and rental</div></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="field-row cols2">
+        <div class="field"><label>Client / Lessee Name</label><input id="s1_client" placeholder="e.g. Prestige Logistics Limited"></div>
+        <div class="field"><label>Lease Product Type</label>
+          <select id="s1_product">
+            <option>Finance Lease — Full Payout</option>
+            <option>Operating Lease</option>
+            <option>Sale and Leaseback — Finance Lease</option>
+            <option>Hire Purchase</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row cols2">
+        <div class="field"><label>Asset Description</label><input id="s1_asset" placeholder="e.g. 8 Isuzu NQR trucks — new, from IEA"></div>
+        <div class="field"><label>Asset Supplier / Dealer</label><input id="s1_supplier" placeholder="e.g. Isuzu East Africa — authorised dealer"></div>
+      </div>
+      <div class="field-row cols4">
+        <div class="field"><label>Total Asset Cost (KES)</label><input id="s1_cost" type="number" placeholder="46400000" oninput="calcRental()"></div>
+        <div class="field"><label>Lease Term (Months)</label><input id="s1_term" type="number" placeholder="48" oninput="calcRental()"></div>
+        <div class="field"><label>Implicit Rate (% p.a.)</label><input id="s1_rate" type="number" placeholder="18" step="0.5" oninput="calcRental()"></div>
+        <div class="field"><label>Advance Rentals (#)</label><input id="s1_advance" type="number" placeholder="2" min="0" max="3"></div>
+      </div>
+      <div class="field-row cols3">
+        <div class="field"><label>Monthly Rental (KES) — Auto-calc</label><div class="calc-result" id="s1_rental">Enter cost, term and rate above</div></div>
+        <div class="field"><label>Annual Rental (KES)</label><div class="calc-result" id="s1_annual">—</div></div>
+        <div class="field"><label>Bank Gross Income (KES)</label><div class="calc-result" id="s1_income">—</div></div>
+      </div>
+      <div class="field-row cols2">
+        <div class="field"><label>Residual / Purchase Option (KES)</label><input id="s1_residual" placeholder="100"></div>
+        <div class="field"><label>VAT-Registered Lessee?</label><select id="s1_vat"><option>Yes — VAT-registered</option><option>No — not VAT-registered</option></select></div>
+      </div>
+      <div class="section-nav"><button class="btn-save" onclick="saveSection(1)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S2 LESSEE FINANCIAL ANALYSIS -->
+  <div class="section-card" id="s2">
+    <div class="section-header" onclick="toggle('s2')">
+      <div class="sec-num" id="n2">02</div>
+      <div class="sec-title-wrap"><div class="sec-title">Lessee Financial Analysis</div><div class="sec-sub">Revenue, EBITDA, rental coverage ratio, and existing obligations</div></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="info-note">⚠ The rental coverage ratio must be calculated on free cashflow <strong>after all existing debt service</strong> — not on raw EBITDA. This is the most common error in lease credit appraisals.</div>
+      <div class="field-row cols3">
+        <div class="field"><label>Year 1 Revenue (KES)</label><input id="s2_rev1" type="number" placeholder="0" oninput="calcCoverage()"></div>
+        <div class="field"><label>Year 2 Revenue (KES)</label><input id="s2_rev2" type="number" placeholder="0" oninput="calcCoverage()"></div>
+        <div class="field"><label>Year 3 Revenue (KES)</label><input id="s2_rev3" type="number" placeholder="0" oninput="calcCoverage()"></div>
+      </div>
+      <div class="field-row cols3">
+        <div class="field"><label>Year 1 EBITDA (KES)</label><input id="s2_ebitda1" type="number" placeholder="0" oninput="calcCoverage()"></div>
+        <div class="field"><label>Year 2 EBITDA (KES)</label><input id="s2_ebitda2" type="number" placeholder="0" oninput="calcCoverage()"></div>
+        <div class="field"><label>Year 3 EBITDA (KES)</label><input id="s2_ebitda3" type="number" placeholder="0" oninput="calcCoverage()"></div>
+      </div>
+      <div class="field-row cols2">
+        <div class="field"><label>Existing Annual Debt Service — ALL facilities (KES)</label><input id="s2_existingds" type="number" placeholder="0" oninput="calcCoverage()"></div>
+        <div class="field"><label>This Lease Annual Rental (KES) — from Section 1</label><div class="calc-result" id="s2_thisrental">Complete Section 1 first</div></div>
+      </div>
+      <div class="field-row cols3">
+        <div class="field"><label>Free EBITDA After Existing DS (KES)</label><div class="calc-result" id="s2_freeEBITDA">—</div></div>
+        <div class="field"><label>Rental Coverage Ratio</label><div class="calc-result" id="s2_coverage">—</div></div>
+        <div class="field"><label>Assessment</label><div class="calc-result" id="s2_assess">—</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Revenue Trend Assessment</label>
+          <select id="s2_trend"><option>Strong growth — 20%+ per year</option><option>Moderate growth — 10–20% per year</option><option>Stable — under 10% per year</option><option>Declining — revenue falling</option></select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Key Credit Observations</label><textarea id="s2_notes" placeholder="e.g. Three-year audited accounts reviewed. Revenue growth 22% CAGR. Main exposure: logistics sector. No adverse bank records. Two director guarantees available."></textarea></div>
+      </div>
+      <div class="section-nav"><button class="btn-save" onclick="saveSection(2)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S3 ASSET QUALITY -->
+  <div class="section-card" id="s3">
+    <div class="section-header" onclick="toggle('s3')">
+      <div class="sec-num" id="n3">03</div>
+      <div class="sec-title-wrap"><div class="sec-title">Asset Quality Assessment</div><div class="sec-sub">Condition, valuation, useful life, and supplier verification</div></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="info-note">The asset is the bank's primary security under a lease — NOT a charge over the lessee's assets. This section must be completed before any credit decision.</div>
+      <div class="field-row cols3">
+        <div class="field"><label>Asset Condition</label>
+          <select id="s3_condition"><option>New — from authorised dealer</option><option>Used — excellent condition, full service history</option><option>Used — good condition, partial service history</option><option>Used — fair condition, inspection required</option></select>
+        </div>
+        <div class="field"><label>Remaining Useful Life (Years)</label><input id="s3_life" type="number" placeholder="8"></div>
+        <div class="field"><label>Lease Term as % of Useful Life</label><div class="calc-result" id="s3_lifePct">Enter useful life above</div></div>
+      </div>
+      <div class="field-row cols3">
+        <div class="field"><label>Independent Market Value (KES)</label><input id="s3_mv" type="number" placeholder="0" oninput="calcLTV()"></div>
+        <div class="field"><label>Forced Sale Value (KES)</label><input id="s3_fsv" type="number" placeholder="0" oninput="calcLTV()"></div>
+        <div class="field"><label>Valuer Name / Reference</label><input id="s3_valuer" placeholder="e.g. ABC Valuers — ref V2024-001"></div>
+      </div>
+      <div class="field-row cols2">
+        <div class="field"><label>LTV vs Market Value</label><div class="calc-result" id="s3_ltv_mv">—</div></div>
+        <div class="field"><label>LTV vs Forced Sale Value</label><div class="calc-result" id="s3_ltv_fsv">—</div></div>
+      </div>
+      <div class="field-row cols2">
+        <div class="field"><label>Supplier Type</label>
+          <select id="s3_supplier"><option>Authorised OEM dealer — new asset</option><option>Authorised OEM dealer — approved used</option><option>Private seller — independent valuation obtained</option><option>Grey market / unverified</option></select>
+        </div>
+        <div class="field"><label>Asset Registration / Title</label>
+          <select id="s3_title"><option>Logbook / title in bank's name — confirmed</option><option>Serial numbers in lease schedule — confirmed</option><option>Pending — registration not yet complete</option><option>Unable to register in bank's name</option></select>
+        </div>
+      </div>
+      <div class="section-nav"><button class="btn-save" onclick="saveSection(3)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S4 RESIDUAL VALUE -->
+  <div class="section-card" id="s4">
+    <div class="section-header" onclick="toggle('s4')">
+      <div class="sec-num" id="n4">04</div>
+      <div class="sec-title-wrap"><div class="sec-title">Residual Value Analysis</div><div class="sec-sub">Projected RV, stress test (base / adverse / severe), and recovery gap</div></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="field-row cols3">
+        <div class="field"><label>Projected RV at End of Term (KES)</label><input id="s4_rvBase" type="number" placeholder="0" oninput="calcRV()"></div>
+        <div class="field"><label>Projected RV as % of Cost</label><div class="calc-result" id="s4_rvPct">—</div></div>
+        <div class="field"><label>RV Basis / Market Evidence</label><input id="s4_rvBasis" placeholder="e.g. Used vehicle market 45–55% at 48M"></div>
+      </div>
+      <div class="info-note">Stress test required for all operating leases and sale-and-leasebacks where RV exceeds 20% of original cost. Action trigger: severe case recovery gap > 15% of original cost.</div>
+      <div class="field-row cols3">
+        <div class="field"><label>Base Case RV (KES)</label><div class="calc-result" id="s4_base">—</div></div>
+        <div class="field"><label>Adverse Case (−25%) (KES)</label><div class="calc-result" id="s4_adverse">—</div></div>
+        <div class="field"><label>Severe Case (−50%) (KES)</label><div class="calc-result" id="s4_severe">—</div></div>
+      </div>
+      <div class="field-row cols2">
+        <div class="field"><label>Severe Case Recovery Gap (KES)</label><div class="calc-result" id="s4_gap">—</div></div>
+        <div class="field"><label>Gap as % of Original Cost — Trigger at 15%</label><div class="calc-result" id="s4_gapPct">—</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Residual Value Action Required</label><div class="calc-result" id="s4_action">Complete fields above</div></div>
+      </div>
+      <div class="section-nav"><button class="btn-save" onclick="saveSection(4)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S5 SECURITY -->
+  <div class="section-card" id="s5">
+    <div class="section-header" onclick="toggle('s5')">
+      <div class="sec-num" id="n5">05</div>
+      <div class="sec-title-wrap"><div class="sec-title">Security and Structural Protections</div><div class="sec-sub">Title, insurance, guarantees, cross-default, and negative pledge</div></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="field-row cols2">
+        <div class="field"><label>Asset Title / Registration Status</label>
+          <select id="s5_title"><option>Confirmed in bank's name — pre-drawdown</option><option>In process — 5 working days</option><option>Not yet arranged — CP before drawdown</option></select>
+        </div>
+        <div class="field"><label>Insurance — Policy Type</label>
+          <select id="s5_ins"><option>All-risks, agreed value, bank as loss payee — confirmed</option><option>All-risks, market value — needs upgrade to agreed value</option><option>Third-party only — insufficient for lease</option><option>Not yet arranged — CP before drawdown</option></select>
+        </div>
+      </div>
+      <div class="field-row cols3">
+        <div class="field"><label>Parent / Director Guarantee</label>
+          <select id="s5_guarantee"><option>Personal guarantee from both directors</option><option>Corporate guarantee from parent</option><option>Personal guarantee from MD only</option><option>No guarantee — asset security only</option></select>
+        </div>
+        <div class="field"><label>Cross-Default Clause</label>
+          <select id="s5_crossdef"><option>Included — KES 5M threshold, 30-day cure</option><option>Included — unlimited, no threshold</option><option>Not included — exposure above KES 50M</option><option>Not applicable — single facility</option></select>
+        </div>
+        <div class="field"><label>Negative Pledge</label>
+          <select id="s5_negpledge"><option>Included — covers leased assets</option><option>Included — covers all assets</option><option>Not included</option></select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Maintenance Compliance Requirement</label>
+          <select id="s5_maint"><option>Manufacturer schedule, semi-annual compliance certificate required</option><option>Manufacturer schedule only — no certificate required</option><option>Not specified in lease agreement</option></select>
+        </div>
+      </div>
+      <div class="section-nav"><button class="btn-save" onclick="saveSection(5)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S6 END OF LEASE -->
+  <div class="section-card" id="s6">
+    <div class="section-header" onclick="toggle('s6')">
+      <div class="sec-num" id="n6">06</div>
+      <div class="sec-title-wrap"><div class="sec-title">End-of-Lease Analysis</div><div class="sec-sub">Three options, bank recovery under each, and remarketing strategy</div></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="field-row cols3">
+        <div class="field"><label>Purchase Option Price (KES)</label><input id="s6_purchase" placeholder="100"></div>
+        <div class="field"><label>Extension Rental (KES/month)</label><input id="s6_extend" placeholder="e.g. 85,000 reduced rental"></div>
+        <div class="field"><label>Return — Remarketing Channel</label>
+          <select id="s6_remarket"><option>OEM / authorised dealer buyback</option><option>Direct sale — dealer network</option><option>Auction — reserve at FSV</option><option>Re-lease to new lessee</option><option>Not identified — gap</option></select>
+        </div>
+      </div>
+      <div class="field-row cols3">
+        <div class="field"><label>Most Likely Outcome</label>
+          <select id="s6_likely"><option>Purchase — lessee will exercise option</option><option>Extension — lessee will renew</option><option>Return — lessee will hand back</option><option>Uncertain — depends on lessee's cashflow</option></select>
+        </div>
+        <div class="field"><label>Option Exercise Deadline in Agreement?</label>
+          <select id="s6_deadline"><option>Yes — 30 days before expiry</option><option>Yes — 60 days before expiry</option><option>No — not specified (gap)</option></select>
+        </div>
+        <div class="field"><label>Target Disposition Timeline (days)</label><input id="s6_dispdays" placeholder="e.g. 30" type="number"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>End-of-Lease Notes</label><textarea id="s6_notes" placeholder="e.g. Lessee has indicated intention to purchase. Purchase option at KES 100. Bank has approved valuer on standby for any return scenario."></textarea></div>
+      </div>
+      <div class="section-nav"><button class="btn-save" onclick="saveSection(6)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S7 DEAL ECONOMICS -->
+  <div class="section-card" id="s7">
+    <div class="section-header" onclick="toggle('s7')">
+      <div class="sec-num" id="n7">07</div>
+      <div class="sec-title-wrap"><div class="sec-title">Deal Economics</div><div class="sec-sub">Pre-tax rate, capital allowance benefit, post-tax return, and hurdle rate comparison</div></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="field-row cols3">
+        <div class="field"><label>Pre-Tax Implicit Rate (% p.a.)</label><div class="calc-result" id="s7_pretax">From Section 1</div></div>
+        <div class="field"><label>Bank's Cost of Funds (% p.a.)</label><input id="s7_cof" type="number" placeholder="15" step="0.5" oninput="calcEconomics()"></div>
+        <div class="field"><label>Net Interest Spread</label><div class="calc-result" id="s7_spread">—</div></div>
+      </div>
+      <div class="field-row cols3">
+        <div class="field"><label>Capital Allowance (Inv. Deduction) — bank as lessor?</label>
+          <select id="s7_caType" onchange="calcEconomics()"><option value="yes">Yes — bank claims 100% inv. deduction</option><option value="lessee">No — lessee claims (finance lease)</option><option value="no">Not applicable</option></select>
+        </div>
+        <div class="field"><label>Year 1 Tax Saving (KES)</label><div class="calc-result" id="s7_taxSaving">—</div></div>
+        <div class="field"><label>Bank's Hurdle Rate for Lease Assets (% p.a.)</label><input id="s7_hurdle" type="number" placeholder="18" step="0.5" oninput="calcEconomics()"></div>
+      </div>
+      <div class="field-row cols2">
+        <div class="field"><label>Deal vs Hurdle Rate</label><div class="calc-result" id="s7_vs_hurdle">—</div></div>
+        <div class="field"><label>Annual Gross Interest Income (KES)</label><div class="calc-result" id="s7_annualIncome">—</div></div>
+      </div>
+      <div class="section-nav"><button class="btn-save" onclick="saveSection(7)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S8 RECOMMENDATION -->
+  <div class="section-card" id="s8">
+    <div class="section-header" onclick="toggle('s8')">
+      <div class="sec-num" id="n8">08</div>
+      <div class="sec-title-wrap"><div class="sec-title">Recommendation</div><div class="sec-sub">Decision, conditions precedent, and ongoing monitoring</div></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="field-row cols2">
+        <div class="field"><label>Credit Decision</label>
+          <select id="s8_decision"><option value="approve">Approve — no conditions</option><option value="conditional">Approve — subject to conditions precedent</option><option value="decline">Decline</option></select>
+        </div>
+        <div class="field"><label>Prepared by (RM Name)</label><input id="s8_rm" placeholder="Relationship Manager name"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Conditions Precedent (before drawdown)</label>
+          <textarea id="s8_cp" placeholder="e.g. 1. Asset title / logbook in bank's name confirmed&#10;2. All-risks insurance — bank as loss payee — certificate received&#10;3. Lease agreement executed (not facility letter)&#10;4. Director personal guarantees signed&#10;5. Independent valuation report received"></textarea>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Conditions Subsequent (ongoing covenants)</label>
+          <textarea id="s8_cs" placeholder="e.g. 1. Semi-annual maintenance compliance certificate&#10;2. Annual audited accounts within 120 days of year-end&#10;3. Annual insurance certificate renewal&#10;4. Quarterly portfolio review by assigned credit officer"></textarea>
+        </div>
+      </div>
+      <div class="section-nav"><button class="btn-save" onclick="saveSection(8)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S9 DFI COMPLIANCE -->
+  <div class="section-card" id="s9" style="border-top:3px solid var(--dfi);">
+    <div class="section-header" onclick="toggle('s9')" style="background:var(--dfi);">
+      <div class="sec-num" id="n9" style="border-color:rgba(201,146,42,.4);color:var(--gold);">09</div>
+      <div class="sec-title-wrap">
+        <div class="sec-title">DFI Compliance — ESG & Development Impact</div>
+        <div class="sec-sub" style="color:#5A8A76;">Complete this section when the facility is co-funded by IFC · AfDB · PROPARCO · BII · FMO or any development finance institution</div>
+      </div>
+      <div class="sec-chevron" style="color:#3A6A5A;">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="info-note" style="border-left-color:var(--dfi);background:#E8F5F0;">
+        <strong>DFI Requirement:</strong> Development finance institutions require ESG screening at the deal level — not just at the portfolio level. Every lease transaction funded with DFI capital must demonstrate: (1) ESG risk category, (2) exclusion list compliance, (3) development impact contribution, and (4) additionality. This section generates the deal-level DFI compliance confirmation that your ESMS requires.
+      </div>
+
+      <div class="field-row cols3">
+        <div class="field"><label>DFI Funder</label>
+          <select id="s9_dfi">
+            <option>IFC — International Finance Corporation</option>
+            <option>AfDB — African Development Bank</option>
+            <option>PROPARCO (French DFI)</option>
+            <option>BII / CDC (British)</option>
+            <option>FMO (Dutch)</option>
+            <option>Multiple DFIs — blended facility</option>
+            <option>Not applicable — commercial funding only</option>
+          </select>
+        </div>
+        <div class="field"><label>IFC Environmental Category</label>
+          <select id="s9_envCat" onchange="calcDFI()">
+            <option value="C">Category C — Minimal impact (most financial intermediary leases)</option>
+            <option value="B">Category B — Moderate impact (some manufacturing, agri, construction)</option>
+            <option value="A">Category A — Significant impact (mining, large infrastructure)</option>
+          </select>
+        </div>
+        <div class="field"><label>E&S Category Assessment</label>
+          <div class="calc-result" id="s9_envAssess">Select category above</div>
+        </div>
+      </div>
+
+      <div class="field-row cols2">
+        <div class="field"><label>Exclusion List — Lessee Sector Screened?</label>
+          <select id="s9_exclusion" onchange="calcDFI()">
+            <option value="pass">✓ Screened — sector does not appear on DFI exclusion list</option>
+            <option value="flag">⚠ Sector requires additional review (e.g. agriculture, chemicals, mining)</option>
+            <option value="fail">✗ Sector is on the DFI exclusion list — deal cannot proceed</option>
+          </select>
+        </div>
+        <div class="field"><label>Exclusion Compliance Status</label>
+          <div class="calc-result" id="s9_exclusionAssess">Select above</div>
+        </div>
+      </div>
+
+      <div style="font-size:12px;font-weight:700;color:var(--dfi);margin:16px 0 10px;text-transform:uppercase;letter-spacing:.8px;">Development Impact Metrics</div>
+      <div class="field-row cols4">
+        <div class="field"><label>Lessee Classification</label>
+          <select id="s9_lesseeCls" onchange="calcDFI()">
+            <option value="3">Micro enterprise (&lt;KES 10M revenue)</option>
+            <option value="3">Small enterprise (KES 10M–100M)</option>
+            <option value="2">Medium enterprise (KES 100M–500M)</option>
+            <option value="1">Large corporate (&gt;KES 500M revenue)</option>
+          </select>
+        </div>
+        <div class="field"><label>First-Time Finance Recipient?</label>
+          <select id="s9_firstTime" onchange="calcDFI()">
+            <option value="2">Yes — lessee has not previously accessed formal equipment finance</option>
+            <option value="1">No — existing formal finance customer</option>
+          </select>
+        </div>
+        <div class="field"><label>Gender Lens</label>
+          <select id="s9_gender" onchange="calcDFI()">
+            <option value="2">Women-owned or led (&gt;50% ownership / CEO is woman)</option>
+            <option value="1">Mixed / male-led</option>
+          </select>
+        </div>
+        <div class="field"><label>Geographic Reach</label>
+          <select id="s9_geo" onchange="calcDFI()">
+            <option value="2">Rural or peri-urban — outside major city centres</option>
+            <option value="1">Urban — Nairobi / Mombasa / major city</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row cols4">
+        <div class="field"><label>Sector Development Impact</label>
+          <select id="s9_sector" onchange="calcDFI()">
+            <option value="3">Healthcare — improves access to medical services</option>
+            <option value="3">Agriculture — food security, smallholder support</option>
+            <option value="3">Clean energy / green asset</option>
+            <option value="2">Transport / logistics — supply chain development</option>
+            <option value="2">ICT — digital economy enablement</option>
+            <option value="2">Construction — infrastructure development</option>
+            <option value="1">General commercial — limited development premium</option>
+          </select>
+        </div>
+        <div class="field"><label>Estimated Direct Jobs Supported</label>
+          <input type="number" id="s9_jobs" placeholder="e.g. 45" oninput="calcDFI()">
+        </div>
+        <div class="field"><label>Deal Impact Score (auto-calc)</label>
+          <div class="calc-result" id="s9_impactScore">Complete fields above</div>
+        </div>
+        <div class="field"><label>Additionality</label>
+          <select id="s9_additionality" onchange="calcDFI()">
+            <option value="high">High — commercial bank declined or would not fund this segment</option>
+            <option value="moderate">Moderate — commercial bank funding possible but at higher rate</option>
+            <option value="low">Low — commercial bank would fund at comparable terms</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="font-size:12px;font-weight:700;color:var(--dfi);margin:16px 0 10px;text-transform:uppercase;letter-spacing:.8px;">Climate & Environmental</div>
+      <div class="field-row cols3">
+        <div class="field"><label>Is this a Green / Climate Asset?</label>
+          <select id="s9_green" onchange="calcDFI()">
+            <option value="yes">Yes — qualifies as green asset (solar, EV, efficient equipment, clean agri)</option>
+            <option value="no">No — conventional asset</option>
+          </select>
+        </div>
+        <div class="field"><label>Carbon Footprint Direction</label>
+          <select id="s9_carbon">
+            <option>Reduces carbon vs alternative (e.g. efficient truck vs older model)</option>
+            <option>Neutral — comparable to market alternative</option>
+            <option>Increases carbon — fossil fuel intensive equipment</option>
+          </select>
+        </div>
+        <div class="field"><label>DFI Green Finance Tag</label>
+          <div class="calc-result" id="s9_greenTag">—</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field"><label>Deal-Level Impact Narrative (for DFI reporting)</label>
+          <textarea id="s9_narrative" placeholder="Describe the specific development impact of this lease transaction. e.g. 'This 5-truck fleet lease enables Nakuru Harvest Co — a woman-led SME with 45 employees — to expand their grain distribution capacity by 60%. The lessee had been declined by two commercial banks. The expanded fleet directly supports 3 new driver employment positions and enables the lessee to serve 8 additional smallholder cooperatives in the Rift Valley.'"></textarea>
+        </div>
+      </div>
+
+      <div class="field-row cols2">
+        <div class="field"><label>Overall DFI Deal Assessment</label>
+          <div class="calc-result" id="s9_overall">Complete all fields above</div>
+        </div>
+        <div class="field"><label>Reporting Obligation Triggered?</label>
+          <div class="calc-result" id="s9_reporting">—</div>
+        </div>
+      </div>
+
+      <div class="section-nav"><button class="btn-save" onclick="generateMemo()">Generate Credit Memo →</button></div>
+    </div>
+  </div>
+  <div id="rec-section">
+    <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:10px;">Credit Memo Output <span style="flex:1;height:2px;background:var(--gold);display:inline-block;"></span></div>
+    <div class="rec-grid" id="recKPIs"></div>
+    <div id="decisionBox"></div>
+    <div class="cp-list" id="cpBox"></div>
+    <div class="cp-list" id="csBox"></div>
+    <div style="text-align:right;margin-top:10px;">
+      <button onclick="window.print()" style="background:var(--teal);color:#fff;border:none;padding:10px 22px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">🖨 Print Credit Memo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const saved={};
+let completedSections=0;
+
+function fmt(n){return isNaN(n)?'—':'KES '+Math.round(n).toLocaleString();}
+function fmtP(n){return isNaN(n)||!isFinite(n)?'—':n.toFixed(1)+'%';}
+function fmtX(n){return isNaN(n)||!isFinite(n)?'—':n.toFixed(2)+'×';}
+function v(id){return parseFloat(document.getElementById(id)?.value)||0;}
+function el(id){return document.getElementById(id);}
+function set(id,val,cls=''){const e=el(id);if(e){e.textContent=val;e.className='calc-result'+(cls?' '+cls:'');}}
+
+function toggle(id){
+  const c=document.getElementById(id);c.classList.toggle('open');
+}
+
+let monthlyRental=0,annualRental=0;
+
+function calcRental(){
+  const cost=v('s1_cost'),term=parseInt(el('s1_term')?.value)||48,rate=v('s1_rate');
+  if(!cost||!rate){return;}
+  const r=rate/12/100;
+  const af=(1-Math.pow(1+r,-term))/r;
+  monthlyRental=cost/af;
+  annualRental=monthlyRental*12;
+  const grossIncome=monthlyRental*term-cost;
+  set('s1_rental',fmt(monthlyRental));
+  set('s1_annual',fmt(annualRental));
+  set('s1_income',fmt(grossIncome));
+  el('s2_thisrental').textContent=fmt(annualRental);
+  el('s2_thisrental').className='calc-result';
+  calcCoverage();
+  calcEconomics();
+  // Useful life %
+  const life=v('s3_life');
+  if(life){set('s3_lifePct',fmtP(term/12/life*100)+(term/12/life>.8?' ⚠ >80% of life':' ✓'));}
+}
+
+function calcCoverage(){
+  const ebitda3=[v('s2_ebitda1'),v('s2_ebitda2'),v('s2_ebitda3')];
+  const latestEBITDA=ebitda3.reduce((a,b)=>Math.max(a,b),0)||v('s2_ebitda1');
+  const existDS=v('s2_existingds');
+  const freeEB=latestEBITDA-existDS;
+  const ar=annualRental||v('s1_cost')/(((1-Math.pow(1+(v('s1_rate')/12/100),-(parseInt(el('s1_term')?.value)||48)))/(v('s1_rate')/12/100)))*12;
+  const cov=ar>0?freeEB/ar:0;
+  set('s2_freeEBITDA',fmt(freeEB),freeEB<0?'fail':'');
+  set('s2_coverage',fmtX(cov),cov>=2?'pass':cov>=1.5?'warn':'fail');
+  set('s2_assess',cov>=2?'Strong ✓':cov>=1.5?'Acceptable — monitor closely':cov>0?'⚠ Below 1.5× floor — restructure required':'Enter EBITDA data',cov>=2?'pass':cov>=1.5?'warn':'fail');
+}
+
+function calcLTV(){
+  const cost=v('s1_cost');
+  const mv=v('s3_mv'),fsv=v('s3_fsv');
+  if(cost&&mv){set('s3_ltv_mv',fmtP(cost/mv*100),cost/mv>0.9?'warn':cost/mv>1?'fail':'pass');}
+  if(cost&&fsv){set('s3_ltv_fsv',fmtP(cost/fsv*100),cost/fsv>1.2?'fail':cost/fsv>1?'warn':'pass');}
+  // life %
+  const life=v('s3_life'),term=parseInt(el('s1_term')?.value)||48;
+  if(life){set('s3_lifePct',fmtP(term/12/life*100)+(term/12/life>.8?' ⚠ >80% of life':' ✓'),term/12/life>.8?'warn':'pass');}
+}
+
+function calcRV(){
+  const base=v('s4_rvBase'),cost=v('s1_cost');
+  if(!base)return;
+  const adverse=base*0.75,severe=base*0.5;
+  const gap=Math.max(0,cost-severe-(annualRental*(parseInt(el('s1_term')?.value)||48)/12));
+  const gapPct=cost>0?gap/cost*100:0;
+  set('s4_rvPct',cost>0?fmtP(base/cost*100):'—');
+  set('s4_base',fmt(base),'pass');
+  set('s4_adverse',fmt(adverse),'warn');
+  set('s4_severe',fmt(severe),'fail');
+  set('s4_gap',fmt(Math.max(0,base*0.5-(annualRental>0?annualRental/12:0))),'');
+  set('s4_gapPct',fmtP(gapPct),gapPct>15?'fail':gapPct>10?'warn':'pass');
+  set('s4_action',gapPct>15?'⚠ ACTION REQUIRED: Severe case gap >15% of cost — reprice, require cash deposit, or restructure as finance lease with nominal residual':gapPct>10?'Monitor: Gap approaching 15% threshold — review RV assumptions with approved valuer':'Pass: Severe case recovery gap within acceptable range',gapPct>15?'fail':gapPct>10?'warn':'pass');
+}
+
+function calcEconomics(){
+  const rate=v('s1_rate'),cof=v('s7_cof'),cost=v('s1_cost'),hurdle=v('s7_hurdle');
+  const spread=rate-cof;
+  set('s7_pretax',rate>0?rate+'% p.a.':'From Section 1');
+  if(spread){set('s7_spread',spread.toFixed(1)+'% NIS',spread>=4?'pass':spread>=2?'warn':'fail');}
+  const caType=el('s7_caType')?.value;
+  if(caType==='yes'&&cost){
+    set('s7_taxSaving',fmt(cost*0.3)+' (Year 1 — 100% inv. deduction @ 30% tax)','pass');
+  } else if(caType==='lessee'){
+    set('s7_taxSaving','Lessee claims — not bank. Document clearly to avoid double deduction.','warn');
+  } else {
+    set('s7_taxSaving','Not applicable','');
+  }
+  if(rate&&hurdle){set('s7_vs_hurdle',rate>=hurdle?rate+'% ≥ '+hurdle+'% hurdle — PASS':'⚠ '+rate+'% < '+hurdle+'% hurdle — below floor',rate>=hurdle?'pass':'fail');}
+  if(annualRental){set('s7_annualIncome',fmt(annualRental));}
+}
+
+function calcDFI(){
+  // Environmental category
+  const cat=el('s9_envCat')?.value||'C';
+  const catMsg={
+    C:'Category C — Minimal E&S impact. Standard monitoring applies. No additional E&S assessment required.',
+    B:'Category B — Moderate E&S impact. Lessee E&S screening required. Semi-annual compliance check.',
+    A:'⚠ Category A — Significant impact. Full IFC Performance Standards assessment required before approval.'
+  }[cat];
+  const catCls={C:'pass',B:'warn',A:'fail'}[cat];
+  set('s9_envAssess',catMsg,catCls);
+
+  // Exclusion
+  const exc=el('s9_exclusion')?.value||'pass';
+  const excMsg={
+    pass:'✓ Sector cleared — not on DFI exclusion list. Proceed.',
+    flag:'⚠ Sector flagged — additional E&S review required before DFI drawdown.',
+    fail:'✗ BLOCKED — Lessee sector is on the DFI exclusion list. This deal cannot be funded with DFI capital.'
+  }[exc];
+  set('s9_exclusionAssess',excMsg,exc==='pass'?'pass':exc==='flag'?'warn':'fail');
+
+  // Impact score
+  const cls=parseInt(el('s9_lesseeCls')?.value)||2;
+  const ft=parseInt(el('s9_firstTime')?.value)||1;
+  const gen=parseInt(el('s9_gender')?.value)||1;
+  const geo=parseInt(el('s9_geo')?.value)||1;
+  const sec=parseInt(el('s9_sector')?.value)||1;
+  const jobs=v('s9_jobs');
+  const jobScore=jobs>=50?2:jobs>=10?1:0;
+  const rawScore=cls+ft+gen+geo+sec+jobScore;
+  const maxScore=3+2+2+2+3+2;
+  const pct=Math.round(rawScore/maxScore*100);
+  const impCls=pct>=65?'pass':pct>=40?'warn':'fail';
+  const impLbl=pct>=65?'Strong impact profile':pct>=40?'Moderate — acceptable for most DFIs':'Weak — additionality narrative critical';
+  set('s9_impactScore',pct+'% — '+impLbl,impCls);
+
+  // Green tag
+  const isGreen=el('s9_green')?.value==='yes';
+  set('s9_greenTag',isGreen?'✓ Qualifies as Green Finance asset — tag for climate reporting':'Standard asset — not tagged for green finance',isGreen?'pass':'');
+
+  // Additionality
+  const add=el('s9_additionality')?.value||'moderate';
+
+  // Overall
+  const excOk=exc!=='fail';
+  const catOk=cat!=='A';
+  const impOk=pct>=40;
+  const addOk=add!=='low';
+  const allOk=excOk&&catOk&&impOk&&addOk;
+  const someIssue=!impOk||!addOk||(cat==='B');
+  const overallMsg=!excOk?'⚠ BLOCKED — Exclusion list failure. Cannot fund with DFI capital.':
+    !catOk?'⚠ CONDITIONAL — Category A requires full IFC PS assessment.':
+    allOk?'✓ DFI ELIGIBLE — Deal meets ESG and impact requirements.':
+    '⚠ CONDITIONAL — Impact score or additionality needs strengthening. See narrative.';
+  set('s9_overall',overallMsg,!excOk||!catOk?'fail':allOk?'pass':'warn');
+
+  // Reporting
+  const reptMsg=cat==='A'?'Full IFC PS report required — escalate to E&S officer immediately':
+    cat==='B'?'Annual lessee E&S compliance report required — diarise now':
+    isGreen?'Green finance tagging required — include in quarterly DFI green portfolio report':
+    'Standard semi-annual portfolio report — include in DFI portfolio data submission';
+  set('s9_reporting',reptMsg,cat==='A'?'fail':cat==='B'||isGreen?'warn':'pass');
+}
+
+function saveSection(n){
+  saved[n]=true;
+  const numEl=el('n'+n);
+  if(numEl){
+    numEl.className='sec-num done';
+    if(n===9) numEl.style.cssText='background:var(--green);border-color:var(--green);color:#fff;';
+    numEl.textContent='✓';
+  }
+  completedSections=Object.keys(saved).length;
+  el('progFill').style.width=(completedSections/9*100)+'%';
+  el('progLabel').textContent=completedSections+' of 9 sections complete';
+  const next=el('s'+(n+1));
+  el('s'+n).classList.remove('open');
+  if(next){next.classList.add('open');next.scrollIntoView({behavior:'smooth',block:'start'});}
+}
+
+function generateMemo(){
+  saveSection(9);
+  const client=el('s1_client')?.value||'Client';
+  const asset=el('s1_asset')?.value||'Asset';
+  const cost=v('s1_cost'),term=parseInt(el('s1_term')?.value)||48,rate=v('s1_rate');
+  const decision=el('s8_decision')?.value||'approve';
+  const r=rate/12/100;
+  const af=(1-Math.pow(1+r,-term))/r;
+  const mr=cost/af;
+  const cof=v('s7_cof');
+  const ebitda=Math.max(v('s2_ebitda1'),v('s2_ebitda2'),v('s2_ebitda3'));
+  const existDS=v('s2_existingds');
+  const cov=(ebitda-existDS)/(mr*12);
+
+  // DFI fields
+  const dfi=el('s9_dfi')?.value||'';
+  const isDFI=dfi&&!dfi.includes('Not applicable');
+  const envCat=el('s9_envCat')?.value||'C';
+  const exc=el('s9_exclusion')?.value||'pass';
+  const isGreen=el('s9_green')?.value==='yes';
+  const jobs=v('s9_jobs');
+  const add=el('s9_additionality')?.value||'moderate';
+  const narrative=el('s9_narrative')?.value||'';
+
+  el('recKPIs').innerHTML=`
+    <div class="rec-kpi"><div class="rec-kpi-label">Client</div><div class="rec-kpi-val" style="font-size:16px;color:var(--navy)">${client}</div><div class="rec-kpi-sub">${asset}</div></div>
+    <div class="rec-kpi"><div class="rec-kpi-label">Asset Cost</div><div class="rec-kpi-val" style="color:var(--navy)">${fmt(cost)}</div><div class="rec-kpi-sub">${term} months @ ${rate}% p.a.</div></div>
+    <div class="rec-kpi"><div class="rec-kpi-label">Monthly Rental</div><div class="rec-kpi-val" style="color:var(--teal)">${fmt(mr)}</div><div class="rec-kpi-sub">Annual: ${fmt(mr*12)}</div></div>
+    <div class="rec-kpi"><div class="rec-kpi-label">Rental Coverage</div><div class="rec-kpi-val" style="color:${cov>=1.5?'var(--green)':'var(--red)'}">${fmtX(cov)}</div><div class="rec-kpi-sub">${cov>=1.5?'Meets 1.5× minimum':'⚠ Below minimum'}</div></div>
+    <div class="rec-kpi"><div class="rec-kpi-label">NI Spread</div><div class="rec-kpi-val" style="color:var(--gold)">${(rate-cof).toFixed(1)}%</div><div class="rec-kpi-sub">Rate ${rate}% vs CoF ${cof}%</div></div>
+    <div class="rec-kpi"><div class="rec-kpi-label">Sections Complete</div><div class="rec-kpi-val" style="color:var(--navy)">${completedSections}/9</div><div class="rec-kpi-sub">${completedSections===9?'Full memo complete':'Incomplete memo'}</div></div>
+  `;
+
+  const decClass={approve:'approve',conditional:'conditional',decline:'decline'}[decision];
+  const decText={approve:'APPROVED — No Conditions',conditional:'APPROVED — Subject to Conditions Precedent',decline:'DECLINED'}[decision];
+  el('decisionBox').innerHTML=`<div class="decision-box ${decClass}"><h3>Credit Decision: ${decText}</h3><p>Prepared under the VGL Nine-Section Lease Credit Appraisal Framework. This memo replaces any loan or HP credit template previously applied to this transaction. Asset ownership, rental coverage, residual value, end-of-lease provisions, and DFI ESG compliance have all been assessed using lease-specific methodology.</p></div>`;
+
+  const cpText=el('s8_cp')?.value||'';
+  const csText=el('s8_cs')?.value||'';
+  el('cpBox').innerHTML=`<h4>Conditions Precedent — Before Drawdown</h4>${cpText?cpText.split('\n').filter(l=>l.trim()).map(l=>`<div class="cp-item">${l}</div>`).join(''):'<div class="cp-item">No conditions specified</div>'}`;
+  el('csBox').innerHTML=`<h4>Conditions Subsequent — Ongoing Covenants</h4>${csText?csText.split('\n').filter(l=>l.trim()).map(l=>`<div class="cp-item">${l}</div>`).join(''):'<div class="cp-item">No conditions specified</div>'}`;
+
+  // DFI OUTPUT BLOCK
+  if(isDFI){
+    const excOk=exc==='pass';
+    const dfiStatusCls=!excOk||envCat==='A'?'fail':exc==='flag'||envCat==='B'?'warn':'pass';
+    const dfiStatusMsg=!excOk?'⚠ BLOCKED — Exclusion list failure':envCat==='A'?'⚠ Category A — Full IFC PS assessment required':exc==='flag'?'⚠ Conditional — Additional E&S review required':'✓ DFI Eligible';
+    const dfiBlock=`
+      <div class="cp-list" style="border-top:3px solid var(--dfi);margin-top:12px;">
+        <h4 style="color:var(--dfi);">Section 9 — DFI ESG &amp; Development Impact Summary</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0;">
+          <div style="background:var(--lgrey);border-radius:7px;padding:12px;text-align:center;">
+            <div style="font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;">DFI Funder</div>
+            <div style="font-size:13px;font-weight:700;color:var(--navy);">${dfi.split('—')[0].trim()}</div>
+          </div>
+          <div style="background:${envCat==='C'?'#E8F5EE':envCat==='B'?'#FFF3E0':'#FDE8E8'};border-radius:7px;padding:12px;text-align:center;">
+            <div style="font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;">IFC Env. Category</div>
+            <div style="font-size:20px;font-weight:700;color:${envCat==='C'?'var(--green)':envCat==='B'?'var(--amber)':'var(--red)'};">${envCat}</div>
+          </div>
+          <div style="background:${dfiStatusCls==='pass'?'#E8F5EE':dfiStatusCls==='warn'?'#FFF3E0':'#FDE8E8'};border-radius:7px;padding:12px;text-align:center;">
+            <div style="font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;">DFI Status</div>
+            <div style="font-size:12px;font-weight:700;color:${dfiStatusCls==='pass'?'var(--green)':dfiStatusCls==='warn'?'var(--amber)':'var(--red)'};">${dfiStatusMsg}</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;">
+          <div class="cp-item">Exclusion list: <strong>${excOk?'✓ Cleared':'⚠ '+exc}</strong></div>
+          <div class="cp-item">Jobs supported: <strong>${jobs>0?jobs:' Not measured'}</strong></div>
+          <div class="cp-item">Green asset: <strong>${isGreen?'✓ Yes':'No'}</strong></div>
+          <div class="cp-item">Additionality: <strong>${add.charAt(0).toUpperCase()+add.slice(1)}</strong></div>
+        </div>
+        ${narrative?`<div style="background:var(--lgrey);border-radius:7px;padding:12px;font-size:12px;color:var(--char);line-height:1.6;margin-top:8px;"><strong style="color:var(--dfi);">Deal Impact Narrative:</strong><br>${narrative}</div>`:''}
+      </div>`;
+    el('csBox').insertAdjacentHTML('afterend',dfiBlock);
+  }
+
+  el('rec-section').classList.add('show');
+  el('rec-section').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>

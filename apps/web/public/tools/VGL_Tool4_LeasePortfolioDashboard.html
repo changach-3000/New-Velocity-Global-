@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGL Tool 4 — Lease Portfolio Health Dashboard</title>
+<style>
+:root{--navy:#0B1F3A;--teal:#005B5E;--gold:#C9922A;--red:#C0272D;--green:#1B7A4A;
+  --dfi:#004F3F;--amber:#B8640A;--white:#fff;--off:#F4F7FA;--border:#D0DDE8;--char:#1A2535;--mid:#6A7F96;--lgrey:#EEF3F8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--off);color:var(--char);font-size:13px;}
+.header{background:var(--navy);border-bottom:3px solid var(--gold);padding:18px 28px;}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;}
+.badge{background:rgba(201,146,42,.18);border:1px solid var(--gold);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:2px;text-transform:uppercase;display:inline-block;margin-bottom:8px;}
+.h1{font-size:20px;color:#fff;font-weight:700;}.h1 span{color:var(--gold);}
+.sub{font-size:11px;color:#7A9BBB;margin-top:4px;}
+.brand-name{font-size:13px;color:var(--gold);font-weight:700;text-align:right;}
+.main{max-width:1100px;margin:0 auto;padding:24px 24px 60px;}
+/* CONTROLS */
+.controls{background:#fff;border-radius:10px;border:1px solid var(--border);padding:18px 20px;margin-bottom:20px;box-shadow:0 2px 8px rgba(11,31,58,.05);}
+.controls h2{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.ctrl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
+.field label{display:block;font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;}
+.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:7px 10px;font-size:12px;font-family:inherit;color:var(--char);background:#fff;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--teal);}
+.run-btn{background:var(--navy);color:#fff;border:none;padding:11px 24px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;margin-top:12px;}
+.run-btn:hover{background:var(--teal);}
+/* KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:20px;}
+.kpi{background:#fff;border-radius:10px;border:1px solid var(--border);padding:16px;box-shadow:0 2px 8px rgba(11,31,58,.05);text-align:center;}
+.kpi-label{font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.kpi-val{font-size:22px;font-weight:700;line-height:1;}
+.kpi-val.green{color:var(--green);}
+.kpi-val.amber{color:var(--amber);}
+.kpi-val.red{color:var(--red);}
+.kpi-val.navy{color:var(--navy);}
+.kpi-val.gold{color:var(--gold);}
+.kpi-sub{font-size:10px;color:var(--mid);margin-top:3px;}
+/* GRID 2 */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.panel{background:#fff;border-radius:10px;border:1px solid var(--border);padding:18px;box-shadow:0 2px 8px rgba(11,31,58,.05);}
+.panel h3{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--gold);}
+/* DONUT */
+.donut-wrap{display:flex;align-items:center;gap:20px;}
+.donut-legend{flex:1;}
+.legend-item{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px;}
+.legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+canvas{max-width:140px;max-height:140px;}
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:12px;}
+.data-table th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.7px;}
+.data-table td{padding:9px 12px;border-bottom:1px solid var(--border);}
+.data-table tr:nth-child(even) td{background:var(--lgrey);}
+.data-table tr:last-child td{border-bottom:none;}
+.status-pill{font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;}
+.pill-green{background:#E8F5EE;color:var(--green);}
+.pill-amber{background:#FFF3E0;color:var(--amber);}
+.pill-red{background:#FDE8E8;color:var(--red);}
+/* ALERTS */
+.alert-list{margin-top:4px;}
+.alert-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;padding:9px 12px;border-radius:7px;font-size:12px;border:1px solid;}
+.alert-item.red{background:#FDE8E8;border-color:#F5C6C6;color:var(--red);}
+.alert-item.amber{background:#FFF3E0;border-color:#FBDDB0;color:var(--amber);}
+.alert-item.green{background:#E8F5EE;border-color:#B4DCC5;color:var(--green);}
+.alert-icon{font-size:14px;flex-shrink:0;}
+/* DFI KPI ROW */
+.dfi-kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:20px;}
+.dfi-kpi{background:#fff;border-radius:10px;border:1px solid var(--border);border-top:3px solid var(--dfi);padding:14px 16px;box-shadow:0 2px 8px rgba(11,31,58,.05);text-align:center;}
+.dfi-kpi-label{font-size:9px;font-weight:700;color:var(--dfi);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.dfi-kpi-val{font-size:20px;font-weight:700;line-height:1;color:var(--dfi);}
+.dfi-kpi-val.green{color:var(--green);}
+.dfi-kpi-val.amber{color:var(--amber);}
+.dfi-kpi-val.red{color:var(--red);}
+.dfi-kpi-sub{font-size:10px;color:var(--mid);margin-top:3px;}
+.dfi-section-title{font-size:11px;font-weight:700;color:var(--dfi);text-transform:uppercase;letter-spacing:1.5px;margin:0 0 10px;padding:8px 0 8px 12px;border-left:4px solid var(--dfi);background:rgba(0,79,63,.04);border-radius:0 6px 6px 0;}
+
+.maturity-bar{height:20px;background:var(--lgrey);border-radius:4px;overflow:hidden;display:flex;margin-top:8px;}
+.mat-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="badge">Bank Credit Tool 4 of 5</div>
+      <div class="h1">Lease Portfolio <span>Health Dashboard</span></div>
+      <div class="sub">Portfolio-level monitoring — CBK prudential metrics · DFI ESG KPIs · Insurance, maintenance and end-of-term pipeline</div>
+    </div>
+    <div><div class="brand-name">Velocity Global Leasing</div></div>
+  </div>
+</div>
+<div class="main">
+  <div class="controls">
+    <h2>Portfolio Parameters — Enter your lease book data</h2>
+    <div class="ctrl-grid">
+      <div class="field"><label>Total Lease Book (KES M)</label><input type="number" id="totalBook" value="450" step="10"></div>
+      <div class="field"><label>Number of Active Leases</label><input type="number" id="numLeases" value="68"></div>
+      <div class="field"><label>Normal / Performing (KES M)</label><input type="number" id="normal" value="355" step="5"></div>
+      <div class="field"><label>Watch (30–89 days) (KES M)</label><input type="number" id="watch" value="42" step="5"></div>
+      <div class="field"><label>Substandard (90–179d) (KES M)</label><input type="number" id="sub" value="28" step="5"></div>
+      <div class="field"><label>Doubtful (180–359d) (KES M)</label><input type="number" id="doubtful" value="18" step="5"></div>
+      <div class="field"><label>Loss (360d+) (KES M)</label><input type="number" id="loss" value="7" step="1"></div>
+      <div class="field"><label>Operating Leases in Book (%)</label><input type="number" id="opLeasePct" value="22" step="1" max="100"></div>
+      <div class="field"><label>Insurance Lapsed / At Risk (%)</label><input type="number" id="insLapsed" value="8" step="1"></div>
+      <div class="field"><label>Maintenance Non-Compliant (%)</label><input type="number" id="maintNC" value="12" step="1"></div>
+      <div class="field"><label>Leases Maturing in 90 Days (#)</label><input type="number" id="maturing90" value="9"></div>
+      <div class="field"><label>Leases Maturing in 180 Days (#)</label><input type="number" id="maturing180" value="19"></div>
+    </div>
+    <div style="margin-top:16px;margin-bottom:10px;"><div class="dfi-section-title">DFI Portfolio Metrics — IFC · AfDB · PROPARCO (complete if DFI-funded)</div></div>
+    <div class="ctrl-grid">
+      <div class="field"><label>SME Lessees (% of book)</label><input type="number" id="dfi_sme" value="58" step="1" max="100"></div>
+      <div class="field"><label>Women-Owned / Led (%)</label><input type="number" id="dfi_gender" value="19" step="1" max="100"></div>
+      <div class="field"><label>First-Time Finance Recipients (%)</label><input type="number" id="dfi_first" value="24" step="1" max="100"></div>
+      <div class="field"><label>Green / Climate Assets (% of book)</label><input type="number" id="dfi_green" value="9" step="1" max="100"></div>
+      <div class="field"><label>Rural / Peri-Urban Lessees (%)</label><input type="number" id="dfi_rural" value="31" step="1" max="100"></div>
+      <div class="field"><label>Category A/B Env. Leases (%)</label><input type="number" id="dfi_envAB" value="12" step="1" max="100"></div>
+    </div>
+    <button class="run-btn" onclick="render()">Refresh Dashboard →</button>
+  </div>
+
+  <!-- KPI ROW -->
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-label">Total Lease Book</div><div class="kpi-val navy" id="k_book">—</div><div class="kpi-sub" id="k_bookSub">—</div></div>
+    <div class="kpi"><div class="kpi-label">NPL Ratio</div><div class="kpi-val" id="k_npl">—</div><div class="kpi-sub" id="k_nplSub">—</div></div>
+    <div class="kpi"><div class="kpi-label">Classified Assets</div><div class="kpi-val" id="k_class">—</div><div class="kpi-sub" id="k_classSub">—</div></div>
+    <div class="kpi"><div class="kpi-label">Min CBK Provision</div><div class="kpi-val" id="k_prov">—</div><div class="kpi-sub">At CBK minimum rates</div></div>
+    <div class="kpi"><div class="kpi-label">RV Exposure (Op. Leases)</div><div class="kpi-val" id="k_rv">—</div><div class="kpi-sub" id="k_rvSub">—</div></div>
+    <div class="kpi"><div class="kpi-label">Insurance At Risk</div><div class="kpi-val" id="k_ins">—</div><div class="kpi-sub" id="k_insSub">—</div></div>
+  </div>
+
+  <!-- DFI KPI ROW -->
+  <div class="dfi-section-title" style="margin-bottom:12px;">DFI Impact KPIs — Development Finance Institution Reporting</div>
+  <div class="dfi-kpi-row">
+    <div class="dfi-kpi"><div class="dfi-kpi-label">SME Penetration</div><div class="dfi-kpi-val" id="dk_sme">—</div><div class="dfi-kpi-sub" id="dk_smeSub">DFI target: &gt;50%</div></div>
+    <div class="dfi-kpi"><div class="dfi-kpi-label">Gender Inclusion</div><div class="dfi-kpi-val" id="dk_gender">—</div><div class="dfi-kpi-sub" id="dk_genderSub">DFI target: &gt;15%</div></div>
+    <div class="dfi-kpi"><div class="dfi-kpi-label">First-Time Finance</div><div class="dfi-kpi-val" id="dk_first">—</div><div class="dfi-kpi-sub" id="dk_firstSub">DFI target: &gt;10%</div></div>
+    <div class="dfi-kpi"><div class="dfi-kpi-label">Green Assets</div><div class="dfi-kpi-val" id="dk_green">—</div><div class="dfi-kpi-sub" id="dk_greenSub">DFI target: &gt;5%</div></div>
+    <div class="dfi-kpi"><div class="dfi-kpi-label">Rural Reach</div><div class="dfi-kpi-val" id="dk_rural">—</div><div class="dfi-kpi-sub" id="dk_ruralSub">DFI target: &gt;20%</div></div>
+    <div class="dfi-kpi"><div class="dfi-kpi-label">DFI Impact Score</div><div class="dfi-kpi-val" id="dk_impact">—</div><div class="dfi-kpi-sub" id="dk_impactSub">Composite portfolio rating</div></div>
+  </div>
+
+  <div class="grid2">
+    <!-- CLASSIFICATION CHART -->
+    <div class="panel">
+      <h3>Portfolio Classification — CBK/PG/07</h3>
+      <div class="donut-wrap">
+        <canvas id="classChart" width="140" height="140"></canvas>
+        <div class="donut-legend" id="legend"></div>
+      </div>
+    </div>
+    <!-- ALERTS -->
+    <div class="panel">
+      <h3>Active Alerts — Requires Attention</h3>
+      <div class="alert-list" id="alerts"></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <!-- PROVISION TABLE -->
+    <div class="panel">
+      <h3>CBK Provisioning Schedule</h3>
+      <table class="data-table" id="provTable"></table>
+    </div>
+    <!-- MATURITY PIPELINE -->
+    <div class="panel">
+      <h3>End-of-Term Pipeline</h3>
+      <div id="maturityPanel"></div>
+    </div>
+  </div>
+
+  <!-- ACTIONS TABLE -->
+  <div class="panel" style="margin-top:16px;">
+    <h3>Recommended Portfolio Actions</h3>
+    <table class="data-table" id="actionsTable">
+      <thead><tr><th>Issue</th><th>Portfolio Impact</th><th>Priority</th><th>Recommended Action</th><th>Timeline</th></tr></thead>
+      <tbody id="actionsBody"></tbody>
+    </table>
+  </div>
+
+  <div style="text-align:right;margin-top:12px;">
+    <button onclick="window.print()" style="background:var(--teal);color:#fff;border:none;padding:10px 22px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">🖨 Print Dashboard Report</button>
+  </div>
+</div>
+
+<script>
+function fmt(n,m=0){return isNaN(n)?'—':'KES '+n.toFixed(m)+'M';}
+function fmtP(n){return isNaN(n)?'—':n.toFixed(1)+'%';}
+function v(id){return parseFloat(document.getElementById(id)?.value)||0;}
+
+function render(){
+  const total=v('totalBook'),nl=parseInt(v('numLeases'))||0;
+  const normal=v('normal'),watch=v('watch'),sub=v('sub'),doubtful=v('doubtful'),loss=v('loss');
+  const opPct=v('opLeasePct'),insLapsed=v('insLapsed'),maintNC=v('maintNC');
+  const mat90=parseInt(v('maturing90'))||0,mat180=parseInt(v('maturing180'))||0;
+
+  const classified=sub+doubtful+loss;
+  const npl=(doubtful+loss)/total*100;
+  const classifiedPct=classified/total*100;
+  const minProv=sub*0.1+doubtful*0.4+loss*1.0;
+  const opBookM=total*opPct/100;
+  const rvExposureM=opBookM*0.4; // assume 40% RV on op leases
+  const insAtRiskM=total*insLapsed/100;
+
+  // KPIs
+  function kpi(id,val,cls,sub=''){document.getElementById(id).textContent=val;document.getElementById(id).className='kpi-val '+cls;if(sub&&document.getElementById(id+'Sub'))document.getElementById(id+'Sub').textContent=sub;}
+  kpi('k_book',fmt(total),'navy',nl+' active leases');
+  kpi('k_npl',fmtP(npl),npl>5?'red':npl>3?'amber':'green',npl>5?'⚠ Above 5% threshold':npl>3?'Watch — approaching threshold':'Good');
+  kpi('k_class',fmt(classified),'amber',fmtP(classifiedPct)+' of book');
+  kpi('k_prov',fmt(minProv,1),'red','CBK minimum required');
+  kpi('k_rv',fmt(rvExposureM,1),opPct>30?'amber':'green',fmtP(opPct)+' op leases in book');
+  kpi('k_ins',fmt(insAtRiskM,1),insLapsed>10?'red':insLapsed>5?'amber':'green',fmtP(insLapsed)+' of book');
+
+  // DFI KPIs
+  const dfiSme=v('dfi_sme'),dfiGender=v('dfi_gender'),dfiFirst=v('dfi_first');
+  const dfiGreen=v('dfi_green'),dfiRural=v('dfi_rural'),dfiEnvAB=v('dfi_envAB');
+  function dkpi(id,val,target,unit='%',subId){
+    const el=document.getElementById(id);
+    const sub=document.getElementById(subId||id+'Sub');
+    const pct=parseFloat(val);
+    const cls=pct>=target?'green':pct>=target*0.7?'amber':'red';
+    if(el){el.textContent=val+unit;el.className='dfi-kpi-val '+cls;}
+    if(sub){sub.textContent=(pct>=target?'✓ Meets':'⚠ Below')+' DFI target >'+(unit==='%'?target+'%':target);}
+  }
+  dkpi('dk_sme',dfiSme,50,'%','dk_smeSub');
+  dkpi('dk_gender',dfiGender,15,'%','dk_genderSub');
+  dkpi('dk_first',dfiFirst,10,'%','dk_firstSub');
+  dkpi('dk_green',dfiGreen,5,'%','dk_greenSub');
+  dkpi('dk_rural',dfiRural,20,'%','dk_ruralSub');
+  // Composite DFI impact score
+  const impScoreRaw=(
+    (dfiSme>=50?3:dfiSme>=35?2:1)+
+    (dfiGender>=15?3:dfiGender>=8?2:1)+
+    (dfiFirst>=10?2:dfiFirst>=5?1:0)+
+    (dfiGreen>=5?2:dfiGreen>=2?1:0)+
+    (dfiRural>=20?2:dfiRural>=10?1:0)+
+    (dfiEnvAB<=15?2:dfiEnvAB<=25?1:0)
+  );
+  const impMax=3+3+2+2+2+2;
+  const impPct=Math.round(impScoreRaw/impMax*100);
+  const impEl=document.getElementById('dk_impact');
+  const impSub=document.getElementById('dk_impactSub');
+  const impCls=impPct>=70?'green':impPct>=45?'amber':'red';
+  const impLbl=impPct>=70?'Strong — DFI ready':impPct>=45?'Moderate — needs work':'Weak — gaps to address';
+  if(impEl){impEl.textContent=impPct+'%';impEl.className='dfi-kpi-val '+impCls;}
+  if(impSub){impSub.textContent=impLbl;}
+
+  // Donut chart
+  const canvas=document.getElementById('classChart');
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,140,140);
+  const segments=[
+    {val:normal,color:'#1B7A4A',label:'Normal'},
+    {val:watch,color:'#5A9ABB',label:'Watch'},
+    {val:sub,color:'#C9922A',label:'Substandard'},
+    {val:doubtful,color:'#E07020',label:'Doubtful'},
+    {val:loss,color:'#C0272D',label:'Loss'},
+  ].filter(s=>s.val>0);
+  let angle=-Math.PI/2;
+  segments.forEach(s=>{
+    const slice=s.val/total*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(70,70);ctx.arc(70,70,62,angle,angle+slice);ctx.closePath();ctx.fillStyle=s.color;ctx.fill();
+    angle+=slice;
+  });
+  ctx.beginPath();ctx.arc(70,70,38,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+  ctx.fillStyle=npl>5?'#C0272D':npl>3?'#B8640A':'#1B7A4A';ctx.font='bold 14px Segoe UI';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(fmtP(npl),70,66);ctx.font='10px Segoe UI';ctx.fillStyle='#6A7F96';ctx.fillText('NPL',70,80);
+
+  const legendHTML=segments.map(s=>`<div class="legend-item"><div class="legend-dot" style="background:${s.color}"></div><span style="color:var(--char)">${s.label}: <strong>${fmt(s.val)}</strong></span></div>`).join('');
+  document.getElementById('legend').innerHTML=legendHTML;
+
+  // Provision table
+  document.getElementById('provTable').innerHTML=`
+    <thead><tr><th>Classification</th><th>Book (KES M)</th><th>% of Total</th><th>CBK Rate</th><th>Min Provision (KES M)</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Normal</td><td>${fmt(normal)}</td><td>${fmtP(normal/total*100)}</td><td>—</td><td>—</td><td><span class="status-pill pill-green">Performing</span></td></tr>
+      <tr><td>Watch (30–89d)</td><td>${fmt(watch)}</td><td>${fmtP(watch/total*100)}</td><td>0%</td><td>KES 0</td><td><span class="status-pill pill-amber">Monitor</span></td></tr>
+      <tr><td>Substandard (90–179d)</td><td>${fmt(sub)}</td><td>${fmtP(sub/total*100)}</td><td>10%</td><td>${fmt(sub*0.1,1)}</td><td><span class="status-pill pill-amber">Provision</span></td></tr>
+      <tr><td>Doubtful (180–359d)</td><td>${fmt(doubtful)}</td><td>${fmtP(doubtful/total*100)}</td><td>40%</td><td>${fmt(doubtful*0.4,1)}</td><td><span class="status-pill pill-red">Action</span></td></tr>
+      <tr><td>Loss (360d+)</td><td>${fmt(loss)}</td><td>${fmtP(loss/total*100)}</td><td>100%</td><td>${fmt(loss,1)}</td><td><span class="status-pill pill-red">Write-off</span></td></tr>
+      <tr><td><strong>Total Classified</strong></td><td><strong>${fmt(classified)}</strong></td><td><strong>${fmtP(classifiedPct)}</strong></td><td>—</td><td><strong>${fmt(minProv,1)}</strong></td><td><span class="status-pill pill-${npl>5?'red':'amber'}">${npl>5?'Above Threshold':'Monitor'}</span></td></tr>
+    </tbody>`;
+
+  // Maturity panel
+  const mat90Pct=nl>0?mat90/nl*100:0,mat180Pct=nl>0?mat180/nl*100:0;
+  document.getElementById('maturityPanel').innerHTML=`
+    <div style="font-size:12px;color:var(--mid);margin-bottom:10px;">Leases reaching end of term — requiring option exercise, renewal, or asset management.</div>
+    <div style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span>Maturing in 90 days</span><span style="font-weight:700;color:var(--red)">${mat90} leases</span></div>
+      <div class="maturity-bar"><div class="mat-seg" style="width:${Math.min(100,mat90Pct)}%;background:var(--red);">${mat90}</div><div class="mat-seg" style="width:${Math.min(100,100-mat90Pct)}%;background:var(--lgrey);"></div></div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span>Maturing in 180 days</span><span style="font-weight:700;color:var(--amber)">${mat180} leases</span></div>
+      <div class="maturity-bar"><div class="mat-seg" style="width:${Math.min(100,mat180Pct)}%;background:var(--amber);">${mat180}</div><div class="mat-seg" style="width:${Math.min(100,100-mat180Pct)}%;background:var(--lgrey);"></div></div>
+    </div>
+    <div style="background:var(--lgrey);border-radius:8px;padding:12px 14px;font-size:12px;line-height:1.6;color:var(--char);">
+      <strong>End-of-Term Action Required:</strong> Each maturing lease needs a formal notification to the lessee (30 days before expiry), a pre-return inspection (if return option expected), and confirmation of the purchase option exercise or renewal terms. ${mat90} leases require immediate contact this week.
+    </div>`;
+
+  // Alerts
+  const alertItems=[];
+  if(loss>total*0.03) alertItems.push({cls:'red',icon:'🔴',text:`Loss category exposure ${fmt(loss)} (${fmtP(loss/total*100)} of book) requires 100% provision of ${fmt(loss,1)}. Write-off approval and legal recovery action needed.`});
+  if(npl>5) alertItems.push({cls:'red',icon:'🔴',text:`NPL ratio of ${fmtP(npl)} exceeds the 5% internal threshold. Portfolio stress analysis required. Report to Credit Committee this week.`});
+  if(insLapsed>10) alertItems.push({cls:'red',icon:'🔴',text:`${fmtP(insLapsed)} of the lease book (${fmt(insAtRiskM,1)}) has lapsed or at-risk insurance. This is a critical security gap — uninsured assets create unquantified loss exposure. Urgent renewal required.`});
+  if(insLapsed>0&&insLapsed<=10) alertItems.push({cls:'amber',icon:'🟡',text:`${fmtP(insLapsed)} of the book (${fmt(insAtRiskM,1)}) has lapsed or at-risk insurance. Follow up with lessees — insurance renewal is a lease covenant. Formal breach notice if not resolved within 14 days.`});
+  if(maintNC>15) alertItems.push({cls:'red',icon:'🔴',text:`${fmtP(maintNC)} of the fleet is maintenance non-compliant. This is a significant RV risk — non-serviced assets hold materially lower residual values. Issue formal compliance notices immediately.`});
+  if(maintNC>0&&maintNC<=15) alertItems.push({cls:'amber',icon:'🟡',text:`${fmtP(maintNC)} of the fleet has not submitted maintenance compliance certificates. Issue semi-annual compliance certificate requests. Persistent non-compliance may trigger RVG condition failure.`});
+  if(mat90>=5) alertItems.push({cls:'red',icon:'🔴',text:`${mat90} leases mature within 90 days. Each requires formal end-of-term notification, option exercise confirmation, and — for return scenarios — pre-return inspection scheduling. Action this week.`});
+  if(doubtful>total*0.05) alertItems.push({cls:'amber',icon:'🟡',text:`Doubtful category (${fmt(doubtful)}) represents ${fmtP(doubtful/total*100)} of the book. Review restructuring options (term extension, rental holiday) for accounts where cashflow evidence supports recovery. Repossession plan required for accounts where restructuring is not viable.`});
+  if(alertItems.length===0) alertItems.push({cls:'green',icon:'✅',text:'Portfolio health indicators are within normal parameters. Continue standard monitoring cycle.'});
+
+  document.getElementById('alerts').innerHTML=alertItems.map(a=>`<div class="alert-item ${a.cls}"><span class="alert-icon">${a.icon}</span><span>${a.text}</span></div>`).join('');
+
+  // Actions table
+  const actions=[];
+  if(loss>0) actions.push(['Loss category accounts','100% provision required — '+fmt(loss,1),'High','Initiate legal recovery and write-off approval process','Immediate']);
+  if(insLapsed>5) actions.push(['Insurance lapsed/at-risk','Unprotected assets — '+fmt(insAtRiskM,1),'High','Issue formal insurance compliance notices — 14-day cure','This week']);
+  if(npl>3) actions.push(['NPL ratio above 3%','Portfolio quality declining — '+fmtP(npl),'High','Stress test top 10 accounts — identify repossession candidates','2 weeks']);
+  if(maintNC>10) actions.push(['Maintenance non-compliance','RV exposure on '+fmtP(maintNC)+' of fleet','Medium','Issue compliance certificate requests — formal breach notice if unresolved','This month']);
+  if(mat90>0) actions.push(['Leases maturing in 90 days',mat90+' leases requiring end-of-term action','Medium','Send formal notifications, schedule pre-return inspections','This week']);
+  if(opPct>25) actions.push(['Operating lease concentration',fmtP(opPct)+' of book — '+fmt(opBookM,1),'Medium','Annual RV revaluation on all operating lease assets. Confirm RVG coverage.','Quarterly']);
+  if(doubtful>0) actions.push(['Doubtful category accounts','40% provision — '+fmt(doubtful*0.4,1),'Medium','Assess restructuring viability. Document repossession plan for non-viable accounts.','30 days']);
+  if(actions.length===0) actions.push(['No critical actions','Portfolio within normal parameters','Low','Maintain standard quarterly review cycle','Next review']);
+  document.getElementById('actionsBody').innerHTML=actions.map(([issue,impact,pri,action,timeline])=>{
+    const pillC=pri==='High'?'pill-red':pri==='Medium'?'pill-amber':'pill-green';
+    return `<tr><td><strong>${issue}</strong></td><td>${impact}</td><td><span class="status-pill ${pillC}">${pri}</span></td><td>${action}</td><td>${timeline}</td></tr>`;
+  }).join('');
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGL Tool 6 — DFI ESG & Development Impact Assessment</title>
+<style>
+:root{
+  --navy:#0B1F3A;--teal:#005B5E;--gold:#C9922A;--red:#C0272D;--green:#1B7A4A;
+  --amber:#B8640A;--white:#fff;--off:#F3F6F9;--border:#CDD8E4;--char:#1A2535;
+  --mid:#607585;--lgrey:#E8EFF5;--dfi:#004F3F;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--off);color:var(--char);font-size:13px;}
+
+/* HEADER */
+.header{background:var(--dfi);border-bottom:3px solid var(--gold);padding:0;}
+.header-inner{max-width:980px;margin:0 auto;padding:22px 28px;display:flex;align-items:flex-start;justify-content:space-between;gap:20px;}
+.badge{background:rgba(201,146,42,.2);border:1px solid var(--gold);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:2px;padding:3px 11px;border-radius:2px;text-transform:uppercase;display:inline-block;margin-bottom:9px;}
+.h1{font-size:22px;color:#fff;font-weight:700;line-height:1.2;}
+.h1 span{color:var(--gold);}
+.header-sub{font-size:12px;color:#8ABBA8;margin-top:5px;line-height:1.5;}
+.dfi-logos{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.dfi-tag{font-size:10px;color:var(--gold);font-weight:700;text-align:right;letter-spacing:1px;}
+.dfi-list{font-size:10px;color:#5A8A76;text-align:right;line-height:1.8;}
+
+/* PROGRESS */
+.prog-bar{background:rgba(0,79,63,.5);padding:10px 28px;}
+.prog-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:14px;}
+.prog-track{flex:1;height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .4s;}
+.prog-label{font-size:11px;color:#5A8A76;font-weight:600;white-space:nowrap;}
+
+/* MAIN */
+.main{max-width:980px;margin:0 auto;padding:28px 24px 80px;}
+
+/* INTRO */
+.intro{background:#fff;border-radius:10px;border:1px solid var(--border);padding:20px 22px;margin-bottom:22px;box-shadow:0 2px 12px rgba(11,31,58,.06);}
+.intro h2{font-size:14px;font-weight:700;color:var(--dfi);margin-bottom:10px;}
+.intro p{font-size:13px;color:var(--mid);line-height:1.7;margin-bottom:8px;}
+.dfi-grid{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+.dfi-pill{background:var(--lgrey);border:1px solid var(--border);border-radius:6px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--char);}
+
+/* SECTIONS */
+.section-card{background:#fff;border-radius:10px;border:1px solid var(--border);margin-bottom:18px;overflow:hidden;box-shadow:0 2px 10px rgba(11,31,58,.05);}
+.section-header{display:flex;align-items:center;gap:14px;padding:14px 20px;background:var(--dfi);cursor:pointer;user-select:none;}
+.sec-num{width:32px;height:32px;border-radius:50%;border:2px solid rgba(201,146,42,.4);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gold);font-weight:700;flex-shrink:0;}
+.sec-num.done{background:var(--green);border-color:var(--green);color:#fff;}
+.sec-title-wrap{flex:1;}
+.sec-title{font-size:14px;font-weight:600;color:#fff;}
+.sec-sub{font-size:11px;color:#5A8A76;margin-top:2px;}
+.chevron{color:#3A6A5A;font-size:16px;transition:transform .3s;flex-shrink:0;}
+.section-card.open .chevron{transform:rotate(180deg);}
+.section-body{display:none;padding:22px;}
+.section-card.open .section-body{display:block;}
+
+/* FIELDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
+.field label{display:block;font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:8px 11px;font-family:inherit;font-size:13px;color:var(--char);background:#fff;transition:border-color .15s;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal);}
+.field textarea{resize:vertical;min-height:72px;}
+.computed{background:var(--lgrey);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:13px;font-weight:700;color:var(--navy);min-height:36px;display:flex;align-items:center;}
+.computed.green{background:#E4F5EC;border-color:#A8D8BC;color:var(--green);}
+.computed.amber{background:#FFF3E0;border-color:#FBDDB0;color:var(--amber);}
+.computed.red{background:#FDE8E8;border-color:#F5C6C6;color:var(--red);}
+
+/* ESG RATING */
+.esg-row{display:flex;gap:8px;align-items:center;margin-bottom:12px;}
+.esg-item{flex:1;text-align:center;padding:10px 6px;border-radius:8px;border:2px solid var(--border);cursor:pointer;transition:all .15s;}
+.esg-item.selected-A{background:#E4F5EC;border-color:var(--green);}
+.esg-item.selected-B{background:#FFF3E0;border-color:var(--amber);}
+.esg-item.selected-C{background:#FDE8E8;border-color:var(--red);}
+.esg-item.selected-D{background:#F3E8FD;border-color:#8A3AAA;}
+.esg-letter{font-size:22px;font-weight:700;}
+.esg-label{font-size:10px;color:var(--mid);margin-top:3px;}
+
+/* SCORING */
+.score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
+.score-card{background:var(--lgrey);border-radius:8px;border:1px solid var(--border);padding:14px;text-align:center;}
+.score-label{font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.score-val{font-size:20px;font-weight:700;line-height:1;}
+.score-val.green{color:var(--green);}
+.score-val.amber{color:var(--amber);}
+.score-val.red{color:var(--red);}
+.score-val.dfi{color:var(--dfi);}
+.score-sub{font-size:10px;color:var(--mid);margin-top:3px;}
+
+/* TRAFFIC LIGHT */
+.tl-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px;}
+.tl-card{border-radius:10px;padding:16px;border:1px solid;}
+.tl-card.green{background:#E4F5EC;border-color:#A8D8BC;}
+.tl-card.amber{background:#FFF3E0;border-color:#FBDDB0;}
+.tl-card.red{background:#FDE8E8;border-color:#F5C6C6;}
+.tl-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.tl-card.green .tl-head{color:var(--green);}
+.tl-card.amber .tl-head{color:var(--amber);}
+.tl-card.red .tl-head{color:var(--red);}
+.tl-body{font-size:12px;color:var(--char);line-height:1.6;}
+
+/* INFO BOX */
+.info{background:var(--lgrey);border-left:3px solid var(--teal);border-radius:0 6px 6px 0;padding:11px 14px;font-size:12px;color:var(--mid);margin-bottom:14px;line-height:1.6;}
+.info strong{color:var(--char);}
+
+/* SAVE BTN */
+.save-row{display:flex;justify-content:flex-end;margin-top:18px;}
+.btn-save{background:var(--dfi);color:#fff;border:none;padding:11px 28px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;}
+.btn-save:hover{background:var(--teal);}
+
+/* RESULT */
+#result{display:none;}#result.show{display:block;}
+.result-hero{border-radius:10px;padding:24px;margin-bottom:20px;}
+.result-hero.strong{background:var(--dfi);color:#fff;}
+.result-hero.moderate{background:var(--amber);color:#fff;}
+.result-hero.weak{background:var(--red);color:#fff;}
+.result-hero h2{font-size:18px;font-weight:700;margin-bottom:8px;}
+.result-hero p{font-size:13px;line-height:1.7;opacity:.9;}
+
+.output-section{background:#fff;border-radius:10px;border:1px solid var(--border);padding:20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(11,31,58,.05);}
+.output-section h3{font-size:13px;font-weight:700;color:var(--dfi);margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--gold);}
+
+.impact-table{width:100%;border-collapse:collapse;font-size:12px;}
+.impact-table th{background:var(--dfi);color:#fff;padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.7px;}
+.impact-table td{padding:9px 12px;border-bottom:1px solid var(--border);}
+.impact-table tr:nth-child(even) td{background:var(--lgrey);}
+.impact-table tr:last-child td{border-bottom:none;}
+.tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;}
+.tag-green{background:#E4F5EC;color:var(--green);}
+.tag-amber{background:#FFF3E0;color:var(--amber);}
+.tag-red{background:#FDE8E8;color:var(--red);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="badge">Bank & DFI Credit Tool 6 of 6</div>
+      <div class="h1">DFI ESG &amp; Development Impact <span>Assessment Tool</span></div>
+      <div class="header-sub">Environmental, social, and governance screening for leasing company and bank portfolio funding applications to development finance institutions</div>
+    </div>
+    <div class="dfi-logos">
+      <div class="dfi-tag">Aligned to DFI standards:</div>
+      <div class="dfi-list">IFC Performance Standards<br>AfDB Environmental & Social Policy<br>PROPARCO ESG Framework<br>BII (CDC) ESG Toolkit<br>FMO Environmental & Social Policy</div>
+    </div>
+  </div>
+</div>
+
+<div class="prog-bar">
+  <div class="prog-inner">
+    <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+    <div class="prog-label" id="progLabel">0 of 7 sections complete</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="intro">
+    <h2>Who This Tool Is For</h2>
+    <p>This assessment is designed for: <strong>(a) Leasing companies</strong> applying to IFC, AfDB, PROPARCO, BII, or FMO for portfolio funding facilities, and <strong>(b) Banks</strong> seeking DFI co-financing or technical assistance for their lease portfolios.</p>
+    <p>DFIs will not fund a leasing operation that cannot demonstrate a credible ESG framework — regardless of how strong the financial metrics are. This tool structures the assessment so that gaps are identified and addressed before the formal DFI application is submitted.</p>
+    <div class="dfi-grid">
+      <div class="dfi-pill">🌱 IFC Performance Standards</div>
+      <div class="dfi-pill">🌍 AfDB ESP</div>
+      <div class="dfi-pill">🇫🇷 PROPARCO</div>
+      <div class="dfi-pill">🇬🇧 BII / CDC</div>
+      <div class="dfi-pill">🇳🇱 FMO</div>
+      <div class="dfi-pill">📊 Development Impact</div>
+    </div>
+  </div>
+
+  <!-- S1: APPLICANT PROFILE -->
+  <div class="section-card open" id="s1">
+    <div class="section-header" onclick="tog('s1')">
+      <div class="sec-num" id="n1">01</div>
+      <div class="sec-title-wrap"><div class="sec-title">Applicant Profile</div><div class="sec-sub">Leasing company or bank — basic corporate information for DFI pre-screening</div></div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="g2">
+        <div class="field"><label>Applicant Name</label><input id="a_name" placeholder="e.g. Savanna Leasing Company Limited"></div>
+        <div class="field"><label>Entity Type</label>
+          <select id="a_type">
+            <option>Independent leasing company</option>
+            <option>Bank — direct lessor</option>
+            <option>Bank-owned leasing subsidiary</option>
+            <option>OEM captive finance company</option>
+            <option>Microfinance institution with leasing programme</option>
+          </select>
+        </div>
+      </div>
+      <div class="g3">
+        <div class="field"><label>Years of Operation</label><input type="number" id="a_years" placeholder="e.g. 4" min="0"></div>
+        <div class="field"><label>Total Lease Book (KES M)</label><input type="number" id="a_book" placeholder="e.g. 280" oninput="calcProfile()"></div>
+        <div class="field"><label>Number of Active Lessees</label><input type="number" id="a_lessees" placeholder="e.g. 85"></div>
+      </div>
+      <div class="g3">
+        <div class="field"><label>DFI Facility Requested (KES M)</label><input type="number" id="a_facility" placeholder="e.g. 150" oninput="calcProfile()"></div>
+        <div class="field"><label>Facility as % of Book</label><div class="computed" id="a_facilityPct">—</div></div>
+        <div class="field"><label>Target DFI</label>
+          <select id="a_dfi">
+            <option>IFC — International Finance Corporation</option>
+            <option>AfDB — African Development Bank</option>
+            <option>PROPARCO (French DFI)</option>
+            <option>BII / CDC (British)</option>
+            <option>FMO (Dutch)</option>
+            <option>Multiple DFIs — blended facility</option>
+          </select>
+        </div>
+      </div>
+      <div class="save-row"><button class="btn-save" onclick="save(1)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S2: PORTFOLIO DEVELOPMENT IMPACT -->
+  <div class="section-card" id="s2">
+    <div class="section-header" onclick="tog('s2')">
+      <div class="sec-num" id="n2">02</div>
+      <div class="sec-title-wrap"><div class="sec-title">Portfolio Development Impact</div><div class="sec-sub">SME focus, job creation, gender lens, and sector development impact</div></div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="info"><strong>DFI Requirement:</strong> IFC, AfDB, and PROPARCO all require quantifiable development impact metrics. "We finance good businesses" is not sufficient. You need specific numbers on SME access, job creation, gender-owned businesses, and sector development contribution.</div>
+      <div class="g3">
+        <div class="field"><label>SME Lessees (% of portfolio)</label><input type="number" id="d_smePct" placeholder="e.g. 68" max="100" oninput="calcImpact()"></div>
+        <div class="field"><label>First-time Finance Recipients (%)</label><input type="number" id="d_firstPct" placeholder="e.g. 22" max="100" oninput="calcImpact()"></div>
+        <div class="field"><label>Women-Owned / Led Businesses (%)</label><input type="number" id="d_genderPct" placeholder="e.g. 18" max="100" oninput="calcImpact()"></div>
+      </div>
+      <div class="g3">
+        <div class="field"><label>Estimated Direct Jobs Supported</label><input type="number" id="d_jobs" placeholder="e.g. 1200" oninput="calcImpact()"></div>
+        <div class="field"><label>Rural / Peri-Urban Lessees (%)</label><input type="number" id="d_ruralPct" placeholder="e.g. 35" max="100" oninput="calcImpact()"></div>
+        <div class="field"><label>Agricultural Sector (% of book)</label><input type="number" id="d_agriPct" placeholder="e.g. 14" max="100" oninput="calcImpact()"></div>
+      </div>
+      <div class="g3">
+        <div class="field"><label>Healthcare Sector (% of book)</label><input type="number" id="d_healthPct" placeholder="e.g. 12" max="100"></div>
+        <div class="field"><label>Clean Energy / Green Assets (% of book)</label><input type="number" id="d_greenPct" placeholder="e.g. 8" max="100" oninput="calcImpact()"></div>
+        <div class="field"><label>Avg Lessee Revenue (KES M)</label><input type="number" id="d_avgRev" placeholder="e.g. 45"></div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Development Impact Score (auto-calc)</label><div class="computed" id="d_score">Complete fields above</div></div>
+        <div class="field"><label>Additionality Statement</label>
+          <select id="d_additionality">
+            <option value="3">Strong — financing segments banks refuse or underserve (SMEs, first-time, rural)</option>
+            <option value="2">Moderate — complementing bank market but at competitive terms</option>
+            <option value="1">Weak — largely replicating what commercial banks already offer</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:14px;"><label>Impact Narrative (max 200 words) — for DFI application</label>
+        <textarea id="d_narrative" placeholder="Describe how this leasing portfolio creates development impact in Kenya/East Africa. Include: which underserved segments you reach, why they cannot access commercial bank finance, what the equipment enables for their businesses, and the multiplier effect on employment and income."></textarea>
+      </div>
+      <div class="save-row"><button class="btn-save" onclick="save(2)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S3: ENVIRONMENTAL RISK -->
+  <div class="section-card" id="s3">
+    <div class="section-header" onclick="tog('s3')">
+      <div class="sec-num" id="n3">03</div>
+      <div class="sec-title-wrap"><div class="sec-title">Environmental Risk Classification</div><div class="sec-sub">IFC Environmental Category, excluded sectors, and climate risk</div></div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="info"><strong>IFC Environmental Categories:</strong> Category A = significant adverse environmental impact (mining, large infrastructure, some manufacturing). Category B = moderate impact (most equipment leasing). Category C = minimal impact (most financial intermediary operations). Most leasing companies qualify as Category B or C — but you must demonstrate you have assessed this and applied the E&S exclusion list.</div>
+
+      <div class="field" style="margin-bottom:14px;"><label>Select your IFC Environmental Category</label></div>
+      <div class="esg-row" id="envCatRow">
+        <div class="esg-item" onclick="selectEnvCat('A')" id="cat_A"><div class="esg-letter" style="color:var(--red)">A</div><div class="esg-label">Significant Impact<br>Mining, large infra</div></div>
+        <div class="esg-item" onclick="selectEnvCat('B')" id="cat_B"><div class="esg-letter" style="color:var(--amber)">B</div><div class="esg-label">Moderate Impact<br>Most equipment leasing</div></div>
+        <div class="esg-item" onclick="selectEnvCat('C')" id="cat_C"><div class="esg-letter" style="color:var(--green)">C</div><div class="esg-label">Minimal Impact<br>Financial intermediary</div></div>
+        <div class="esg-item" onclick="selectEnvCat('FI')" id="cat_FI"><div class="esg-letter" style="color:var(--teal)">FI</div><div class="esg-label">Financial Intermediary<br>Portfolio lending</div></div>
+      </div>
+      <input type="hidden" id="envCat" value="">
+
+      <div class="g2" style="margin-top:14px;">
+        <div class="field"><label>E&S Exclusion List in Place?</label>
+          <select id="e_exclusion">
+            <option value="yes">Yes — formal written exclusion list applied to all deals</option>
+            <option value="partial">Partial — informal exclusions but not documented</option>
+            <option value="no">No — no formal exclusion list</option>
+          </select>
+        </div>
+        <div class="field"><label>Excluded Sectors (confirm all that apply)</label>
+          <select id="e_sectors" multiple style="height:90px;">
+            <option selected>Weapons and defence manufacturing</option>
+            <option selected>Tobacco production</option>
+            <option selected>Gambling and casinos</option>
+            <option selected>Forced or child labour operations</option>
+            <option selected>Hazardous waste processing</option>
+            <option selected>Illegal logging or wildlife trade</option>
+          </select>
+        </div>
+      </div>
+      <div class="g3">
+        <div class="field"><label>Carbon-Intensive Assets in Portfolio (%)</label><input type="number" id="e_carbon" placeholder="e.g. 45" max="100" oninput="calcEnv()"></div>
+        <div class="field"><label>Clean / Green Assets in Portfolio (%)</label><input type="number" id="e_clean" placeholder="e.g. 8" max="100"></div>
+        <div class="field"><label>Environmental Risk Assessment</label><div class="computed" id="e_assess">Complete fields above</div></div>
+      </div>
+      <div class="field" style="margin-bottom:14px;"><label>Climate Risk Narrative</label>
+        <textarea id="e_climate" placeholder="Describe any climate-related risks in your portfolio (e.g. agricultural lessees exposed to drought, coastal transport exposed to flooding) and any mitigation measures or climate adaptation products you offer."></textarea>
+      </div>
+      <div class="save-row"><button class="btn-save" onclick="save(3)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S4: SOCIAL RISK -->
+  <div class="section-card" id="s4">
+    <div class="section-header" onclick="tog('s4')">
+      <div class="sec-num" id="n4">04</div>
+      <div class="sec-title-wrap"><div class="sec-title">Social Risk and Labour Standards</div><div class="sec-sub">Labour practices, community impact, and IFC Performance Standard 2 compliance</div></div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="g2">
+        <div class="field"><label>Employment Policy in Place?</label>
+          <select id="s_employment">
+            <option value="3">Yes — formal written HR policy, non-discrimination, grievance mechanism</option>
+            <option value="2">Partial — basic employment practices, no formal policy document</option>
+            <option value="1">No — informal employment arrangements</option>
+          </select>
+        </div>
+        <div class="field"><label>Health &amp; Safety Policy?</label>
+          <select id="s_hs">
+            <option value="3">Yes — formal H&S policy, trained officer, incident reporting</option>
+            <option value="2">Partial — basic safety practices, no formal officer</option>
+            <option value="1">No formal H&S policy</option>
+          </select>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Grievance Mechanism for Employees?</label>
+          <select id="s_grievance">
+            <option value="3">Yes — documented grievance channel, response timeline specified</option>
+            <option value="2">Informal — employees can raise concerns with management</option>
+            <option value="1">No formal mechanism</option>
+          </select>
+        </div>
+        <div class="field"><label>Client (Lessee) Grievance Mechanism?</label>
+          <select id="s_clientGrievance">
+            <option value="3">Yes — formal complaints process, escalation path, response SLA</option>
+            <option value="2">Informal — clients can call or email</option>
+            <option value="1">No formal mechanism</option>
+          </select>
+        </div>
+      </div>
+      <div class="g3">
+        <div class="field"><label>Child Labour Screening on Lessee Operations?</label>
+          <select id="s_child">
+            <option value="3">Yes — formal screening for child labour in lessee businesses</option>
+            <option value="2">Informal — sector-level awareness</option>
+            <option value="1">No — not currently assessed</option>
+          </select>
+        </div>
+        <div class="field"><label>Community Impact Assessment?</label>
+          <select id="s_community">
+            <option value="3">Yes — positive community impact documented and reported</option>
+            <option value="2">Informal — impact observed but not measured</option>
+            <option value="1">Not assessed</option>
+          </select>
+        </div>
+        <div class="field"><label>Social Risk Score (auto-calc)</label><div class="computed" id="s_score">Complete fields above</div></div>
+      </div>
+      <div class="save-row"><button class="btn-save" onclick="save(4)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S5: GOVERNANCE -->
+  <div class="section-card" id="s5">
+    <div class="section-header" onclick="tog('s5')">
+      <div class="sec-num" id="n5">05</div>
+      <div class="sec-title-wrap"><div class="sec-title">Governance and Anti-Corruption</div><div class="sec-sub">Board structure, AML/KYC policy, and anti-bribery compliance</div></div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="g3">
+        <div class="field"><label>Board Composition</label>
+          <select id="g_board">
+            <option value="3">Independent directors ≥ 33% of board, audit committee in place</option>
+            <option value="2">Some independent directors, limited board committees</option>
+            <option value="1">Family or founder-dominated board, no independent oversight</option>
+          </select>
+        </div>
+        <div class="field"><label>Audited Financial Statements</label>
+          <select id="g_audit">
+            <option value="3">3+ years of audited accounts — Big 4 or reputable mid-tier firm</option>
+            <option value="2">2 years audited — smaller audit firm</option>
+            <option value="1">1 year or less — unaudited accounts</option>
+          </select>
+        </div>
+        <div class="field"><label>Regulatory Compliance Status</label>
+          <select id="g_reg">
+            <option value="3">Fully compliant — no outstanding regulatory issues</option>
+            <option value="2">Minor outstanding items — being resolved</option>
+            <option value="1">Material compliance issues outstanding</option>
+          </select>
+        </div>
+      </div>
+      <div class="g3">
+        <div class="field"><label>AML / KYC Policy</label>
+          <select id="g_aml">
+            <option value="3">Formal written AML/KYC policy, trained compliance officer, POCAMLA compliant</option>
+            <option value="2">Basic KYC processes, no formal written policy</option>
+            <option value="1">No formal AML/KYC framework</option>
+          </select>
+        </div>
+        <div class="field"><label>Anti-Bribery &amp; Corruption Policy</label>
+          <select id="g_abc">
+            <option value="3">Formal ABC policy, staff training, whistleblower protection</option>
+            <option value="2">Informal — policy stated but not documented</option>
+            <option value="1">No formal anti-bribery policy</option>
+          </select>
+        </div>
+        <div class="field"><label>Governance Score (auto-calc)</label><div class="computed" id="g_score">Complete fields above</div></div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Related-Party Transaction Policy</label>
+          <select id="g_rpt">
+            <option value="3">Board approval required for all RPTs — documented and disclosed</option>
+            <option value="2">Informal oversight — no formal policy</option>
+            <option value="1">RPTs not formally monitored</option>
+          </select>
+        </div>
+        <div class="field"><label>Data Protection Compliance (Kenya Data Protection Act 2019)</label>
+          <select id="g_data">
+            <option value="3">Registered as data controller/processor — privacy policy in place</option>
+            <option value="2">Aware of requirements — partial compliance</option>
+            <option value="1">Not yet assessed for DPA compliance</option>
+          </select>
+        </div>
+      </div>
+      <div class="save-row"><button class="btn-save" onclick="save(5)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S6: ESG MANAGEMENT SYSTEM -->
+  <div class="section-card" id="s6">
+    <div class="section-header" onclick="tog('s6')">
+      <div class="sec-num" id="n6">06</div>
+      <div class="sec-title-wrap"><div class="sec-title">E&S Management System (ESMS)</div><div class="sec-sub">The structured framework DFIs require for ongoing ESG monitoring — not just at application</div></div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="info"><strong>What is an ESMS?</strong> An Environmental and Social Management System is the documented process by which a financial institution identifies, assesses, manages, and monitors the environmental and social risks in its portfolio. <strong>IFC requires an ESMS as a condition of investment for all financial intermediaries.</strong> Most Kenyan leasing companies do not have one — building it is the single most important DFI readiness action.</div>
+      <div class="g2">
+        <div class="field"><label>E&S Policy Document</label>
+          <select id="esms_policy">
+            <option value="3">Formal written E&S policy — board-approved, publicly available</option>
+            <option value="2">Draft E&S policy — not yet board-approved</option>
+            <option value="1">No E&S policy document</option>
+          </select>
+        </div>
+        <div class="field"><label>E&S Risk Assessment at Origination</label>
+          <select id="esms_screening">
+            <option value="3">Formal E&S screening on every deal — documented, exclusion list applied</option>
+            <option value="2">Informal sector-level awareness — no deal-level screening</option>
+            <option value="1">No E&S assessment at deal origination</option>
+          </select>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Ongoing Monitoring of Lessee E&S Compliance</label>
+          <select id="esms_monitor">
+            <option value="3">Annual lessee E&S reviews — site visits, self-declaration forms, reporting</option>
+            <option value="2">Ad hoc — issues addressed reactively</option>
+            <option value="1">No ongoing E&S monitoring of lessees</option>
+          </select>
+        </div>
+        <div class="field"><label>E&S Incident Reporting</label>
+          <select id="esms_incident">
+            <option value="3">Formal incident reporting system — internal escalation and DFI notification protocol</option>
+            <option value="2">Informal — incidents reported verbally</option>
+            <option value="1">No formal incident reporting system</option>
+          </select>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Dedicated E&S Officer / Responsible Manager</label>
+          <select id="esms_officer">
+            <option value="3">Dedicated E&S officer — trained, with defined responsibilities</option>
+            <option value="2">E&S responsibility assigned to existing manager (dual role)</option>
+            <option value="1">No identified E&S responsible person</option>
+          </select>
+        </div>
+        <div class="field"><label>ESMS Score (auto-calc)</label><div class="computed" id="esms_score">Complete fields above</div></div>
+      </div>
+      <div class="field" style="margin-bottom:14px;"><label>ESMS Development Plan (if score below 2.5 average)</label>
+        <textarea id="esms_plan" placeholder="If your ESMS is incomplete, describe your plan to build it before DFI drawdown. Include: timeline, responsible person, external consultant support if needed, and target completion date. DFIs expect this to be in place within 6 months of facility approval."></textarea>
+      </div>
+      <div class="save-row"><button class="btn-save" onclick="save(6)">Save & Continue →</button></div>
+    </div>
+  </div>
+
+  <!-- S7: DFI REPORTING COMMITMENTS -->
+  <div class="section-card" id="s7">
+    <div class="section-header" onclick="tog('s7')">
+      <div class="sec-num" id="n7">07</div>
+      <div class="sec-title-wrap"><div class="sec-title">DFI Reporting Commitments</div><div class="sec-sub">What you commit to report — and how — if the DFI facility is approved</div></div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="info"><strong>DFI reporting is not optional.</strong> Every DFI facility comes with mandatory reporting obligations. Your ability to meet these obligations — and to demonstrate that your systems can produce the required data — is assessed during due diligence. Confirm which reports you can currently produce.</div>
+      <div class="g2">
+        <div class="field"><label>Semi-Annual Financial Reporting</label>
+          <select id="r_financial">
+            <option value="yes">Yes — can produce audited semi-annual accounts</option>
+            <option value="partial">Partial — management accounts only</option>
+            <option value="no">Not currently producing this</option>
+          </select>
+        </div>
+        <div class="field"><label>Portfolio Performance Report (NPL, sector, geography)</label>
+          <select id="r_portfolio">
+            <option value="yes">Yes — portfolio segmentation data available</option>
+            <option value="partial">Partial — basic portfolio data, limited segmentation</option>
+            <option value="no">Not currently available</option>
+          </select>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Development Impact Metrics (jobs, SME %, gender %)</label>
+          <select id="r_impact">
+            <option value="yes">Yes — tracked and can be reported quarterly</option>
+            <option value="partial">Partial — some metrics tracked, others require development</option>
+            <option value="no">Not currently tracked</option>
+          </select>
+        </div>
+        <div class="field"><label>E&S Incident Reports (if any)</label>
+          <select id="r_incident">
+            <option value="yes">Yes — formal reporting system, can notify DFI within 5 business days</option>
+            <option value="partial">Partial — can report but no formal timeline</option>
+            <option value="no">No formal system</option>
+          </select>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Annual E&S Monitoring Report</label>
+          <select id="r_esms">
+            <option value="yes">Yes — ESMS in place, annual report producible</option>
+            <option value="partial">Partial — ESMS under development, can report once built</option>
+            <option value="no">Not yet possible</option>
+          </select>
+        </div>
+        <div class="field"><label>Climate / Green Finance Reporting</label>
+          <select id="r_climate">
+            <option value="yes">Yes — can identify and report green assets in portfolio</option>
+            <option value="partial">Partial — some green assets identified, not formally tracked</option>
+            <option value="no">Not currently tracked</option>
+          </select>
+        </div>
+      </div>
+      <div class="save-row"><button class="btn-save" onclick="generateReport()">Generate DFI Readiness Report →</button></div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result">
+    <div style="font-size:15px;font-weight:700;color:var(--navy);margin:24px 0 14px;display:flex;align-items:center;gap:10px;">DFI Readiness Assessment Report <span style="flex:1;height:2px;background:var(--gold);display:inline-block;"></span></div>
+
+    <!-- HERO -->
+    <div id="resultHero"></div>
+
+    <!-- SCORE GRID -->
+    <div class="score-grid" id="scoreGrid"></div>
+
+    <!-- TRAFFIC LIGHTS -->
+    <div class="output-section">
+      <h3>Assessment by Category</h3>
+      <div class="tl-grid" id="tlGrid"></div>
+    </div>
+
+    <!-- IMPACT TABLE -->
+    <div class="output-section">
+      <h3>Development Impact Summary</h3>
+      <table class="impact-table" id="impactTable"></table>
+    </div>
+
+    <!-- ACTION PLAN -->
+    <div class="output-section">
+      <h3>DFI Readiness Action Plan — Priority Items Before Application</h3>
+      <table class="impact-table" id="actionTable">
+        <thead><tr><th>Gap Area</th><th>Current Status</th><th>DFI Requirement</th><th>Priority</th><th>Estimated Timeline</th></tr></thead>
+        <tbody id="actionBody"></tbody>
+      </table>
+    </div>
+
+    <div style="text-align:right;margin-top:12px;">
+      <button onclick="window.print()" style="background:var(--dfi);color:#fff;border:none;padding:11px 24px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;">🖨 Print DFI Readiness Report</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const saved={};
+function tog(id){document.getElementById(id).classList.toggle('open');}
+function v(id){return parseFloat(document.getElementById(id)?.value)||0;}
+function sv(id){return document.getElementById(id)?.value||'';}
+function el(id){return document.getElementById(id);}
+function fmt(n,d=1){return isNaN(n)?'—':n.toFixed(d);}
+function fmtP(n){return isNaN(n)?'—':n.toFixed(0)+'%';}
+
+let envCatVal='';
+function selectEnvCat(c){
+  envCatVal=c;
+  ['A','B','C','FI'].forEach(x=>{
+    el('cat_'+x).className='esg-item'+(c===x?' selected-'+c:'');
+  });
+  el('envCat').value=c;
+}
+selectEnvCat('B');
+
+function calcProfile(){
+  const book=v('a_book'),fac=v('a_facility');
+  if(book&&fac) el('a_facilityPct').textContent=fmtP(fac/book*100)+' of current book';
+}
+
+function calcImpact(){
+  const sme=v('d_smePct'),first=v('d_firstPct'),gender=v('d_genderPct'),green=v('d_greenPct'),rural=v('d_ruralPct');
+  const score=(sme*0.3+first*0.2+gender*0.2+green*0.15+rural*0.15)/20;
+  const pct=Math.min(100,score*100);
+  const cls=pct>=60?'green':pct>=35?'amber':'red';
+  const lbl=pct>=60?'Strong impact profile':pct>=35?'Moderate — needs development':'Weak — significant gaps';
+  el('d_score').textContent=fmt(pct,0)+'% Impact Score — '+lbl;
+  el('d_score').className='computed '+cls;
+}
+
+function calcEnv(){
+  const carbon=v('e_carbon');
+  const exc=sv('e_exclusion');
+  let msg='',cls='';
+  if(exc==='no'){msg='⚠ No exclusion list — critical DFI requirement';cls='red';}
+  else if(carbon>60){msg='High carbon portfolio ('+fmtP(carbon)+') — climate risk narrative required';cls='amber';}
+  else if(carbon>30){msg='Moderate carbon exposure — transition plan recommended';cls='amber';}
+  else{msg='Acceptable environmental risk profile';cls='green';}
+  el('e_assess').textContent=msg;
+  el('e_assess').className='computed '+cls;
+}
+
+function scoreSelect(ids){
+  return ids.reduce((s,id)=>{const v=parseInt(sv(id))||1;return s+v;},0)/ids.length;
+}
+
+function save(n){
+  saved[n]=true;
+  el('n'+n).className='sec-num done';
+  el('n'+n).textContent='✓';
+  const done=Object.keys(saved).length;
+  el('progFill').style.width=(done/7*100)+'%';
+  el('progLabel').textContent=done+' of 7 sections complete';
+  const next=el('s'+(n+1));
+  el('s'+n).classList.remove('open');
+  if(next){next.classList.add('open');next.scrollIntoView({behavior:'smooth',block:'start'});}
+}
+
+function generateReport(){
+  save(7);
+
+  const name=sv('a_name')||'Applicant';
+  const dfi=sv('a_dfi');
+  const book=v('a_book'),fac=v('a_facility');
+  const sme=v('d_smePct'),jobs=v('d_jobs'),gender=v('d_genderPct'),green=v('d_greenPct');
+  const additionality=parseInt(sv('d_additionality'))||1;
+
+  // Scores
+  const impactScore=(v('d_smePct')*0.3+v('d_firstPct')*0.2+v('d_genderPct')*0.2+v('d_greenPct')*0.15+v('d_ruralPct')*0.15)/20*100;
+  const envExc=sv('e_exclusion')==='yes'?3:sv('e_exclusion')==='partial'?2:1;
+  const envScore=(envExc+((100-v('e_carbon'))/100*3))/2;
+  const socialScore=scoreSelect(['s_employment','s_hs','s_grievance','s_clientGrievance','s_child','s_community']);
+  const govScore=scoreSelect(['g_board','g_audit','g_reg','g_aml','g_abc','g_rpt','g_data']);
+  const esmsScore=scoreSelect(['esms_policy','esms_screening','esms_monitor','esms_incident','esms_officer']);
+
+  const overall=(impactScore/100*3*0.25+envScore*0.2+socialScore*0.2+govScore*0.2+esmsScore*0.15+additionality*0.2);
+  const overallPct=Math.min(100,overall/3*100);
+
+  let heroClass,heroTitle,heroText;
+  if(overallPct>=70){
+    heroClass='strong';heroTitle='Strong DFI Readiness — Proceed to Formal Application';
+    heroText=`${name} demonstrates a strong ESG and development impact profile suitable for DFI funding from ${dfi}. The overall readiness score of ${fmt(overallPct,0)}% suggests the application is likely to pass initial screening. Focus on completing any remaining ESMS documentation before the formal due diligence process begins.`;
+  } else if(overallPct>=45){
+    heroClass='moderate';heroTitle='Moderate Readiness — Address Key Gaps Before Applying';
+    heroText=`${name} shows a developing ESG profile with material gaps that require attention before a DFI application is likely to succeed. The overall readiness score of ${fmt(overallPct,0)}% is below the typical 70% threshold for successful applications to ${dfi}. The action plan below identifies priority items — typically 3 to 6 months of structured ESG development is needed.`;
+  } else {
+    heroClass='weak';heroTitle='Significant Gaps — DFI Application Not Recommended at This Stage';
+    heroText=`${name}'s current ESG framework and development impact profile fall significantly below DFI minimum standards (readiness score: ${fmt(overallPct,0)}%). A formal application to ${dfi} at this stage is unlikely to succeed and may prejudice future applications. A 12-month ESG capacity building programme is recommended before reapplying.`;
+  }
+
+  el('resultHero').innerHTML=`<div class="result-hero ${heroClass}"><h2>${heroTitle}</h2><p>${heroText}</p></div>`;
+
+  // Score grid
+  const scores=[
+    {label:'Overall Readiness',val:fmt(overallPct,0)+'%',sub:'DFI application threshold: 70%',cls:overallPct>=70?'green':overallPct>=45?'amber':'red'},
+    {label:'Development Impact',val:fmt(Math.min(100,impactScore),0)+'%',sub:'SME: '+fmtP(sme)+' · Gender: '+fmtP(gender),cls:impactScore>=60?'green':impactScore>=35?'amber':'red'},
+    {label:'Environmental',val:fmt(envScore/3*100,0)+'%',sub:'Cat '+envCatVal+' · Excl list: '+sv('e_exclusion'),cls:envScore>=2.5?'green':envScore>=1.5?'amber':'red'},
+    {label:'Social',val:fmt(socialScore/3*100,0)+'%',sub:'Labour, H&S, grievance',cls:socialScore>=2.5?'green':socialScore>=1.5?'amber':'red'},
+    {label:'Governance',val:fmt(govScore/3*100,0)+'%',sub:'Board, AML, compliance',cls:govScore>=2.5?'green':govScore>=1.5?'amber':'red'},
+    {label:'ESMS Maturity',val:fmt(esmsScore/3*100,0)+'%',sub:'DFI minimum: 60%',cls:esmsScore>=2?'green':esmsScore>=1.3?'amber':'red'},
+  ];
+  el('scoreGrid').innerHTML=scores.map(s=>`<div class="score-card"><div class="score-label">${s.label}</div><div class="score-val ${s.cls}">${s.val}</div><div class="score-sub">${s.sub}</div></div>`).join('');
+
+  // Traffic lights
+  function tl(cat,score,max,positives,gaps){
+    const pct=score/max*100;
+    const cls=pct>=75?'green':pct>=45?'amber':'red';
+    const icon=cls==='green'?'✅':cls==='amber'?'⚠':'❌';
+    return `<div class="tl-card ${cls}"><div class="tl-head">${icon} ${cat}</div><div class="tl-body"><strong>${fmt(pct,0)}% score</strong><br>${pct>=75?positives:gaps}</div></div>`;
+  }
+  el('tlGrid').innerHTML=
+    tl('Development Impact',impactScore,100,`Strong SME and gender focus (${fmtP(sme)} SME, ${fmtP(gender)} women-led). Estimated ${jobs.toLocaleString()} direct jobs supported.`,`SME penetration (${fmtP(sme)}), gender inclusion (${fmtP(gender)}), and green finance (${fmtP(green)}%) need strengthening to meet DFI impact thresholds.`)+
+    tl('E&S Framework',envScore,3,'Exclusion list in place. Environmental risk categorisation complete. Climate risk narrative developed.','Exclusion list or E&S risk assessment process incomplete. Environmental Category not confirmed. This is a blocking issue for most DFIs.')+
+    tl('Governance',govScore,3,'Strong board structure, AML/KYC compliance, and anti-corruption policies in place. Audit trail meets DFI standards.','Governance gaps identified — board independence, AML/KYC framework, or audit quality require strengthening before DFI due diligence.');
+
+  // Impact table
+  el('impactTable').innerHTML=`
+    <thead><tr><th>Impact Metric</th><th>Current Value</th><th>DFI Target</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>SME Lessees</td><td>${fmtP(sme)}</td><td>>50%</td><td><span class="tag ${sme>=50?'tag-green':'tag-amber'}">${sme>=50?'Meets Target':'Below Target'}</span></td></tr>
+      <tr><td>Women-Owned / Led Businesses</td><td>${fmtP(gender)}</td><td>>15%</td><td><span class="tag ${gender>=15?'tag-green':'tag-amber'}">${gender>=15?'Meets Target':'Below Target'}</span></td></tr>
+      <tr><td>First-Time Finance Recipients</td><td>${fmtP(v('d_firstPct'))}</td><td>>10%</td><td><span class="tag ${v('d_firstPct')>=10?'tag-green':'tag-amber'}">${v('d_firstPct')>=10?'Meets Target':'Below Target'}</span></td></tr>
+      <tr><td>Green / Clean Energy Assets</td><td>${fmtP(green)}</td><td>>5%</td><td><span class="tag ${green>=5?'tag-green':'tag-amber'}">${green>=5?'Meets Target':'Below Target'}</span></td></tr>
+      <tr><td>Rural / Peri-Urban Reach</td><td>${fmtP(v('d_ruralPct'))}</td><td>>20%</td><td><span class="tag ${v('d_ruralPct')>=20?'tag-green':'tag-amber'}">${v('d_ruralPct')>=20?'Meets Target':'Below Target'}</span></td></tr>
+      <tr><td>Direct Jobs Supported</td><td>${jobs>0?jobs.toLocaleString():'Not measured'}</td><td>Quantified</td><td><span class="tag ${jobs>0?'tag-green':'tag-red'}">${jobs>0?'Measured':'Must Measure'}</span></td></tr>
+      <tr><td>ESMS in Place</td><td>${esmsScore>=2.5?'Yes':'Developing'}</td><td>Required</td><td><span class="tag ${esmsScore>=2.5?'tag-green':esmsScore>=1.5?'tag-amber':'tag-red'}">${esmsScore>=2.5?'Complete':esmsScore>=1.5?'Partial':'Not in Place'}</span></td></tr>
+    </tbody>`;
+
+  // Actions
+  const actions=[];
+  if(sv('e_exclusion')!=='yes') actions.push(['E&S Exclusion List','Not formalized','Required — blocking issue for all DFIs','Critical','2–4 weeks']);
+  if(esmsScore<2) actions.push(['ESMS Framework','Not in place or very early stage','IFC requires ESMS as condition of investment','Critical','3–6 months']);
+  if(govScore<2) actions.push(['Governance Framework','Board independence or AML/KYC gaps','Formal board committees, written AML policy, audit compliance','High','2–4 months']);
+  if(gender<15) actions.push(['Gender Lens Inclusion',''+fmtP(gender)+' women-led businesses','Target >15% — develop women-entrepreneur outreach programme','High','6–12 months']);
+  if(sme<50) actions.push(['SME Focus',''+fmtP(sme)+' SME penetration','Target >50% — tighten deal size criteria, target underserved segments','High','Ongoing']);
+  if(jobs===0) actions.push(['Job Creation Tracking','Not currently measured','Develop methodology — survey lessees on employment numbers annually','Medium','1–2 months']);
+  if(green<5) actions.push(['Green Finance Tracking',''+fmtP(green)+' green assets','Develop green asset taxonomy, begin tracking, target 10% by Year 3','Medium','3 months']);
+  if(sv('r_impact')!=='yes') actions.push(['Impact Data Systems','Impact metrics not tracked quarterly','Build data collection system for SME%, gender%, jobs, rural%','Medium','2–3 months']);
+  if(actions.length===0) actions.push(['No critical gaps','All major DFI requirements addressed','Proceed to formal application','Low','Ready now']);
+  el('actionBody').innerHTML=actions.map(([gap,curr,req,pri,tl])=>{
+    const tc=pri==='Critical'?'tag-red':pri==='High'?'tag-amber':'tag-green';
+    return `<tr><td><strong>${gap}</strong></td><td>${curr}</td><td>${req}</td><td><span class="tag ${tc}">${pri}</span></td><td>${tl}</td></tr>`;
+  }).join('');
+
+  el('result').style.display='block';
+  el('result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>

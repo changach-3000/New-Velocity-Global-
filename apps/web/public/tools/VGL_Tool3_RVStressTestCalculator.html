@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGL Tool 3 — Residual Value Stress Test Calculator</title>
+<style>
+:root{--navy:#0B1F3A;--teal:#005B5E;--gold:#C9922A;--red:#C0272D;--green:#1B7A4A;
+  --amber:#B8640A;--white:#fff;--off:#F4F7FA;--border:#D0DDE8;--char:#1A2535;--mid:#6A7F96;--lgrey:#EEF3F8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--off);color:var(--char);font-size:13px;}
+.header{background:var(--navy);border-bottom:3px solid var(--gold);padding:20px 28px;}
+.header-inner{max-width:900px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;}
+.badge{background:rgba(201,146,42,.18);border:1px solid var(--gold);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:2px;text-transform:uppercase;display:inline-block;margin-bottom:8px;}
+.h1{font-size:20px;color:#fff;font-weight:700;}.h1 span{color:var(--gold);}
+.sub{font-size:11px;color:#7A9BBB;margin-top:4px;}
+.brand{text-align:right;}.brand-name{font-size:13px;color:var(--gold);font-weight:700;}
+.main{max-width:900px;margin:0 auto;padding:24px 24px 60px;}
+.input-card{background:#fff;border-radius:10px;border:1px solid var(--border);padding:22px 24px;margin-bottom:20px;box-shadow:0 2px 10px rgba(11,31,58,.06);}
+.input-card h2{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--gold);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
+.field label{display:block;font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;}
+.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:8px 11px;font-family:inherit;font-size:13px;color:var(--char);background:#fff;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--teal);}
+.run-btn{background:var(--navy);color:#fff;border:none;padding:12px 28px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;margin-top:6px;}
+.run-btn:hover{background:var(--teal);}
+/* RESULTS */
+.results{display:none;}.results.show{display:block;}
+.scenario-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;}
+.scenario-card{border-radius:10px;padding:20px;border:1px solid;}
+.scenario-card.base{background:#E8F5EE;border-color:#B4DCC5;}
+.scenario-card.adverse{background:#FFF3E0;border-color:#FBDDB0;}
+.scenario-card.severe{background:#FDE8E8;border-color:#F5C6C6;}
+.sc-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.sc-label.base{color:var(--green);}
+.sc-label.adverse{color:var(--amber);}
+.sc-label.severe{color:var(--red);}
+.sc-rv{font-size:26px;font-weight:700;line-height:1;margin-bottom:4px;}
+.sc-rv.base{color:var(--green);}
+.sc-rv.adverse{color:var(--amber);}
+.sc-rv.severe{color:var(--red);}
+.sc-pct{font-size:13px;color:var(--mid);margin-bottom:12px;}
+.sc-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;}
+.sc-key{color:var(--mid);}
+.sc-val{font-weight:600;color:var(--char);}
+/* VERDICT */
+.verdict-box{border-radius:10px;padding:20px 22px;margin-bottom:20px;}
+.verdict-box.pass{background:var(--green);color:#fff;}
+.verdict-box.watch{background:var(--amber);color:#fff;}
+.verdict-box.action{background:var(--red);color:#fff;}
+.verdict-box h3{font-size:15px;font-weight:700;margin-bottom:6px;}
+.verdict-box p{font-size:13px;line-height:1.6;opacity:.9;}
+/* RV TABLE */
+.rv-ref-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(11,31,58,.05);margin-bottom:20px;}
+.rv-ref-table th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.7px;}
+.rv-ref-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:12px;}
+.rv-ref-table tr:nth-child(even) td{background:var(--lgrey);}
+.rv-ref-table tr:last-child td{border-bottom:none;}
+/* BAR CHART */
+.bar-section{background:#fff;border-radius:10px;border:1px solid var(--border);padding:20px;margin-bottom:20px;}
+.bar-section h3{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:16px;}
+.bar-row{margin-bottom:14px;}
+.bar-label{font-size:12px;color:var(--mid);margin-bottom:5px;display:flex;justify-content:space-between;}
+.bar-track{height:28px;background:var(--lgrey);border-radius:6px;overflow:hidden;position:relative;}
+.bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:12px;font-weight:700;color:#fff;transition:width .8s;}
+.bar-fill.base-bar{background:var(--green);}
+.bar-fill.adverse-bar{background:var(--amber);}
+.bar-fill.severe-bar{background:var(--red);}
+.bar-fill.cost-line{background:var(--navy);opacity:.3;position:absolute;top:0;left:0;height:100%;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="badge">Bank Credit Tool 3 of 5</div>
+      <div class="h1">Residual Value <span>Stress Test Calculator</span></div>
+      <div class="sub">Three-scenario RV stress test for operating leases and sale-and-leaseback transactions — with automatic action trigger</div>
+    </div>
+    <div class="brand"><div class="brand-name">Velocity Global Leasing</div></div>
+  </div>
+</div>
+<div class="main">
+  <div class="input-card">
+    <h2>Deal Inputs</h2>
+    <div class="grid3">
+      <div class="field"><label>Client / Deal Reference</label><input id="client" value="Nakuru Harvest Co — SAL"></div>
+      <div class="field"><label>Asset Type</label>
+        <select id="assetType" onchange="setRVBenchmark()">
+          <option value="vehicle_isuzu">Commercial Vehicle — Isuzu/Mitsubishi/Hino</option>
+          <option value="vehicle_utility">Utility Vehicle — Toyota HiLux/LC</option>
+          <option value="construction_major">Construction — Cat/Komatsu (major brand)</option>
+          <option value="construction_chinese">Construction — Chinese brand</option>
+          <option value="medical">Medical Equipment</option>
+          <option value="agri">Agricultural Equipment</option>
+          <option value="ict">ICT Equipment</option>
+          <option value="plant">Fixed Plant and Machinery</option>
+        </select>
+      </div>
+      <div class="field"><label>Asset Description</label><input id="assetDesc" value="Grain processing plant"></div>
+    </div>
+    <div class="grid4">
+      <div class="field"><label>Original Asset Cost (KES)</label><input type="number" id="cost" value="95000000" oninput="calcAll()"></div>
+      <div class="field"><label>Lease Term (Months)</label>
+        <select id="term" onchange="setRVBenchmark();calcAll()">
+          <option value="24">24 months</option>
+          <option value="36">36 months</option>
+          <option value="48" selected>48 months</option>
+          <option value="60">60 months</option>
+        </select>
+      </div>
+      <div class="field"><label>Projected RV % of Cost</label><input type="number" id="rvPct" value="40" step="1" min="0" max="100" oninput="calcAll()"></div>
+      <div class="field"><label>Lease Type</label>
+        <select id="leaseType">
+          <option>Finance Lease</option>
+          <option selected>Operating Lease</option>
+          <option>Sale and Leaseback</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid3">
+      <div class="field"><label>Implicit Rate (% p.a.)</label><input type="number" id="rate" value="16.5" step="0.5" oninput="calcAll()"></div>
+      <div class="field"><label>Benchmark RV Range (auto-set)</label><input id="benchmark" readonly style="background:var(--lgrey);color:var(--mid);" value="Select asset type above"></div>
+      <div class="field"><label>RV vs Benchmark Assessment</label><input id="benchAssess" readonly style="font-weight:700;" value="—"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Outstanding Lease Balance at End of Term (KES)</label><input type="number" id="outstanding" value="0" oninput="calcAll()" placeholder="0 for full-payout lease"></div>
+      <div class="field"><label>Asset Marketability</label>
+        <select id="marketability">
+          <option>Active secondary market — quick disposal</option>
+          <option>Moderate — 30–60 day marketing</option>
+          <option>Thin market — specialist buyers only</option>
+          <option>Very thin — custom/installed asset</option>
+        </select>
+      </div>
+    </div>
+    <button class="run-btn" onclick="calcAll();document.getElementById('results').classList.add('show');document.getElementById('results').scrollIntoView({behavior:'smooth'})">Run Stress Test →</button>
+  </div>
+
+  <div class="results" id="results">
+    <!-- SCENARIOS -->
+    <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:10px;">Three-Scenario Stress Test Results <span style="flex:1;height:2px;background:var(--gold);display:inline-block;"></span></div>
+    <div class="scenario-grid">
+      <div class="scenario-card base" id="baseCard">
+        <div class="sc-label base">BASE CASE</div>
+        <div class="sc-rv base" id="baseRV">—</div>
+        <div class="sc-pct" id="basePct">—</div>
+        <div class="sc-row"><span class="sc-key">Recovery gap:</span><span class="sc-val" id="baseGap">—</span></div>
+        <div class="sc-row"><span class="sc-key">Gap as % of cost:</span><span class="sc-val" id="baseGapPct">—</span></div>
+        <div class="sc-row"><span class="sc-key">Assessment:</span><span class="sc-val" id="baseAssess">—</span></div>
+      </div>
+      <div class="scenario-card adverse" id="adverseCard">
+        <div class="sc-label adverse">ADVERSE CASE (−25%)</div>
+        <div class="sc-rv adverse" id="adverseRV">—</div>
+        <div class="sc-pct" id="adversePct">—</div>
+        <div class="sc-row"><span class="sc-key">Recovery gap:</span><span class="sc-val" id="adverseGap">—</span></div>
+        <div class="sc-row"><span class="sc-key">Gap as % of cost:</span><span class="sc-val" id="adverseGapPct">—</span></div>
+        <div class="sc-row"><span class="sc-key">Assessment:</span><span class="sc-val" id="adverseAssess">—</span></div>
+      </div>
+      <div class="scenario-card severe" id="severeCard">
+        <div class="sc-label severe">SEVERE CASE (−50%)</div>
+        <div class="sc-rv severe" id="severeRV">—</div>
+        <div class="sc-pct" id="severePct">—</div>
+        <div class="sc-row"><span class="sc-key">Recovery gap:</span><span class="sc-val" id="severeGap">—</span></div>
+        <div class="sc-row"><span class="sc-key">Gap as % of cost:</span><span class="sc-val" id="severeGapPct">—</span></div>
+        <div class="sc-row"><span class="sc-key">Assessment:</span><span class="sc-val" id="severeAssess">—</span></div>
+      </div>
+    </div>
+
+    <!-- BAR CHART -->
+    <div class="bar-section">
+      <h3>Visual RV Recovery vs Outstanding Balance</h3>
+      <div class="bar-row">
+        <div class="bar-label"><span>Base Case RV</span><span id="baseRV_label">—</span></div>
+        <div class="bar-track"><div class="bar-fill base-bar" id="baseBar">Base</div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label"><span>Adverse Case RV (−25%)</span><span id="adverseRV_label">—</span></div>
+        <div class="bar-track"><div class="bar-fill adverse-bar" id="adverseBar">Adverse</div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label"><span>Severe Case RV (−50%)</span><span id="severeRV_label">—</span></div>
+        <div class="bar-track"><div class="bar-fill severe-bar" id="severeBar">Severe</div></div>
+      </div>
+    </div>
+
+    <!-- VERDICT -->
+    <div id="verdict"></div>
+
+    <!-- RV REFERENCE TABLE -->
+    <div style="font-size:14px;font-weight:700;color:var(--navy);margin:20px 0 12px;display:flex;align-items:center;gap:10px;">Market RV Reference Table — Kenyan Market <span style="flex:1;height:2px;background:var(--gold);display:inline-block;"></span></div>
+    <table class="rv-ref-table">
+      <thead><tr><th>Asset Class</th><th>24M RV</th><th>36M RV</th><th>48M RV</th><th>60M RV</th><th>Key Risk Factors</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Isuzu NQR / Mitsubishi</strong></td><td>75–80%</td><td>60–70%</td><td>45–55%</td><td>35–45%</td><td>Mileage, service history, panels</td></tr>
+        <tr><td><strong>Isuzu FVZ / Heavy commercial</strong></td><td>70–78%</td><td>58–68%</td><td>43–53%</td><td>32–42%</td><td>Engine hours, tyre wear</td></tr>
+        <tr><td><strong>Toyota HiLux / Land Cruiser</strong></td><td>80–88%</td><td>70–80%</td><td>60–70%</td><td>50–62%</td><td>Strong secondary market</td></tr>
+        <tr><td><strong>Caterpillar excavator (new)</strong></td><td>78–85%</td><td>65–75%</td><td>55–65%</td><td>44–54%</td><td>Hours of operation, undercarriage</td></tr>
+        <tr><td><strong>Komatsu dozer</strong></td><td>75–82%</td><td>63–72%</td><td>52–62%</td><td>42–52%</td><td>Similar to Cat — brand premium</td></tr>
+        <tr><td><strong>Chinese brand excavator</strong></td><td>60–68%</td><td>48–58%</td><td>38–48%</td><td>28–38%</td><td>Much weaker secondary market</td></tr>
+        <tr><td><strong>MRI machine (1.5T, major brand)</strong></td><td>65–75%</td><td>50–60%</td><td>36–46%</td><td>24–34%</td><td>Technology obsolescence, parts</td></tr>
+        <tr><td><strong>CT scanner (64-slice)</strong></td><td>62–72%</td><td>48–58%</td><td>34–44%</td><td>22–32%</td><td>High obsolescence risk</td></tr>
+        <tr><td><strong>Agricultural (JD/New Holland)</strong></td><td>72–80%</td><td>60–70%</td><td>50–60%</td><td>38–50%</td><td>Service record critical</td></tr>
+        <tr><td><strong>Enterprise laptops</strong></td><td>30–40%</td><td>15–25%</td><td>8–15%</td><td>—</td><td>3-yr tech cycle — avoid operating lease</td></tr>
+        <tr><td><strong>Fixed plant (installed)</strong></td><td>55–65%</td><td>45–55%</td><td>35–45%</td><td>25–35%</td><td>Relocation cost, tech age</td></tr>
+      </tbody>
+    </table>
+    <div style="text-align:right;"><button onclick="window.print()" style="background:var(--teal);color:#fff;border:none;padding:10px 22px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">🖨 Print Report</button></div>
+  </div>
+</div>
+
+<script>
+const benchmarks={
+  vehicle_isuzu:{24:'75–80%',36:'60–70%',48:'45–55%',60:'35–45%'},
+  vehicle_utility:{24:'80–88%',36:'70–80%',48:'60–70%',60:'50–62%'},
+  construction_major:{24:'78–85%',36:'65–75%',48:'55–65%',60:'44–54%'},
+  construction_chinese:{24:'60–68%',36:'48–58%',48:'38–48%',60:'28–38%'},
+  medical:{24:'65–75%',36:'50–60%',48:'36–46%',60:'24–34%'},
+  agri:{24:'72–80%',36:'60–70%',48:'50–60%',60:'38–50%'},
+  ict:{24:'30–40%',36:'15–25%',48:'8–15%',60:'—'},
+  plant:{24:'55–65%',36:'45–55%',48:'35–45%',60:'25–35%'},
+};
+
+function setRVBenchmark(){
+  const at=document.getElementById('assetType').value;
+  const term=document.getElementById('term').value;
+  const bm=benchmarks[at]?.[term]||'—';
+  document.getElementById('benchmark').value=bm+' of original cost';
+  // Auto-suggest RV mid-point
+  if(bm!=='—'){
+    const parts=bm.replace('%','').split('–');
+    if(parts.length===2){
+      const mid=(parseInt(parts[0])+parseInt(parts[1]))/2;
+      document.getElementById('rvPct').value=mid;
+    }
+  }
+  calcAll();
+}
+
+function fmt(n){return isNaN(n)?'—':'KES '+Math.round(n).toLocaleString();}
+function fmtP(n){return isNaN(n)||!isFinite(n)?'—':n.toFixed(1)+'%';}
+
+function calcAll(){
+  const cost=parseFloat(document.getElementById('cost').value)||0;
+  const rvPct=parseFloat(document.getElementById('rvPct').value)||0;
+  const term=parseInt(document.getElementById('term').value)||48;
+  const rate=parseFloat(document.getElementById('rate').value)||0;
+  const outstanding=parseFloat(document.getElementById('outstanding').value)||0;
+  const at=document.getElementById('assetType').value;
+
+  // Calc rental and total
+  const r=rate/12/100;
+  const af=(1-Math.pow(1+r,-term))/r;
+  const monthlyRental=cost/af;
+  const totalRental=monthlyRental*term;
+  const residualDebt=outstanding; // outstanding balance at end of term
+
+  const baseRV=cost*rvPct/100;
+  const adverseRV=baseRV*0.75;
+  const severeRV=baseRV*0.50;
+
+  // Gap = outstanding balance minus RV recovery
+  function gap(rv){return Math.max(0,residualDebt-rv);}
+  const baseGap=gap(baseRV);
+  const adverseGap=gap(adverseRV);
+  const severeGap=gap(severeRV);
+  const severeGapPct=cost>0?severeGap/cost*100:0;
+
+  // Benchmark assessment
+  const bm=benchmarks[at]?.[term]||'';
+  if(bm&&bm!=='—'){
+    const parts=bm.replace('%','').split('–');
+    const lo=parseInt(parts[0]),hi=parseInt(parts[1]);
+    if(rvPct>=lo&&rvPct<=hi) document.getElementById('benchAssess').value='✓ Within market range ('+bm+')';
+    else if(rvPct<lo) document.getElementById('benchAssess').value='⚠ Below market range — review assumption';
+    else document.getElementById('benchAssess').value='Above market range — conservative';
+    document.getElementById('benchAssess').style.color=rvPct>=lo?'var(--green)':'var(--red)';
+  }
+
+  // Populate scenarios
+  function pop(prefix,rv,decPct,gapVal){
+    const el=id=>document.getElementById(id);
+    el(prefix+'RV').textContent=fmt(rv);
+    el(prefix+'Pct').textContent=fmtP(rv/cost*100)+' of original cost';
+    el(prefix+'Gap').textContent=gapVal>0?fmt(gapVal):'No gap ✓';
+    el(prefix+'GapPct').textContent=cost>0?fmtP(gapVal/cost*100):'—';
+    const gPct=cost>0?gapVal/cost*100:0;
+    el(prefix+'Assess').textContent=gPct===0?'Full recovery':gPct<=10?'Acceptable':gPct<=15?'Monitor':'⚠ Action required';
+  }
+  pop('base',baseRV,0,baseGap);
+  pop('adverse',adverseRV,25,adverseGap);
+  pop('severe',severeRV,50,severeGap);
+
+  // Bars
+  const maxVal=cost;
+  function setBar(id,rv,labelId){
+    const pct=Math.min(100,rv/maxVal*100);
+    document.getElementById(id).style.width=pct+'%';
+    document.getElementById(id).textContent=fmt(rv);
+    if(labelId) document.getElementById(labelId).textContent=fmtP(rv/cost*100)+' of cost';
+  }
+  setBar('baseBar',baseRV,'baseRV_label');
+  setBar('adverseBar',adverseRV,'adverseRV_label');
+  setBar('severeBar',severeRV,'severeRV_label');
+
+  // Verdict
+  let vClass,vTitle,vText;
+  if(severeGapPct>15){
+    vClass='action';
+    vTitle='⚠ ACTION REQUIRED — Severe case recovery gap exceeds 15% of original cost';
+    vText=`The severe case scenario produces a recovery gap of ${fmt(severeGap)} — representing ${fmtP(severeGapPct)} of the original asset cost of ${fmt(cost)}. This exceeds the 15% action trigger. The deal must be restructured before approval. Three options: (1) Reprice — increase the implicit rate to build in an RV risk premium (add 100–200 bps), (2) Require a cash deposit from the lessee equal to the severe case gap — held as additional security, (3) Restructure as a finance lease with a nominal residual — removing the RV risk from the deal structure entirely.`;
+  } else if(severeGapPct>10){
+    vClass='watch';
+    vTitle='Monitor — Severe case gap is approaching the 15% action trigger';
+    vText=`The severe case recovery gap of ${fmt(severeGap)} (${fmtP(severeGapPct)} of original cost) is within the acceptable range but approaching the action trigger. This deal should proceed with enhanced monitoring: (1) Obtain a maintenance compliance certificate every 6 months, (2) Conduct an annual independent revaluation to track actual vs projected RV, (3) If actual RV falls more than 15% below projection in any annual review — escalate to credit committee immediately.`;
+  } else {
+    vClass='pass';
+    vTitle='Pass — Residual value stress test within acceptable parameters';
+    vText=`The severe case recovery gap of ${fmt(severeGap)} (${fmtP(severeGapPct)} of original cost) is within acceptable limits. The deal's residual value assumptions are supported by market evidence and the stress test does not trigger remedial action. Standard lease monitoring applies — semi-annual maintenance compliance, annual insurance renewal, and end-of-lease inspection at month ${term-2} (2 months before expiry).`;
+  }
+  document.getElementById('verdict').innerHTML=`<div class="verdict-box ${vClass}"><h3>${vTitle}</h3><p>${vText}</p></div>`;
+}
+
+// Init
+setRVBenchmark();
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGL Tool 5 — Lease Documentation Compliance Checklist</title>
+<style>
+:root{--navy:#0B1F3A;--teal:#005B5E;--gold:#C9922A;--red:#C0272D;--green:#1B7A4A;
+  --amber:#B8640A;--white:#fff;--off:#F4F7FA;--border:#D0DDE8;--char:#1A2535;--mid:#6A7F96;--lgrey:#EEF3F8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--off);color:var(--char);font-size:13px;}
+.header{background:var(--navy);border-bottom:3px solid var(--gold);padding:18px 28px;}
+.header-inner{max-width:900px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;}
+.badge{background:rgba(201,146,42,.18);border:1px solid var(--gold);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:2px;text-transform:uppercase;display:inline-block;margin-bottom:8px;}
+.h1{font-size:20px;color:#fff;font-weight:700;}.h1 span{color:var(--gold);}
+.sub{font-size:11px;color:#7A9BBB;margin-top:4px;}
+.brand-name{font-size:13px;color:var(--gold);font-weight:700;text-align:right;}
+.main{max-width:900px;margin:0 auto;padding:24px 24px 60px;}
+/* HEADER INFO */
+.deal-header{background:#fff;border-radius:10px;border:1px solid var(--border);padding:18px 20px;margin-bottom:20px;box-shadow:0 2px 8px rgba(11,31,58,.05);}
+.deal-header h2{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.dh-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.field label{display:block;font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;}
+.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:8px 11px;font-size:13px;font-family:inherit;color:var(--char);background:#fff;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--teal);}
+/* PROGRESS */
+.prog-wrap{background:#fff;border-radius:8px;border:1px solid var(--border);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.prog-track{flex:1;height:8px;background:var(--lgrey);border-radius:4px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:4px;transition:width .3s;}
+.prog-label{font-size:12px;color:var(--mid);font-weight:600;white-space:nowrap;}
+/* SECTIONS */
+.check-section{background:#fff;border-radius:10px;border:1px solid var(--border);margin-bottom:16px;overflow:hidden;box-shadow:0 2px 8px rgba(11,31,58,.05);}
+.cs-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:var(--navy);cursor:pointer;}
+.cs-num{width:26px;height:26px;border-radius:50%;border:2px solid rgba(201,146,42,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gold);font-weight:700;flex-shrink:0;}
+.cs-num.all-pass{background:var(--green);border-color:var(--green);color:#fff;}
+.cs-num.has-fail{background:var(--red);border-color:var(--red);color:#fff;}
+.cs-num.has-warn{background:var(--amber);border-color:var(--amber);color:#fff;}
+.cs-title{flex:1;font-size:13px;font-weight:600;color:#fff;}
+.cs-score{font-size:11px;color:#5A7A9A;white-space:nowrap;}
+.cs-chevron{color:#3A5A7A;font-size:14px;transition:transform .3s;}
+.check-section.open .cs-chevron{transform:rotate(180deg);}
+.cs-body{display:none;padding:4px 0;}
+.check-section.open .cs-body{display:block;}
+/* ITEMS */
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border);transition:background .1s;}
+.check-item:last-child{border-bottom:none;}
+.check-item:hover{background:var(--off);}
+.ci-controls{display:flex;gap:6px;flex-shrink:0;margin-top:2px;}
+.ci-btn{width:30px;height:30px;border-radius:6px;border:1.5px solid;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s;background:#fff;}
+.ci-btn.pass-btn{border-color:#B4DCC5;color:var(--green);}
+.ci-btn.pass-btn.active{background:var(--green);border-color:var(--green);color:#fff;}
+.ci-btn.fail-btn{border-color:#F5C6C6;color:var(--red);}
+.ci-btn.fail-btn.active{background:var(--red);border-color:var(--red);color:#fff;}
+.ci-btn.na-btn{border-color:var(--border);color:var(--mid);}
+.ci-btn.na-btn.active{background:var(--mid);border-color:var(--mid);color:#fff;}
+.ci-text{flex:1;}
+.ci-label{font-size:13px;font-weight:600;color:var(--char);margin-bottom:3px;}
+.ci-desc{font-size:11px;color:var(--mid);line-height:1.5;}
+.ci-critical{font-size:10px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
+.ci-notes{width:100%;border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:11px;font-family:inherit;margin-top:6px;resize:none;height:42px;}
+/* RESULT */
+.result-section{display:none;}.result-section.show{display:block;}
+.result-hero{border-radius:10px;padding:22px 24px;margin-bottom:20px;}
+.result-hero.clear{background:var(--green);color:#fff;}
+.result-hero.blocked{background:var(--red);color:#fff;}
+.result-hero.conditional{background:var(--amber);color:var(--navy);}
+.result-hero h2{font-size:18px;font-weight:700;margin-bottom:6px;}
+.result-hero p{font-size:13px;line-height:1.6;opacity:.9;}
+.fail-list{background:#fff;border-radius:10px;border:1px solid var(--border);padding:18px;margin-bottom:16px;}
+.fail-list h3{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px;}
+.fail-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;padding:10px 12px;border-radius:7px;font-size:12px;}
+.fail-item.is-fail{background:#FDE8E8;border:1px solid #F5C6C6;}
+.fail-item.is-warn{background:#FFF3E0;border:1px solid #FBDDB0;}
+.fail-icon{font-size:14px;flex-shrink:0;}
+.sig-block{background:#fff;border-radius:10px;border:1px solid var(--border);padding:18px;margin-top:16px;}
+.sig-block h3{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.sig-field{border-bottom:1.5px solid var(--border);padding-bottom:6px;font-size:12px;color:var(--mid);}
+.sig-label{font-size:10px;color:var(--mid);margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="badge">Bank Credit Tool 5 of 5</div>
+      <div class="h1">Lease Documentation <span>Compliance Checklist</span></div>
+      <div class="sub">Pre-drawdown verification — confirms the deal is documented as a lease, not a loan, before funds are released</div>
+    </div>
+    <div><div class="brand-name">Velocity Global Leasing</div></div>
+  </div>
+</div>
+<div class="main">
+  <!-- DEAL DETAILS -->
+  <div class="deal-header">
+    <h2>Deal Details</h2>
+    <div class="dh-grid">
+      <div class="field"><label>Client / Lessee</label><input id="dh_client" placeholder="e.g. Prestige Logistics Ltd"></div>
+      <div class="field"><label>Asset</label><input id="dh_asset" placeholder="e.g. 8 Isuzu NQR trucks"></div>
+      <div class="field"><label>Deal Value (KES)</label><input type="number" id="dh_value" placeholder="46400000"></div>
+      <div class="field"><label>Product Type</label>
+        <select id="dh_product">
+          <option>Finance Lease — Full Payout</option>
+          <option>Operating Lease</option>
+          <option>Sale and Leaseback</option>
+          <option>Hire Purchase</option>
+        </select>
+      </div>
+      <div class="field"><label>Relationship Manager</label><input id="dh_rm" placeholder="RM name"></div>
+      <div class="field"><label>Checklist Date</label><input type="date" id="dh_date"></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="prog-wrap">
+    <div class="prog-track"><div class="prog-fill" id="pFill" style="width:0%;background:var(--gold);"></div></div>
+    <div class="prog-label" id="pLabel">0 items reviewed</div>
+  </div>
+
+  <!-- CHECKLISTS -->
+  <div id="checklistContainer"></div>
+
+  <!-- GENERATE BUTTON -->
+  <div style="text-align:center;margin:20px 0;">
+    <button class="btn-generate" onclick="generateResult()" style="background:var(--navy);color:#fff;border:none;padding:14px 36px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Generate Compliance Report →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-section" id="resultSection">
+    <div id="resultHero"></div>
+    <div class="fail-list" id="failList"><h3>Items Requiring Attention Before Drawdown</h3><div id="failItems"></div></div>
+    <div class="sig-block">
+      <h3>Sign-off</h3>
+      <div class="sig-grid">
+        <div><div class="sig-field"></div><div class="sig-label">Relationship Manager</div></div>
+        <div><div class="sig-field"></div><div class="sig-label">Credit Officer</div></div>
+        <div><div class="sig-field"></div><div class="sig-label">Date of Drawdown Approval</div></div>
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:12px;"><button onclick="window.print()" style="background:var(--teal);color:#fff;border:none;padding:10px 22px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">🖨 Print Compliance Checklist</button></div>
+  </div>
+</div>
+
+<script>
+const SECTIONS=[
+  {
+    id:'doc',title:'1. Core Documentation',
+    items:[
+      {id:'doc1',label:'Lease Agreement — not a Facility Letter',desc:'The executed document must be a purpose-drafted Finance Lease Agreement (or Operating Lease / HP Agreement as applicable) — not a loan facility letter or overdraft agreement. Check the document heading and structure.',critical:true},
+      {id:'doc2',label:'Ownership clause clearly establishes lessor as legal and beneficial owner',desc:'The lease agreement must contain an explicit statement that the bank is and shall remain the legal and beneficial owner of the equipment throughout the lease term. Check wording — vague or passive language is insufficient.',critical:true},
+      {id:'doc3',label:'Rental schedule — amount, frequency, payment date, VAT treatment',desc:'The agreement must specify: monthly rental in KES (VAT-exclusive), payment date, acceptable payment method, and VAT treatment (16% VAT on each rental if bank is VAT-registered).'},
+      {id:'doc4',label:'Default trigger defined — minimum 5 business days from due date',desc:'The default clause must specify the number of business days after the payment due date before default is triggered. Less than 5 days is operationally unreasonable and should be flagged.',critical:true},
+      {id:'doc5',label:'End-of-term options — all three documented with specific KES amounts',desc:'The agreement must document: (1) Purchase option at a specific KES amount (not "market value"), (2) Extension option at a stated reduced rental, (3) Return option with specified condition standards. Option exercise deadline must be stated.'},
+      {id:'doc6',label:'Early termination formula — PV basis, no additional penalty fee',desc:'The early termination amount must be calculated as the present value of outstanding rentals at the implicit rate. No additional termination fee should be charged on top of the PV calculation.'},
+    ]
+  },
+  {
+    id:'asset',title:'2. Asset and Security',
+    items:[
+      {id:'as1',label:'Asset title / logbook registered in bank name — confirmed',desc:'For commercial vehicles: logbook registered at NTSA in the bank\'s name. For other assets: serial numbers recorded in lease schedule. Original title documents held by bank. This is the bank\'s primary security — not a charge over the lessee\'s assets.',critical:true},
+      {id:'as2',label:'Independent asset valuation received — market value AND forced sale value',desc:'A signed valuation report from an approved independent valuer must be received before drawdown. Must include: market value, forced sale value, asset condition, and remaining useful life. Dealer quotes or lessee declarations are not sufficient.',critical:true},
+      {id:'as3',label:'Asset is sourced from authorised supplier — confirmed',desc:'The supplier must be an authorised OEM dealer or approved vendor. Grey market or unverified sources create warranty, registration, and residual value risks.'},
+      {id:'as4',label:'Asset condition confirmed — physical inspection or delivery note signed',desc:'For used assets: physical inspection report. For new assets: signed delivery note confirming asset received in described condition. This is the baseline for end-of-lease condition assessment.'},
+      {id:'as5',label:'Residual value stress test completed (for operating leases / SAL)',desc:'Three-scenario RV stress test must be completed before approval for any operating lease or sale-and-leaseback. Severe case recovery gap must be below 15% of original cost — or action must be documented.',critical:false},
+    ]
+  },
+  {
+    id:'ins',title:'3. Insurance',
+    items:[
+      {id:'in1',label:'All-risks insurance certificate received — current and valid',desc:'A current all-risks (comprehensive) insurance certificate must be received before drawdown. Third-party only insurance is not acceptable for leased assets.',critical:true},
+      {id:'in2',label:'Bank named as loss payee and additional insured',desc:'The insurance certificate must name the bank as loss payee — meaning insurance proceeds in a total loss event are paid directly to the bank, not to the lessee.',critical:true},
+      {id:'in3',label:'Agreed-value policy (not market value) — confirmed for assets over KES 5M',desc:'For assets above KES 5M, the insurance policy should be on an agreed-value basis — not market value. Agreed value ensures the bank recovers the full insured amount in a total loss regardless of depreciation.'},
+      {id:'in4',label:'Insurance renewal date diarised in bank\'s asset register',desc:'The insurance renewal date must be recorded in the bank\'s asset management system with an automatic alert set for 60 days before renewal. A lapsed insurance policy on a leased asset is a critical security failure.'},
+    ]
+  },
+  {
+    id:'credit',title:'4. Credit Conditions',
+    items:[
+      {id:'cr1',label:'Rental coverage ratio calculated correctly — after all existing debt service',desc:'The rental coverage ratio in the credit memo must use free EBITDA after all existing debt service — not raw EBITDA. Coverage ratio must be at minimum 1.5× (target 2.0×). Confirm the calculation methodology used.',critical:true},
+      {id:'cr2',label:'Guarantees obtained and executed',desc:'All required guarantees (personal director guarantees, corporate parent guarantees) must be signed, dated, and witnessed before drawdown. Unsigned guarantee letters are not enforceable.'},
+      {id:'cr3',label:'Cross-default and negative pledge clauses in agreement (where required)',desc:'For exposures above KES 50M: cross-default clause with minimum KES 5M threshold and 30-day cure period. Negative pledge covering leased assets. Confirm both are present and correctly drafted.'},
+      {id:'cr4',label:'Capital allowance entitlement documented — lessee or lessor',desc:'The credit memo must specify which party claims the capital allowances. For a finance lease: lessee (economic owner) claims. For an operating lease: bank (legal owner) claims. Double claims create KRA liability.',critical:true},
+    ]
+  },
+  {
+    id:'ops',title:'5. Operational and Ongoing',
+    items:[
+      {id:'op1',label:'Maintenance obligation specified in lease agreement',desc:'The lease agreement must require the lessee to maintain the asset per manufacturer\'s service schedule, using approved service providers, and to produce a semi-annual maintenance compliance certificate.'},
+      {id:'op2',label:'Asset registered in bank\'s internal asset register',desc:'The asset must be registered in the bank\'s centralised lease asset register — with full details: asset description, serial/logbook number, lessee, lease start/end dates, insurance details, and RV projection.'},
+      {id:'op3',label:'End-of-lease action diarised — notification date, option deadline',desc:'The bank\'s portfolio management system must show: (1) formal notification date (30 days before expiry), (2) option exercise deadline (30 days before expiry), (3) pre-return inspection date (if return anticipated). Diarise immediately on execution.'},
+      {id:'op4',label:'Assigned credit officer confirmed — single point of accountability',desc:'A specific credit officer must be assigned as primary relationship manager for this lease from execution through maturity. Their name must appear in the credit memo and the asset register.'},
+      {id:'op5',label:'VAT invoice process confirmed — monthly invoices to lessee',desc:'For VAT-registered bank lessors: confirm that the bank\'s accounts receivable system is set up to generate VAT-compliant invoices for each rental payment — showing VAT-exclusive rental, 16% VAT, and VAT-inclusive total.'},
+    ]
+  },
+];
+
+const state={};
+let totalItems=0;
+
+function build(){
+  const container=document.getElementById('checklistContainer');
+  container.innerHTML='';
+  SECTIONS.forEach((sec,si)=>{
+    totalItems+=sec.items.length;
+    const div=document.createElement('div');
+    div.className='check-section'+(si===0?' open':'');
+    div.id='sec_'+sec.id;
+    div.innerHTML=`
+      <div class="cs-header" onclick="toggleSec('sec_${sec.id}')">
+        <div class="cs-num" id="secNum_${sec.id}">0${si+1}</div>
+        <div class="cs-title">${sec.title}</div>
+        <div class="cs-score" id="secScore_${sec.id}">0/${sec.items.length}</div>
+        <div class="cs-chevron">▾</div>
+      </div>
+      <div class="cs-body" id="secBody_${sec.id}">
+        ${sec.items.map(item=>`
+          <div class="check-item" id="ci_${item.id}">
+            <div class="ci-controls">
+              <button class="ci-btn pass-btn" onclick="setStatus('${item.id}','pass')" title="Pass / Confirmed">✓</button>
+              <button class="ci-btn fail-btn" onclick="setStatus('${item.id}','fail')" title="Fail / Not completed">✗</button>
+              <button class="ci-btn na-btn" onclick="setStatus('${item.id}','na')" title="Not applicable">N/A</button>
+            </div>
+            <div class="ci-text">
+              <div class="ci-label">${item.label}${item.critical?'<span class="ci-critical"> ★ Critical — Drawdown blocked if fail</span>':''}</div>
+              <div class="ci-desc">${item.desc}</div>
+              <textarea class="ci-notes" placeholder="Notes (optional)..." id="note_${item.id}"></textarea>
+            </div>
+          </div>
+        `).join('')}
+      </div>`;
+    container.appendChild(div);
+  });
+  updateProgress();
+}
+
+function toggleSec(id){document.getElementById(id).classList.toggle('open');}
+
+function setStatus(itemId,status){
+  state[itemId]=status;
+  const ci=document.getElementById('ci_'+itemId);
+  ci.querySelectorAll('.ci-btn').forEach(b=>{b.classList.remove('active');});
+  ci.querySelector('.'+status+'-btn').classList.add('active');
+  ci.style.background=status==='pass'?'#F0FAF4':status==='fail'?'#FDF2F2':status==='na'?'#F8F8FA':'';
+  updateProgress();
+  updateSectionScore();
+}
+
+function updateProgress(){
+  const reviewed=Object.keys(state).length;
+  const failed=Object.values(state).filter(v=>v==='fail').length;
+  const pct=totalItems>0?reviewed/totalItems*100:0;
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pFill').style.background=failed>0?'var(--red)':pct<50?'var(--gold)':'var(--green)';
+  document.getElementById('pLabel').textContent=`${reviewed} of ${totalItems} items reviewed · ${Object.values(state).filter(v=>v==='pass').length} passed · ${failed} failed`;
+}
+
+function updateSectionScore(){
+  SECTIONS.forEach(sec=>{
+    const passed=sec.items.filter(i=>state[i.id]==='pass').length;
+    const failed=sec.items.filter(i=>state[i.id]==='fail').length;
+    const total=sec.items.length;
+    document.getElementById('secScore_'+sec.id).textContent=`${passed}/${total} passed`;
+    const numEl=document.getElementById('secNum_'+sec.id);
+    numEl.className='cs-num'+(failed>0?' has-fail':passed===total?' all-pass':state[sec.items[0].id]?' has-warn':'');
+    if(failed>0) numEl.textContent='✗';
+    else if(passed===total) numEl.textContent='✓';
+    else numEl.textContent='0'+(SECTIONS.indexOf(sec)+1);
+  });
+}
+
+function generateResult(){
+  const allItems=SECTIONS.flatMap(s=>s.items);
+  const criticalFails=allItems.filter(i=>i.critical&&state[i.id]==='fail');
+  const allFails=allItems.filter(i=>state[i.id]==='fail');
+  const allPass=allFails.length===0&&Object.keys(state).length>=totalItems*0.8;
+
+  let heroClass,heroTitle,heroText;
+  if(criticalFails.length>0){
+    heroClass='blocked';
+    heroTitle='🚫 DRAWDOWN BLOCKED — '+criticalFails.length+' critical item'+(criticalFails.length>1?'s':'')+ ' not cleared';
+    heroText=`This lease transaction cannot proceed to drawdown until all critical items are resolved. Critical items are marked ★ and represent the minimum requirements for a lease transaction to be legally sound, commercially protected, and compliant with CBK prudential guidelines. Releasing funds without clearing these items exposes the bank to unquantified legal, security, and recovery risk.`;
+  } else if(allFails.length>0){
+    heroClass='conditional';
+    heroTitle='⚠ CONDITIONAL APPROVAL — '+allFails.length+' item'+(allFails.length>1?'s':'')+' require resolution';
+    heroText=`No critical items are outstanding. ${allFails.length} non-critical item${allFails.length>1?'s':''} require attention — these should be resolved within the agreed conditions subsequent timeline (typically 30 days from drawdown). The RM is responsible for tracking resolution and updating the asset register when each item is cleared.`;
+  } else {
+    heroClass='clear';
+    heroTitle='✅ CLEARED FOR DRAWDOWN — All documentation requirements met';
+    heroText=`All checklist items are confirmed. This lease transaction is correctly documented as a lease (not a loan or HP), the asset is properly secured in the bank\'s name, insurance is in place with the bank as loss payee, and all credit conditions are met. Drawdown may proceed following credit officer sign-off.`;
+  }
+
+  document.getElementById('resultHero').innerHTML=`<div class="result-hero ${heroClass}"><h2>${heroTitle}</h2><p>${heroText}</p></div>`;
+
+  const failItems=allFails.map(i=>`<div class="fail-item is-fail"><span class="fail-icon">${i.critical?'🚫':'⚠'}</span><div><strong>${i.label}</strong>${i.critical?' <span style="font-size:10px;background:rgba(192,39,45,.15);padding:1px 6px;border-radius:3px;color:var(--red)">CRITICAL</span>':''}<br><span style="color:var(--char);font-size:11px;">${i.desc}</span>${document.getElementById('note_'+i.id)?.value?'<br><em style="color:var(--mid);font-size:11px;">Note: '+document.getElementById('note_'+i.id).value+'</em>':''}</div></div>`).join('');
+  document.getElementById('failItems').innerHTML=failItems||'<div style="color:var(--green);font-weight:600;padding:8px 0;">✓ No failed items</div>';
+
+  document.getElementById('resultSection').classList.add('show');
+  document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Init
+document.addEventListener('DOMContentLoaded',()=>{
+  build();
+  document.getElementById('dh_date').value=new Date().toISOString().split('T')[0];
+});
+</script>
+</body>
+</html>

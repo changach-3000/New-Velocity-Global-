@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGL Tool 1 — Lease vs Loan Credit Appraisal Comparator</title>
+<style>
+:root{
+  --navy:#0B1F3A;--teal:#005B5E;--gold:#C9922A;--red:#C0272D;--green:#1B7A4A;
+  --white:#fff;--off:#F4F7FA;--border:#D0DDE8;--char:#1A2535;--mid:#6A7F96;
+  --lgrey:#EEF3F8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--off);color:var(--char);font-size:14px;}
+.header{background:var(--navy);border-bottom:3px solid var(--gold);padding:22px 28px;}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:20px;}
+.badge{background:rgba(201,146,42,.18);border:1px solid var(--gold);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:2px;text-transform:uppercase;display:inline-block;margin-bottom:8px;}
+.h1{font-size:22px;color:#fff;font-weight:700;line-height:1.2;}
+.h1 span{color:var(--gold);}
+.header-sub{font-size:12px;color:#7A9BBB;margin-top:5px;}
+.brand{text-align:right;flex-shrink:0;}
+.brand-name{font-size:13px;color:var(--gold);font-weight:700;}
+.brand-tag{font-size:10px;color:#4A6880;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;}
+.main{max-width:1100px;margin:0 auto;padding:28px 24px 60px;}
+.intro-bar{background:var(--red);color:#fff;border-radius:8px;padding:14px 20px;margin-bottom:24px;font-size:13px;line-height:1.6;}
+.intro-bar strong{font-weight:700;}
+/* INPUTS */
+.input-card{background:#fff;border-radius:10px;border:1px solid var(--border);padding:22px 24px;margin-bottom:24px;box-shadow:0 2px 12px rgba(11,31,58,.06);}
+.input-card h2{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--gold);}
+.field-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:9px 12px;font-family:inherit;font-size:13px;color:var(--char);background:#fff;transition:border-color .15s;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--teal);}
+.run-btn{background:var(--navy);color:#fff;border:none;padding:13px 32px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-top:18px;transition:background .2s;}
+.run-btn:hover{background:var(--teal);}
+/* COMPARISON TABLE */
+.compare-section{display:none;}
+.compare-section.show{display:block;}
+.section-title{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.section-title::after{content:'';flex:1;height:2px;background:var(--gold);}
+.compare-table{width:100%;border-collapse:collapse;margin-bottom:28px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(11,31,58,.06);}
+.compare-table th{padding:12px 16px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;}
+.th-dim{background:var(--navy);color:#fff;}
+.th-loan{background:#1A3A5A;color:#9ABBD0;}
+.th-lease{background:var(--teal);color:#fff;}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top;line-height:1.5;}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table tr:nth-child(even) td{background:var(--lgrey);}
+.td-dim{font-weight:600;color:var(--navy);background:var(--lgrey)!important;width:28%;}
+.td-loan{width:36%;color:var(--char);}
+.td-lease{width:36%;color:var(--char);}
+.error-tag{background:#FDE8E8;color:var(--red);font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;display:inline-block;margin-top:4px;letter-spacing:.5px;}
+.correct-tag{background:#E8F5EE;color:var(--green);font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;display:inline-block;margin-top:4px;letter-spacing:.5px;}
+/* ERRORS */
+.error-panel{background:#FDF2F2;border:1px solid #F5C6C6;border-left:4px solid var(--red);border-radius:8px;padding:18px 20px;margin-bottom:24px;}
+.error-panel h3{font-size:14px;font-weight:700;color:var(--red);margin-bottom:12px;}
+.error-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.error-num{width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.error-text{font-size:13px;color:var(--char);line-height:1.5;}
+.error-text strong{color:var(--red);}
+/* METRICS */
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+.metric-card{background:#fff;border-radius:10px;border:1px solid var(--border);padding:18px 20px;box-shadow:0 2px 8px rgba(11,31,58,.05);}
+.metric-label{font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
+.metric-val{font-size:22px;font-weight:700;line-height:1;margin-bottom:4px;}
+.metric-sub{font-size:11px;color:var(--mid);}
+.metric-val.green{color:var(--green);}
+.metric-val.red{color:var(--red);}
+.metric-val.gold{color:var(--gold);}
+.metric-val.navy{color:var(--navy);}
+/* RECOMMENDATION */
+.rec-box{background:var(--navy);border-radius:10px;padding:22px 24px;margin-bottom:24px;}
+.rec-box h3{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.rec-box p{font-size:13px;color:#9ABBD0;line-height:1.7;}
+.rec-box strong{color:#fff;}
+/* PRINT */
+@media print{.run-btn,.input-card{display:none;}.compare-section.show{display:block!important;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="badge">Bank Credit Tool 1 of 5</div>
+      <div class="h1">Lease vs Loan <span>Credit Appraisal Comparator</span></div>
+      <div class="header-sub">Identifies errors when lease transactions are appraised as loans or HP — and shows the correct lease credit framework</div>
+    </div>
+    <div class="brand"><div class="brand-name">Velocity Global Leasing</div><div class="brand-tag">Bank Credit Series</div></div>
+  </div>
+</div>
+<div class="main">
+  <div class="intro-bar">
+    <strong>The Problem:</strong> Most Kenyan banks appraise finance lease transactions using loan or hire purchase credit templates. This produces mispriced risk, incorrect documentation, missed asset quality assessments, and delayed recovery in default. This tool shows your credit team exactly where the appraisal goes wrong — and what the correct lease approach looks like.
+  </div>
+
+  <!-- INPUTS -->
+  <div class="input-card">
+    <h2>Deal Parameters</h2>
+    <div class="field-grid">
+      <div class="field"><label>Client Name</label><input type="text" id="clientName" placeholder="e.g. Savannah Transport Ltd" value="Savannah Transport Ltd"></div>
+      <div class="field"><label>Asset Description</label><input type="text" id="assetDesc" placeholder="e.g. 5 Isuzu NQR trucks" value="5 Isuzu NQR trucks"></div>
+      <div class="field"><label>Total Asset Cost (KES)</label><input type="number" id="assetCost" placeholder="29000000" value="29000000"></div>
+      <div class="field"><label>Lease Term (Months)</label><input type="number" id="term" placeholder="48" value="48" min="12" max="84"></div>
+      <div class="field"><label>Implicit Rate (% p.a.)</label><input type="number" id="rate" placeholder="18" value="18" step="0.5"></div>
+      <div class="field"><label>Client Annual EBITDA (KES)</label><input type="number" id="ebitda" placeholder="18000000" value="18000000"></div>
+      <div class="field"><label>Existing Annual Debt Service (KES)</label><input type="number" id="existingDebt" placeholder="4200000" value="4200000"></div>
+      <div class="field"><label>Asset Type</label>
+        <select id="assetType">
+          <option value="vehicle">Commercial Vehicles</option>
+          <option value="construction">Construction Equipment</option>
+          <option value="medical">Medical Equipment</option>
+          <option value="agri">Agricultural Equipment</option>
+          <option value="ict">ICT Equipment</option>
+        </select>
+      </div>
+      <div class="field"><label>Product Type</label>
+        <select id="productType">
+          <option value="finance">Finance Lease</option>
+          <option value="operating">Operating Lease</option>
+          <option value="saleback">Sale and Leaseback</option>
+        </select>
+      </div>
+    </div>
+    <button class="run-btn" onclick="runComparison()">Run Comparison →</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="compare-section" id="results">
+    <div class="section-title">Appraisal Error Analysis</div>
+    <div class="error-panel" id="errorPanel"></div>
+
+    <div class="section-title">Side-by-Side Comparison</div>
+    <div id="metricsGrid" class="metrics-grid"></div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th class="th-dim">Appraisal Dimension</th>
+          <th class="th-loan">❌ Loan / HP Template (Current Practice)</th>
+          <th class="th-lease">✓ Correct Lease Credit Approach</th>
+        </tr>
+      </thead>
+      <tbody id="compareBody"></tbody>
+    </table>
+
+    <div class="rec-box" id="recBox"></div>
+    <div style="text-align:right;margin-top:8px;">
+      <button onclick="window.print()" style="background:var(--teal);color:#fff;border:none;padding:10px 22px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">🖨 Print Report</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function fmt(n){return'KES '+Math.round(n).toLocaleString();}
+function fmtPct(n){return n.toFixed(1)+'%';}
+
+function runComparison(){
+  const client=document.getElementById('clientName').value||'Client';
+  const asset=document.getElementById('assetDesc').value||'Asset';
+  const cost=parseFloat(document.getElementById('assetCost').value)||0;
+  const termM=parseInt(document.getElementById('term').value)||48;
+  const rateAnn=parseFloat(document.getElementById('rate').value)||18;
+  const ebitda=parseFloat(document.getElementById('ebitda').value)||0;
+  const existingDS=parseFloat(document.getElementById('existingDebt').value)||0;
+  const assetType=document.getElementById('assetType').value;
+  const productType=document.getElementById('productType').value;
+
+  const r=rateAnn/12/100;
+  const af=(1-Math.pow(1+r,-termM))/r;
+  const monthlyRental=cost/af;
+  const annualRental=monthlyRental*12;
+  const totalRental=monthlyRental*termM;
+  const grossIncome=totalRental-cost;
+
+  // Rental coverage — correct (after existing debt)
+  const freeEBITDA=ebitda-existingDS;
+  const coverageCorrect=freeEBITDA/annualRental;
+  // Wrong way — on raw EBITDA
+  const coverageWrong=ebitda/annualRental;
+
+  // RV by asset type
+  const rvRanges={vehicle:'40–50% at 48M (Isuzu/Mitsubishi)',construction:'55–65% at 48M (Cat/Komatsu)',medical:'36–46% at 48M — high obsolescence',agri:'43–53% at 48M',ict:'15–25% at 36M — very fast depreciation'};
+  const rvRange=rvRanges[assetType];
+
+  // Errors
+  const errors=[
+    {title:'Security structure',detail:'Loan template takes a charge over the asset. But <strong>you cannot charge your own property</strong> — under a finance lease the bank already owns the asset. The charge is legally meaningless and misleads the security register.'},
+    {title:'Credit coverage metric',detail:`Loan template uses EBITDA ÷ Annual Rental = <strong>${fmtPct(coverageWrong)}</strong>. Correct metric is free cashflow after all existing debt service: <strong>${fmt(freeEBITDA)} ÷ ${fmt(annualRental)} = ${fmtPct(coverageCorrect)}</strong>. The difference is ${fmt(existingDS)} in existing obligations being ignored.`},
+    {title:'Asset quality assessment',detail:'Loan template has no section for independent asset valuation, asset condition, or residual value. For a lease — the asset is your primary security. Its condition, market value, and force-sale value must be assessed before drawdown.'},
+    {title:'End-of-lease strategy',detail:'Loan template has no end-of-lease section. Every lease must document the lessee\'s three options — purchase, extend, or return — and the bank\'s remarketing strategy if the asset is returned or repossessed.'},
+    {title:'VAT treatment',detail:'Loan template does not flag VAT on rental stream. Lease rentals are subject to 16% VAT. The credit memo must confirm whether the lessee is VAT-registered — which changes the effective cost and the lease vs loan comparison materially.'},
+    {title:'Capital allowance entitlement',detail:'Loan template does not identify who claims the capital allowances. Under a finance lease — the lessee (economic owner) claims the 100% investment deduction. Under an operating lease — the bank (legal owner) claims it. This must be documented and cannot be claimed by both parties.'},
+  ];
+
+  document.getElementById('errorPanel').innerHTML=`
+    <h3>⚠ ${errors.length} Critical Errors Identified — Loan/HP Template Applied to Lease Transaction</h3>
+    ${errors.map((e,i)=>`<div class="error-item"><div class="error-num">${i+1}</div><div class="error-text"><strong>${e.title}:</strong> ${e.detail}</div></div>`).join('')}
+  `;
+
+  // Metrics
+  document.getElementById('metricsGrid').innerHTML=`
+    <div class="metric-card"><div class="metric-label">Monthly Rental</div><div class="metric-val navy">${fmt(monthlyRental)}</div><div class="metric-sub">at ${rateAnn}% p.a., ${termM}M</div></div>
+    <div class="metric-card"><div class="metric-label">Rental Coverage (Correct)</div><div class="metric-val ${coverageCorrect>=1.5?'green':'red'}">${fmtPct(coverageCorrect)}×</div><div class="metric-sub">${coverageCorrect>=2.0?'Strong ✓':coverageCorrect>=1.5?'Acceptable — monitor':'⚠ Below 1.5× minimum'}</div></div>
+    <div class="metric-card"><div class="metric-label">Coverage if Wrong Method</div><div class="metric-val gold">${fmtPct(coverageWrong)}×</div><div class="metric-sub">Ignores KES ${Math.round(existingDS/1e6*10)/10}M existing debt service</div></div>
+    <div class="metric-card"><div class="metric-label">Bank Gross Income</div><div class="metric-val green">${fmt(grossIncome)}</div><div class="metric-sub">Over ${termM} months</div></div>
+    <div class="metric-card"><div class="metric-label">RV Range — ${assetType.charAt(0).toUpperCase()+assetType.slice(1)}</div><div class="metric-val navy" style="font-size:15px">${rvRange.split('—')[0]}</div><div class="metric-sub">${rvRange.split('—')[1]||''}</div></div>
+  `;
+
+  // Compare table rows
+  const rows=[
+    ['Security Structure',
+     'Charge/debenture over the asset. Registration at Companies Registry as secured creditor.<span class="error-tag">ERROR — cannot charge own asset</span>',
+     'No charge required. Bank owns the asset as lessor. Repossession right derives from ownership — no court order needed.<span class="correct-tag">CORRECT</span>'],
+    ['Credit Coverage Metric',
+     `EBITDA ÷ Annual Rental = ${fmtPct(coverageWrong)}× (ignores existing debt obligations)<span class="error-tag">INFLATED — ${fmt(existingDS)} existing debt not deducted</span>`,
+     `Free EBITDA after all debt service ÷ Annual Rental = ${fmtPct(coverageCorrect)}× (minimum 1.5×, target 2.0×)<span class="${coverageCorrect>=1.5?'correct-tag':'error-tag'}">${coverageCorrect>=1.5?'PASS':'⚠ FAIL — below 1.5× floor'}</span>`],
+    ['Asset Quality Assessment',
+     'No asset valuation required. Security is a charge — value is notional.<span class="error-tag">CRITICAL GAP</span>',
+     `Independent valuation required — Market Value AND Forced Sale Value. Asset condition report. Residual value assessment (${rvRange}). Supplier confirmation (authorised dealer vs grey market).<span class="correct-tag">REQUIRED</span>`],
+    ['Documentation',
+     'Loan Facility Letter or HP Agreement. Creates debtor-creditor relationship.<span class="error-tag">WRONG DOCUMENT</span>',
+     'Purpose-drafted Finance Lease Agreement establishing lessor ownership, rental schedule, maintenance obligations, insurance assignment, and end-of-lease options.<span class="correct-tag">CORRECT</span>'],
+    ['End-of-Lease Strategy',
+     'No end-of-lease section. No remarketing plan. No end-of-lease options documented.<span class="error-tag">NOT ADDRESSED</span>',
+     'Three options documented: (1) Purchase at stated KES amount, (2) Extend at reduced rental, (3) Return — with bank\'s asset inspection and remarketing strategy specified.<span class="correct-tag">REQUIRED</span>'],
+    ['VAT Treatment',
+     'VAT not addressed. Rental amounts may be quoted inclusive or exclusive without clarity.<span class="error-tag">COMPLIANCE RISK</span>',
+     `Rental quoted VAT-exclusive. VAT at 16% on each payment. Lessee VAT registration confirmed: ${cost>0?'check required':'N/A'}. Invoice format compliance per VAT Act Cap 476.<span class="correct-tag">REQUIRED</span>`],
+    ['Capital Allowances',
+     'Not addressed — capital allowances assumed to follow ownership (loan borrower).<span class="error-tag">UNRESOLVED</span>',
+     `${productType==='finance'?'Lessee (economic owner) claims 100% investment deduction in Year 1. Bank (legal owner) does NOT claim. Document clearly — double claim creates KRA liability.':'Bank (operating lessor and legal owner) claims 100% investment deduction in Year 1. Lessee deducts rentals only.'}<span class="correct-tag">DOCUMENT CLEARLY</span>`],
+    ['Recovery in Default',
+     'Court order required. Appoint receiver. Contest lessee\'s challenges. Timeline: 6–18+ months. Recovery typically 50–70% of outstanding.<span class="error-tag">SLOW AND COSTLY</span>',
+     'Bank repossesses as owner — no court order required under correctly structured finance lease. Pre-identified valuer and remarketing channel. Target: 30-day asset disposition.<span class="correct-tag">STRUCTURAL ADVANTAGE</span>'],
+  ];
+
+  document.getElementById('compareBody').innerHTML=rows.map(([dim,loan,lease])=>`
+    <tr><td class="td-dim">${dim}</td><td class="td-loan">${loan}</td><td class="td-lease">${lease}</td></tr>
+  `).join('');
+
+  const coverOK=coverageCorrect>=1.5;
+  document.getElementById('recBox').innerHTML=`
+    <h3>Credit Assessment Summary — ${client}</h3>
+    <p><strong>${asset}</strong> — ${fmt(cost)} — ${termM}-month ${productType} at ${rateAnn}% p.a.<br><br>
+    Rental coverage ratio (correctly calculated): <strong>${fmtPct(coverageCorrect)}×</strong> — ${coverOK?'meets the 1.5× minimum':'⚠ BELOW the 1.5× minimum — deal requires restructuring or additional security before approval'}.<br><br>
+    Monthly rental: <strong>${fmt(monthlyRental)}</strong>. Annual rental: <strong>${fmt(annualRental)}</strong>. Bank gross income over term: <strong>${fmt(grossIncome)}</strong>.<br><br>
+    <strong>Immediate action required:</strong> If this deal was appraised on a loan or HP template — the credit memo must be re-done using the eight-section lease credit appraisal template (VGL Tool 2) before a credit decision is issued. The security structure, asset valuation, end-of-lease provisions, and capital allowance position must all be documented correctly.</p>
+  `;
+
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>

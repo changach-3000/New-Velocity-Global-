@@ -16,6 +16,7 @@ import {
   Wrench,
   ExternalLink,
   BookOpen,
+  Headphones
 } from "lucide-react";
 import { Button } from "@/components/ui/button.jsx";
 import { Card, CardContent } from "@/components/ui/card.jsx";
@@ -24,98 +25,129 @@ import apiServerClient from "@/lib/apiServerClient.js";
 
 // ─── Data: what each tier sees ────────────────────────────────────────────────
 
-const VIDEOS_BY_TIER = {
-  Standard: [
-    {
-      title: "Introduction to Equipment Leasing",
-      quarter: "Q1 2025",
-      duration: "38:00",
-      description:
-        "Foundations of equipment finance: structures, parties, and core concepts.",
-    },
-    {
-      title: "Understanding Lease vs Loan",
-      quarter: "Q2 2025",
-      duration: "41:00",
-      description:
-        "How to position leasing against traditional debt financing for clients.",
-    },
-  ],
-  Premium: [
-    {
-      title: "Introduction to Equipment Leasing",
-      quarter: "Q1 2025",
-      duration: "38:00",
-      description:
-        "Foundations of equipment finance: structures, parties, and core concepts.",
-    },
-    {
-      title: "Understanding Lease vs Loan",
-      quarter: "Q2 2025",
-      duration: "41:00",
-      description:
-        "How to position leasing against traditional debt financing for clients.",
-    },
-    {
-      title: "Advanced Deal Structuring",
-      quarter: "Q3 2025",
-      duration: "52:00",
-      description:
-        "Complex multi-asset structures, residual value strategies and risk mitigation.",
-    },
-    {
-      title: "Credit Analysis Deep Dive",
-      quarter: "Q4 2025",
-      duration: "47:00",
-      description:
-        "Reading financials, assessing creditworthiness, and pricing risk into deals.",
-    },
-  ],
-  Elite: [
-    {
-      title: "Introduction to Equipment Leasing",
-      quarter: "Q1 2025",
-      duration: "38:00",
-      description:
-        "Foundations of equipment finance: structures, parties, and core concepts.",
-    },
-    {
-      title: "Understanding Lease vs Loan",
-      quarter: "Q2 2025",
-      duration: "41:00",
-      description:
-        "How to position leasing against traditional debt financing for clients.",
-    },
-    {
-      title: "Advanced Deal Structuring",
-      quarter: "Q3 2025",
-      duration: "52:00",
-      description:
-        "Complex multi-asset structures, residual value strategies and risk mitigation.",
-    },
-    {
-      title: "Credit Analysis Deep Dive",
-      quarter: "Q4 2025",
-      duration: "47:00",
-      description:
-        "Reading financials, assessing creditworthiness, and pricing risk into deals.",
-    },
-    {
-      title: "IFRS 16 Masterclass",
-      quarter: "Q1 2026",
-      duration: "65:00",
-      description:
-        "Comprehensive walkthrough of lessee and lessor accounting under IFRS 16.",
-    },
-    {
-      title: "VIP: Market Outlook & Deal Flow",
-      quarter: "Q2 2026",
-      duration: "58:00",
-      description:
-        "Elite-only session: industry leaders discuss 2026 market conditions and opportunities.",
-    },
-  ],
-};
+// const VIDEOS_BY_TIER = {
+//   Standard: [
+//     {
+//       title: "Introduction to Equipment Leasing",
+//       quarter: "Q1 2025",
+//       duration: "38:00",
+//       description:
+//         "Foundations of equipment finance: structures, parties, and core concepts.",
+//     },
+//     {
+//       title: "Understanding Lease vs Loan",
+//       quarter: "Q2 2025",
+//       duration: "41:00",
+//       description:
+//         "How to position leasing against traditional debt financing for clients.",
+//     },
+//   ],
+//   Premium: [
+//     {
+//       title: "Introduction to Equipment Leasing",
+//       quarter: "Q1 2025",
+//       duration: "38:00",
+//       description:
+//         "Foundations of equipment finance: structures, parties, and core concepts.",
+//     },
+//     {
+//       title: "Understanding Lease vs Loan",
+//       quarter: "Q2 2025",
+//       duration: "41:00",
+//       description:
+//         "How to position leasing against traditional debt financing for clients.",
+//     },
+//     {
+//       title: "Advanced Deal Structuring",
+//       quarter: "Q3 2025",
+//       duration: "52:00",
+//       description:
+//         "Complex multi-asset structures, residual value strategies and risk mitigation.",
+//     },
+//     {
+//       title: "Credit Analysis Deep Dive",
+//       quarter: "Q4 2025",
+//       duration: "47:00",
+//       description:
+//         "Reading financials, assessing creditworthiness, and pricing risk into deals.",
+//     },
+//   ],
+//   Elite: [
+//     {
+//       title: "Introduction to Equipment Leasing",
+//       quarter: "Q1 2025",
+//       duration: "38:00",
+//       description:
+//         "Foundations of equipment finance: structures, parties, and core concepts.",
+//     },
+//     {
+//       title: "Understanding Lease vs Loan",
+//       quarter: "Q2 2025",
+//       duration: "41:00",
+//       description:
+//         "How to position leasing against traditional debt financing for clients.",
+//     },
+//     {
+//       title: "Advanced Deal Structuring",
+//       quarter: "Q3 2025",
+//       duration: "52:00",
+//       description:
+//         "Complex multi-asset structures, residual value strategies and risk mitigation.",
+//     },
+//     {
+//       title: "Credit Analysis Deep Dive",
+//       quarter: "Q4 2025",
+//       duration: "47:00",
+//       description:
+//         "Reading financials, assessing creditworthiness, and pricing risk into deals.",
+//     },
+//     {
+//       title: "IFRS 16 Masterclass",
+//       quarter: "Q1 2026",
+//       duration: "65:00",
+//       description:
+//         "Comprehensive walkthrough of lessee and lessor accounting under IFRS 16.",
+//     },
+//     {
+//       title: "VIP: Market Outlook & Deal Flow",
+//       quarter: "Q2 2026",
+//       duration: "58:00",
+//       description:
+//         "Elite-only session: industry leaders discuss 2026 market conditions and opportunities.",
+//     },
+//   ],
+// };
+
+const PODCAST_EPISODES = [
+  {
+    title: "Why Mature Markets Embrace leasing",
+    episode: "Ep 1",
+    duration: "15 min",
+    // description:
+    //   "We break down real-world scenarios where leasing beats financing — and when it doesn't. First episode in our Equipment Finance Deep Dive series.",
+    spotifyEmbedUrl:
+      "https://open.spotify.com/embed/episode/1TYqN8pMzDc35SDpuPIMuY",
+    releaseDate: "April 2026",
+  },
+  // {
+  //   title: "Residual Value Risks Uncovered",
+  //   episode: "Ep 2",
+  //   duration: "38 min",
+  //   description:
+  //     "How to stress-test RV assumptions and protect your portfolio from market volatility.",
+  //   spotifyEmbedUrl: "", // add future episode link here
+  //   releaseDate: "May 2026",
+  // },
+  // {
+  //   title: "IFRS 16 for Lessors (Made Simple)",
+  //   episode: "Ep 3",
+  //   duration: "51 min",
+  //   description:
+  //     "Practical walkthrough of lease classification, P&L impact, and disclosure tricks.",
+  //   spotifyEmbedUrl: "",
+  //   releaseDate: "June 2026",
+  // },
+];
 
 const SEMINARS_BY_TIER = {
   Standard: [
@@ -217,6 +249,55 @@ const ELITE_TOOLS = [
     file: "GLI_Learner_Toolkit.html",
     icon: "📚",
   },
+  {
+    title: "Lease vs Loan Comparator",
+    description:
+      "A comprehensive learning resource toolkit for determining a lease v",
+    file: "GLI_Learner_Toolkit.html",
+    icon: "📚",
+  },
+  {
+    title: "Lease vs Loan Comparator (Tool 1)",
+    description:
+      "Interactive tool to compare leasing versus financing scenarios, highlighting cash flow and ownership impacts.",
+    file: "VGL_Tool1_LeaseVsLoanComparator.html",
+    icon: "⚖️",
+  },
+  {
+    title: "Lease Credit Appraisal Template",
+    description:
+      "Structured template for assessing lessee creditworthiness, including financial ratios and risk scoring.",
+    file: "VGL_Tool2_LeaseCreditAppraisalTemplate.html",
+    icon: "📊",
+  },
+  {
+    title: "RV Stress Test Calculator",
+    description:
+      "Tool for stress testing residual values under different market scenarios to evaluate lease-end risk exposure.",
+    file: "VGL_Tool3_RVStressTestCalculator.html",
+    icon: "📉",
+  },
+  {
+    title: "Lease Portfolio Dashboard",
+    description:
+      "Visual dashboard to monitor key portfolio metrics, concentration risks, and lease performance trends.",
+    file: "VGL_Tool4_LeasePortfolioDashboard.html",
+    icon: "📈",
+  },
+  {
+    title: "Documentation Checklist",
+    description:
+      "Comprehensive lease documentation checklist to ensure compliance and completeness throughout the lease lifecycle.",
+    file: "VGL_Tool5_DocumentationChecklist.html",
+    icon: "✅",
+  },
+  {
+    title: "DFI ESG Assessment",
+    description:
+      "Tool for integrating ESG criteria into lease and equipment financing decisions aligned with DFI standards.",
+    file: "VGL_Tool6_DFI_ESG_Assessment.html",
+    icon: "🌱",
+  },
 ];
 
 // ─── Helper components ────────────────────────────────────────────────────────
@@ -268,7 +349,7 @@ const TierBadge = ({ tier }) => {
 // ─── Tab definitions ──────────────────────────────────────────────────────────
 
 const TABS = [
-  { id: "videos", label: "Video Library", icon: Video },
+  { id: "videos", label: "Podcast Series", icon: Headphones },
   { id: "seminars", label: "Seminars", icon: Calendar },
   { id: "tools", label: "Industry Tools", icon: Wrench, eliteOnly: true },
 ];
@@ -310,7 +391,7 @@ const SeminarsPage = () => {
   }, [currentUser, isAuthenticated]);
 
   const isElite = membershipTier === "Elite";
-  const videos = VIDEOS_BY_TIER[membershipTier] || [];
+  const videos = PODCAST_EPISODES[membershipTier] || [];
   const seminars = SEMINARS_BY_TIER[membershipTier] || [];
   const visibleTabs = TABS.filter((t) => !t.eliteOnly || isElite);
 
@@ -404,7 +485,7 @@ const SeminarsPage = () => {
             </div>
 
             {/* ── Video Library Tab ── */}
-            {activeTab === "videos" && (
+            {/* {activeTab === "videos" && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 <div className="flex items-center justify-between mb-6">
                   <div>
@@ -439,6 +520,75 @@ const SeminarsPage = () => {
                         <p className="text-sm text-slate-400">
                           {v.description}
                         </p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </motion.div>
+            )} */}
+
+            {activeTab === "videos" && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white">
+                      🎙️ Podcast Series
+                    </h2>
+                    <p className="text-slate-400 mt-1">
+                      Equipment finance insights — listen directly on the page
+                    </p>
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-8">
+                  {PODCAST_EPISODES.map((ep, i) => (
+                    <Card
+                      key={i}
+                      className="bg-slate-900/50 border-slate-800 overflow-hidden group"
+                    >
+                      {/* Podcast card header with audio wave icon */}
+                      <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 relative flex flex-col items-center justify-center">
+                        {/* <div className="text-6xl mb-3">🎧</div> */}
+                        <div className="flex gap-1 items-center">
+                          <div className="w-2 h-8 bg-emerald-400 rounded-full animate-pulse" />
+                          <div className="w-2 h-5 bg-emerald-400 rounded-full animate-pulse delay-75" />
+                          <div className="w-2 h-10 bg-emerald-400 rounded-full animate-pulse delay-150" />
+                        </div>
+                        <div className="absolute bottom-3 right-3 bg-black/70 px-2 py-1 rounded text-xs font-medium text-white flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> {ep.duration}
+                        </div>
+                        <div className="absolute top-3 left-3 bg-emerald-600 px-2 py-1 rounded text-xs font-bold text-white">
+                          {ep.episode}
+                        </div>
+                      </div>
+
+                      <CardContent className="p-6">
+                        <h4 className="text-lg font-bold text-white mb-2">
+                          {ep.title}
+                        </h4>
+                        <p className="text-sm text-slate-400 mb-4">
+                          {ep.description}
+                        </p>
+                        <div className="text-xs text-slate-500 mb-4">
+                          📅 Released: {ep.releaseDate}
+                        </div>
+
+                        {/* Spotify embed - only shown if URL exists */}
+                        {ep.spotifyEmbedUrl ? (
+                          <iframe
+                            src={ep.spotifyEmbedUrl}
+                            width="100%"
+                            height="152"
+                            frameBorder="0"
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"
+                            className="rounded-xl"
+                            title={`Listen to ${ep.title}`}
+                          />
+                        ) : (
+                          <div className="bg-slate-800/50 rounded-xl p-4 text-center text-slate-400 text-sm">
+                            🎧 Episode coming soon
+                          </div>
+                        )}
                       </CardContent>
                     </Card>
                   ))}

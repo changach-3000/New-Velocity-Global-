@@ -80,6 +80,10 @@ const CourseCatalog = () => {
       "Strategic Funding Options for Managed Services",
       "Legal, Operational, and Asset Readiness",
       "Go-to-Market Strategy",
+      "Introduction to Equipment Leasing for Banks	Banking",
+      "Regulatory Compliance in Kenyan Lease Finance	Banking",
+      "Structuring Complex Lease Deals	Banking",
+      "Loan vs Lease — A Banker's Comparative Guide",
     ],
     sales: [
       "closing techniques",
@@ -93,6 +97,16 @@ const CourseCatalog = () => {
       "portfolio management",
       "Maximizing Value from Equipment Leasing",
       "Managing Your Leased Equipment",
+      "Leasing as a Business Growth Tool Business Owner",
+      "Understanding Your Lease Agreement",
+      "Lease vs Buy vs Loan — Making the Right Call",
+      "IFRS 16 for Corporate Finance Teams",
+      "Negotiating Lease Terms with Your Lessor",
+      "Fleet Leasing for Growing Businesses",
+      "Medical Equipment Leasing for Healthcare Providers",
+      "ICT and Technology Leasing",
+      "Construction and Heavy Equipment Leasing",
+      "Agricultural Equipment Leasing",
     ],
     vendor: [
       "vendor leasing programs",
@@ -114,6 +128,11 @@ const CourseCatalog = () => {
       "Lessee Accounting under IFRS 16",
       "Lessor Accounting under IFRS 16",
       "Transition and Impact Analysis",
+      "Tax Treatment of Leases in Kenya",
+      "Capital Allowances and Lease Deductibility",
+      "IFRS 16 vs IAS 17 — Transition and Ongoing Impact",
+      "VAT on Leasing — Rentals, Import Duties and Tax Efficiency",
+      "Advising Clients on Lease vs Buy",
     ],
     esg: [
       // Beginner Level (Modules 01-07)
@@ -149,6 +168,9 @@ const CourseCatalog = () => {
     "key financial ratios for lessors",
     "funding the leasing company",
     "advanced funding sources and structures",
+    "Collections, Recoveries and Distressed Assets",
+    "Pricing a Lease — IRR, Yield and Margin",
+    "Vendor and Supplier Relationships",
   ];
 
   // Filter and sort courses
