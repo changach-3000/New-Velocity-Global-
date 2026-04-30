@@ -438,41 +438,81 @@ const CheckoutPage = () => {
 
   // ─── Promo Code Handlers ────────────────────────────────────────────────────
 
+  // const handleApplyPromo = async () => {
+  //   if (!promoCode.trim()) return;
+  //   setPromoLoading(true);
+  //   setPromoError('');
+  //   setAppliedPromo(null);
+
+  //   try {
+  //     const res = await fetch('https://velocity-global-express.onrender.com/api/paystack/validate-promo', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         code: promoCode.trim().toUpperCase(),
+  //         amount: totalAmount,
+  //       }),
+  //     });
+
+  //     const data = await res.json();
+
+  //     if (!res.ok || !data.valid) {
+  //       setPromoError(data.message || 'Invalid promo code.');
+  //       return;
+  //     }
+
+  //     setAppliedPromo(data);
+  //     toast({
+  //       title: 'Promo code applied!',
+  //       description: data.message,
+  //     });
+  //   } catch (err) {
+  //     console.error('Promo validation error:', err);
+  //     setPromoError('Could not validate code. Please try again.');
+  //   } finally {
+  //     setPromoLoading(false);
+  //   }
+  // };
+
+
   const handleApplyPromo = async () => {
-    if (!promoCode.trim()) return;
-    setPromoLoading(true);
-    setPromoError('');
-    setAppliedPromo(null);
+  if (!promoCode.trim()) return;
+  setPromoLoading(true);
+  setPromoError('');
+  setAppliedPromo(null);
 
-    try {
-      const res = await fetch('https://velocity-global-express.onrender.com/api/paystack/validate-promo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          code: promoCode.trim().toUpperCase(),
-          amount: totalAmount,
-        }),
-      });
+  // Collect the course IDs being purchased
+  const courseIds = singleCourseId
+    ? [singleCourseId]
+    : cartItems.map((item) => item.id);
 
-      const data = await res.json();
+  try {
+    const res = await fetch('https://velocity-global-express.onrender.com/api/paystack/validate-promo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        code: promoCode.trim().toUpperCase(),
+        amount: totalAmount,
+        courseIds, // ← send course IDs
+      }),
+    });
 
-      if (!res.ok || !data.valid) {
-        setPromoError(data.message || 'Invalid promo code.');
-        return;
-      }
+    const data = await res.json();
 
-      setAppliedPromo(data);
-      toast({
-        title: 'Promo code applied!',
-        description: data.message,
-      });
-    } catch (err) {
-      console.error('Promo validation error:', err);
-      setPromoError('Could not validate code. Please try again.');
-    } finally {
-      setPromoLoading(false);
+    if (!res.ok || !data.valid) {
+      setPromoError(data.message || 'Invalid promo code.');
+      return;
     }
-  };
+
+    setAppliedPromo(data);
+    toast({ title: 'Promo code applied!', description: data.message });
+  } catch (err) {
+    console.error('Promo validation error:', err);
+    setPromoError('Could not validate code. Please try again.');
+  } finally {
+    setPromoLoading(false);
+  }
+};
 
   const handleRemovePromo = () => {
     setAppliedPromo(null);
