@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Margin Protection Calculator — VGL Masterclass</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0F1E;--cream:#F7F4EE;--gold:#D4922A;--teal:#0C5E5A;--rust:#B84A2E;--mist:#E8EFF4;--mid:#6B7A8D;--card:#fff;--border:#DDE4EC;--success:#1B6B4A;--warn:#A05A00;--danger:#9B2020;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);}
+.masthead{background:var(--rust);padding:28px 36px 24px;position:relative;overflow:hidden;}
+.masthead::before{content:'';position:absolute;top:0;right:0;width:300px;height:100%;background:linear-gradient(90deg,transparent,rgba(0,0,0,.15));}
+.mc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:5px 14px;margin-bottom:14px;}
+.mc-badge span{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.9);}
+.tool-num{width:22px;height:22px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--ink);}
+h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1.15;}
+h1 em{color:var(--gold);font-style:normal;}
+.masthead-sub{font-size:13px;color:rgba(255,255,255,.6);margin-top:8px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:26px 28px;margin-bottom:20px;box-shadow:0 2px 16px rgba(10,15,30,.06);}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--rust);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:#fff;}
+.field input:focus{outline:none;border-color:var(--rust);}
+.computed{background:var(--mist);border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-size:14px;font-weight:700;min-height:42px;display:flex;align-items:center;}
+.computed.good{background:#E6F4EE;border-color:#A8D4BC;color:var(--success);}
+.computed.warn{background:#FEF6E6;border-color:#E8C97A;color:var(--warn);}
+.computed.bad{background:#FDEAEA;border-color:#E8A8A8;color:var(--danger);}
+.floor-bar{height:32px;border-radius:8px;background:var(--mist);overflow:hidden;display:flex;margin:12px 0;position:relative;}
+.floor-seg{height:100%;display:flex;align-items:center;padding:0 10px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--rust);color:#fff;border:none;padding:13px 28px;border-radius:9px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:6px;transition:background .2s;}
+.cta:hover{background:#8B3A2E;}
+.leakage-table{width:100%;border-collapse:collapse;font-size:13px;}
+.leakage-table th{background:var(--rust);color:#fff;padding:10px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.7px;}
+.leakage-table td{padding:10px 12px;border-bottom:1px solid var(--border);}
+.leakage-table tr:nth-child(even) td{background:var(--mist);}
+.pill{font-size:10px;font-weight:700;padding:3px 9px;border-radius:8px;}
+.pill-r{background:#FDEAEA;color:var(--danger);}
+.pill-a{background:#FEF6E6;color:var(--warn);}
+.pill-g{background:#E6F4EE;color:var(--success);}
+</style>
+</head>
+<body>
+<div class="masthead">
+  <div class="mc-badge"><div class="tool-num">3</div><span>Profitable Equipment Leasing Masterclass</span></div>
+  <h1>Margin <em>Protection Calculator</em></h1>
+  <div class="masthead-sub">Find your true rate floor — and identify every cost that is silently eating your margin</div>
+</div>
+<div class="main">
+  <div class="card">
+    <div class="card-title">Your Cost Structure</div>
+    <div class="g3">
+      <div class="field"><label>Average Lease Book (KES M)</label><input type="number" id="book" value="120" oninput="calcMargin()"></div>
+      <div class="field"><label>Cost of Funds — Debt (% p.a.)</label><input type="number" id="cofDebt" value="15.5" step="0.25" oninput="calcMargin()"></div>
+      <div class="field"><label>Equity in Book (KES M)</label><input type="number" id="equity" value="20" oninput="calcMargin()"></div>
+    </div>
+    <div class="g3">
+      <div class="field"><label>Annual Operational Budget (KES M)</label><input type="number" id="opBudget" value="4.8" step="0.1" oninput="calcMargin()"></div>
+      <div class="field"><label>Historical Credit Loss Rate (%)</label><input type="number" id="lossRate" value="2" step="0.25" oninput="calcMargin()"></div>
+      <div class="field"><label>Target Return on Equity (%)</label><input type="number" id="roe" value="25" step="1" oninput="calcMargin()"></div>
+    </div>
+    <div class="g3">
+      <div class="field"><label>Average Portfolio Yield Today (%)</label><input type="number" id="yield" value="21" step="0.5" oninput="calcMargin()"></div>
+      <div class="field"><label>Referral Fees Paid (% of funded deals)</label><input type="number" id="referral" value="1" step="0.25" oninput="calcMargin()"></div>
+      <div class="field"><label>Annual Repossession Costs (KES M)</label><input type="number" id="repoCost" value="0.4" step="0.1" oninput="calcMargin()"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Rate Floor Build-Up</div>
+    <div class="g3">
+      <div class="field"><label>WACF (Weighted Avg Cost of Funds)</label><div class="computed" id="r_wacf">—</div></div>
+      <div class="field"><label>Operational Cost Rate</label><div class="computed" id="r_ops">—</div></div>
+      <div class="field"><label>Credit Loss Provision</label><div class="computed" id="r_loss">—</div></div>
+    </div>
+    <div class="g3">
+      <div class="field"><label>Equity Return Contribution</label><div class="computed" id="r_equity">—</div></div>
+      <div class="field"><label>Hidden Costs (referral + repo)</label><div class="computed" id="r_hidden">—</div></div>
+      <div class="field"><label>MINIMUM RATE FLOOR</label><div class="computed" id="r_floor" style="font-size:18px;">—</div></div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;">Rate Floor Components</div>
+    <div class="floor-bar" id="floorBar"></div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;" id="floorLegend"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Margin Leakage Analysis</div>
+    <table class="leakage-table">
+      <thead><tr><th>Cost Leakage Source</th><th>Annual KES</th><th>As % of Book</th><th>Impact on Rate</th><th>Status</th></tr></thead>
+      <tbody id="leakageBody"></tbody>
+    </table>
+    <div style="margin-top:16px;padding:14px 16px;background:var(--mist);border-radius:8px;font-size:13px;color:var(--ink);" id="verdictText"></div>
+  </div>
+</div>
+<script>
+function v(id){return parseFloat(document.getElementById(id)?.value)||0;}
+function el(id){return document.getElementById(id);}
+function fmtP(n,d=2){return isNaN(n)?'—':n.toFixed(d)+'%';}
+function fmtM(n){return 'KES '+n.toFixed(2)+'M';}
+function set(id,val,cls=''){const e=el(id);if(!e)return;e.textContent=val;e.className='computed'+(cls?' '+cls:'');}
+
+function calcMargin(){
+  const book=v('book'),cofD=v('cofDebt'),eq=v('equity'),opB=v('opBudget');
+  const lossR=v('lossRate'),roe=v('roe'),yld=v('yield'),ref=v('referral'),repo=v('repoCost');
+  const debtBook=book-eq;
+  const equityCost=15; // notional equity cost
+  const wacf=debtBook>0?((debtBook*cofD+eq*equityCost)/book):cofD;
+  const opRate=opB/book*100;
+  const equityContrib=eq*roe/100/book*100;
+  const hiddenRate=(ref+repo/book*100);
+  const floor=wacf+opRate+lossR+equityContrib+hiddenRate;
+  const spread=yld-floor;
+
+  set('r_wacf',fmtP(wacf),wacf<15?'good':wacf<18?'warn':'bad');
+  set('r_ops',fmtP(opRate),opRate<4?'good':opRate<8?'warn':'bad');
+  set('r_loss',fmtP(lossR));
+  set('r_equity',fmtP(equityContrib));
+  set('r_hidden',fmtP(hiddenRate),hiddenRate<2?'good':'warn');
+  set('r_floor',fmtP(floor),yld>=floor?'good':'bad');
+
+  // Bar
+  const segs=[
+    {lbl:'WACF',val:wacf,col:'#0C5E5A'},
+    {lbl:'Ops',val:opRate,col:'#D4922A'},
+    {lbl:'Credit Loss',val:lossR,col:'#B84A2E'},
+    {lbl:'Equity',val:equityContrib,col:'#1B6B4A'},
+    {lbl:'Hidden',val:hiddenRate,col:'#6B7A8D'},
+  ];
+  el('floorBar').innerHTML=segs.map(s=>`<div class="floor-seg" style="width:${s.val/floor*100}%;background:${s.col};">${s.val>=2?s.lbl:''}</div>`).join('');
+  el('floorLegend').innerHTML=segs.map(s=>'<span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:'+s.col+';display:inline-block;"></span>'+s.lbl+' '+fmtP(s.val)+'</span>').join('');
+
+  // Leakage
+  const rows=[
+    ['Operational Costs',fmtM(opB),fmtP(opRate),fmtP(opRate)+' of rate floor',opRate>6?'r':opRate>4?'a':'g'],
+    ['Credit Losses (provision)',fmtM(book*lossR/100),fmtP(lossR),fmtP(lossR)+' of rate floor',lossR>3?'r':lossR>2?'a':'g'],
+    ['Referral Fees',fmtM(book*ref/100),fmtP(ref),fmtP(ref)+' per deal funded',ref>1.5?'r':ref>1?'a':'g'],
+    ['Repossession Costs',fmtM(repo),fmtP(repo/book*100),fmtP(repo/book*100)+' on book',repo/book*100>1?'r':'g'],
+    ['Total Leakage',fmtM(opB+book*lossR/100+book*ref/100+repo),fmtP(opRate+lossR+ref+repo/book*100),'Must be covered by spread',''],
+  ];
+  el('leakageBody').innerHTML=rows.map(([n,kes,pct,imp,s])=>`
+    <tr><td><strong>${n}</strong></td><td>${kes}</td><td>${pct}</td><td>${imp}</td>
+    <td>${s?'<span class="pill pill-'+s+'">'+(s==='r'?'⚠ High':s==='a'?'Monitor':'✓ OK')+'</span>':''}</td></tr>`).join('');
+
+  el('verdictText').innerHTML=spread>=3
+    ?'<strong style="color:var(--success)">✓ Margin is protected.</strong> Your current portfolio yield of '+fmtP(yld)+' sits '+fmtP(spread)+' above your rate floor of '+fmtP(floor)+'. Continue applying your floor discipline on every new deal.'
+    :spread>0
+    ?'<strong style="color:var(--warn)">⚠ Margin is thin.</strong> Your '+fmtP(spread)+' buffer above the '+fmtP(floor)+' rate floor is insufficient to absorb unexpected credit losses or cost increases. Raise your pricing floor by at least 150 bps immediately.'
+    :'<strong style="color:var(--danger)">✗ You are pricing below your cost floor.</strong> Your portfolio yield of '+fmtP(yld)+' is below your true cost floor of '+fmtP(floor)+'. Every new deal at current pricing destroys equity. Stop and reprice now.';
+}
+calcMargin();
+</script>
+</body>
+</html>

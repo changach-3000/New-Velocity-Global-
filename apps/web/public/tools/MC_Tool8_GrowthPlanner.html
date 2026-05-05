@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leasing Growth Strategy Planner — VGL Masterclass</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0F1E;--cream:#F7F4EE;--gold:#D4922A;--teal:#0C5E5A;--rust:#B84A2E;--mist:#E8EFF4;--mid:#6B7A8D;--card:#fff;--border:#DDE4EC;--success:#1B6B4A;--warn:#A05A00;--danger:#9B2020;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
+.masthead{background:linear-gradient(135deg,#082A1A 0%,#0C5E5A 50%,#D4922A 100%);padding:28px 36px 24px;}
+.mc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;margin-bottom:14px;}
+.mc-badge span{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.85);}
+.tool-num{width:22px;height:22px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--ink);}
+h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1.15;}
+h1 em{color:var(--gold);font-style:normal;}
+.masthead-sub{font-size:13px;color:rgba(255,255,255,.55);margin-top:8px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:26px 28px;margin-bottom:20px;box-shadow:0 2px 16px rgba(10,15,30,.06);}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.field input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:#fff;}
+.field input:focus{outline:none;border-color:var(--teal);}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;border:none;padding:14px 32px;border-radius:9px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:background .2s;}
+.cta:hover{background:#0A4E4A;}
+.proj-panel{background:var(--ink);border-radius:14px;padding:28px;margin-bottom:22px;}
+.proj-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;}
+.proj-table{width:100%;border-collapse:collapse;}
+.proj-table th{color:rgba(255,255,255,.45);font-size:10px;text-transform:uppercase;letter-spacing:.8px;padding:8px 12px;text-align:right;border-bottom:1px solid rgba(255,255,255,.1);font-weight:600;}
+.proj-table th:first-child{text-align:left;}
+.proj-table td{padding:11px 12px;text-align:right;color:#fff;font-size:13px;border-bottom:1px solid rgba(255,255,255,.06);font-variant-numeric:tabular-nums;}
+.proj-table td:first-child{text-align:left;color:var(--gold);font-weight:700;font-size:12px;}
+.proj-table tr:last-child td{border-bottom:none;font-weight:700;}
+.proj-table .highlight{color:var(--gold);}
+.pillar{background:var(--card);border-radius:12px;border:2px solid var(--border);margin-bottom:14px;overflow:hidden;transition:border-color .2s;}
+.pillar.open{border-color:var(--teal);}
+.pillar-head{display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;user-select:none;}
+.pillar-icon{width:40px;height:40px;border-radius:10px;background:var(--mist);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.pillar.open .pillar-icon{background:rgba(12,94,90,.1);}
+.pillar-name{flex:1;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--ink);}
+.pillar-toggle{font-size:18px;color:var(--mid);transition:transform .3s;}
+.pillar.open .pillar-toggle{transform:rotate(180deg);color:var(--teal);}
+.pillar-body{display:none;padding:0 20px 20px;}
+.pillar.open .pillar-body{display:block;}
+.pillar-intro{font-size:13px;color:var(--mid);line-height:1.7;margin-bottom:16px;padding:12px 14px;background:var(--mist);border-radius:8px;}
+.action-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.action-item:last-child{border-bottom:none;}
+.action-arrow{color:var(--teal);font-weight:700;font-size:14px;flex-shrink:0;margin-top:1px;}
+.action-text{font-size:13px;color:var(--ink);line-height:1.6;}
+.impact-chip{display:inline-block;font-size:10px;font-weight:700;background:rgba(12,94,90,.1);color:var(--teal);border-radius:4px;padding:2px 8px;margin-left:6px;vertical-align:middle;}
+@media print{.cta,.field input{display:none;}.main{padding:0;}}
+</style>
+</head>
+<body>
+<div class="masthead">
+  <div class="mc-badge"><div class="tool-num">8</div><span>Profitable Equipment Leasing Masterclass</span></div>
+  <h1>Leasing as a <em>Growth Strategy</em> Planner</h1>
+  <div class="masthead-sub">Build your 3-year leasing growth plan — book size, NIM, ROE, and the four pillars that get you there</div>
+</div>
+<div class="main">
+  <div class="card">
+    <div class="card-title">Your Current Position and 3-Year Target</div>
+    <div class="g3">
+      <div class="field"><label>Current Lease Book (KES M)</label><input type="number" id="g_book" value="80" min="1"></div>
+      <div class="field"><label>Current Portfolio Yield (% p.a.)</label><input type="number" id="g_yield" value="21" step="0.5"></div>
+      <div class="field"><label>Cost of Funds (% p.a.)</label><input type="number" id="g_cof" value="15.5" step="0.25"></div>
+    </div>
+    <div class="g3">
+      <div class="field"><label>Annual Operational Budget (KES M)</label><input type="number" id="g_ops" value="3.2" step="0.1"></div>
+      <div class="field"><label>Target Book in 3 Years (KES M)</label><input type="number" id="g_target" value="280" min="1"></div>
+      <div class="field"><label>Equity Capital Available (KES M)</label><input type="number" id="g_equity" value="15" min="1"></div>
+    </div>
+    <button class="cta" onclick="buildGrowthPlan()">Build 3-Year Growth Plan →</button>
+  </div>
+
+  <div id="growthOutput" style="display:none;">
+    <div class="proj-panel">
+      <div class="proj-title">3-Year Portfolio Projection</div>
+      <table class="proj-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Metric</th>
+            <th>Today</th>
+            <th>Year 1</th>
+            <th>Year 2</th>
+            <th>Year 3 Target</th>
+          </tr>
+        </thead>
+        <tbody id="projBody"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">The Four Growth Pillars — Click Any Pillar to Expand</div>
+      <div id="pillarsArea"></div>
+    </div>
+
+    <div style="text-align:right;margin-top:8px;">
+      <button onclick="window.print()" style="background:var(--teal);color:#fff;border:none;padding:10px 22px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;">Print Growth Plan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function fmtM(n){return isNaN(n)?'—':'KES '+n.toFixed(1)+'M';}
+function fmtP(n,d){d=d||1;return isNaN(n)||!isFinite(n)?'—':n.toFixed(d)+'%';}
+function v(id){return parseFloat(document.getElementById(id).value)||0;}
+
+function buildGrowthPlan(){
+  var book=v('g_book');
+  var yld=v('g_yield');
+  var cof=v('g_cof');
+  var ops=v('g_ops');
+  var target=v('g_target');
+  var equity=v('g_equity');
+
+  var growthRate=Math.pow(target/book,1/3)-1;
+  var y1=book*(1+growthRate);
+  var y2=y1*(1+growthRate);
+  var y3=y2*(1+growthRate);
+
+  function nim(b){return b*(yld-cof)/100;}
+  function losses(b){return b*0.02;}
+  function pretax(b){return nim(b)-ops-losses(b);}
+  function roe(b){return equity>0?pretax(b)/equity*100:0;}
+  function opRate(b){return b>0?ops/b*100:0;}
+
+  var rows=[
+    ['Book Size',fmtM(book),fmtM(y1),fmtM(y2),fmtM(y3)],
+    ['Annual Growth Rate','Baseline',fmtP(growthRate*100),fmtP(growthRate*100),fmtP(growthRate*100)],
+    ['Portfolio Yield',fmtP(yld),fmtP(yld),fmtP(yld),fmtP(yld)],
+    ['Net Interest Spread',fmtP(yld-cof),fmtP(yld-cof),fmtP(yld-cof),fmtP(yld-cof)],
+    ['Net Interest Income',fmtM(nim(book)),fmtM(nim(y1)),fmtM(nim(y2)),fmtM(nim(y3))],
+    ['Operational Cost Rate',fmtP(opRate(book)),fmtP(opRate(y1)),fmtP(opRate(y2)),fmtP(opRate(y3))],
+    ['Credit Losses (2%)',fmtM(losses(book)),fmtM(losses(y1)),fmtM(losses(y2)),fmtM(losses(y3))],
+    ['Pre-Tax Profit',fmtM(pretax(book)),fmtM(pretax(y1)),fmtM(pretax(y2)),fmtM(pretax(y3))],
+    ['Return on Equity',fmtP(roe(book)),fmtP(roe(y1)),fmtP(roe(y2)),fmtP(roe(y3))],
+  ];
+
+  document.getElementById('projBody').innerHTML=rows.map(function(r){
+    return '<tr>'+r.map(function(c,i){return '<td'+(i===4?' class="highlight"':'')+'>'+(c||'—')+'</td>';}).join('')+'</tr>';
+  }).join('');
+
+  var gr=Math.round(growthRate*100);
+  var pillars=[
+    {
+      icon:'🤝',
+      name:'Pillar 1 — Vendor Partnerships: Deal Flow That Comes to You',
+      intro:'A vendor programme with one strong OEM or dealer turns their sales force into your origination engine. Instead of spending KES 3M+ per year finding deals, you pay a 1% referral fee and the deals come to you. Target: one vendor programme operational by month 3, producing 40% of your new deal flow by month 12.',
+      actions:[
+        {text:'Identify your top 3 target vendors — map who their customers are, what equipment they sell, and whether those customers have a financing gap',chip:'Week 1'},
+        {text:'Approach the vendor\'s commercial director with a one-page programme proposal — rate card, '+gr+'% target growth, turnaround time, and referral fee structure',chip:'Week 2'},
+        {text:'Launch soft in month 2 with first 3-5 deals, full launch in month 3 with volume targets agreed in writing',chip:'Month 2-3'},
+        {text:'Track weekly: deals submitted, deals funded, turnaround time, referral fee payments, and credit quality vs direct origination',chip:'Ongoing'},
+        {text:'Once first programme is stable, add a second vendor in a different sector to reduce concentration risk — do not put 60%+ of your new flow through one relationship',chip:'Month 9'}
+      ]
+    },
+    {
+      icon:'📊',
+      name:'Pillar 2 — Portfolio Quality: Growing Without Compromising Your Credit Book',
+      intro:'Growing from KES '+book.toFixed(0)+'M to KES '+target.toFixed(0)+'M requires '+gr+'% annual growth. That growth must be in creditworthy, well-secured deals — not volume at the expense of quality. A 5% NPL ratio on a growing book destroys the economics that growth was supposed to create.',
+      actions:[
+        {text:'Set and enforce a maximum 10% concentration in any single lessee group and a maximum 30% in any single sector — rebalance quarterly',chip:'Credit policy'},
+        {text:'Review the rental coverage ratio distribution monthly — if the portfolio average falls below 1.8x, pause new originations at the margin until quality recovers',chip:'Monthly'},
+        {text:'Track early warning indicators at months 3, 6, and 9 of every new deal — not just at missed payments. Maintenance compliance, site visit observation, and business activity levels all predict defaults earlier than arrears do',chip:'Credit monitoring'},
+        {text:'Provision at 2% of average book per year — model your growth projections using this provision, not zero credit losses. The plan that assumes zero losses is not a plan',chip:'Financial planning'},
+        {text:'Build a credit quality score for your portfolio — weighted average coverage ratio, average risk score, percentage of deals above 2x coverage — and report it to your board monthly',chip:'Governance'}
+      ]
+    },
+    {
+      icon:'💰',
+      name:'Pillar 3 — Funding Diversification: Never Be One Lender Away From Stopping',
+      intro:'A lease book funded by a single bank revolving credit line is fragile. If that bank reprices, tightens covenants, or withdraws the line — your new originations stop overnight. Growing to KES '+target.toFixed(0)+'M requires multiple funding relationships and a deliberate migration from short-dated revolving lines to term-matched funding.',
+      actions:[
+        {text:'Open conversations with at least two different banks simultaneously — never be a single-source borrower at any point in your growth journey',chip:'Immediate'},
+        {text:'Negotiate term loan facilities (3-5 year maturity) to match your 48-month lease terms — revolving lines create maturity mismatch risk, particularly when your book is growing fast',chip:'Year 1'},
+        {text:'Apply for a DFI facility (IFC, AfDB, PROPARCO) in Year 2 once you have 24 months of audited accounts — DFI rates at 10-12% vs commercial bank rates of 15-16% add 3-4% to your NIM immediately',chip:'Year 2'},
+        {text:'Target: no single funder represents more than 50% of your total funding by end of Year 2, and maximum 40% by end of Year 3',chip:'Funding policy'},
+        {text:'Build the DFI application using the VGL Tool 6 ESG Assessment — start the process 12 months before you need the money, not when you are running short of liquidity',chip:'Strategic'}
+      ]
+    },
+    {
+      icon:'📈',
+      name:'Pillar 4 — Leasing as a Growth Tool for Your Clients: The Biggest Differentiator',
+      intro:'The leasing companies that grow the fastest are those whose clients grow the fastest. Your job is not just to finance equipment — it is to use leasing to unlock growth opportunities your clients would otherwise miss. The lessor who understands a client\'s business deeply enough to say "I think you should lease 6 more trucks to take that contract" is not a lender — they are a growth partner.',
+      actions:[
+        {text:'Introduce every new client to the capital efficiency argument at drawdown: "What will you do with the KES '+Math.round(v('g_book')/10/1e6*10)/10+'M you kept free by leasing?" Make them think about the next opportunity, not just the current equipment',chip:'Mindset shift'},
+        {text:'Build a 90-day calendar contact for every client in your portfolio — proactive outreach, not reactive collections. A phone call asking "how are the trucks performing?" is the best collections tool ever built',chip:'Relationship'},
+        {text:'When you see a new contract opportunity in a client\'s sector — call them before they call you. "I saw the government announced new road contracts in Nakuru — are you bidding? Do you need additional equipment?"',chip:'Proactive origination'},
+        {text:'Offer fleet expansion conversations at month 12 of every 48-month lease — not at month 46 when the lease is expiring and they are already looking at other options',chip:'Retention'},
+        {text:'Build a client newsletter or quarterly market insight — one page, specific to their sector, positioning you as the most informed equipment finance professional they know. The advisor relationship is worth 10x the transaction relationship',chip:'Positioning'}
+      ]
+    }
+  ];
+
+  document.getElementById('pillarsArea').innerHTML=pillars.map(function(p,i){
+    var actions=p.actions.map(function(a){
+      return '<div class="action-item"><div class="action-arrow">→</div><div class="action-text">'+a.text+'<span class="impact-chip">'+a.chip+'</span></div></div>';
+    }).join('');
+    return '<div class="pillar" id="pillar_'+i+'"><div class="pillar-head" onclick="togglePillar('+i+')"><div class="pillar-icon">'+p.icon+'</div><div class="pillar-name">'+p.name+'</div><div class="pillar-toggle">▾</div></div><div class="pillar-body"><div class="pillar-intro">'+p.intro+'</div>'+actions+'</div></div>';
+  }).join('');
+
+  document.getElementById('growthOutput').style.display='block';
+  document.getElementById('growthOutput').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function togglePillar(i){
+  var el=document.getElementById('pillar_'+i);
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>

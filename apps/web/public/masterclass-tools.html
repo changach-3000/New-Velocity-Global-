@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>VGL Masterclass | Strategic Tool Suite</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      background: linear-gradient(145deg, #f0f7ff 0%, #eef2fa 100%);
+      min-height: 100vh;
+      color: #0a2540;
+    }
+
+    /* ---------- GATE LAYOUT (light elegant) ---------- */
+    #gate {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #eef4ff 0%, #ffffff 100%);
+    }
+
+    .gate-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(2px);
+      border-radius: 2rem;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 25px 45px -12px rgba(0, 32, 64, 0.18), 0 1px 2px rgba(0,0,0,0.02);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .gate-logo {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(145deg, #ffffff, #eef2ff);
+      width: 72px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2rem;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 10px 15px -6px rgba(0, 50, 80, 0.1);
+    }
+
+    .gate-card h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 1rem 0 0.5rem;
+      background: linear-gradient(115deg, #0f3b6f, #1e6df2);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .gate-card p {
+      color: #2c5a7a;
+      margin-bottom: 1.8rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
+    .gate-card input {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #cddfe7;
+      border-radius: 1.2rem;
+      padding: 0.85rem 1.2rem;
+      color: #0f2b3f;
+      font-size: 1rem;
+      text-align: center;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
+      outline: none;
+      transition: all 0.2s;
+      font-weight: 500;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    .gate-card input:focus {
+      border-color: #2b7eef;
+      box-shadow: 0 0 0 3px rgba(43, 126, 239, 0.15);
+    }
+
+    .gate-card button {
+      width: 100%;
+      background: #1a66e0;
+      color: white;
+      border: none;
+      border-radius: 1.5rem;
+      padding: 0.85rem 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 8px rgba(26, 102, 224, 0.2);
+    }
+
+    .gate-card button:hover {
+      background: #0c4eb3;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px -6px #1a66e055;
+    }
+
+    .gate-error {
+      color: #e14b3a;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      display: none;
+      font-weight: 500;
+    }
+
+    /* ---------- APP (light & premium) ---------- */
+    #app {
+      display: none;
+    }
+
+    header {
+      background: #ffffffdd;
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(58, 126, 215, 0.2);
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .header-brand {
+      font-weight: 700;
+      font-size: 1.15rem;
+      background: linear-gradient(125deg, #1363df, #2d89f0);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.2px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .header-brand:before {
+      content: "⚡";
+      background: none;
+      -webkit-text-fill-color: #1a66e0;
+      color: #1a66e0;
+    }
+
+    .header-badge {
+      background: #eef4ff;
+      border: 1px solid #cde1f5;
+      color: #1e5bc0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 0.4rem 1rem;
+      border-radius: 60px;
+      backdrop-filter: blur(2px);
+    }
+
+    .hub {
+      padding: 2rem 2rem 2.2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .hub-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: #0b355c;
+      letter-spacing: -0.4px;
+    }
+
+    .hub-sub {
+      color: #527f9e;
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+      border-left: 4px solid #2b7eef;
+      padding-left: 1rem;
+      font-weight: 450;
+    }
+
+    /* modern card grid */
+    #tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .tool-card {
+      background: #ffffff;
+      border-radius: 1.75rem;
+      padding: 1.6rem 1.6rem 1.8rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid #eaf0f8;
+      box-shadow: 0 5px 14px rgba(0, 20, 40, 0.03);
+    }
+
+    .tool-card:hover {
+      transform: translateY(-5px);
+      border-color: #b9d6ff;
+      box-shadow: 0 22px 32px -14px rgba(26, 102, 224, 0.18);
+    }
+
+    .tool-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: #f5f9ff;
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1.25rem;
+      transition: background 0.2s;
+    }
+
+    .tool-card:hover .tool-icon {
+      background: #e7f0fe;
+    }
+
+    .tool-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: #124072;
+      letter-spacing: -0.2px;
+    }
+
+    .tool-desc {
+      font-size: 0.88rem;
+      color: #4b6e8c;
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+    }
+
+    .tool-filename {
+      font-size: 0.7rem;
+      font-family: monospace;
+      background: #f0f5fe;
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      border-radius: 24px;
+      color: #1a66e0;
+      margin-bottom: 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    .tool-launch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1e6df2;
+      background: #eef4ff;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      transition: all 0.2s;
+    }
+
+    .tool-card:hover .tool-launch {
+      background: #dfebfc;
+      gap: 0.7rem;
+      color: #0c4eb3;
+    }
+
+    /* iframe viewer */
+    #tool-viewer {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .viewer-bar {
+      background: #ffffffcc;
+      backdrop-filter: blur(8px);
+      border-radius: 2rem;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1.8rem;
+      border: 1px solid #e2edff;
+    }
+
+    .back-btn {
+      background: #f8fafe;
+      border: 1px solid #cbddee;
+      color: #1a4977;
+      border-radius: 2rem;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .back-btn:hover {
+      background: #eef3fc;
+      border-color: #9bbde2;
+      color: #0a2e5a;
+      transform: translateX(-2px);
+    }
+
+    .viewer-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #134680;
+      background: #eef4ff;
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+    }
+
+    #viewer-external-link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #1e6df2;
+      text-decoration: none;
+      background: #eef4ff;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      transition: background 0.2s;
+    }
+
+    #viewer-external-link:hover {
+      background: #dfebfc;
+      text-decoration: underline;
+    }
+
+    iframe {
+      width: 100%;
+      height: 75vh;
+      border-radius: 1.8rem;
+      background: #FFFFFF;
+      border: 1px solid #e2edff;
+      box-shadow: 0 12px 25px -12px rgba(0, 0, 0, 0.08);
+    }
+
+    @media (max-width: 700px) {
+      .hub {
+        padding: 1.5rem;
+      }
+      .tool-card {
+        padding: 1.2rem;
+      }
+      .viewer-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- GATE SCREEN -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">🧰</div>
+    <h1>VGL Masterclass Tools</h1>
+    <p>Enter your masterclass access code to unlock eight professional tools — deal structures, margin protection, risk scorecard and more.</p>
+    <input type="password" id="pw-input" placeholder="Access code" autocomplete="off" />
+    <button id="unlock-btn">Unlock suite →</button>
+    <div class="gate-error" id="gate-error">✕ Incorrect access code. Please verify and try again.</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <header>
+    <span class="header-brand">VGL Masterclass · Strategic Toolkit</span>
+    <span class="header-badge">PROFESSIONAL ACCESS</span>
+  </header>
+
+  <div class="hub">
+    <h1 class="hub-title">Decision intelligence suite</h1>
+    <p class="hub-sub">8 interactive tools — from deal structuring to growth planning. Click any card to launch.</p>
+
+    <div id="tool-grid"></div>
+
+    <div id="tool-viewer">
+      <div class="viewer-bar">
+        <button class="back-btn" id="close-viewer-btn">← Back to tools</button>
+        <span class="viewer-title" id="viewer-title-label">Tool</span>
+        <a id="viewer-external-link" href="#" target="_blank">Open in new tab ↗</a>
+      </div>
+      <iframe id="dynamic-frame" title="Interactive tool" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // EXACT 8 TOOLS (matching the screenshot names)
+  // All files are served from /public/tools/ as per React pattern
+  // --------------------------------------------------------------
+  const PASSWORD = 'VGL2026';
+
+  const TOOL_LIBRARY = [
+    {
+      id: "tool1",
+      originalName: "MC_Tool1_DealStructure",
+      displayTitle: "Deal Structure Architect",
+      description: "Model complex equipment finance transactions, optimize advance rates, and structure multi-tranche facilities.",
+      icon: "🏛️",
+      fileName: "MC_Tool1_DealStructure.html"
+    },
+    {
+      id: "tool2",
+      originalName: "MC_Tool2_LeaseNumbers-1",
+      displayTitle: "Lease Numbers Analyzer",
+      description: "Detailed lease cashflow, implicit rate calculation, and GAAP / IFRS disclosure analytics.",
+      icon: "🔢",
+      fileName: "MC_Tool2_LeaseNumbers-1.html"
+    },
+    {
+      id: "tool3",
+      originalName: "MC_Tool3_MarginProtection",
+      displayTitle: "Margin Protection Shield",
+      description: "Stress-test spreads, break-even cost analysis, and margin preservation strategies.",
+      icon: "🛡️",
+      fileName: "MC_Tool3_MarginProtection.html"
+    },
+    {
+      id: "tool4",
+      originalName: "MC_Tool4_RiskScorecard",
+      displayTitle: "Risk Scorecard",
+      description: "Automated risk rating, probability of default calibration, and covenant tracker.",
+      icon: "📋",
+      fileName: "MC_Tool4_RiskScorecard.html"
+    },
+    {
+      id: "tool5",
+      originalName: "MC_Tool5_MistakePrevention",
+      displayTitle: "Mistake Prevention Checklist",
+      description: "Proactive error detection for documentation, compliance, and pricing missteps.",
+      icon: "⚠️",
+      fileName: "MC_Tool5_MistakePrevention.html"
+    },
+    {
+      id: "tool6",
+      originalName: "MC_Tool6_CustomerProfiler",
+      displayTitle: "Customer Profiler",
+      description: "Segment clients by behavior, financial health, and lifetime value for tailored offerings.",
+      icon: "👥",
+      fileName: "MC_Tool6_CustomerProfiler.html"
+    },
+    {
+      id: "tool7",
+      originalName: "MC_Tool7_VendorPlanner",
+      displayTitle: "Vendor Planner",
+      description: "Evaluate vendor partnerships, pipeline scenarios, and co-marketing ROI.",
+      icon: "🤝",
+      fileName: "MC_Tool7_VendorPlanner.html"
+    },
+    {
+      id: "tool8",
+      originalName: "MC_Tool8_GrowthPlanner",
+      displayTitle: "Growth Planner",
+      description: "Strategic forecast models, asset class expansion, and territory planning engine.",
+      icon: "📈",
+      fileName: "MC_Tool8_GrowthPlanner.html"
+    }
+  ];
+
+  // Base path for tools (matching React setup: public/tools/)
+  const TOOLS_BASE_PATH = "/public/tools/";
+
+  // Helper to get full file URL
+  function getToolFileUrl(fileName) {
+    // If the path already starts with /tools/ or similar, keep consistent
+    // but standard pattern from the React code: /tools/${file}
+    // Here we follow "public/tools/" -> URL will be /public/tools/xxx.html
+    // In many setups, static files are served from root, so /public/tools/ is accessible.
+    // For flexibility, we ensure no double slashes.
+    let base = TOOLS_BASE_PATH;
+    if (!base.endsWith('/')) base += '/';
+    return base + fileName;
+  }
+
+  // DOM elements
+  const gateDiv = document.getElementById('gate');
+  const appDiv = document.getElementById('app');
+  const gridContainer = document.getElementById('tool-grid');
+  const viewerDiv = document.getElementById('tool-viewer');
+  const iframeEl = document.getElementById('dynamic-frame');
+  const viewerTitleSpan = document.getElementById('viewer-title-label');
+  const externalLink = document.getElementById('viewer-external-link');
+  const closeBtn = document.getElementById('close-viewer-btn');
+  const unlockButton = document.getElementById('unlock-btn');
+  const pwInput = document.getElementById('pw-input');
+  const gateError = document.getElementById('gate-error');
+
+  // State for current tool index
+  let activeToolIndex = null;
+
+  // Build grid with exact name matches (showing original MC_ToolX identifier)
+  function buildToolGrid() {
+    gridContainer.innerHTML = '';
+    TOOL_LIBRARY.forEach((tool, idx) => {
+      const card = document.createElement('div');
+      card.className = 'tool-card';
+      card.setAttribute('data-tool-index', idx);
+      // Display includes the original filename as a subtle badge (matching requirement: titles and names match)
+      card.innerHTML = `
+        <div class="tool-icon">${tool.icon}</div>
+        <div class="tool-title">${tool.displayTitle}</div>
+        <div class="tool-desc">${tool.description}</div>
+        <div class="tool-filename">📄 ${tool.originalName}.html</div>
+        <div class="tool-launch">Launch tool →</div>
+      `;
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openToolByIndex(idx);
+      });
+      gridContainer.appendChild(card);
+    });
+  }
+
+  // Open tool inside iframe (same pattern as React code)
+  function openToolByIndex(index) {
+    const tool = TOOL_LIBRARY[index];
+    if (!tool) return;
+    activeToolIndex = index;
+    
+    const fileUrl = getToolFileUrl(tool.fileName);
+    
+    // Hide grid, show viewer
+    gridContainer.style.display = 'none';
+    viewerDiv.style.display = 'block';
+    viewerTitleSpan.textContent = tool.displayTitle;
+    iframeEl.src = fileUrl;
+    externalLink.href = fileUrl;
+    
+    // Optional: iframe load error fallback (console)
+    iframeEl.onerror = () => {
+      console.warn(`Failed to load tool: ${fileUrl}`);
+      // Optionally show a small inline message, but design keeps clean
+    };
+  }
+
+  function closeToolViewer() {
+    viewerDiv.style.display = 'none';
+    gridContainer.style.display = 'grid';
+    iframeEl.src = 'about:blank';   // stop loading previous tool
+    activeToolIndex = null;
+    viewerTitleSpan.textContent = '';
+    externalLink.href = '#';
+  }
+
+  // Unlock / gate logic
+  function unlockTools() {
+    const enteredCode = pwInput.value.trim();
+    if (enteredCode === PASSWORD) {
+      gateDiv.style.display = 'none';
+      appDiv.style.display = 'block';
+      buildToolGrid();
+      // Ensure we start with grid visible and viewer hidden
+      gridContainer.style.display = 'grid';
+      viewerDiv.style.display = 'none';
+      iframeEl.src = '';
+      gateError.style.display = 'none';
+    } else {
+      gateError.style.display = 'block';
+      // subtle shake
+      const card = document.querySelector('.gate-card');
+      if (card) {
+        card.style.transform = 'translateX(4px)';
+        setTimeout(() => { if(card) card.style.transform = ''; }, 150);
+      }
+      pwInput.value = '';
+      pwInput.focus();
+    }
+  }
+
+  // Event listeners
+  unlockButton.addEventListener('click', unlockTools);
+  closeBtn.addEventListener('click', closeToolViewer);
+  
+  pwInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      unlockTools();
+    }
+  });
+
+  // Additional improvement: show warning if iframe fails because file missing, but external link still works
+  // Provide graceful note in console (no UX disruption)
+  
+  // For extra clarity: we match the React pattern by using /public/tools/ prefix.
+  // If your server is serving static files from root, ensure that the folder "public/tools" exists 
+  // with these 8 HTML files. To align with common React hosting, path is exactly as per example:
+  // In the provided React component they used `href={`/tools/${ELITE_TOOLS[activeToolIndex].file}`}`
+  // So they placed tools inside public/tools/ (which becomes /tools/ at the root). 
+  // Adjust base path to match that pattern:
+  
+  // Override base path to be consistent with React example code (they use "/tools/xxx.html")
+  // I'll update TOOLS_BASE_PATH to '/tools/' because in the react code they reference "/tools/filename.html".
+  const REACT_STYLE_BASE = '/tools/';
+  
+  // Re-evaluate getToolFileUrl but override to match React's /tools/ pattern exactly.
+  window.TOOLS_BASE_PATH_ACTUAL = REACT_STYLE_BASE;
+  
+  function getFinalToolUrl(fileName) {
+    // According to the React page: `<a href={`/tools/${ELITE_TOOLS[activeToolIndex].file}`}`
+    // So files are served from the public/tools directory at route "/tools/".
+    let base = '/tools/';
+    if (!base.endsWith('/')) base += '/';
+    return base + fileName;
+  }
+  
+  // Override the openToolByIndex to use exact react path pattern
+  const originalOpen = openToolByIndex;
+  window.openToolByIndex = function(index) {
+    const tool = TOOL_LIBRARY[index];
+    if (!tool) return;
+    activeToolIndex = index;
+    const fileUrl = getFinalToolUrl(tool.fileName);
+    gridContainer.style.display = 'none';
+    viewerDiv.style.display = 'block';
+    viewerTitleSpan.textContent = tool.displayTitle;
+    iframeEl.src = fileUrl;
+    externalLink.href = fileUrl;
+    iframeEl.onerror = () => console.warn(`Tool not found at ${fileUrl}, ensure file exists in /public/tools/`);
+  };
+  
+  // Replace function globally
+  function openToolByIndex(index) {
+    const tool = TOOL_LIBRARY[index];
+    if (!tool) return;
+    activeToolIndex = index;
+    const fileUrl = getFinalToolUrl(tool.fileName);
+    gridContainer.style.display = 'none';
+    viewerDiv.style.display = 'block';
+    viewerTitleSpan.textContent = tool.displayTitle;
+    iframeEl.src = fileUrl;
+    externalLink.href = fileUrl;
+    iframeEl.onerror = () => console.warn(`Tool not found at ${fileUrl}, ensure file exists in /public/tools/`);
+  }
+  
+  // Reassign to make sure buildToolGrid uses the correct open function
+  window.openToolByIndexGlobal = openToolByIndex;
+  
+  // Rebuild grid function to attach updated event
+  function buildGridWithReactPath() {
+    gridContainer.innerHTML = '';
+    TOOL_LIBRARY.forEach((tool, idx) => {
+      const card = document.createElement('div');
+      card.className = 'tool-card';
+      card.innerHTML = `
+        <div class="tool-icon">${tool.icon}</div>
+        <div class="tool-title">${tool.displayTitle}</div>
+        <div class="tool-desc">${tool.description}</div>
+        <div class="tool-filename">📄 ${tool.originalName}.html</div>
+        <div class="tool-launch">Launch tool →</div>
+      `;
+      card.addEventListener('click', () => openToolByIndex(idx));
+      gridContainer.appendChild(card);
+    });
+  }
+  
+  // Override unlock to use correct builder
+  const originalUnlock = unlockTools;
+  window.unlockTools = function() {
+    const enteredCode = pwInput.value.trim();
+    if (enteredCode === PASSWORD) {
+      gateDiv.style.display = 'none';
+      appDiv.style.display = 'block';
+      buildGridWithReactPath();   // uses updated openToolByIndex with /tools/ base
+      gridContainer.style.display = 'grid';
+      viewerDiv.style.display = 'none';
+      iframeEl.src = '';
+      gateError.style.display = 'none';
+    } else {
+      gateError.style.display = 'block';
+      const card = document.querySelector('.gate-card');
+      if (card) {
+        card.style.transform = 'translateX(4px)';
+        setTimeout(() => { if(card) card.style.transform = ''; }, 150);
+      }
+    }
+  };
+  
+  // re-attach unlock button event
+  const newUnlockBtn = document.getElementById('unlock-btn');
+  if (newUnlockBtn) {
+    // remove old listeners
+    const newBtn = newUnlockBtn.cloneNode(true);
+    newUnlockBtn.parentNode.replaceChild(newBtn, newUnlockBtn);
+    newBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.unlockTools();
+    });
+  }
+  
+  // reattach password enter
+  const passwordField = document.getElementById('pw-input');
+  if (passwordField) {
+    passwordField.removeEventListener('keypress', passwordField.listeners);
+    passwordField.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        window.unlockTools();
+      }
+    });
+  }
+  
+  // re-export close function properly
+  window.closeToolViewer = function() {
+    viewerDiv.style.display = 'none';
+    gridContainer.style.display = 'grid';
+    iframeEl.src = 'about:blank';
+    activeToolIndex = null;
+    viewerTitleSpan.textContent = '';
+    externalLink.href = '#';
+  };
+  
+  document.getElementById('close-viewer-btn').addEventListener('click', () => {
+    window.closeToolViewer();
+  });
+  
+  // Final style ensure external link absolute path consistency
+  console.log('Ready — Tools are served from /tools/ directory (public/tools/). Make sure all 8 HTML files exist there.');
+</script>
+</body>
+</html>

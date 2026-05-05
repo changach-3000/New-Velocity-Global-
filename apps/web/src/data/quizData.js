@@ -3802,287 +3802,288 @@ export const quizData = [
   // },
 
   {
-    "id": "c32",
-    "title": "Introduction to IFRS 16",
-    "description": "Gain a clear foundational understanding of IFRS 16 — its scope, objectives, and key concepts.",
-    "questions": [
+    id: "c32",
+    title: "Introduction to IFRS 16",
+    description:
+      "Gain a clear foundational understanding of IFRS 16 — its scope, objectives, and key concepts.",
+    questions: [
       {
-        "id": "q1",
-        "text": "What problem did IFRS 16 primarily seek to solve?",
-        "options": {
-          "a": "To simplify lease documentation for lessees",
-          "b": "To standardise lease payment terms globally",
-          "c": "To bring transparency to lessee financial statements by requiring most leases to be recognised on the balance sheet, eliminating the widespread use of off-balance-sheet operating leases",
-          "d": "To reduce the cost of leasing for small businesses"
+        id: "q1",
+        text: "What problem did IFRS 16 primarily seek to solve?",
+        options: {
+          a: "To simplify lease documentation for lessees",
+          b: "To standardise lease payment terms globally",
+          c: "To bring transparency to lessee financial statements by requiring most leases to be recognised on the balance sheet, eliminating the widespread use of off-balance-sheet operating leases",
+          d: "To reduce the cost of leasing for small businesses",
         },
-        "correctAnswer": "c"
+        correctAnswer: "c",
       },
       {
-        "id": "q2",
-        "text": "When did IFRS 16 become effective?",
-        "options": {
-          "a": "1 January 2013",
-          "b": "1 January 2021",
-          "c": "1 January 2019",
-          "d": "1 January 2025"
+        id: "q2",
+        text: "When did IFRS 16 become effective?",
+        options: {
+          a: "1 January 2013",
+          b: "1 January 2021",
+          c: "1 January 2019",
+          d: "1 January 2025",
         },
-        "correctAnswer": "c"
+        correctAnswer: "c",
       },
       {
-        "id": "q3",
-        "text": "Which standard did IFRS 16 replace?",
-        "options": {
-          "a": "IFRS 9",
-          "b": "IAS 17",
-          "c": "IAS 39",
-          "d": "IFRS 15"
+        id: "q3",
+        text: "Which standard did IFRS 16 replace?",
+        options: {
+          a: "IFRS 9",
+          b: "IAS 17",
+          c: "IAS 39",
+          d: "IFRS 15",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q4",
-        "text": "Under IFRS 16, what is the definition of a lease?",
-        "options": {
-          "a": "A contract, or part of a contract, that conveys the right to control the use of an identified asset for a period of time in exchange for consideration",
-          "b": "Any contract involving the payment of a regular fee for the use of an asset",
-          "c": "Any contract where title to an asset transfers at the end of the term",
-          "d": "A contract for the purchase of an asset through instalment payments"
+        id: "q4",
+        text: "Under IFRS 16, what is the definition of a lease?",
+        options: {
+          a: "A contract, or part of a contract, that conveys the right to control the use of an identified asset for a period of time in exchange for consideration",
+          b: "Any contract involving the payment of a regular fee for the use of an asset",
+          c: "Any contract where title to an asset transfers at the end of the term",
+          d: "A contract for the purchase of an asset through instalment payments",
         },
-        "correctAnswer": "a"
+        correctAnswer: "a",
       },
       {
-        "id": "q5",
-        "text": "What are the two key elements that determine whether a contract contains a lease under IFRS 16?",
-        "options": {
-          "a": "The contract must be in writing and signed by both parties",
-          "b": "There must be an identified asset and the customer must have the right to control the use of that asset throughout the period of use",
-          "c": "The contract must specify a fixed term and a fixed payment",
-          "d": "The asset must be tangible and the payments must be monthly"
+        id: "q5",
+        text: "What are the two key elements that determine whether a contract contains a lease under IFRS 16?",
+        options: {
+          a: "The contract must be in writing and signed by both parties",
+          b: "There must be an identified asset and the customer must have the right to control the use of that asset throughout the period of use",
+          c: "The contract must specify a fixed term and a fixed payment",
+          d: "The asset must be tangible and the payments must be monthly",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q6",
-        "text": "Which entities are required to apply IFRS 16?",
-        "options": {
-          "a": "Entities that prepare financial statements in accordance with IFRS, including both lessees and lessors",
-          "b": "All companies globally",
-          "c": "Only listed companies in the European Union",
-          "d": "Only lessors — lessees apply ASC 842"
+        id: "q6",
+        text: "Which entities are required to apply IFRS 16?",
+        options: {
+          a: "Entities that prepare financial statements in accordance with IFRS, including both lessees and lessors",
+          b: "All companies globally",
+          c: "Only listed companies in the European Union",
+          d: "Only lessors — lessees apply ASC 842",
         },
-        "correctAnswer": "a"
+        correctAnswer: "a",
       },
       {
-        "id": "q7",
-        "text": "What are the two types of leases recognised under IFRS 16 for lessors?",
-        "options": {
-          "a": "Short-term and long-term leases",
-          "b": "Finance leases and operating leases",
-          "c": "Recognised and unrecognised leases",
-          "d": "On-balance-sheet and off-balance-sheet leases"
+        id: "q7",
+        text: "What are the two types of leases recognised under IFRS 16 for lessors?",
+        options: {
+          a: "Short-term and long-term leases",
+          b: "Finance leases and operating leases",
+          c: "Recognised and unrecognised leases",
+          d: "On-balance-sheet and off-balance-sheet leases",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q8",
-        "text": "What is meant by 'right of substitution' and how does it affect the lease assessment?",
-        "options": {
-          "a": "The lessee's right to substitute one piece of equipment for another",
-          "b": "If the supplier has a substantive right to substitute the asset throughout the period of use, the contract does not contain a lease — because the customer does not control a specific identified asset",
-          "c": "The lessor's right to substitute the lessee",
-          "d": "The right to substitute cash payments for equipment returns"
+        id: "q8",
+        text: "What is meant by 'right of substitution' and how does it affect the lease assessment?",
+        options: {
+          a: "The lessee's right to substitute one piece of equipment for another",
+          b: "If the supplier has a substantive right to substitute the asset throughout the period of use, the contract does not contain a lease — because the customer does not control a specific identified asset",
+          c: "The lessor's right to substitute the lessee",
+          d: "The right to substitute cash payments for equipment returns",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q9",
-        "text": "What is the scope exclusion for 'low-value assets' under IFRS 16?",
-        "options": {
-          "a": "Assets with a cost of less than $1,000",
-          "b": "Assets that depreciate to zero within 12 months",
-          "c": "Lessees may apply a practical expedient to not recognise leases of underlying assets that are of low value when new (commonly interpreted as below approximately USD 5,000), expensing payments on a straight-line basis instead",
-          "d": "All assets under $50,000 original cost"
+        id: "q9",
+        text: "What is the scope exclusion for 'low-value assets' under IFRS 16?",
+        options: {
+          a: "Assets with a cost of less than $1,000",
+          b: "Assets that depreciate to zero within 12 months",
+          c: "Lessees may apply a practical expedient to not recognise leases of underlying assets that are of low value when new (commonly interpreted as below approximately USD 5,000), expensing payments on a straight-line basis instead",
+          d: "All assets under $50,000 original cost",
         },
-        "correctAnswer": "c"
+        correctAnswer: "c",
       },
       {
-        "id": "q10",
-        "text": "Why is IFRS 16 considered a significant improvement in transparency over its predecessor IAS 17?",
-        "options": {
-          "a": "Because it simplifies lease accounting to a single journal entry",
-          "b": "Because it ensures that all material lease obligations are visible on the lessee's balance sheet, allowing investors and analysts to see the true extent of a company's financial commitments rather than relying on footnote disclosures",
-          "c": "Because it eliminates the need for lease disclosures",
-          "d": "Because it reduces the number of leases companies can enter into"
+        id: "q10",
+        text: "Why is IFRS 16 considered a significant improvement in transparency over its predecessor IAS 17?",
+        options: {
+          a: "Because it simplifies lease accounting to a single journal entry",
+          b: "Because it ensures that all material lease obligations are visible on the lessee's balance sheet, allowing investors and analysts to see the true extent of a company's financial commitments rather than relying on footnote disclosures",
+          c: "Because it eliminates the need for lease disclosures",
+          d: "Because it reduces the number of leases companies can enter into",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q11",
-        "text": "For lessees, how does IFRS 16 initially recognise most leases?",
-        "options": {
-          "a": "As an expense immediately",
-          "b": "As a right-of-use asset and a lease liability",
-          "c": "As an off-balance-sheet item",
-          "d": "As a contingent liability only"
+        id: "q11",
+        text: "For lessees, how does IFRS 16 initially recognise most leases?",
+        options: {
+          a: "As an expense immediately",
+          b: "As a right-of-use asset and a lease liability",
+          c: "As an off-balance-sheet item",
+          d: "As a contingent liability only",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q12",
-        "text": "How is the lease liability initially measured under IFRS 16?",
-        "options": {
-          "a": "Fair value of the leased asset",
-          "b": "Undiscounted future lease payments",
-          "c": "Present value of lease payments not yet paid",
-          "d": "Carrying amount of the asset in lessor's books"
+        id: "q12",
+        text: "How is the lease liability initially measured under IFRS 16?",
+        options: {
+          a: "Fair value of the leased asset",
+          b: "Undiscounted future lease payments",
+          c: "Present value of lease payments not yet paid",
+          d: "Carrying amount of the asset in lessor's books",
         },
-        "correctAnswer": "c"
+        correctAnswer: "c",
       },
       {
-        "id": "q13",
-        "text": "Which of the following is included in lease payments for lessees under IFRS 16?",
-        "options": {
-          "a": "Only the base rent",
-          "b": "Fixed payments, variable payments linked to an index, purchase option exercise price if reasonably certain, and residual value guarantees",
-          "c": "Only payments to the lessor for asset use",
-          "d": "Only insurance and maintenance payments"
+        id: "q13",
+        text: "Which of the following is included in lease payments for lessees under IFRS 16?",
+        options: {
+          a: "Only the base rent",
+          b: "Fixed payments, variable payments linked to an index, purchase option exercise price if reasonably certain, and residual value guarantees",
+          c: "Only payments to the lessor for asset use",
+          d: "Only insurance and maintenance payments",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q14",
-        "text": "What discount rate does a lessee typically use for present value calculation under IFRS 16?",
-        "options": {
-          "a": "Lessor's cost of equity",
-          "b": "Risk-free government bond rate",
-          "c": "Interest rate implicit in the lease, if practicable; otherwise the lessee's incremental borrowing rate",
-          "d": "Central bank base rate"
+        id: "q14",
+        text: "What discount rate does a lessee typically use for present value calculation under IFRS 16?",
+        options: {
+          a: "Lessor's cost of equity",
+          b: "Risk-free government bond rate",
+          c: "Interest rate implicit in the lease, if practicable; otherwise the lessee's incremental borrowing rate",
+          d: "Central bank base rate",
         },
-        "correctAnswer": "c"
+        correctAnswer: "c",
       },
       {
-        "id": "q15",
-        "text": "How does IFRS 16 treat short-term leases (12 months or less, no purchase option)?",
-        "options": {
-          "a": "Capitalised like all other leases",
-          "b": "Disclosed only in footnotes",
-          "c": "May be expensed on a straight-line basis as a practical expedient",
-          "d": "Prohibited under IFRS 16"
+        id: "q15",
+        text: "How does IFRS 16 treat short-term leases (12 months or less, no purchase option)?",
+        options: {
+          a: "Capitalised like all other leases",
+          b: "Disclosed only in footnotes",
+          c: "May be expensed on a straight-line basis as a practical expedient",
+          d: "Prohibited under IFRS 16",
         },
-        "correctAnswer": "c"
+        correctAnswer: "c",
       },
       {
-        "id": "q16",
-        "text": "Under IFRS 16, lessees subsequently account for the right-of-use asset using:",
-        "options": {
-          "a": "Cost model (depreciated cost) unless another standard requires fair value",
-          "b": "Fair value model for all assets",
-          "c": "Revaluation model only for property",
-          "d": "Lower of cost and net realisable value"
+        id: "q16",
+        text: "Under IFRS 16, lessees subsequently account for the right-of-use asset using:",
+        options: {
+          a: "Cost model (depreciated cost) unless another standard requires fair value",
+          b: "Fair value model for all assets",
+          c: "Revaluation model only for property",
+          d: "Lower of cost and net realisable value",
         },
-        "correctAnswer": "a"
+        correctAnswer: "a",
       },
       {
-        "id": "q17",
-        "text": "A lessee reassesses the lease liability when:",
-        "options": {
-          "a": "Every reporting period automatically",
-          "b": "There is a change in lease term, purchase option assessment, or a modification to payments",
-          "c": "Market interest rates change generally",
-          "d": "The lessor requests it"
+        id: "q17",
+        text: "A lessee reassesses the lease liability when:",
+        options: {
+          a: "Every reporting period automatically",
+          b: "There is a change in lease term, purchase option assessment, or a modification to payments",
+          c: "Market interest rates change generally",
+          d: "The lessor requests it",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q18",
-        "text": "Under IFRS 16, lessor accounting for a finance lease results in:",
-        "options": {
-          "a": "Asset kept on lessor's balance sheet, rental income recognised",
-          "b": "Asset derecognised, lease receivable recognised",
-          "c": "No entry until lease ends",
-          "d": "Lease treated as an investment property"
+        id: "q18",
+        text: "Under IFRS 16, lessor accounting for a finance lease results in:",
+        options: {
+          a: "Asset kept on lessor's balance sheet, rental income recognised",
+          b: "Asset derecognised, lease receivable recognised",
+          c: "No entry until lease ends",
+          d: "Lease treated as an investment property",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q19",
-        "text": "For an operating lease under IFRS 16 lessor accounting, lease income is recognised:",
-        "options": {
-          "a": "On a straight-line basis or another systematic basis",
-          "b": "Upfront entirely",
-          "c": "Only upon cash receipt",
-          "d": "At the end of the lease term"
+        id: "q19",
+        text: "For an operating lease under IFRS 16 lessor accounting, lease income is recognised:",
+        options: {
+          a: "On a straight-line basis or another systematic basis",
+          b: "Upfront entirely",
+          c: "Only upon cash receipt",
+          d: "At the end of the lease term",
         },
-        "correctAnswer": "a"
+        correctAnswer: "a",
       },
       {
-        "id": "q20",
-        "text": "In a sale and leaseback transaction where the transfer is a sale under IFRS 15, the seller-lessee:",
-        "options": {
-          "a": "Ignores the leaseback entirely",
-          "b": "Recognises the full gain immediately",
-          "c": "Recognises only the gain on rights transferred",
-          "d": "Defers all gain until lease end"
+        id: "q20",
+        text: "In a sale and leaseback transaction where the transfer is a sale under IFRS 15, the seller-lessee:",
+        options: {
+          a: "Ignores the leaseback entirely",
+          b: "Recognises the full gain immediately",
+          c: "Recognises only the gain on rights transferred",
+          d: "Defers all gain until lease end",
         },
-        "correctAnswer": "c"
+        correctAnswer: "c",
       },
       {
-        "id": "q21",
-        "text": "Which of the following is typically a lessee exemption from capitalising a lease under IFRS 16?",
-        "options": {
-          "a": "Leases where the lessee expects to renew indefinitely",
-          "b": "Short-term leases (12 months or less)",
-          "c": "Leases with variable payments only",
-          "d": "Leases of land and buildings combined"
+        id: "q21",
+        text: "Which of the following is typically a lessee exemption from capitalising a lease under IFRS 16?",
+        options: {
+          a: "Leases where the lessee expects to renew indefinitely",
+          b: "Short-term leases (12 months or less)",
+          c: "Leases with variable payments only",
+          d: "Leases of land and buildings combined",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q22",
-        "text": "Under IFRS 16, the right-of-use asset is initially measured at:",
-        "options": {
-          "a": "The lease liability amount plus initial direct costs and prepayments, minus lease incentives",
-          "b": "Fair value of the leased asset",
-          "c": "Undiscounted lease payments",
-          "d": "The lessor's carrying amount"
+        id: "q22",
+        text: "Under IFRS 16, the right-of-use asset is initially measured at:",
+        options: {
+          a: "The lease liability amount plus initial direct costs and prepayments, minus lease incentives",
+          b: "Fair value of the leased asset",
+          c: "Undiscounted lease payments",
+          d: "The lessor's carrying amount",
         },
-        "correctAnswer": "a"
+        correctAnswer: "a",
       },
       {
-        "id": "q23",
-        "text": "IFRS 16 requires lessees to present right-of-use assets:",
-        "options": {
-          "a": "As a single line item called 'Lease assets'",
-          "b": "Separately or within the same line as PPE (with disclosure)",
-          "c": "Only in the notes to the financial statements",
-          "d": "As part of goodwill"
+        id: "q23",
+        text: "IFRS 16 requires lessees to present right-of-use assets:",
+        options: {
+          a: "As a single line item called 'Lease assets'",
+          b: "Separately or within the same line as PPE (with disclosure)",
+          c: "Only in the notes to the financial statements",
+          d: "As part of goodwill",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q24",
-        "text": "What is the effect of IFRS 16 on lessees' operating cash flow classification?",
-        "options": {
-          "a": "No change from IAS 17",
-          "b": "Principal portion of lease payments is financing outflow; interest portion is either operating or financing",
-          "c": "All lease payments are operating outflows",
-          "d": "All lease payments are financing outflows"
+        id: "q24",
+        text: "What is the effect of IFRS 16 on lessees' operating cash flow classification?",
+        options: {
+          a: "No change from IAS 17",
+          b: "Principal portion of lease payments is financing outflow; interest portion is either operating or financing",
+          c: "All lease payments are operating outflows",
+          d: "All lease payments are financing outflows",
         },
-        "correctAnswer": "b"
+        correctAnswer: "b",
       },
       {
-        "id": "q25",
-        "text": "Under IFRS 16, variable lease payments not linked to an index or rate are:",
-        "options": {
-          "a": "Excluded from the lease liability and expensed as incurred",
-          "b": "Capitalised and amortised over the lease term",
-          "c": "Included in the initial measurement of the lease liability",
-          "d": "Disclosed as a contingent liability only"
+        id: "q25",
+        text: "Under IFRS 16, variable lease payments not linked to an index or rate are:",
+        options: {
+          a: "Excluded from the lease liability and expensed as incurred",
+          b: "Capitalised and amortised over the lease term",
+          c: "Included in the initial measurement of the lease liability",
+          d: "Disclosed as a contingent liability only",
         },
-        "correctAnswer": "a"
-      }
-    ]
-}
+        correctAnswer: "a",
+      },
+    ],
+  },
 
   {
     id: "c33",

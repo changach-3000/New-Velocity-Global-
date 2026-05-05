@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lease Risk Scorecard — VGL Masterclass</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0F1E;--cream:#F7F4EE;--gold:#D4922A;--teal:#0C5E5A;--rust:#B84A2E;--purple:#3A1A6E;--mist:#E8EFF4;--mid:#6B7A8D;--card:#fff;--border:#DDE4EC;--success:#1B6B4A;--warn:#A05A00;--danger:#9B2020;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
+.masthead{background:linear-gradient(135deg,#1A0A3E 0%,#2A1060 100%);padding:28px 36px 24px;}
+.mc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,146,42,.15);border:1px solid rgba(212,146,42,.3);border-radius:20px;padding:5px 14px;margin-bottom:14px;}
+.mc-badge span{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.tool-num{width:22px;height:22px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--ink);}
+h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1.15;}
+h1 em{color:var(--gold);font-style:normal;}
+.masthead-sub{font-size:13px;color:rgba(255,255,255,.5);margin-top:8px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:26px 28px;margin-bottom:20px;box-shadow:0 2px 16px rgba(10,15,30,.06);}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.dim-row{display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-bottom:1px solid var(--border);}
+.dim-row:last-child{border-bottom:none;}
+.dim-info{flex:1;}
+.dim-label{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px;}
+.dim-desc{font-size:12px;color:var(--mid);line-height:1.55;}
+.dim-score-wrap{flex-shrink:0;width:220px;}
+.dim-score-wrap label{display:block;font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.dim-score-wrap select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:9px 11px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);background:#fff;cursor:pointer;}
+.dim-score-wrap select:focus{outline:none;border-color:var(--purple);}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--purple);color:#fff;border:none;padding:14px 32px;border-radius:9px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:background .2s;}
+.cta:hover{background:#2A0A5E;}
+.score-hero{border-radius:16px;padding:36px;text-align:center;margin-bottom:22px;}
+.score-hero.approve{background:linear-gradient(135deg,var(--success),#0A4A30);}
+.score-hero.watch{background:linear-gradient(135deg,#7A4A00,#A06000);}
+.score-hero.decline{background:linear-gradient(135deg,var(--danger),#6B0000);}
+.score-num{font-family:'Syne',sans-serif;font-size:72px;font-weight:800;color:#fff;line-height:1;}
+.score-out-of{font-size:28px;color:rgba(255,255,255,.5);}
+.score-grade{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.9);margin-top:8px;}
+.score-msg{font-size:13px;color:rgba(255,255,255,.65);margin-top:10px;line-height:1.7;max-width:560px;margin-left:auto;margin-right:auto;}
+.breakdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+.breakdown-card{border-radius:12px;border:2px solid var(--border);padding:18px;text-align:center;}
+.bd-label{font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;}
+.bd-score{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;line-height:1;}
+.s3{color:var(--success);}
+.s2{color:var(--teal);}
+.s1{color:var(--warn);}
+.s0{color:var(--danger);}
+.bd-max{font-size:11px;color:var(--mid);margin-top:3px;}
+.bd-bar-wrap{background:var(--mist);border-radius:4px;height:6px;overflow:hidden;margin-top:10px;}
+.bd-bar{height:100%;border-radius:4px;transition:width .7s;}
+.bd-verdict{font-size:11px;font-weight:600;margin-top:6px;}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.action-card{border-radius:10px;padding:16px;border:1px solid var(--border);}
+.act-approve{background:#E6F4EE;border-color:#A8D4BC;}
+.act-watch{background:#FEF6E6;border-color:#E8C97A;}
+.act-decline{background:#FDEAEA;border-color:#E8A8A8;}
+.action-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
+.act-approve .action-title{color:var(--success);}
+.act-watch .action-title{color:var(--warn);}
+.act-decline .action-title{color:var(--danger);}
+.action-list{list-style:none;}
+.action-list li{font-size:12px;color:var(--ink);padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);line-height:1.5;display:flex;gap:8px;}
+.action-list li:last-child{border-bottom:none;}
+.action-list li::before{content:'→';color:var(--teal);font-weight:700;flex-shrink:0;}
+@media print{.cta{display:none;}}
+</style>
+</head>
+<body>
+<div class="masthead">
+  <div class="mc-badge"><div class="tool-num">4</div><span>Profitable Equipment Leasing Masterclass</span></div>
+  <h1>Lease Risk <em>Scorecard</em></h1>
+  <div class="masthead-sub">Score any deal across six dimensions — instant Approve / Watch / Decline verdict with specific actions</div>
+</div>
+<div class="main">
+  <div class="card">
+    <div class="card-title">Score the Deal — Six Risk Dimensions</div>
+    <div id="dimContainer"></div>
+    <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;">
+      <button class="cta" onclick="calcScore()">Calculate Risk Score →</button>
+      <button onclick="resetAll()" style="background:transparent;border:1.5px solid var(--border);color:var(--mid);padding:14px 24px;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;">Reset</button>
+    </div>
+  </div>
+  <div id="resultSection" style="display:none;">
+    <div class="score-hero" id="heroBox">
+      <div class="score-num" id="scoreNum">0<span class="score-out-of">/18</span></div>
+      <div class="score-grade" id="scoreGrade">—</div>
+      <div class="score-msg" id="scoreMsg">—</div>
+    </div>
+    <div class="breakdown-grid" id="breakdownGrid"></div>
+    <div class="card">
+      <div class="card-title">Recommended Actions</div>
+      <div class="action-grid" id="actionGrid"></div>
+    </div>
+    <div style="text-align:right;margin-top:8px;">
+      <button onclick="window.print()" style="background:var(--purple);color:#fff;border:none;padding:10px 22px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;">Print Scorecard</button>
+    </div>
+  </div>
+</div>
+<script>
+var dimensions=[
+  {id:'credit',label:'Credit Quality',desc:'EBITDA coverage ratio, revenue trend, bank statement quality, audited accounts, and existing debt obligations',
+   opts:[{v:0,l:'0 — Fail: Coverage below 1.2x, no audited accounts, adverse credit records'},{v:1,l:'1 — Weak: Coverage 1.2–1.5x, one year accounts, irregular bank statements'},{v:2,l:'2 — Acceptable: Coverage 1.5–2.0x, two years accounts, clean records'},{v:3,l:'3 — Strong: Coverage 2.0x+, three years audited, excellent banking history'}]},
+  {id:'asset',label:'Asset Quality',desc:'Brand strength, secondary market depth, condition, and useful life remaining relative to lease term',
+   opts:[{v:0,l:'0 — Poor: Unknown brand, no secondary market, near end of economic life'},{v:1,l:'1 — Weak: Thin secondary market, high mileage or age, grey market source'},{v:2,l:'2 — Good: Known brand, active secondary market, new or low hours'},{v:3,l:'3 — Excellent: Major brand (Isuzu/Cat/JD/Toyota), deep liquid market, brand new'}]},
+  {id:'cashflow',label:'Cashflow Fit',desc:'How well the lessee revenue cycle matches the rental payment profile — flat vs seasonal mismatch',
+   opts:[{v:0,l:'0 — Mismatch: Seasonal income against flat rental, no working capital buffer'},{v:1,l:'1 — Partial: Some mismatch, limited cushion, close monitoring required'},{v:2,l:'2 — Good: Revenue broadly matches payment cycle, adequate buffer'},{v:3,l:'3 — Excellent: Rental covered by a single recurring contract or steady revenue stream'}]},
+  {id:'experience',label:'Sector and Equipment Experience',desc:'How long the lessee has operated in their sector and whether they have prior equipment management experience',
+   opts:[{v:0,l:'0 — New entrant: Under 1 year in sector, no prior equipment ownership'},{v:1,l:'1 — Early stage: 1–2 years operating, limited equipment track record'},{v:2,l:'2 — Established: 3–5 years, prior equipment experience, references available'},{v:3,l:'3 — Veteran: 5+ years, repeat equipment user, strong sector knowledge'}]},
+  {id:'security',label:'Security Package',desc:'Title position, guarantee structure, insurance coverage, and ease of repossession if default occurs',
+   opts:[{v:0,l:'0 — Weak: No guarantee, asset difficult to identify, repossess or sell'},{v:1,l:'1 — Limited: Personal guarantee only, moderate asset liquidity'},{v:2,l:'2 — Good: Guarantee + asset title in your name + insurance confirmed pre-drawdown'},{v:3,l:'3 — Strong: Above + cross-default, assigned receivables, parent guarantee'}]},
+  {id:'relationship',label:'Relationship and Track Record',desc:'Existing customer history, payment track record, and quality of the referral or introduction source',
+   opts:[{v:0,l:'0 — Cold: No relationship, unverified referral source, first contact'},{v:1,l:'1 — New: No prior history but comes from a reputable verified referral'},{v:2,l:'2 — Returning: 1–2 prior deals, satisfactory payment history, site visit done'},{v:3,l:'3 — Anchor: 3+ deals, zero arrears history, material portfolio relationship'}]}
+];
+
+var container=document.getElementById('dimContainer');
+dimensions.forEach(function(d){
+  var row=document.createElement('div');
+  row.className='dim-row';
+  var opts=d.opts.map(function(o){return '<option value="'+o.v+'">'+o.l+'</option>';}).join('');
+  row.innerHTML='<div class="dim-info"><div class="dim-label">'+d.label+'</div><div class="dim-desc">'+d.desc+'</div></div><div class="dim-score-wrap"><label>Score this dimension</label><select id="dim_'+d.id+'">'+opts+'</select></div>';
+  container.appendChild(row);
+});
+
+function getVal(id){return parseInt(document.getElementById(id).value)||0;}
+var colorMap={3:'var(--success)',2:'var(--teal)',1:'var(--warn)',0:'var(--danger)'};
+var verdictMap={3:'Strong',2:'Acceptable',1:'Weak — mitigate',0:'Fail'};
+
+function calcScore(){
+  var total=0;
+  var scores=dimensions.map(function(d){
+    var s=getVal('dim_'+d.id);
+    total+=s;
+    return {id:d.id,label:d.label,score:s};
+  });
+  var pct=total/18*100;
+  var heroClass=pct>=72?'approve':pct>=44?'watch':'decline';
+  var grade,msg;
+  if(pct>=72){grade='APPROVE — Strong Risk Profile';msg='Total score of '+total+'/18 indicates a well-qualified lessee with acceptable asset quality and a sound security package. Proceed to credit committee with standard documentation.';}
+  else if(pct>=44){grade='APPROVE WITH CONDITIONS — Monitor Closely';msg='Score of '+total+'/18 shows merit but specific weaknesses require mitigation. Address the lowest-scoring dimensions before proceeding — additional security, higher advance rentals, or a risk premium of 150–200 bps.';}
+  else{grade='DECLINE — Risk Profile Too Weak';msg='Score of '+total+'/18 means too many dimensions fail minimum standards. Either restructure materially or decline and redirect your origination time to higher-quality prospects.';}
+
+  document.getElementById('heroBox').className='score-hero '+heroClass;
+  document.getElementById('scoreNum').innerHTML=total+'<span class="score-out-of">/18</span>';
+  document.getElementById('scoreGrade').textContent=grade;
+  document.getElementById('scoreMsg').textContent=msg;
+
+  var breakdown=scores.map(function(s){
+    var cls=s.score===3?'s3':s.score===2?'s2':s.score===1?'s1':'s0';
+    var col=colorMap[s.score];
+    return '<div class="breakdown-card"><div class="bd-label">'+s.label+'</div><div class="bd-score '+cls+'">'+s.score+'</div><div class="bd-max">out of 3</div><div class="bd-bar-wrap"><div class="bd-bar" style="width:'+(s.score/3*100)+'%;background:'+col+';"></div></div><div class="bd-verdict" style="color:'+col+'">'+verdictMap[s.score]+'</div></div>';
+  }).join('');
+  document.getElementById('breakdownGrid').innerHTML=breakdown;
+
+  var weak=scores.filter(function(s){return s.score<=1;}).map(function(s){return s.label;});
+  var actionHTML='';
+  if(heroClass==='approve'){
+    actionHTML='<div class="action-card act-approve"><div class="action-title">Proceed — Standard Process</div><ul class="action-list"><li>Submit to credit committee with full documentation</li><li>Apply standard rate — no premium required for this risk score</li><li>Schedule a 6-month proactive check-in</li><li>Invite to your advisory network — anchor client profile</li></ul></div><div class="action-card act-approve"><div class="action-title">Relationship Investment</div><ul class="action-list"><li>Site visit confirmation before drawdown</li><li>Propose a multi-phase fleet or equipment programme</li><li>Monthly payment tracker for first 3 months then quarterly</li><li>Start end-of-lease renewal conversation at month 36 of 48</li></ul></div>';
+  } else if(heroClass==='watch'){
+    var mitigations=[];
+    scores.forEach(function(s){
+      if(s.id==='credit'&&s.score<=1) mitigations.push('Require 2 additional advance rentals to compensate for coverage weakness');
+      if(s.id==='security'&&s.score<=1) mitigations.push('Add personal director guarantee and cross-default clause before proceeding');
+      if(s.id==='asset'&&s.score<=1) mitigations.push('Independent valuation mandatory — do not rely on dealer quote alone');
+      if(s.id==='experience'&&s.score<=1) mitigations.push('Shorten lease term by 12 months to reduce exposure duration');
+    });
+    if(mitigations.length===0) mitigations.push('Price risk premium of 150 bps above your standard floor rate');
+    var items=mitigations.map(function(m){return '<li>'+m+'</li>';}).join('');
+    actionHTML='<div class="action-card act-watch"><div class="action-title">Required Mitigations Before Approval</div><ul class="action-list">'+items+'</ul></div><div class="action-card act-watch"><div class="action-title">Ongoing Monitoring Requirements</div><ul class="action-list"><li>Monthly payment tracker for first 6 months — not quarterly</li><li>Site visit at month 3 and month 9</li><li>Insurance compliance certificate every 6 months</li><li>First sign of arrears: escalate immediately, do not wait for cure period</li></ul></div>';
+  } else {
+    var weakList=weak.length?weak.join(', '):'multiple dimensions';
+    actionHTML='<div class="action-card act-decline"><div class="action-title">Decline — Document Your Reasons</div><ul class="action-list"><li>Record weak dimensions: '+weakList+'</li><li>File the decline with client name and date for portfolio audit trail</li><li>Do not revisit for minimum 6 months without material change</li><li>Communicate the decline professionally — preserve the relationship</li></ul></div><div class="action-card act-decline"><div class="action-title">What Would Change the Decision</div><ul class="action-list"><li>Credit weakness: 12 months improved trading and clean bank statements</li><li>Security weakness: A creditworthy guarantor or additional collateral</li><li>Asset weakness: Switch to a major brand with deeper secondary market</li><li>Experience weakness: Return in 12 months with operating track record</li></ul></div>';
+  }
+  document.getElementById('actionGrid').innerHTML=actionHTML;
+  document.getElementById('resultSection').style.display='block';
+  document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetAll(){
+  dimensions.forEach(function(d){document.getElementById('dim_'+d.id).value=0;});
+  document.getElementById('resultSection').style.display='none';
+}
+</script>
+</body>
+</html>

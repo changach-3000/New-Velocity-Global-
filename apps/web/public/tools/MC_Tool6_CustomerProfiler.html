@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ideal Customer Profiler — VGL Masterclass</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0F1E;--cream:#F7F4EE;--gold:#D4922A;--teal:#0C5E5A;--rust:#B84A2E;--mist:#E8EFF4;--mid:#6B7A8D;--card:#fff;--border:#DDE4EC;--success:#1B6B4A;--warn:#A05A00;--danger:#9B2020;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
+.masthead{background:linear-gradient(135deg,#082A1A 0%,#0C5E5A 100%);padding:28px 36px 24px;}
+.mc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,146,42,.15);border:1px solid rgba(212,146,42,.3);border-radius:20px;padding:5px 14px;margin-bottom:14px;}
+.mc-badge span{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.tool-num{width:22px;height:22px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--ink);}
+h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1.15;}
+h1 em{color:var(--gold);font-style:normal;}
+.masthead-sub{font-size:13px;color:rgba(255,255,255,.5);margin-top:8px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:26px 28px;margin-bottom:20px;box-shadow:0 2px 16px rgba(10,15,30,.06);}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.field select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);background:#fff;cursor:pointer;}
+.field select:focus{outline:none;border-color:var(--teal);}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;border:none;padding:14px 32px;border-radius:9px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:background .2s;}
+.cta:hover{background:#0A4E4A;}
+.grade-hero{border-radius:16px;padding:36px;text-align:center;margin-bottom:22px;}
+.grade-hero.a{background:linear-gradient(135deg,var(--success),#0A4A30);}
+.grade-hero.b{background:linear-gradient(135deg,var(--teal),#072E2C);}
+.grade-hero.c{background:linear-gradient(135deg,var(--warn),#6B3A00);}
+.grade-hero.d{background:linear-gradient(135deg,var(--danger),#6B0000);}
+.grade-letter{font-family:'Syne',sans-serif;font-size:80px;font-weight:800;color:#fff;line-height:1;}
+.grade-label{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.9);margin-top:6px;}
+.grade-sub{font-size:13px;color:rgba(255,255,255,.65);margin-top:10px;line-height:1.7;max-width:560px;margin-left:auto;margin-right:auto;}
+.attr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
+.attr-card{border-radius:10px;border:2px solid var(--border);padding:16px;}
+.attr-card.pos{background:#E6F4EE;border-color:#A8D4BC;}
+.attr-card.neu{background:#FEF6E6;border-color:#E8C97A;}
+.attr-card.neg{background:#FDEAEA;border-color:#E8A8A8;}
+.attr-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.attr-card.pos .attr-lbl{color:var(--success);}
+.attr-card.neu .attr-lbl{color:var(--warn);}
+.attr-card.neg .attr-lbl{color:var(--danger);}
+.attr-val{font-size:13px;color:var(--ink);line-height:1.5;font-weight:500;}
+.strat-list{list-style:none;}
+.strat-list li{padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink);display:flex;align-items:flex-start;gap:12px;line-height:1.6;}
+.strat-list li:last-child{border-bottom:none;}
+.strat-num{width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+@media print{.cta{display:none;}}
+</style>
+</head>
+<body>
+<div class="masthead">
+  <div class="mc-badge"><div class="tool-num">6</div><span>Profitable Equipment Leasing Masterclass</span></div>
+  <h1>Ideal Customer <em>Profiler</em></h1>
+  <div class="masthead-sub">Describe a prospect across eight dimensions — get a customer fit grade A to D with a tailored origination strategy</div>
+</div>
+<div class="main">
+  <div class="card">
+    <div class="card-title">Prospect Profile</div>
+    <div class="g3">
+      <div class="field"><label>Sector</label>
+        <select id="p_sector">
+          <option value="3">Transport and Logistics</option>
+          <option value="3">Agriculture</option>
+          <option value="3">Healthcare and Medical</option>
+          <option value="2">Construction</option>
+          <option value="2">Manufacturing</option>
+          <option value="2">ICT and Technology</option>
+          <option value="1">Retail and Distribution</option>
+          <option value="1">Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Annual Revenue</label>
+        <select id="p_rev">
+          <option value="0">Under KES 10M — micro</option>
+          <option value="1">KES 10M to 50M — small</option>
+          <option value="2">KES 50M to 200M — medium</option>
+          <option value="3">KES 200M to 1B — large</option>
+          <option value="2">Above KES 1B — corporate</option>
+        </select>
+      </div>
+      <div class="field"><label>Years in Business</label>
+        <select id="p_years">
+          <option value="0">Under 1 year — startup</option>
+          <option value="1">1 to 2 years</option>
+          <option value="2">3 to 5 years</option>
+          <option value="3">6 to 10 years</option>
+          <option value="3">Over 10 years</option>
+        </select>
+      </div>
+    </div>
+    <div class="g3">
+      <div class="field"><label>VAT Registration</label>
+        <select id="p_vat">
+          <option value="2">Yes — VAT registered</option>
+          <option value="0">No — not VAT registered</option>
+        </select>
+      </div>
+      <div class="field"><label>Prior Formal Finance</label>
+        <select id="p_finance">
+          <option value="3">Existing bank or lease customer — clean record</option>
+          <option value="1">First time formal finance</option>
+          <option value="0">Previously declined by a bank</option>
+        </select>
+      </div>
+      <div class="field"><label>Equipment Revenue Link</label>
+        <select id="p_link">
+          <option value="3">Direct — equipment generates the revenue</option>
+          <option value="1">Indirect — supports operations</option>
+          <option value="0">Weak — efficiency tool only</option>
+        </select>
+      </div>
+    </div>
+    <div class="g3">
+      <div class="field"><label>Estimated Monthly EBITDA</label>
+        <select id="p_ebitda">
+          <option value="0">Under KES 500K</option>
+          <option value="1">KES 500K to 1.5M</option>
+          <option value="2">KES 1.5M to 4M</option>
+          <option value="3">KES 4M to 10M</option>
+          <option value="3">Above KES 10M</option>
+        </select>
+      </div>
+      <div class="field"><label>Referral Source Quality</label>
+        <select id="p_ref">
+          <option value="3">Existing customer referral or anchor relationship</option>
+          <option value="2">Reputable dealer or OEM introduction</option>
+          <option value="1">Broker or cold inbound</option>
+          <option value="0">Unknown or unverified source</option>
+        </select>
+      </div>
+      <div class="field"><label>Equipment Deal Size</label>
+        <select id="p_size">
+          <option value="1">Under KES 3M — micro deal</option>
+          <option value="2">KES 3M to 15M — standard</option>
+          <option value="3">KES 15M to 50M — large</option>
+          <option value="3">Above KES 50M — portfolio deal</option>
+        </select>
+      </div>
+    </div>
+    <button class="cta" onclick="profileCustomer()">Generate Customer Profile →</button>
+  </div>
+
+  <div id="profileOutput" style="display:none;">
+    <div class="grade-hero" id="gradeHero">
+      <div class="grade-letter" id="gradeLetter">—</div>
+      <div class="grade-label" id="gradeLabel">—</div>
+      <div class="grade-sub" id="gradeSub">—</div>
+    </div>
+    <div class="attr-grid" id="attrGrid"></div>
+    <div class="card">
+      <div class="card-title">Origination Strategy for This Profile</div>
+      <ul class="strat-list" id="stratList"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+function gv(id){return parseInt(document.getElementById(id).value)||0;}
+function gs(id){return document.getElementById(id);}
+
+function profileCustomer(){
+  var sector=gv('p_sector');
+  var rev=gv('p_rev');
+  var years=gv('p_years');
+  var vat=gv('p_vat');
+  var finance=gv('p_finance');
+  var link=gv('p_link');
+  var ebitda=gv('p_ebitda');
+  var ref=gv('p_ref');
+  var size=gv('p_size');
+
+  var score=sector+rev+years+vat+finance+link+ebitda+ref+size;
+  var maxScore=3+3+3+2+3+3+3+3+3; // 26
+  var pct=score/maxScore*100;
+
+  var grade,gradeClass,gradeLabel,gradeSub;
+  if(pct>=70){grade='A';gradeClass='a';gradeLabel='Ideal Customer — Prioritise This Prospect';gradeSub='This prospect matches your ideal customer profile across sector, financial strength, VAT status, and revenue linkage. Move quickly and invest in the relationship — this is the kind of customer that anchors a healthy portfolio and generates repeat business for years.';}
+  else if(pct>=52){grade='B';gradeClass='b';gradeLabel='Good Fit — Standard Credit Process';gradeSub='A solid prospect with a clear equipment finance need. Apply your standard credit process. One or two dimensions are below ideal — factor these into your pricing or security requirements. This is a good deal worth pursuing.';}
+  else if(pct>=35){grade='C';gradeClass='c';gradeLabel='Marginal — Proceed with Conditions';gradeSub='This prospect has specific weaknesses that need structural mitigation before the deal is worth taking. Address the weakest dimensions through higher advance rentals, additional security, a shorter term, or a risk premium on the rate. Do not proceed on standard terms.';}
+  else{grade='D';gradeClass='d';gradeLabel='Poor Fit — Decline or Restructure Significantly';gradeSub='This prospect does not meet minimum profile requirements across too many dimensions. Proceeding would likely produce a stressed account within 12 months. Decline professionally, document the reason, and redirect your origination time to higher-grade prospects.';}
+
+  document.getElementById('gradeHero').className='grade-hero '+gradeClass;
+  document.getElementById('gradeLetter').textContent=grade;
+  document.getElementById('gradeLabel').textContent=gradeLabel;
+  document.getElementById('gradeSub').textContent=gradeSub;
+
+  var sectorSel=gs('p_sector').options[gs('p_sector').selectedIndex].text;
+  var revSel=gs('p_rev').options[gs('p_rev').selectedIndex].text;
+  var yearsSel=gs('p_years').options[gs('p_years').selectedIndex].text;
+  var vatVal=gv('p_vat');
+  var financeSel=gs('p_finance').options[gs('p_finance').selectedIndex].text;
+  var linkSel=gs('p_link').options[gs('p_link').selectedIndex].text;
+  var ebitdaSel=gs('p_ebitda').options[gs('p_ebitda').selectedIndex].text;
+  var refSel=gs('p_ref').options[gs('p_ref').selectedIndex].text;
+
+  function attrCls(v,good,ok){return v>=good?'pos':v>=ok?'neu':'neg';}
+
+  var attrs=[
+    {cls:attrCls(sector,3,2),label:'Sector',val:sectorSel+(sector>=3?' — active secondary asset market, high lease penetration':sector>=2?' — good lease market, manageable RV risk':' — lower RV, requires careful credit review')},
+    {cls:attrCls(rev,2,1),label:'Revenue Scale',val:revSel+(rev>=2?' — adequate scale for equipment finance, proportionate deal sizes':rev>=1?' — manageable if deal size proportionate':' — micro — consider cooperative or grouped structure')},
+    {cls:attrCls(years,2,1),label:'Business Maturity',val:yearsSel+(years>=2?' — established track record, standard process':years>=1?' — early stage, shorten term and increase advance':' — startup, very high risk, collateral or guarantor required')},
+    {cls:attrCls(vatVal,2,1),label:'VAT Status',val:vatVal>=2?'VAT registered — input VAT on rentals recoverable, full lease economics apply':'Not VAT registered — 16% VAT is a dead cost on every rental, increases effective lease cost materially'},
+    {cls:attrCls(finance,3,1),label:'Finance History',val:financeSel+(finance>=3?' — prioritise, offer preferred rate, lock in the relationship':finance>=1?' — first time, require maintenance compliance early, monthly monitoring':' — previously declined, understand the reason before proceeding')},
+    {cls:attrCls(link,3,1),label:'Revenue Linkage',val:linkSel+(link>=3?' — equipment pays for itself, coverage case is self-evident':link>=1?' — coverage depends on broader business performance':' — no direct revenue link, harder to justify, monitor closely')},
+    {cls:attrCls(ebitda,2,1),label:'EBITDA Level',val:ebitdaSel+(ebitda>=2?' — sufficient to cover rental with adequate buffer':ebitda>=1?' — tight, model coverage carefully':' — insufficient for standard lease, consider restructured product')},
+    {cls:attrCls(ref,2,1),label:'Referral Quality',val:refSel+(ref>=2?' — strong lead quality, reduced due diligence burden':ref>=1?' — acceptable, conduct standard independent verification':' — unverified, full independent verification mandatory before proceeding')},
+  ];
+
+  document.getElementById('attrGrid').innerHTML=attrs.map(function(a){
+    return '<div class="attr-card '+a.cls+'"><div class="attr-lbl">'+a.label+'</div><div class="attr-val">'+a.val+'</div></div>';
+  }).join('');
+
+  var strats=[];
+  if(grade==='A'){
+    strats=['Offer a preferred rate — this customer profile justifies the investment in the relationship','Propose a multi-phase equipment programme at the first meeting — not just the immediate deal','Schedule a quarterly check-in proactively — do not wait for them to call you','Invite to your advisory network, masterclass, or sector insight events — become their trusted advisor','At month 12, introduce the next product or fleet expansion conversation before they start looking elsewhere'];
+  } else if(grade==='B'){
+    strats=['Apply standard pricing — this profile does not warrant a discount or a premium','Require 2 advance rentals unless the lessee has an established payment track record with you','Conduct a site visit before drawdown — non-negotiable for any deal above KES 5M','Set a 12-month credit review trigger to reassess after the first year of clean payments','If this customer pays well for 12 months, move them to Grade A treatment at renewal'];
+  } else if(grade==='C'){
+    strats=['Require 3 advance rentals minimum — the advance rentals are your cashflow cushion if stress emerges early','Shorten the lease term by 12 months — reduce your exposure duration','Add a personal director guarantee even if the entity is a limited liability company','Price at 150 to 200 basis points above your standard floor to compensate for the risk profile','Monthly payment tracking for the first 6 months — escalate on first missed payment, do not wait for the cure period'];
+  } else {
+    strats=['Do not proceed on current terms — the risk profile is too weak across too many dimensions','If the relationship is strategically important, require significant cash collateral or guarantor before considering further','Refer to a microfinance institution, government equipment scheme, or cooperative lending structure if the client is deserving but early-stage','Document the decline reason clearly for your portfolio risk management records','Revisit in 12 months if the client can show improved trading, clean banking, and established equipment track record'];
+  }
+
+  document.getElementById('stratList').innerHTML=strats.map(function(s,i){
+    return '<li><span class="strat-num">'+(i+1)+'</span>'+s+'</li>';
+  }).join('');
+
+  document.getElementById('profileOutput').style.display='block';
+  document.getElementById('profileOutput').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>

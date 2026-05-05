@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Sign Mistake Prevention Checklist — VGL Masterclass</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0F1E;--cream:#F7F4EE;--gold:#D4922A;--teal:#0C5E5A;--rust:#B84A2E;--mist:#E8EFF4;--mid:#6B7A8D;--card:#fff;--border:#DDE4EC;--success:#1B6B4A;--warn:#A05A00;--danger:#9B2020;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);}
+.masthead{background:var(--ink);padding:28px 36px 24px;border-bottom:4px solid var(--gold);}
+.mc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,146,42,.12);border:1px solid rgba(212,146,42,.25);border-radius:20px;padding:5px 14px;margin-bottom:14px;}
+.mc-badge span{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.tool-num{width:22px;height:22px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--ink);}
+h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1.15;}
+h1 em{color:var(--gold);font-style:normal;}
+.masthead-sub{font-size:13px;color:rgba(255,255,255,.5);margin-top:8px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.section-wrap{margin-bottom:24px;}
+.section-label{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.section-label::after{content:'';flex:1;height:1px;background:rgba(212,146,42,.3);}
+.check-item{background:var(--card);border-radius:10px;border:1px solid var(--border);padding:14px 18px;margin-bottom:8px;display:flex;align-items:flex-start;gap:14px;cursor:pointer;transition:all .15s;}
+.check-item:hover{border-color:var(--teal);box-shadow:0 2px 12px rgba(12,94,90,.1);}
+.check-item.checked{background:#E6F4EE;border-color:#A8D4BC;}
+.check-item.fatal-fail{background:#FDEAEA;border-color:#E8A8A8;}
+.check-box{width:22px;height:22px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s;}
+.check-item.checked .check-box{background:var(--success);border-color:var(--success);color:#fff;}
+.check-item.fatal-fail .check-box{background:var(--danger);border-color:var(--danger);color:#fff;}
+.check-text{flex:1;}
+.check-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.check-item.checked .check-title{color:var(--success);}
+.check-desc{font-size:12px;color:var(--mid);line-height:1.5;}
+.fatal-tag{font-size:10px;font-weight:700;color:var(--danger);background:#FDEAEA;border:1px solid #E8A8A8;border-radius:4px;padding:2px 7px;display:inline-block;margin-bottom:5px;}
+.progress-bar{background:var(--card);border-radius:10px;border:1px solid var(--border);padding:18px 22px;margin-bottom:24px;box-shadow:0 2px 8px rgba(10,15,30,.05);}
+.prog-track{height:8px;background:var(--mist);border-radius:4px;overflow:hidden;margin:10px 0 6px;}
+.prog-fill{height:100%;border-radius:4px;transition:width .4s,background .4s;}
+.prog-info{display:flex;justify-content:space-between;font-size:12px;color:var(--mid);}
+.result-bar{border-radius:12px;padding:20px 24px;margin-bottom:16px;}
+.result-bar.good{background:var(--success);color:#fff;}
+.result-bar.bad{background:var(--danger);color:#fff;}
+.result-bar h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px;}
+.result-bar p{font-size:13px;opacity:.85;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="masthead">
+  <div class="mc-badge"><div class="tool-num">5</div><span>Profitable Equipment Leasing Masterclass</span></div>
+  <h1>Pre-Sign <em>Mistake Prevention</em> Checklist</h1>
+  <div class="masthead-sub">The 24 checks that separate profitable lessors from those who learn expensive lessons — tick each one before any deal closes</div>
+</div>
+<div class="main">
+  <div class="progress-bar">
+    <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--ink);">Checklist Progress</div>
+    <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%;background:var(--gold)"></div></div>
+    <div class="prog-info"><span id="progText">0 of 24 checks completed</span><span id="fatalText" style="color:var(--danger);font-weight:600"></span></div>
+  </div>
+  <div id="checklistContainer"></div>
+  <div id="resultOutput"></div>
+</div>
+<script>
+const sections=[
+  {label:'Pricing & Margin',items:[
+    {title:'Rate is above my floor rate',desc:'My implicit rate covers: cost of funds + operational costs + credit loss provision + equity return. I have not discounted below this floor for any reason.',fatal:true},
+    {title:'VAT position confirmed',desc:'I know whether this lessee is VAT-registered. If not, the 16% VAT on my rentals is a dead cost for them — I have factored this into the commercial conversation.',fatal:false},
+    {title:'Rate not quoted verbally before credit approval',desc:'I have not quoted a rate to the lessee before the credit decision is made. Verbal rate commitments before credit approval are a common source of margin loss.',fatal:false},
+  ]},
+  {label:'Credit & Coverage',items:[
+    {title:'Rental coverage calculated on FREE cashflow',desc:'My coverage ratio uses EBITDA minus ALL existing debt service — not raw EBITDA. The ratio is at or above 1.5×.',fatal:true},
+    {title:'Three years of financial data reviewed',desc:'I have reviewed minimum 2 years of audited accounts and 6 months of bank statements. Spot-checking one year is not sufficient.',fatal:false},
+    {title:'Existing debt obligations fully mapped',desc:'I know every loan, HP, lease, and facility the lessee is servicing. Hidden obligations are the most common cause of coverage ratio inflation.',fatal:true},
+    {title:'Lessee visit conducted or scheduled',desc:'I have visited the lessee premises or committed to a visit before drawdown. A site visit uncovers issues no financial statement shows.',fatal:false},
+  ]},
+  {label:'Documentation & Legal',items:[
+    {title:'Lease Agreement signed — NOT a Facility Letter',desc:'The executed document is a purpose-drafted lease agreement. A facility letter creates a loan relationship, not a lease. This difference determines my repossession rights.',fatal:true},
+    {title:'Asset title in MY name confirmed',desc:'For vehicles: logbook registered in my name at NTSA. For other assets: serial numbers in lease schedule. This is my primary security.',fatal:true},
+    {title:'Purchase option price stated in KES',desc:'The end-of-lease purchase option is stated as a specific KES amount — not "market value to be agreed." Vague purchase option language is unenforceable.',fatal:true},
+    {title:'Default trigger and cure period defined',desc:'The lease states how many business days after payment due date before default is triggered. Minimum 5 business days is fair. 1-2 days is operationally impossible.',fatal:false},
+    {title:'Early termination formula documented',desc:'The early termination amount is calculated using the present value of outstanding rentals — not the full face value of remaining payments without discount.',fatal:false},
+  ]},
+  {label:'Asset & Insurance',items:[
+    {title:'Independent valuation received',desc:'I have a signed valuation from an approved valuer showing market value AND forced sale value. Dealer quotes are not valuations.',fatal:true},
+    {title:'Insurance certificate received — bank as loss payee',desc:'All-risks insurance is in place with my company named as loss payee. Cover is for agreed value, not market value. Certificate is in my file BEFORE drawdown.',fatal:true},
+    {title:'Asset condition photographed at delivery',desc:'I have dated photographs of the asset at the time of delivery — front, back, both sides, interior (for vehicles), serial numbers. This is my end-of-lease reference baseline.',fatal:false},
+    {title:'Insurance renewal date diarised',desc:'The insurance renewal date is in my calendar with a 60-day advance alert. A lapsed insurance policy on a leased asset is a critical security failure.',fatal:false},
+  ]},
+  {label:'End-of-Lease & Recovery',items:[
+    {title:'All three end-of-lease options documented',desc:'The lease agreement states all three options: (1) purchase at KES amount stated, (2) extend at stated new rental, (3) return with condition standards specified.',fatal:true},
+    {title:'Remarketing channel identified in advance',desc:'If the lessee returns the asset — I have already identified who will buy it and at what approximate price. I do not discover this at end of term.',fatal:false},
+    {title:'Repossession process mapped for this asset type',desc:'I know exactly how I would repossess this specific asset in this lessee location. For vehicles: NTSA process. For equipment: removal logistics.',fatal:false},
+  ]},
+  {label:'Commercial & Relationship',items:[
+    {title:'No side agreements or verbal commitments',desc:'Everything agreed with the lessee is in the signed lease agreement. Verbal commitments about future rentals, upgrades, or pricing are unenforceable and dangerous.',fatal:true},
+    {title:'Referral source verified',desc:'If this deal was introduced by a dealer or broker — I have independently verified the lessee, the asset, and the deal structure. I have not relied solely on the introducer.',fatal:false},
+    {title:'Maintenance compliance mechanism in place',desc:'The lease agreement requires the lessee to maintain the asset per manufacturer schedule and submit a semi-annual compliance certificate. Failure to maintain destroys residual value.',fatal:false},
+    {title:'Next contact date diarised',desc:'I have a specific date in my calendar to contact this lessee proactively — not waiting for a missed payment to trigger contact.',fatal:false},
+  ]},
+];
+
+let checked=new Set(),total=0;
+const container=document.getElementById('checklistContainer');
+
+sections.forEach((sec,si)=>{
+  const wrap=document.createElement('div');
+  wrap.className='section-wrap';
+  wrap.innerHTML=\`<div class="section-label">\${sec.label}</div>\

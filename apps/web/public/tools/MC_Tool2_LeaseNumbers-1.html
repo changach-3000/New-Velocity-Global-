@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deal Numbers Decoder — VGL Masterclass</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0F1E;--cream:#F7F4EE;--gold:#D4922A;--teal:#0C5E5A;--rust:#B84A2E;--mist:#E8EFF4;--mid:#6B7A8D;--card:#FFFFFF;--border:#DDE4EC;--success:#1B6B4A;--warn:#A05A00;--danger:#9B2020;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
+.masthead{background:linear-gradient(135deg,var(--teal) 0%,#072E2C 100%);padding:28px 36px 24px;position:relative;overflow:hidden;}
+.masthead::after{content:'';position:absolute;bottom:-40px;right:40px;width:200px;height:200px;border:40px solid rgba(255,255,255,.04);border-radius:50%;}
+.mc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;margin-bottom:14px;}
+.mc-badge span{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.8);}
+.tool-num{width:22px;height:22px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--ink);}
+h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1.15;}
+h1 em{color:var(--gold);font-style:normal;}
+.masthead-sub{font-size:13px;color:rgba(255,255,255,.55);margin-top:8px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:26px 28px;margin-bottom:20px;box-shadow:0 2px 16px rgba(10,15,30,.06);}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:#fff;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--teal);}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;}
+.metric{border-radius:12px;border:2px solid;padding:20px;position:relative;overflow:hidden;}
+.metric::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.08;}
+.metric.blue{border-color:var(--teal);}.metric.blue::before{background:var(--teal);}
+.metric.amber{border-color:var(--gold);}.metric.amber::before{background:var(--gold);}
+.metric.red-m{border-color:var(--rust);}.metric.red-m::before{background:var(--rust);}
+.metric.green{border-color:var(--success);}.metric.green::before{background:var(--success);}
+.metric.dark{border-color:var(--ink);background:var(--ink);}.metric.dark::before{background:#fff;}
+.metric-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);margin-bottom:8px;}
+.metric.dark .metric-label{color:rgba(255,255,255,.5);}
+.metric-value{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;line-height:1;color:var(--ink);}
+.metric.dark .metric-value{color:#fff;}
+.metric-value.green-v{color:var(--success);}
+.metric-value.amber-v{color:var(--warn);}
+.metric-value.red-v{color:var(--danger);}
+.metric-desc{font-size:11px;color:var(--mid);margin-top:6px;line-height:1.5;}
+.metric.dark .metric-desc{color:rgba(255,255,255,.5);}
+/* EXPLAINER */
+.explainer{background:var(--mist);border-radius:10px;padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--teal);}
+.exp-title{font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.exp-body{font-size:13px;color:var(--ink);line-height:1.6;}
+.exp-formula{background:var(--ink);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:8px 14px;border-radius:6px;margin-top:8px;display:inline-block;}
+/* BENCHMARKS */
+.bench-table{width:100%;border-collapse:collapse;font-size:13px;}
+.bench-table th{background:var(--ink);color:#fff;padding:10px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.7px;}
+.bench-table td{padding:10px 12px;border-bottom:1px solid var(--border);}
+.bench-table tr:nth-child(even) td{background:var(--mist);}
+.bench-table tr:last-child td{border-bottom:none;}
+.pill{font-size:10px;font-weight:700;padding:3px 9px;border-radius:8px;display:inline-block;}
+.pill-g{background:#E6F4EE;color:var(--success);}
+.pill-a{background:#FEF6E6;color:var(--warn);}
+.pill-r{background:#FDEAEA;color:var(--danger);}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;border:none;padding:13px 28px;border-radius:9px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:6px;transition:background .2s;}
+.cta:hover{background:#0A4E4A;}
+</style>
+</head>
+<body>
+<div class="masthead">
+  <div class="mc-badge"><div class="tool-num">2</div><span>Profitable Equipment Leasing Masterclass</span></div>
+  <h1>Deal Numbers <em>Decoder</em></h1>
+  <div class="masthead-sub">Understand IRR, NIM, coverage ratio and spread — the four numbers that determine if a deal actually makes money</div>
+</div>
+
+<div class="main">
+  <div class="card">
+    <div class="card-title">Your Deal Inputs</div>
+    <div class="g3">
+      <div class="field"><label>Asset Cost (KES)</label><input type="number" id="cost" value="8500000" oninput="decode()"></div>
+      <div class="field"><label>Monthly Rental (KES)</label><input type="number" id="rental" value="245000" oninput="decode()"></div>
+      <div class="field"><label>Lease Term (Months)</label><select id="term" onchange="decode()">
+        <option value="24">24</option><option value="36">36</option><option value="48" selected>48</option><option value="60">60</option>
+      </select></div>
+    </div>
+    <div class="g3">
+      <div class="field"><label>Your Cost of Funds (% p.a.)</label><input type="number" id="cof" value="15" step="0.5" oninput="decode()"></div>
+      <div class="field"><label>Annual Lessee EBITDA (KES)</label><input type="number" id="ebitda" value="12000000" oninput="decode()"></div>
+      <div class="field"><label>Existing Annual Debt Service (KES)</label><input type="number" id="existds" value="3200000" oninput="decode()"></div>
+    </div>
+    <button class="cta" onclick="decode()">Decode This Deal →</button>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metric-grid" id="metrics" style="display:none;">
+    <div class="metric dark">
+      <div class="metric-label">Implicit Rate (IRR)</div>
+      <div class="metric-value" id="m_irr">—</div>
+      <div class="metric-desc">The true annual return on this deal — what you earn on every shilling deployed</div>
+    </div>
+    <div class="metric blue">
+      <div class="metric-label">Net Interest Spread</div>
+      <div class="metric-value" id="m_spread">—</div>
+      <div class="metric-desc">IRR minus your cost of funds. This is your margin before operational costs</div>
+    </div>
+    <div class="metric amber">
+      <div class="metric-label">Rental Coverage</div>
+      <div class="metric-value" id="m_cov">—</div>
+      <div class="metric-desc">Free EBITDA (after existing debt) ÷ annual rental. Minimum: 1.5×</div>
+    </div>
+    <div class="metric green">
+      <div class="metric-label">Gross Income</div>
+      <div class="metric-value" id="m_income">—</div>
+      <div class="metric-desc">Total rentals minus asset cost — your gross return over the full term</div>
+    </div>
+    <div class="metric red-m">
+      <div class="metric-label">Income as % of Cost</div>
+      <div class="metric-value" id="m_yield">—</div>
+      <div class="metric-desc">How much you earn relative to what you deployed</div>
+    </div>
+    <div class="metric blue">
+      <div class="metric-label">Monthly NI Income</div>
+      <div class="metric-value" id="m_mni">—</div>
+      <div class="metric-desc">Monthly net interest contribution from this deal to your P&L</div>
+    </div>
+  </div>
+
+  <!-- EXPLAINERS -->
+  <div class="card" id="explainers" style="display:none;">
+    <div class="card-title">What Each Number Means — Plain Language</div>
+    <div class="explainer">
+      <div class="exp-title">Implicit Rate (IRR) — The True Return</div>
+      <div class="exp-body">The implicit rate is not the interest rate you quote to the client. It is the actual internal rate of return on your investment — the rate that makes the net present value of all cashflows equal to zero. A deal quoted at "19% per annum" has an implicit rate of 19%. The gap between your implicit rate and your cost of funds is your gross margin.</div>
+      <div class="exp-formula" id="ef_irr">—</div>
+    </div>
+    <div class="explainer" style="border-left-color:var(--gold);">
+      <div class="exp-title">Net Interest Spread — Your Margin Before Costs</div>
+      <div class="exp-body">The spread is what you earn above your cost of funds on every shilling deployed. A 5% spread on a KES 100M book = KES 5M per year in gross margin before operational costs and credit losses. Target spread for a Kenyan lessor: minimum 4%, strong at 6%+.</div>
+      <div class="exp-formula" id="ef_spread">—</div>
+    </div>
+    <div class="explainer" style="border-left-color:var(--rust);">
+      <div class="exp-title">Rental Coverage Ratio — Can They Actually Pay?</div>
+      <div class="exp-body">The single most important credit metric in equipment leasing. It measures whether the lessee has enough free cashflow — after all their existing debt obligations — to comfortably cover your rental. Below 1.5× is a red flag. Above 2.0× is comfortable. The most common credit mistake is calculating coverage on raw EBITDA without deducting existing debt service.</div>
+      <div class="exp-formula" id="ef_cov">—</div>
+    </div>
+  </div>
+
+  <!-- BENCHMARKS -->
+  <div class="card" id="benchCard" style="display:none;">
+    <div class="card-title">How This Deal Compares — Market Benchmarks</div>
+    <table class="bench-table">
+      <thead><tr><th>Metric</th><th>This Deal</th><th>Minimum</th><th>Target</th><th>Status</th></tr></thead>
+      <tbody id="benchBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const fmt=n=>isNaN(n)?'—':'KES '+Math.round(n).toLocaleString();
+const fmtM=n=>isNaN(n)?'—':'KES '+n.toFixed(1)+'M';
+const fmtP=(n,d=2)=>isNaN(n)||!isFinite(n)?'—':n.toFixed(d)+'%';
+const fmtX=n=>isNaN(n)||!isFinite(n)?'—':n.toFixed(2)+'×';
+function v(id){return parseFloat(document.getElementById(id)?.value)||0;}
+function el(id){return document.getElementById(id);}
+
+function calcIRR(cost,rental,term){
+  // Newton-Raphson IRR monthly
+  let r=0.015;
+  for(let i=0;i<100;i++){
+    const pv=rental*(1-Math.pow(1+r,-term))/r;
+    const f=pv-cost;
+    const df=-rental*(1-Math.pow(1+r,-term))/(r*r)+rental*term*Math.pow(1+r,-term-1)/r;
+    const rNew=r-f/df;
+    if(Math.abs(rNew-r)<1e-8){r=rNew;break;}
+    r=rNew;
+  }
+  return r*12*100;
+}
+
+function decode(){
+  const cost=v('cost'),rental=v('rental'),term=parseInt(el('term').value)||48;
+  const cof=v('cof'),ebitda=v('ebitda'),existds=v('existds');
+  if(!cost||!rental)return;
+
+  const irr=calcIRR(cost,rental,term);
+  const spread=irr-cof;
+  const totalRentals=rental*term;
+  const income=totalRentals-cost;
+  const yieldPct=income/cost*100;
+  const annualRental=rental*12;
+  const freeEB=ebitda-existds;
+  const cov=freeEB/annualRental;
+  const mni=cost*spread/100/12;
+
+  // Show sections
+  el('metrics').style.display='grid';
+  el('explainers').style.display='block';
+  el('benchCard').style.display='block';
+
+  function setMetric(id,val,cls=''){el(id).textContent=val;el(id).className='metric-value'+(cls?' '+cls:'');}
+  setMetric('m_irr',fmtP(irr),irr>=18?'green-v':irr>=14?'amber-v':'red-v');
+  setMetric('m_spread',fmtP(spread),spread>=5?'green-v':spread>=3?'amber-v':'red-v');
+  setMetric('m_cov',fmtX(cov),cov>=2?'green-v':cov>=1.5?'amber-v':'red-v');
+  setMetric('m_income',fmtM(income/1e6),income>0?'green-v':'red-v');
+  setMetric('m_yield',fmtP(yieldPct),yieldPct>=30?'green-v':yieldPct>=20?'amber-v':'red-v');
+  setMetric('m_mni',fmt(mni));
+
+  el('ef_irr').textContent=`IRR ${fmtP(irr)} — Cost of Funds ${fmtP(cof)} = Spread ${fmtP(spread)}`;
+  el('ef_spread').textContent=`${fmtP(irr)} − ${fmtP(cof)} = ${fmtP(spread)} net interest spread`;
+  el('ef_cov').textContent=`(EBITDA ${fmt(ebitda)} − Existing DS ${fmt(existds)}) ÷ Annual Rental ${fmt(annualRental)} = ${fmtX(cov)}`;
+
+  // Benchmarks
+  const rows=[
+    ['Implicit Rate (IRR)',fmtP(irr),'14.0%','18.0%+',irr>=18?'g':irr>=14?'a':'r'],
+    ['Net Interest Spread',fmtP(spread),'3.0%','5.0%+',spread>=5?'g':spread>=3?'a':'r'],
+    ['Rental Coverage Ratio',fmtX(cov),'1.5×','2.0×+',cov>=2?'g':cov>=1.5?'a':'r'],
+    ['Gross Yield on Cost',fmtP(yieldPct),'20.0%','30.0%+',yieldPct>=30?'g':yieldPct>=20?'a':'r'],
+    ['Monthly NI Contribution',fmt(mni),'Positive','KES 50K+ per deal',mni>=50000?'g':mni>0?'a':'r'],
+  ];
+  el('benchBody').innerHTML=rows.map(([m,val,min,tgt,s])=>`
+    <tr>
+      <td><strong>${m}</strong></td>
+      <td style="font-weight:700;font-family:'Syne',sans-serif;">${val}</td>
+      <td style="color:var(--mid)">${min}</td>
+      <td style="color:var(--mid)">${tgt}</td>
+      <td><span class="pill pill-${s}">${s==='g'?'✓ Strong':s==='a'?'⚠ Acceptable':'✗ Below floor'}</span></td>
+    </tr>`).join('');
+}
+decode();
+</script>
+</body>
+</html>

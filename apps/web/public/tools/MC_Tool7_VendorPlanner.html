@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Partnership Planner — VGL Masterclass</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0F1E;--cream:#F7F4EE;--gold:#D4922A;--teal:#0C5E5A;--rust:#B84A2E;--mist:#E8EFF4;--mid:#6B7A8D;--card:#fff;--border:#DDE4EC;--success:#1B6B4A;--warn:#A05A00;--danger:#9B2020;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
+.masthead{background:linear-gradient(135deg,#2A1A0A 0%,#7A4800 100%);padding:28px 36px 24px;}
+.mc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,146,42,.2);border:1px solid rgba(212,146,42,.4);border-radius:20px;padding:5px 14px;margin-bottom:14px;}
+.mc-badge span{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.tool-num{width:22px;height:22px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--ink);}
+h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1.15;}
+h1 em{color:var(--gold);font-style:normal;}
+.masthead-sub{font-size:13px;color:rgba(255,255,255,.5);margin-top:8px;}
+.main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:26px 28px;margin-bottom:20px;box-shadow:0 2px 16px rgba(10,15,30,.06);}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.card-title::after{content:'';flex:1;height:1px;background:rgba(212,146,42,.25);}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:#fff;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--gold);}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--ink);border:none;padding:14px 32px;border-radius:9px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:opacity .2s;}
+.cta:hover{opacity:.85;}
+.econ-panel{background:var(--ink);border-radius:14px;padding:28px;margin-bottom:20px;}
+.econ-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;}
+.econ-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.econ-item{text-align:center;}
+.econ-label{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.econ-value{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;line-height:1;}
+.econ-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:3px;}
+.timeline-step{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid var(--border);}
+.timeline-step:last-child{border-bottom:none;}
+.step-circle{width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--ink);font-family:'Syne',sans-serif;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-body{flex:1;}
+.step-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px;}
+.step-desc{font-size:13px;color:var(--mid);line-height:1.6;margin-bottom:6px;}
+.step-deliverable{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;}
+.non-neg-item{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.non-neg-item:last-child{border-bottom:none;}
+.nn-num{width:28px;height:28px;border-radius:50%;background:var(--rust);color:#fff;font-family:'Syne',sans-serif;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.nn-body{flex:1;}
+.nn-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.nn-desc{font-size:12px;color:var(--mid);line-height:1.55;}
+@media print{.cta,.field input,.field select{display:none;}.main{padding:0;}}
+</style>
+</head>
+<body>
+<div class="masthead">
+  <div class="mc-badge"><div class="tool-num">7</div><span>Profitable Equipment Leasing Masterclass</span></div>
+  <h1>Vendor Partnership <em>Planner</em></h1>
+  <div class="masthead-sub">Build the economics and 90-day launch plan for a vendor leasing programme with any OEM or equipment dealer</div>
+</div>
+<div class="main">
+  <div class="card">
+    <div class="card-title">Vendor Programme Parameters</div>
+    <div class="g3">
+      <div class="field"><label>Vendor or Dealer Name</label><input type="text" id="v_name" value="Isuzu East Africa" placeholder="e.g. Isuzu East Africa"></div>
+      <div class="field"><label>Asset Type</label>
+        <select id="v_asset">
+          <option>Commercial Vehicles</option>
+          <option>Agricultural Equipment</option>
+          <option>Medical Equipment</option>
+          <option>Construction Equipment</option>
+          <option>ICT Equipment</option>
+        </select>
+      </div>
+      <div class="field"><label>Average Deal Value (KES M)</label><input type="number" id="v_dealVal" value="8.5" step="0.5"></div>
+    </div>
+    <div class="g3">
+      <div class="field"><label>Target Deals Per Month</label><input type="number" id="v_deals" value="6" min="1"></div>
+      <div class="field"><label>Referral Fee to Vendor (% of deal)</label><input type="number" id="v_fee" value="1" step="0.25" min="0.25" max="3"></div>
+      <div class="field"><label>Implicit Rate You Will Charge (% p.a.)</label><input type="number" id="v_rate" value="18" step="0.5"></div>
+    </div>
+    <div class="g2">
+      <div class="field"><label>Turnaround Commitment</label>
+        <select id="v_tat">
+          <option value="24">24 hours for complete applications</option>
+          <option value="48">48 hours for complete applications</option>
+          <option value="72">72 hours for complete applications</option>
+        </select>
+      </div>
+      <div class="field"><label>Programme Type</label>
+        <select id="v_type">
+          <option>Non-exclusive referral — vendor refers to multiple lessors</option>
+          <option selected>Preferred lessor — vendor refers primarily to you</option>
+          <option>Exclusive programme — all finance enquiries come to you only</option>
+        </select>
+      </div>
+    </div>
+    <button class="cta" onclick="buildPlan()">Build Vendor Plan →</button>
+  </div>
+
+  <div id="planOutput" style="display:none;">
+    <div class="econ-panel">
+      <div class="econ-title">Programme Economics — Annual Projection</div>
+      <div class="econ-row">
+        <div class="econ-item"><div class="econ-label">Annual Originations</div><div class="econ-value" id="e_vol">—</div><div class="econ-sub">Target volume</div></div>
+        <div class="econ-item"><div class="econ-label">Referral Fees Payable</div><div class="econ-value" id="e_fees">—</div><div class="econ-sub">Cost to you</div></div>
+        <div class="econ-item"><div class="econ-label">Gross Finance Income</div><div class="econ-value" id="e_income">—</div><div class="econ-sub">To your book</div></div>
+        <div class="econ-item"><div class="econ-label">Net Income After Fees</div><div class="econ-value" id="e_net">—</div><div class="econ-sub">Approx annual</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">90-Day Launch Timeline</div>
+      <div id="timelineArea"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">The 5 Non-Negotiables in Every Vendor Agreement</div>
+      <div id="nonNegArea"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">The Vendor Sales Team Training — What They Need to Know</div>
+      <div id="trainingArea"></div>
+    </div>
+
+    <div style="text-align:right;margin-top:8px;">
+      <button onclick="window.print()" style="background:var(--gold);color:var(--ink);border:none;padding:10px 22px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;">Print Vendor Plan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function fmtM(n){return 'KES '+n.toFixed(1)+'M';}
+function v(id){return parseFloat(document.getElementById(id).value)||0;}
+function sv(id){return document.getElementById(id).value||'';}
+
+function buildPlan(){
+  var vendor=sv('v_name')||'the vendor';
+  var asset=sv('v_asset');
+  var dealVal=v('v_dealVal')*1e6;
+  var deals=v('v_deals');
+  var fee=v('v_fee');
+  var rate=v('v_rate');
+  var tat=sv('v_tat').split(' ')[0];
+  var progType=sv('v_type');
+
+  var annualVol=dealVal*deals*12;
+  var annualFees=annualVol*fee/100;
+
+  // Gross income = total rentals - capital deployed
+  var r=rate/12/100;
+  var term=48;
+  var af=(1-Math.pow(1+r,-term))/r;
+  var monthly=dealVal/af;
+  var incomePerDeal=monthly*term-dealVal;
+  var annualIncome=incomePerDeal*deals*12;
+  var netIncome=annualIncome-annualFees;
+
+  document.getElementById('e_vol').textContent=fmtM(annualVol/1e6);
+  document.getElementById('e_fees').textContent=fmtM(annualFees/1e6);
+  document.getElementById('e_income').textContent=fmtM(annualIncome/1e6);
+  document.getElementById('e_net').textContent=fmtM(netIncome/1e6);
+
+  var steps=[
+    {phase:'Weeks 1 and 2',title:'Programme Design',desc:'Agree scope (asset types, deal sizes, geography), referral fee of '+fee+'% of funded deal value, turnaround commitment of '+tat+' hours, and exclusivity terms with '+vendor+'. Discuss how the vendor sales team will identify and qualify finance-ready customers.',deliverable:'Signed term sheet'},
+    {phase:'Weeks 3 and 4',title:'Documentation',desc:'Draft and execute the Vendor Programme Agreement. Develop the standardised lease application form specific to '+vendor+' customers. Create the '+vendor+' rate card — showing monthly payments for standard '+asset+' deal sizes so sales staff can quote without calling you.',deliverable:'Vendor Programme Agreement signed. Rate card approved by both parties.'},
+    {phase:'Weeks 5 and 6',title:'Sales Team Training',desc:'Train '+vendor+'\'s sales team on three things: (1) how to identify a customer who needs finance, (2) how to present the monthly payment using the rate card, and (3) how to submit a complete application. Role-play the customer conversation until it is natural.',deliverable:'Sales team briefed. Role-play session completed. Quick reference card distributed.'},
+    {phase:'Weeks 7 to 9',title:'Soft Launch',desc:'Process the first 3 to 5 deals end-to-end. Measure actual turnaround against the '+tat+'-hour commitment. Identify friction points in the application or approval process — incomplete documents, valuation delays, communication gaps — and resolve each one before full launch.',deliverable:'3 to 5 funded deals. Process refinement document completed and shared with '+vendor+'.'},
+    {phase:'Weeks 10 to 12',title:'Full Programme Launch',desc:'Announce the programme formally within '+vendor+'\'s sales organisation. Set quarterly volume targets. Schedule a monthly review call between your relationship manager and '+vendor+'\'s finance contact to track deal flow, quality, and referral fee payments.',deliverable:'Programme fully live. First monthly review call scheduled. Volume targets agreed in writing.'}
+  ];
+
+  document.getElementById('timelineArea').innerHTML=steps.map(function(s){
+    return '<div class="timeline-step"><div class="step-circle">'+(steps.indexOf(s)+1)+'</div><div class="step-body"><div class="step-title">'+s.phase+': '+s.title+'</div><div class="step-desc">'+s.desc+'</div><div class="step-deliverable">Deliverable: '+s.deliverable+'</div></div></div>';
+  }).join('');
+
+  var nonNegs=[
+    {title:'Turnaround time is written into the agreement',desc:tat+' hours for complete applications. This is not a target — it is a commitment. First miss triggers a formal review. Consistently missing the commitment entitles '+vendor+' to reduce your preferred lessor status or add a competing lessor to the programme.'},
+    {title:'Referral fee paid on funded drawdown only — not on application',desc:'Fee of '+fee+'% of funded deal value is payable when the lease is drawn down and the asset is delivered. Include a 90-day clawback: if a deal goes into arrears within 90 days of drawdown, the referral fee is returned. This aligns '+vendor+'\'s incentive with deal quality.'},
+    {title:'Minimum quarterly volume to maintain preferred lessor status',desc:'Set a minimum funded volume per quarter that '+vendor+' must achieve to maintain the programme and the agreed referral fee rate. Below the threshold: you may introduce a competing lessor or reduce the fee rate. Above a premium volume: the fee rate steps up as a volume reward.'},
+    {title:'Application completeness standard — incomplete applications restart the clock',desc:'The '+tat+'-hour clock only starts when a complete application is received — all documents on the standard form. An incomplete submission does not trigger your turnaround obligation. This protects your credit quality and prevents you from being pressured to approve incomplete credit.'},
+    {title:'Quality not just quantity — systematic poor-quality referrals trigger a review',desc:vendor+' is responsible for the quality of introductions. If the programme consistently produces sub-standard credit applications — customers who clearly cannot afford the equipment — it triggers a programme review and retraining. You are a lessor, not a credit recycling service.'}
+  ];
+
+  document.getElementById('nonNegArea').innerHTML=nonNegs.map(function(n,i){
+    return '<div class="non-neg-item"><div class="nn-num">'+(i+1)+'</div><div class="nn-body"><div class="nn-title">'+n.title+'</div><div class="nn-desc">'+n.desc+'</div></div></div>';
+  }).join('');
+
+  var training=[
+    '<strong>How to spot a finance-ready customer:</strong> Listen for "the price is quite steep right now" or "we need to think about the timing" or "let me check with our accounts team." These are finance signals. The customer wants the '+asset.toLowerCase()+' — they just need a different way to fund it.',
+    '<strong>How to introduce the monthly payment:</strong> Always lead with the product — never with the finance. After the product presentation, say: "The '+asset.toLowerCase()+' is KES [price] — or we can structure it as KES [monthly payment] per month over 48 months. Which works better for your cashflow?" Then pause. Let them process the monthly number.',
+    '<strong>The five objections and how to handle them:</strong> (1) "Leasing costs more than buying" — compare total after-tax cost, not headline rate. (2) "I want to own it" — under a finance lease you own it for KES 100 at end of term. (3) "What if my business changes" — early termination provision exists. (4) "Someone else will own my truck" — operationally identical, legal title only. (5) "The paperwork looks complicated" — 10 minutes together right now.',
+    '<strong>How to submit a complete application:</strong> Collect: (1) copy of business registration, (2) PIN certificate, (3) two years of accounts or management accounts, (4) six months of business bank statements, (5) director ID and PIN. Complete the standard application form. Submit all documents together — incomplete applications restart the '+tat+'-hour clock.'
+  ];
+
+  document.getElementById('trainingArea').innerHTML='<ul style="list-style:none;">'+training.map(function(t,i){
+    return '<li style="padding:14px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink);display:flex;gap:12px;line-height:1.6;align-items:flex-start;"><span style="width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;font-family:Syne,sans-serif;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">'+(i+1)+'</span>'+t+'</li>';
+  }).join('')+'</ul>';
+
+  document.getElementById('planOutput').style.display='block';
+  document.getElementById('planOutput').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>
