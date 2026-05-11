@@ -19,6 +19,7 @@ import { Card, CardContent } from '@/components/ui/card.jsx';
 import LeaseVsBuyCalculator from '@/components/LeaseVsBuyCalculator.jsx';
 import SkillsAssessmentGapTest from '@/components/SkillsAssessmentGapTest.jsx';
 import RolesSection from '@/components/RolesSection.jsx';
+import UpcomingEvents from '@/components/UpcomingEvents.jsx';
 
 const HomePage = () => {
   const fadeIn = {
@@ -87,6 +88,9 @@ const HomePage = () => {
           </motion.div>
         </div>
       </section>
+
+    {/* Upcoming Events Section */}
+    <UpcomingEvents />
 
       {/* Roles Section (New) */}
       <RolesSection />
