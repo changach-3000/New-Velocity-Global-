@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VGL Tool 1 — Lease Profitability Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#003366;--navy2:#002244;--gold:#C9A84C;--gold2:#e8c96a;--gold-pale:#FFF8E7;--white:#fff;--off:#F7F9FC;--grey:#6B7280;--dark:#1A1A2E;--green:#1A7A4a;--red:#8B1A1A;--amber:#92400E;--border:#E5E7EB;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--dark);min-height:100vh;}
+.hdr{background:var(--navy);position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;top:0;right:0;width:260px;height:100%;background:var(--navy2);clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);}
+.hdr-inner{max-width:1080px;margin:0 auto;padding:22px 36px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2;}
+.hdr-badge{width:5px;height:46px;background:var(--gold);border-radius:3px;margin-right:14px;flex-shrink:0;}
+.hdr-left{display:flex;align-items:center;}
+.hdr-tool{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#fff;line-height:1.1;}
+.hdr-right{text-align:right;}
+.hdr-brand{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:var(--gold);}
+.hdr-tag{font-size:.65rem;color:rgba(255,255,255,.45);font-style:italic;margin-top:2px;}
+.gold-bar{height:4px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));}
+.main{max-width:1080px;margin:0 auto;padding:32px 36px 60px;}
+.card{background:#fff;border-radius:8px;border:1px solid var(--border);padding:26px 30px;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,51,102,.05);}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.card-desc{font-size:.8rem;color:var(--grey);margin-bottom:20px;font-style:italic;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:.7rem;font-weight:600;color:var(--grey);letter-spacing:.05em;text-transform:uppercase;}
+.field label span{color:var(--gold);font-size:.65rem;text-transform:none;letter-spacing:0;font-weight:400;}
+.field input,.field select,.field textarea{padding:10px 13px;border:1.5px solid var(--border);border-radius:6px;font-size:.88rem;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;transition:border-color .2s,box-shadow .2s;outline:none;resize:vertical;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+.field input::placeholder,.field textarea::placeholder{color:#aaa;font-style:italic;}
+.toggle-grp{display:flex;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;}
+.toggle-grp input[type=radio]{display:none;}
+.toggle-grp label{flex:1;text-align:center;padding:9px;cursor:pointer;font-size:.8rem;font-weight:500;color:var(--grey);background:#fff;transition:all .2s;text-transform:none;letter-spacing:0;}
+.toggle-grp input[type=radio]:checked+label{background:var(--navy);color:var(--gold);font-weight:600;}
+.toggle-grp label:hover{background:var(--off);}
+.btn-primary{width:100%;padding:15px 28px;background:var(--navy);color:var(--gold);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:all .2s;margin-top:6px;}
+.btn-primary:hover{background:var(--navy2);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,51,102,.22);}
+.btn-secondary{width:100%;padding:11px;background:transparent;color:var(--grey);border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s;margin-top:9px;}
+.btn-secondary:hover{color:var(--dark);border-color:var(--grey);}
+.results{display:none;animation:fadeUp .4s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.res-hdr{background:var(--navy);border-radius:10px 10px 0 0;padding:20px 28px;display:flex;align-items:center;gap:12px;}
+.res-hdr-icon{width:40px;height:40px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.res-hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:#fff;}
+.res-hdr-sub{font-size:.7rem;color:rgba(255,255,255,.55);margin-top:2px;font-style:italic;}
+.res-body{background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:26px 30px;box-shadow:0 4px 18px rgba(0,51,102,.07);}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.kpi{background:var(--off);border-radius:7px;padding:14px 16px;border-left:4px solid var(--gold);}
+.kpi.hi{background:var(--navy);border-left-color:var(--gold);}
+.kpi-lbl{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:5px;}
+.kpi.hi .kpi-lbl{color:rgba(255,255,255,.55);}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;color:var(--navy);line-height:1;}
+.kpi.hi .kpi-val{color:var(--gold);}
+.kpi-sub{font-size:.65rem;color:var(--grey);margin-top:3px;}
+.kpi.hi .kpi-sub{color:rgba(255,255,255,.45);}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:var(--navy);margin:22px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--gold-pale);display:flex;align-items:center;gap:7px;}
+.sec-title::before{content:'';display:block;width:4px;height:16px;background:var(--gold);border-radius:2px;}
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;background:var(--off);border-radius:5px;font-size:.8rem;}
+.sum-lbl{color:var(--grey);}
+.sum-val{font-weight:600;color:var(--navy);}
+.verdict{border-radius:8px;padding:16px 20px;margin-top:18px;display:flex;align-items:flex-start;gap:12px;}
+.verdict.good{background:#e8f5ee;border-left:5px solid var(--green);}
+.verdict.warn{background:#FFF3E0;border-left:5px solid #d4790a;}
+.verdict.bad{background:#FDF0F0;border-left:5px solid var(--red);}
+.verdict-icon{font-size:1.4rem;flex-shrink:0;margin-top:1px;}
+.verdict-title{font-weight:700;font-size:.9rem;margin-bottom:3px;}
+.verdict.good .verdict-title{color:var(--green);}
+.verdict.warn .verdict-title{color:var(--amber);}
+.verdict.bad .verdict-title{color:var(--red);}
+.verdict-body{font-size:.8rem;color:var(--grey);line-height:1.6;}
+.tbl-wrap{overflow-x:auto;margin-bottom:22px;}
+table{width:100%;border-collapse:collapse;font-size:.8rem;}
+thead th{background:var(--navy);color:var(--gold);padding:9px 13px;text-align:right;font-weight:600;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;}
+thead th:first-child{text-align:left;}
+tbody tr:nth-child(even){background:var(--off);}
+tbody tr:hover{background:var(--gold-pale);}
+tbody td{padding:8px 13px;text-align:right;color:var(--grey);border-bottom:1px solid var(--border);}
+tbody td:first-child{text-align:left;font-weight:600;color:var(--navy);}
+tfoot td{padding:9px 13px;text-align:right;background:var(--navy);color:var(--gold);font-weight:700;font-size:.78rem;}
+tfoot td:first-child{text-align:left;}
+.btn-print{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:transparent;border:1.5px solid var(--gold);color:var(--gold);border-radius:6px;font-size:.75rem;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;transition:all .2s;margin-top:18px;}
+.btn-print:hover{background:var(--gold);color:var(--navy);}
+.ftr{text-align:center;padding:22px;font-size:.68rem;color:var(--grey);border-top:1px solid var(--border);margin-top:36px;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:6px;margin-bottom:6px;cursor:pointer;transition:background .15s;}
+.check-item:hover{background:var(--gold-pale);}
+.check-item input[type=checkbox]{width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--navy);}
+.check-item .ci-label{font-size:.85rem;font-weight:600;color:var(--navy);}
+.check-item .ci-desc{font-size:.75rem;color:var(--grey);margin-top:2px;}
+.section-hdr{background:var(--navy);color:var(--gold);padding:8px 14px;border-radius:5px;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:18px 0 8px;}
+.progress-bar{width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:8px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--gold));border-radius:4px;transition:width .4s ease;}
+.score-display{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--navy);text-align:center;}
+.score-label{font-size:.75rem;color:var(--grey);text-align:center;margin-top:4px;}
+.tag{display:inline-block;padding:3px 9px;border-radius:12px;font-size:.68rem;font-weight:700;margin:2px;}
+.tag.green{background:#e8f5ee;color:var(--green);}
+.tag.amber{background:#FFF3E0;color:var(--amber);}
+.tag.red{background:#FDF0F0;color:var(--red);}
+@media(max-width:768px){.main{padding:18px 16px 40px;}.grid2,.grid3{grid-template-columns:1fr;}.kpi-row{grid-template-columns:1fr 1fr;}.hdr-inner{flex-direction:column;gap:10px;}.sum-grid{grid-template-columns:1fr;}}
+@media print{.btn-primary,.btn-secondary,.btn-print{display:none;}body{background:#fff;}.card{box-shadow:none;}}
+</style></head><body>
+<div class="hdr"><div class="hdr-inner"><div class="hdr-left"><div class="hdr-badge"></div><div><div class="hdr-tool">VGL Tool 01 of 8</div><div class="hdr-title">Lease Profitability Calculator</div></div></div><div class="hdr-right"><div class="hdr-brand">Velocity Global Leasing</div><div class="hdr-tag">Africa's Leasing Intelligence Platform</div></div></div></div><div class="gold-bar"></div>
+<div class="main">
+<div class="card">
+  <div class="card-title"><span>1</span> Deal Parameters</div>
+  <p class="card-desc">Enter asset details, lease structure, and pricing to compute yield and profitability</p>
+  <div class="grid3" style="margin-bottom:16px">
+    <div class="field"><label>Asset Description</label><input type="text" id="a_name" placeholder="e.g. Isuzu FVZ Truck"></div>
+    <div class="field"><label>Asset Cost (KES) <span>incl. VAT</span></label><input type="number" id="a_cost" placeholder="e.g. 8500000" min="0"></div>
+    <div class="field"><label>Residual Value (KES)</label><input type="number" id="a_resid" value="0" min="0"></div>
+  </div>
+  <div class="grid3">
+    <div class="field"><label>Lease Term (months)</label><select id="a_term"><option value="">Select</option><option value="12">12 months</option><option value="24">24 months</option><option value="36" selected>36 months</option><option value="48">48 months</option><option value="60">60 months</option><option value="72">72 months</option></select></div>
+    <div class="field"><label>Annual Lease Rate (%)</label><input type="number" id="a_rate" placeholder="e.g. 18" step="0.1" min="0"></div>
+    <div class="field"><label>Lease Type</label><div class="toggle-grp"><input type="radio" name="ltype" id="lt_fin" value="finance" checked><label for="lt_fin">Finance</label><input type="radio" name="ltype" id="lt_op" value="operating"><label for="lt_op">Operating</label></div></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title"><span>2</span> Payment & Fees</div>
+  <p class="card-desc">Configure payment structure, advance rentals, and upfront charges</p>
+  <div class="grid3" style="margin-bottom:16px">
+    <div class="field"><label>Advance Rentals</label><select id="a_adv"><option value="0">0 — None</option><option value="1">1 rental</option><option value="2" selected>2 rentals</option><option value="3">3 rentals</option></select></div>
+    <div class="field"><label>Security Deposit (KES)</label><input type="number" id="a_dep" value="0" min="0"></div>
+    <div class="field"><label>Documentation Fee (KES)</label><input type="number" id="a_fee" value="0" min="0"></div>
+  </div>
+  <div class="grid3">
+    <div class="field"><label>VAT on Rentals (%)</label><input type="number" id="a_vat" value="16" min="0"></div>
+    <div class="field"><label>Payment Frequency</label><select id="a_freq"><option value="monthly" selected>Monthly</option><option value="quarterly">Quarterly</option></select></div>
+    <div class="field"><label>Currency</label><select id="a_curr"><option value="KES" selected>KES</option><option value="USD">USD</option><option value="EUR">EUR</option></select></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title"><span>3</span> Lessor Profitability Inputs</div>
+  <p class="card-desc">Required to calculate net yield, spread, and deal profitability verdict</p>
+  <div class="grid3">
+    <div class="field"><label>Cost of Funds (% p.a.) <span>lessor borrowing rate</span></label><input type="number" id="a_cof" placeholder="e.g. 13" step="0.1" min="0"></div>
+    <div class="field"><label>Credit Risk Provision (%)</label><input type="number" id="a_crisk" value="2" step="0.1" min="0"></div>
+    <div class="field"><label>Operating Cost (%)</label><input type="number" id="a_opcost" value="1.5" step="0.1" min="0"></div>
+  </div>
+</div>
+<button class="btn-primary" onclick="calc()">&#9654;&#160;&#160;Generate Profitability Analysis</button>
+<button class="btn-secondary" onclick="resetAll()">Reset All Fields</button>
+<div class="results" id="results" style="margin-top:28px">
+  <div class="res-hdr"><div class="res-hdr-icon">💰</div><div><div class="res-hdr-title" id="r_title">Analysis</div><div class="res-hdr-sub" id="r_sub">VGL Lease Profitability Calculator</div></div></div>
+  <div class="res-body">
+    <div class="kpi-row" id="r_kpis"></div>
+    <div class="sec-title">Deal Summary</div>
+    <div class="sum-grid" id="r_sum"></div>
+    <div class="sec-title">Amortisation Schedule</div>
+    <div class="tbl-wrap"><table id="r_tbl"><thead></thead><tbody></tbody><tfoot></tfoot></table></div>
+    <div id="r_ifrs"></div>
+    <div class="sec-title">Deal Verdict</div>
+    <div id="r_verdict"></div>
+    <button class="btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
+  </div>
+</div>
+</div>
+<div class="ftr">Velocity Global Leasing &nbsp;|&nbsp; Africa's Leasing Intelligence Platform &nbsp;|&nbsp; Dr. Roselyn Mwaura &nbsp;|&nbsp; www.velocitygloballeasing.com<br><span style="color:#bbb;font-style:italic">For professional development and educational use. Validate with a qualified leasing advisor.</span></div>
+<script>
+function f(n,c){if(isNaN(n))return'—';return(c||'KES')+' '+Math.round(n).toLocaleString('en-KE');}
+function p(n){if(isNaN(n))return'—';return n.toFixed(2)+'%';}
+function resetAll(){document.getElementById('a_name').value='';document.getElementById('a_cost').value='';document.getElementById('a_resid').value='0';document.getElementById('a_term').value='36';document.getElementById('a_rate').value='';document.getElementById('a_adv').value='2';document.getElementById('a_dep').value='0';document.getElementById('a_fee').value='0';document.getElementById('a_vat').value='16';document.getElementById('a_cof').value='';document.getElementById('a_crisk').value='2';document.getElementById('a_opcost').value='1.5';document.getElementById('results').style.display='none';}
+function calc(){
+  var nm=document.getElementById('a_name').value.trim()||'Asset';
+  var cost=parseFloat(document.getElementById('a_cost').value);
+  var resid=parseFloat(document.getElementById('a_resid').value)||0;
+  var term=parseInt(document.getElementById('a_term').value);
+  var rate=parseFloat(document.getElementById('a_rate').value);
+  var ltype=document.querySelector('input[name="ltype"]:checked').value;
+  var adv=parseInt(document.getElementById('a_adv').value)||0;
+  var dep=parseFloat(document.getElementById('a_dep').value)||0;
+  var fee=parseFloat(document.getElementById('a_fee').value)||0;
+  var vat=parseFloat(document.getElementById('a_vat').value)||0;
+  var freq=document.getElementById('a_freq').value;
+  var curr=document.getElementById('a_curr').value;
+  var cof=parseFloat(document.getElementById('a_cof').value)||0;
+  var crisk=parseFloat(document.getElementById('a_crisk').value)||0;
+  var opcost=parseFloat(document.getElementById('a_opcost').value)||0;
+  if(isNaN(cost)||cost<=0){alert('Enter a valid Asset Cost.');return;}
+  if(isNaN(term)||term<=0){alert('Select a Lease Term.');return;}
+  if(isNaN(rate)||rate<=0){alert('Enter a valid Annual Lease Rate.');return;}
+  var ppy=freq==='monthly'?12:4;
+  var np=freq==='monthly'?term:Math.ceil(term/3);
+  var r=(rate/100)/ppy;
+  var PV=cost-dep;
+  var FV=resid;
+  var rental;
+  if(r===0){rental=(PV-FV/(np+1))/np;}
+  else{var pw=Math.pow(1+r,np);rental=(PV*r*pw-FV*r)/(pw-1);}
+  if(adv>0&&r>0){var pvA=PV-rental*adv;if(pvA>0){var pw2=Math.pow(1+r,np);rental=(pvA*r*pw2-FV*r)/(pw2-1);}}
+  var vatAmt=rental*(vat/100);
+  var gross=rental+vatAmt;
+  var totNet=rental*np;
+  var totGross=gross*np;
+  var totInt=totNet-(cost-resid);
+  var upfront=adv*gross+dep+fee;
+  var spread=rate-cof;
+  var netY=spread-crisk-opcost;
+  var sched=[];
+  var bal=PV;
+  for(var i=1;i<=np;i++){var ic=bal*r;var pr=rental-ic;bal=bal-pr;if(i===np)bal=0;sched.push({p:i,r:rental,i:ic,pr:pr,b:Math.max(0,bal)}); }
+  document.getElementById('r_title').textContent='Analysis: '+nm;
+  document.getElementById('r_sub').textContent=ltype.charAt(0).toUpperCase()+ltype.slice(1)+' Lease — '+term+' months — '+curr+' — '+new Date().toLocaleDateString('en-KE');
+  var kd=[
+    {l:'Monthly Rental (excl.VAT)',v:f(rental,curr),s:f(gross,curr)+' incl.VAT',hi:false},
+    {l:'Total Rentals Payable',v:f(totNet,curr),s:f(totGross,curr)+' incl.VAT',hi:false},
+    {l:'Total Interest Income',v:f(totInt,curr),s:p((totInt/cost)*100)+' of asset cost',hi:false},
+    {l:'Lessor Net Yield',v:p(netY),s:p(spread)+' spread · '+p(rate)+' rate',hi:true}
+  ];
+  var kr=document.getElementById('r_kpis');kr.innerHTML='';
+  kd.forEach(function(k){kr.innerHTML+='<div class="kpi'+(k.hi?' hi':'')+'"><div class="kpi-lbl">'+k.l+'</div><div class="kpi-val">'+k.v+'</div><div class="kpi-sub">'+k.s+'</div></div>';});
+  var sd=[['Asset Cost',f(cost,curr)],['Residual Value',f(resid,curr)],['Lease Term',term+' months'],['Lease Rate p.a.',p(rate)],['Advance Rentals',adv+' ('+f(adv*gross,curr)+')'],['Security Deposit',f(dep,curr)],['Doc Fee',f(fee,curr)],['Total Upfront',f(upfront,curr)],['VAT Rate',p(vat)],['Cost of Funds',cof>0?p(cof):'Not entered'],['Yield Spread',cof>0?p(spread):'—']];
+  var sg=document.getElementById('r_sum');sg.innerHTML='';
+  sd.forEach(function(s){sg.innerHTML+='<div class="sum-row"><span class="sum-lbl">'+s[0]+'</span><span class="sum-val">'+s[1]+'</span></div>';});
+  var tbl=document.getElementById('r_tbl');
+  var pl=freq==='monthly'?'Month':'Quarter';
+  tbl.querySelector('thead').innerHTML='<tr><th>'+pl+'</th><th>Rental</th><th>Interest</th><th>Principal</th><th>Balance</th></tr>';
+  var tb=tbl.querySelector('tbody');tb.innerHTML='';
+  var show=np<=24?sched:sched.slice(0,6).concat([null]).concat(sched.slice(-6));
+  show.forEach(function(row){if(!row){tb.innerHTML+='<tr><td colspan="5" style="text-align:center;color:#aaa;font-style:italic;padding:7px">— middle periods hidden —</td></tr>';return;}tb.innerHTML+='<tr><td>'+row.p+'</td><td>'+Math.round(row.r).toLocaleString()+'</td><td>'+Math.round(row.i).toLocaleString()+'</td><td>'+Math.round(row.pr).toLocaleString()+'</td><td>'+Math.round(row.b).toLocaleString()+'</td></tr>';});
+  var tI=sched.reduce(function(s,r){return s+r.i;},0);
+  var tP=sched.reduce(function(s,r){return s+r.pr;},0);
+  var tR=sched.reduce(function(s,r){return s+r.r;},0);
+  tbl.querySelector('tfoot').innerHTML='<td>TOTALS</td><td>'+Math.round(tR).toLocaleString()+'</td><td>'+Math.round(tI).toLocaleString()+'</td><td>'+Math.round(tP).toLocaleString()+'</td><td>0</td>';
+  var ifn=document.getElementById('r_ifrs');
+  ifn.innerHTML='<div style="background:var(--gold-pale);border-left:4px solid var(--gold);padding:13px 16px;border-radius:0 6px 6px 0;margin-bottom:18px;font-size:.78rem;color:var(--grey)"><strong style="color:var(--navy)">IFRS 16 — '+ltype.charAt(0).toUpperCase()+ltype.slice(1)+' Lease (Lessee)</strong><br><br>Right-of-Use Asset: <strong>'+f(cost,curr)+'</strong> &nbsp;|&nbsp; Lease Liability at inception: <strong>'+f(cost-dep,curr)+'</strong><br>'+(ltype==='finance'?'Asset depreciated over '+term+' months. Interest unwound via effective interest method.':'Rental expense on straight-line basis of '+f(rental,curr)+'/'+freq.slice(0,-2)+'.')+'</div>';
+  var vb=document.getElementById('r_verdict');
+  var vc,vi,vt,vx;
+  if(cof>0){if(netY>=5){vc='good';vi='✅';vt='Strong Deal — Recommend to Proceed';vx='Net yield of '+p(netY)+' exceeds threshold. Gross spread of '+p(spread)+' against cost of funds of '+p(cof)+' indicates healthy profitability. Total interest income: '+f(totInt,curr)+'.';}else if(netY>=2){vc='warn';vi='⚠️';vt='Marginal Deal — Review Pricing';vx='Net yield of '+p(netY)+' is positive but thin. Consider increasing the rate, reducing term, or negotiating higher advance rental.';}else{vc='bad';vi='❌';vt='Unprofitable — Reprice Before Proceeding';vx='Net yield of '+p(netY)+' is insufficient. Recommend minimum rate of '+p(cof+crisk+opcost+3)+' p.a.';}}else{vc='warn';vi='📋';vt='Deal Structured — Profitability Incomplete';vx='Enter Cost of Funds to unlock the full deal profitability verdict.';}
+  vb.innerHTML='<div class="verdict '+vc+'"><div class="verdict-icon">'+vi+'</div><div><div class="verdict-title">'+vt+'</div><div class="verdict-body">'+vx+'</div></div></div>';
+  var res=document.getElementById('results');res.style.display='block';res.scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script></body></html>

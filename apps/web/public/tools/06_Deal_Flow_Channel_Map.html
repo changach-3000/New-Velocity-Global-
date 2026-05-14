@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VGL Tool 6 — Deal Flow Channel Map</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#003366;--navy2:#002244;--gold:#C9A84C;--gold2:#e8c96a;--gold-pale:#FFF8E7;--white:#fff;--off:#F7F9FC;--grey:#6B7280;--dark:#1A1A2E;--green:#1A7A4a;--red:#8B1A1A;--amber:#92400E;--border:#E5E7EB;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--dark);min-height:100vh;}
+.hdr{background:var(--navy);position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;top:0;right:0;width:260px;height:100%;background:var(--navy2);clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);}
+.hdr-inner{max-width:1080px;margin:0 auto;padding:22px 36px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2;}
+.hdr-badge{width:5px;height:46px;background:var(--gold);border-radius:3px;margin-right:14px;flex-shrink:0;}
+.hdr-left{display:flex;align-items:center;}
+.hdr-tool{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#fff;line-height:1.1;}
+.hdr-right{text-align:right;}
+.hdr-brand{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:var(--gold);}
+.hdr-tag{font-size:.65rem;color:rgba(255,255,255,.45);font-style:italic;margin-top:2px;}
+.gold-bar{height:4px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));}
+.main{max-width:1080px;margin:0 auto;padding:32px 36px 60px;}
+.card{background:#fff;border-radius:8px;border:1px solid var(--border);padding:26px 30px;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,51,102,.05);}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.card-desc{font-size:.8rem;color:var(--grey);margin-bottom:20px;font-style:italic;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:.7rem;font-weight:600;color:var(--grey);letter-spacing:.05em;text-transform:uppercase;}
+.field label span{color:var(--gold);font-size:.65rem;text-transform:none;letter-spacing:0;font-weight:400;}
+.field input,.field select,.field textarea{padding:10px 13px;border:1.5px solid var(--border);border-radius:6px;font-size:.88rem;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;transition:border-color .2s,box-shadow .2s;outline:none;resize:vertical;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+.field input::placeholder,.field textarea::placeholder{color:#aaa;font-style:italic;}
+.toggle-grp{display:flex;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;}
+.toggle-grp input[type=radio]{display:none;}
+.toggle-grp label{flex:1;text-align:center;padding:9px;cursor:pointer;font-size:.8rem;font-weight:500;color:var(--grey);background:#fff;transition:all .2s;text-transform:none;letter-spacing:0;}
+.toggle-grp input[type=radio]:checked+label{background:var(--navy);color:var(--gold);font-weight:600;}
+.toggle-grp label:hover{background:var(--off);}
+.btn-primary{width:100%;padding:15px 28px;background:var(--navy);color:var(--gold);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:all .2s;margin-top:6px;}
+.btn-primary:hover{background:var(--navy2);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,51,102,.22);}
+.btn-secondary{width:100%;padding:11px;background:transparent;color:var(--grey);border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s;margin-top:9px;}
+.btn-secondary:hover{color:var(--dark);border-color:var(--grey);}
+.results{display:none;animation:fadeUp .4s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.res-hdr{background:var(--navy);border-radius:10px 10px 0 0;padding:20px 28px;display:flex;align-items:center;gap:12px;}
+.res-hdr-icon{width:40px;height:40px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.res-hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:#fff;}
+.res-hdr-sub{font-size:.7rem;color:rgba(255,255,255,.55);margin-top:2px;font-style:italic;}
+.res-body{background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:26px 30px;box-shadow:0 4px 18px rgba(0,51,102,.07);}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.kpi{background:var(--off);border-radius:7px;padding:14px 16px;border-left:4px solid var(--gold);}
+.kpi.hi{background:var(--navy);border-left-color:var(--gold);}
+.kpi-lbl{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:5px;}
+.kpi.hi .kpi-lbl{color:rgba(255,255,255,.55);}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;color:var(--navy);line-height:1;}
+.kpi.hi .kpi-val{color:var(--gold);}
+.kpi-sub{font-size:.65rem;color:var(--grey);margin-top:3px;}
+.kpi.hi .kpi-sub{color:rgba(255,255,255,.45);}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:var(--navy);margin:22px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--gold-pale);display:flex;align-items:center;gap:7px;}
+.sec-title::before{content:'';display:block;width:4px;height:16px;background:var(--gold);border-radius:2px;}
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;background:var(--off);border-radius:5px;font-size:.8rem;}
+.sum-lbl{color:var(--grey);}
+.sum-val{font-weight:600;color:var(--navy);}
+.verdict{border-radius:8px;padding:16px 20px;margin-top:18px;display:flex;align-items:flex-start;gap:12px;}
+.verdict.good{background:#e8f5ee;border-left:5px solid var(--green);}
+.verdict.warn{background:#FFF3E0;border-left:5px solid #d4790a;}
+.verdict.bad{background:#FDF0F0;border-left:5px solid var(--red);}
+.verdict-icon{font-size:1.4rem;flex-shrink:0;margin-top:1px;}
+.verdict-title{font-weight:700;font-size:.9rem;margin-bottom:3px;}
+.verdict.good .verdict-title{color:var(--green);}
+.verdict.warn .verdict-title{color:var(--amber);}
+.verdict.bad .verdict-title{color:var(--red);}
+.verdict-body{font-size:.8rem;color:var(--grey);line-height:1.6;}
+.tbl-wrap{overflow-x:auto;margin-bottom:22px;}
+table{width:100%;border-collapse:collapse;font-size:.8rem;}
+thead th{background:var(--navy);color:var(--gold);padding:9px 13px;text-align:right;font-weight:600;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;}
+thead th:first-child{text-align:left;}
+tbody tr:nth-child(even){background:var(--off);}
+tbody tr:hover{background:var(--gold-pale);}
+tbody td{padding:8px 13px;text-align:right;color:var(--grey);border-bottom:1px solid var(--border);}
+tbody td:first-child{text-align:left;font-weight:600;color:var(--navy);}
+tfoot td{padding:9px 13px;text-align:right;background:var(--navy);color:var(--gold);font-weight:700;font-size:.78rem;}
+tfoot td:first-child{text-align:left;}
+.btn-print{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:transparent;border:1.5px solid var(--gold);color:var(--gold);border-radius:6px;font-size:.75rem;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;transition:all .2s;margin-top:18px;}
+.btn-print:hover{background:var(--gold);color:var(--navy);}
+.ftr{text-align:center;padding:22px;font-size:.68rem;color:var(--grey);border-top:1px solid var(--border);margin-top:36px;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:6px;margin-bottom:6px;cursor:pointer;transition:background .15s;}
+.check-item:hover{background:var(--gold-pale);}
+.check-item input[type=checkbox]{width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--navy);}
+.check-item .ci-label{font-size:.85rem;font-weight:600;color:var(--navy);}
+.check-item .ci-desc{font-size:.75rem;color:var(--grey);margin-top:2px;}
+.section-hdr{background:var(--navy);color:var(--gold);padding:8px 14px;border-radius:5px;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:18px 0 8px;}
+.progress-bar{width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:8px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--gold));border-radius:4px;transition:width .4s ease;}
+.score-display{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--navy);text-align:center;}
+.score-label{font-size:.75rem;color:var(--grey);text-align:center;margin-top:4px;}
+.tag{display:inline-block;padding:3px 9px;border-radius:12px;font-size:.68rem;font-weight:700;margin:2px;}
+.tag.green{background:#e8f5ee;color:var(--green);}
+.tag.amber{background:#FFF3E0;color:var(--amber);}
+.tag.red{background:#FDF0F0;color:var(--red);}
+@media(max-width:768px){.main{padding:18px 16px 40px;}.grid2,.grid3{grid-template-columns:1fr;}.kpi-row{grid-template-columns:1fr 1fr;}.hdr-inner{flex-direction:column;gap:10px;}.sum-grid{grid-template-columns:1fr;}}
+@media print{.btn-primary,.btn-secondary,.btn-print{display:none;}body{background:#fff;}.card{box-shadow:none;}}
+</style></head><body>
+<div class="hdr"><div class="hdr-inner"><div class="hdr-left"><div class="hdr-badge"></div><div><div class="hdr-tool">VGL Tool 06 of 8</div><div class="hdr-title">Deal Flow Channel Map</div></div></div><div class="hdr-right"><div class="hdr-brand">Velocity Global Leasing</div><div class="hdr-tag">Africa's Leasing Intelligence Platform</div></div></div></div><div class="gold-bar"></div>
+<div class="main">
+
+<div style="background:var(--navy);border-radius:8px;padding:16px 22px;margin-bottom:22px">
+  <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:6px">The Core Principle</div>
+  <div style="font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.6">Mature leasing markets do not wait for customers to arrive. They embed financing into the equipment sales journey — at every point where equipment need is expressed. This map identifies your six primary deal flow channels, the action steps for each, and a tracking framework to build a consistent pipeline.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span>Pipeline Overview</span></div>
+  <div class="grid3">
+    <div class="field"><label>Your Institution / Organisation</label><input type="text" id="m_org" placeholder="e.g. Velocity Global Leasing"></div>
+    <div class="field"><label>Primary Target Sector</label><select id="m_sector"><option value="logistics">Logistics & Transport</option><option value="agri">Agriculture</option><option value="construction">Construction</option><option value="health">Healthcare</option><option value="manufacturing">Manufacturing</option><option value="all">All Sectors</option></select></div>
+    <div class="field"><label>Monthly Deal Target</label><input type="number" id="m_target" placeholder="e.g. 10 deals/month"></div>
+  </div>
+</div>
+
+
+<div class="card" style="background:#f7f9ff">
+  <div style="display:flex;align-items:flex-start;gap:16px">
+    <div style="width:52px;height:52px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">🚛</div>
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--navy)">Equipment Vendors & Dealers</div>
+        <span class="tag green">🔴 High Priority</span>
+      </div>
+      <div style="font-size:.75rem;color:var(--grey);margin-bottom:10px;font-style:italic">OEMs, dealerships, distributors</div>
+      <div style="font-size:.85rem;color:var(--dark);line-height:1.6;margin-bottom:12px">Your highest-volume channel. Dealers have customers who want equipment — the barrier is affordability. A structured referral programme turns every dealer into a leasing originator.</div>
+      <div style="font-weight:700;font-size:.75rem;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Action Steps</div>
+      <ol style="margin-left:18px;font-size:.82rem;color:var(--grey);line-height:1.8"><li>Identify 5 anchor dealers in your target sector</li><li>Propose referral commission (1.5–3% of financed value)</li><li>Train dealer sales teams on how to present the lease option</li><li>Provide co-branded marketing materials</li><li>Set a monthly deal flow target per dealer</li></ol>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+        <span style="font-size:.72rem;color:var(--grey)">Track this channel:</span>
+        <input type="number" placeholder="Monthly target (deals)" style="width:160px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+        <input type="number" placeholder="Deals this month" style="width:140px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card" style="background:#fffdf0">
+  <div style="display:flex;align-items:flex-start;gap:16px">
+    <div style="width:52px;height:52px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">🏭</div>
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--navy)">Industry Associations & Chambers</div>
+        <span class="tag amber">🟡 Medium Priority</span>
+      </div>
+      <div style="font-size:.75rem;color:var(--grey);margin-bottom:10px;font-style:italic">Sector bodies, trade associations, chambers of commerce</div>
+      <div style="font-size:.85rem;color:var(--dark);line-height:1.6;margin-bottom:12px">Associations aggregate trust. A partnership with one association gives you access to all their members simultaneously — and positions you as the endorsed financing partner for the sector.</div>
+      <div style="font-weight:700;font-size:.75rem;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Action Steps</div>
+      <ol style="margin-left:18px;font-size:.82rem;color:var(--grey);line-height:1.8"><li>Map the 3 most active associations in your target sector</li><li>Propose a training/education partnership (VGL Podcast, masterclass)</li><li>Offer members preferential leasing rates</li><li>Speak at association events</li><li>Negotiate endorsement or preferred partner status</li></ol>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+        <span style="font-size:.72rem;color:var(--grey)">Track this channel:</span>
+        <input type="number" placeholder="Monthly target (deals)" style="width:160px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+        <input type="number" placeholder="Deals this month" style="width:140px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card" style="background:#f7f9ff">
+  <div style="display:flex;align-items:flex-start;gap:16px">
+    <div style="width:52px;height:52px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">🔧</div>
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--navy)">Service & Maintenance Centers</div>
+        <span class="tag amber">🟡 Medium Priority</span>
+      </div>
+      <div style="font-size:.75rem;color:var(--grey);margin-bottom:10px;font-style:italic">Equipment service centres, authorised repair centres</div>
+      <div style="font-size:.85rem;color:var(--dark);line-height:1.6;margin-bottom:12px">Service centres know when equipment is ageing, failing, or becoming expensive to maintain. Every major service ticket is a potential conversation about equipment replacement finance.</div>
+      <div style="font-weight:700;font-size:.75rem;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Action Steps</div>
+      <ol style="margin-left:18px;font-size:.82rem;color:var(--grey);line-height:1.8"><li>Partner with 2–3 major service centres in your sector</li><li>Train service advisors to identify replacement finance opportunities</li><li>Create a referral protocol: when maintenance cost exceeds X, refer to leasing</li><li>Offer a commission on successful referrals</li><li>Review service centre customer database for aged fleet opportunities</li></ol>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+        <span style="font-size:.72rem;color:var(--grey)">Track this channel:</span>
+        <input type="number" placeholder="Monthly target (deals)" style="width:160px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+        <input type="number" placeholder="Deals this month" style="width:140px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card" style="background:#fffdf0">
+  <div style="display:flex;align-items:flex-start;gap:16px">
+    <div style="width:52px;height:52px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">🏦</div>
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--navy)">Bank & SACCO SME Desks</div>
+        <span class="tag green">🔴 High Priority</span>
+      </div>
+      <div style="font-size:.75rem;color:var(--grey);margin-bottom:10px;font-style:italic">Commercial bank SME desks, SACCOs, MFIs</div>
+      <div style="font-size:.85rem;color:var(--dark);line-height:1.6;margin-bottom:12px">Many banks already serve SMEs who need equipment but cannot access conventional loans. The leasing opportunity is already inside the existing customer base — it just needs a product to serve it.</div>
+      <div style="font-weight:700;font-size:.75rem;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Action Steps</div>
+      <ol style="margin-left:18px;font-size:.82rem;color:var(--grey);line-height:1.8"><li>Approach bank SME relationship managers with a co-financing proposal</li><li>Offer to handle the equipment financing while bank handles working capital</li><li>Propose a white-label leasing product for the bank's SME portfolio</li><li>Target SACCOs serving logistics, agri, or construction members</li><li>Provide training for bank staff on leasing referral identification</li></ol>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+        <span style="font-size:.72rem;color:var(--grey)">Track this channel:</span>
+        <input type="number" placeholder="Monthly target (deals)" style="width:160px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+        <input type="number" placeholder="Deals this month" style="width:140px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card" style="background:#f7f9ff">
+  <div style="display:flex;align-items:flex-start;gap:16px">
+    <div style="width:52px;height:52px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">🌾</div>
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--navy)">Sector-Specific Campaigns</div>
+        <span class="tag green">🔴 High Priority</span>
+      </div>
+      <div style="font-size:.75rem;color:var(--grey);margin-bottom:10px;font-style:italic">Targeted outreach by sector and asset type</div>
+      <div style="font-size:.85rem;color:var(--dark);line-height:1.6;margin-bottom:12px">A focused leasing campaign targeting one sector converts better than a general message. Equipment needs in agriculture, logistics, healthcare, and construction are predictable and large-scale.</div>
+      <div style="font-weight:700;font-size:.75rem;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Action Steps</div>
+      <ol style="margin-left:18px;font-size:.82rem;color:var(--grey);line-height:1.8"><li>Select 1 priority sector per quarter</li><li>Identify the top 3 equipment types in that sector</li><li>Build a targeted campaign (LinkedIn, WhatsApp, association events)</li><li>Create sector-specific case studies and ROI examples</li><li>Partner with a sector anchor (e.g. Isuzu for logistics, John Deere for agri)</li></ol>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+        <span style="font-size:.72rem;color:var(--grey)">Track this channel:</span>
+        <input type="number" placeholder="Monthly target (deals)" style="width:160px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+        <input type="number" placeholder="Deals this month" style="width:140px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card" style="background:#fffdf0">
+  <div style="display:flex;align-items:flex-start;gap:16px">
+    <div style="width:52px;height:52px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">📱</div>
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--navy)">Digital & Social Channels</div>
+        <span class="tag amber">🟡 Medium Priority</span>
+      </div>
+      <div style="font-size:.75rem;color:var(--grey);margin-bottom:10px;font-style:italic">LinkedIn, WhatsApp Business, email campaigns</div>
+      <div style="font-size:.85rem;color:var(--dark);line-height:1.6;margin-bottom:12px">LinkedIn reaches CFOs, finance directors, and operations managers — your primary decision-makers. The VGL Podcast builds authority. WhatsApp drives direct conversations at scale.</div>
+      <div style="font-weight:700;font-size:.75rem;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Action Steps</div>
+      <ol style="margin-left:18px;font-size:.82rem;color:var(--grey);line-height:1.8"><li>Publish 2 LinkedIn posts per week using VGL emotional hook framework</li><li>Share LeaseTalk Africa podcast episodes targeting each sector</li><li>Build a WhatsApp Business broadcast list of qualified prospects</li><li>Run a monthly educational email to your mailing list</li><li>Convert podcast listeners into masterclass and leasing enquiries</li></ol>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+        <span style="font-size:.72rem;color:var(--grey)">Track this channel:</span>
+        <input type="number" placeholder="Monthly target (deals)" style="width:160px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+        <input type="number" placeholder="Deals this month" style="width:140px;padding:5px 9px;border:1.5px solid var(--border);border-radius:5px;font-size:.8rem">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span>Channel Performance Tracker</span></div>
+  <p class="card-desc">Use this section to track which channels are producing the most qualified deals this month</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Channel</th><th>Target (Deals)</th><th>Actual (Deals)</th><th>Pipeline Value (KES)</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>🚛 Equipment Vendors & Dealers</td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:110px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><select style='padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'><option>On track</option><option>Behind</option><option>Ahead</option><option>Not started</option></select></td></tr><tr><td>🏭 Industry Associations & Chambers</td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:110px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><select style='padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'><option>On track</option><option>Behind</option><option>Ahead</option><option>Not started</option></select></td></tr><tr><td>🔧 Service & Maintenance Centers</td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:110px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><select style='padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'><option>On track</option><option>Behind</option><option>Ahead</option><option>Not started</option></select></td></tr><tr><td>🏦 Bank & SACCO SME Desks</td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:110px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><select style='padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'><option>On track</option><option>Behind</option><option>Ahead</option><option>Not started</option></select></td></tr><tr><td>🌾 Sector-Specific Campaigns</td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:110px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><select style='padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'><option>On track</option><option>Behind</option><option>Ahead</option><option>Not started</option></select></td></tr><tr><td>📱 Digital & Social Channels</td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:70px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><input type='number' style='width:110px;padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'></td><td><select style='padding:4px 7px;border:1px solid var(--border);border-radius:4px;font-size:.78rem'><option>On track</option><option>Behind</option><option>Ahead</option><option>Not started</option></select></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<button class="btn-primary" onclick="window.print()">🖨 Print Channel Map</button>
+</div>
+<div class="ftr">Velocity Global Leasing &nbsp;|&nbsp; Africa's Leasing Intelligence Platform &nbsp;|&nbsp; Dr. Roselyn Mwaura &nbsp;|&nbsp; www.velocitygloballeasing.com</div>
+</body></html>

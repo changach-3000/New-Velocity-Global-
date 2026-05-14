@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VGL Tool 4 — IFRS 16 & Tax Compliance Checklist</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#003366;--navy2:#002244;--gold:#C9A84C;--gold2:#e8c96a;--gold-pale:#FFF8E7;--white:#fff;--off:#F7F9FC;--grey:#6B7280;--dark:#1A1A2E;--green:#1A7A4a;--red:#8B1A1A;--amber:#92400E;--border:#E5E7EB;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--dark);min-height:100vh;}
+.hdr{background:var(--navy);position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;top:0;right:0;width:260px;height:100%;background:var(--navy2);clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);}
+.hdr-inner{max-width:1080px;margin:0 auto;padding:22px 36px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2;}
+.hdr-badge{width:5px;height:46px;background:var(--gold);border-radius:3px;margin-right:14px;flex-shrink:0;}
+.hdr-left{display:flex;align-items:center;}
+.hdr-tool{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#fff;line-height:1.1;}
+.hdr-right{text-align:right;}
+.hdr-brand{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:var(--gold);}
+.hdr-tag{font-size:.65rem;color:rgba(255,255,255,.45);font-style:italic;margin-top:2px;}
+.gold-bar{height:4px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));}
+.main{max-width:1080px;margin:0 auto;padding:32px 36px 60px;}
+.card{background:#fff;border-radius:8px;border:1px solid var(--border);padding:26px 30px;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,51,102,.05);}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.card-desc{font-size:.8rem;color:var(--grey);margin-bottom:20px;font-style:italic;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:.7rem;font-weight:600;color:var(--grey);letter-spacing:.05em;text-transform:uppercase;}
+.field label span{color:var(--gold);font-size:.65rem;text-transform:none;letter-spacing:0;font-weight:400;}
+.field input,.field select,.field textarea{padding:10px 13px;border:1.5px solid var(--border);border-radius:6px;font-size:.88rem;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;transition:border-color .2s,box-shadow .2s;outline:none;resize:vertical;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+.field input::placeholder,.field textarea::placeholder{color:#aaa;font-style:italic;}
+.toggle-grp{display:flex;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;}
+.toggle-grp input[type=radio]{display:none;}
+.toggle-grp label{flex:1;text-align:center;padding:9px;cursor:pointer;font-size:.8rem;font-weight:500;color:var(--grey);background:#fff;transition:all .2s;text-transform:none;letter-spacing:0;}
+.toggle-grp input[type=radio]:checked+label{background:var(--navy);color:var(--gold);font-weight:600;}
+.toggle-grp label:hover{background:var(--off);}
+.btn-primary{width:100%;padding:15px 28px;background:var(--navy);color:var(--gold);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:all .2s;margin-top:6px;}
+.btn-primary:hover{background:var(--navy2);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,51,102,.22);}
+.btn-secondary{width:100%;padding:11px;background:transparent;color:var(--grey);border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s;margin-top:9px;}
+.btn-secondary:hover{color:var(--dark);border-color:var(--grey);}
+.results{display:none;animation:fadeUp .4s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.res-hdr{background:var(--navy);border-radius:10px 10px 0 0;padding:20px 28px;display:flex;align-items:center;gap:12px;}
+.res-hdr-icon{width:40px;height:40px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.res-hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:#fff;}
+.res-hdr-sub{font-size:.7rem;color:rgba(255,255,255,.55);margin-top:2px;font-style:italic;}
+.res-body{background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:26px 30px;box-shadow:0 4px 18px rgba(0,51,102,.07);}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.kpi{background:var(--off);border-radius:7px;padding:14px 16px;border-left:4px solid var(--gold);}
+.kpi.hi{background:var(--navy);border-left-color:var(--gold);}
+.kpi-lbl{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:5px;}
+.kpi.hi .kpi-lbl{color:rgba(255,255,255,.55);}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;color:var(--navy);line-height:1;}
+.kpi.hi .kpi-val{color:var(--gold);}
+.kpi-sub{font-size:.65rem;color:var(--grey);margin-top:3px;}
+.kpi.hi .kpi-sub{color:rgba(255,255,255,.45);}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:var(--navy);margin:22px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--gold-pale);display:flex;align-items:center;gap:7px;}
+.sec-title::before{content:'';display:block;width:4px;height:16px;background:var(--gold);border-radius:2px;}
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;background:var(--off);border-radius:5px;font-size:.8rem;}
+.sum-lbl{color:var(--grey);}
+.sum-val{font-weight:600;color:var(--navy);}
+.verdict{border-radius:8px;padding:16px 20px;margin-top:18px;display:flex;align-items:flex-start;gap:12px;}
+.verdict.good{background:#e8f5ee;border-left:5px solid var(--green);}
+.verdict.warn{background:#FFF3E0;border-left:5px solid #d4790a;}
+.verdict.bad{background:#FDF0F0;border-left:5px solid var(--red);}
+.verdict-icon{font-size:1.4rem;flex-shrink:0;margin-top:1px;}
+.verdict-title{font-weight:700;font-size:.9rem;margin-bottom:3px;}
+.verdict.good .verdict-title{color:var(--green);}
+.verdict.warn .verdict-title{color:var(--amber);}
+.verdict.bad .verdict-title{color:var(--red);}
+.verdict-body{font-size:.8rem;color:var(--grey);line-height:1.6;}
+.tbl-wrap{overflow-x:auto;margin-bottom:22px;}
+table{width:100%;border-collapse:collapse;font-size:.8rem;}
+thead th{background:var(--navy);color:var(--gold);padding:9px 13px;text-align:right;font-weight:600;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;}
+thead th:first-child{text-align:left;}
+tbody tr:nth-child(even){background:var(--off);}
+tbody tr:hover{background:var(--gold-pale);}
+tbody td{padding:8px 13px;text-align:right;color:var(--grey);border-bottom:1px solid var(--border);}
+tbody td:first-child{text-align:left;font-weight:600;color:var(--navy);}
+tfoot td{padding:9px 13px;text-align:right;background:var(--navy);color:var(--gold);font-weight:700;font-size:.78rem;}
+tfoot td:first-child{text-align:left;}
+.btn-print{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:transparent;border:1.5px solid var(--gold);color:var(--gold);border-radius:6px;font-size:.75rem;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;transition:all .2s;margin-top:18px;}
+.btn-print:hover{background:var(--gold);color:var(--navy);}
+.ftr{text-align:center;padding:22px;font-size:.68rem;color:var(--grey);border-top:1px solid var(--border);margin-top:36px;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:6px;margin-bottom:6px;cursor:pointer;transition:background .15s;}
+.check-item:hover{background:var(--gold-pale);}
+.check-item input[type=checkbox]{width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--navy);}
+.check-item .ci-label{font-size:.85rem;font-weight:600;color:var(--navy);}
+.check-item .ci-desc{font-size:.75rem;color:var(--grey);margin-top:2px;}
+.section-hdr{background:var(--navy);color:var(--gold);padding:8px 14px;border-radius:5px;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:18px 0 8px;}
+.progress-bar{width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:8px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--gold));border-radius:4px;transition:width .4s ease;}
+.score-display{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--navy);text-align:center;}
+.score-label{font-size:.75rem;color:var(--grey);text-align:center;margin-top:4px;}
+.tag{display:inline-block;padding:3px 9px;border-radius:12px;font-size:.68rem;font-weight:700;margin:2px;}
+.tag.green{background:#e8f5ee;color:var(--green);}
+.tag.amber{background:#FFF3E0;color:var(--amber);}
+.tag.red{background:#FDF0F0;color:var(--red);}
+@media(max-width:768px){.main{padding:18px 16px 40px;}.grid2,.grid3{grid-template-columns:1fr;}.kpi-row{grid-template-columns:1fr 1fr;}.hdr-inner{flex-direction:column;gap:10px;}.sum-grid{grid-template-columns:1fr;}}
+@media print{.btn-primary,.btn-secondary,.btn-print{display:none;}body{background:#fff;}.card{box-shadow:none;}}
+</style></head><body>
+<div class="hdr"><div class="hdr-inner"><div class="hdr-left"><div class="hdr-badge"></div><div><div class="hdr-tool">VGL Tool 04 of 8</div><div class="hdr-title">IFRS 16 & Tax Compliance Checklist</div></div></div><div class="hdr-right"><div class="hdr-brand">Velocity Global Leasing</div><div class="hdr-tag">Africa's Leasing Intelligence Platform</div></div></div></div><div class="gold-bar"></div>
+<div class="main">
+<div style="background:var(--navy);border-radius:8px;padding:16px 22px;margin-bottom:22px">
+  <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:6px">Why This Checklist Matters</div>
+  <div style="font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.6">IFRS 16 (effective 1 January 2019) fundamentally changed how leases are recognised on financial statements. A commercially sound deal that is incorrectly classified or poorly documented can create accounting errors, tax penalties, and regulatory risk. This checklist ensures every transaction is commercially sound, properly classified, correctly measured, and fully compliant.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span>Transaction Information</span></div>
+  <div class="grid3">
+    <div class="field"><label>Transaction Reference</label><input type="text" id="d_ref" placeholder="Deal or contract reference"></div>
+    <div class="field"><label>Lessee / Customer</label><input type="text" id="d_lessee" placeholder="Company name"></div>
+    <div class="field"><label>Assessment Date</label><input type="date" id="d_date"></div>
+  </div>
+  <div class="grid3" style="margin-top:14px">
+    <div class="field"><label>Asset Description</label><input type="text" id="d_asset" placeholder="e.g. Medical Imaging Equipment"></div>
+    <div class="field"><label>Lease Classification</label><select id="d_class"><option value="">Not yet determined</option><option value="finance">Finance Lease</option><option value="operating">Operating Lease</option><option value="exempt_st">Exempt — Short-term</option><option value="exempt_lv">Exempt — Low-value</option></select></div>
+    <div class="field"><label>Accounting Standard</label><select id="d_std"><option value="ifrs16">IFRS 16</option><option value="ias17">IAS 17 (legacy)</option></select></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span>Compliance Progress</span></div>
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:10px">
+    <div style="flex:1">
+      <div class="progress-bar"><div class="progress-fill" id="d_prog" style="width:0%"></div></div>
+      <div style="font-size:.72rem;color:var(--grey);margin-top:4px"><span id="d_count">0</span> of 30 compliance checks completed</div>
+    </div>
+    <div style="text-align:center">
+      <div class="score-display" id="d_score">0%</div>
+      <div class="score-label">Compliance Score</div>
+    </div>
+    <div id="d_tag" style="min-width:100px;text-align:center"></div>
+  </div>
+  <div id="d_msg" style="font-size:.8rem;color:var(--grey);font-style:italic;padding:8px 12px;background:var(--off);border-radius:5px">Complete the checklist to generate a compliance score.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span>IFRS 16 & Tax Compliance Checklist</span></div>
+  <p class="card-desc">Work through each step in sequence. Each check must be confirmed before the transaction is considered compliant for financial reporting.</p>
+  <div class="section-hdr">Step 1: Lease Identification</div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Contract identifies asset</div><div class="ci-desc">The contract identifies a specific asset that the customer controls the use of throughout the lease period.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Right to obtain substantially all economic benefits</div><div class="ci-desc">The lessee has the right to obtain substantially all the economic benefits from use of the asset.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Right to direct use of asset</div><div class="ci-desc">The lessee has the right to direct how and for what purpose the asset is used throughout the period of use.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Low-value asset exemption assessed</div><div class="ci-desc">Asset value has been assessed against the low-value threshold (generally USD 5,000) — exemption applied where applicable.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Short-term lease exemption assessed</div><div class="ci-desc">Lease term has been assessed — short-term exemption (12 months or less) applied where applicable.</div></div></div><div class="section-hdr">Step 2: Lease Classification</div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Finance vs. operating determined</div><div class="ci-desc">Lease has been classified as finance or operating based on substance over form principles.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Ownership transfer assessed</div><div class="ci-desc">Whether ownership of the asset transfers to the lessee at end of lease has been assessed.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Purchase option assessed</div><div class="ci-desc">The existence of a bargain purchase option (BPO) has been assessed and documented.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Lease term vs. useful life assessed</div><div class="ci-desc">Lease term as a proportion of the asset's useful economic life has been calculated and documented.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Present value test applied</div><div class="ci-desc">Present value of lease payments as a proportion of fair value of the asset has been calculated.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Specialised nature assessed</div><div class="ci-desc">Whether the asset is so specialised that only the lessee can use it has been considered.</div></div></div><div class="section-hdr">Step 3: Initial Measurement (Lessee)</div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Lease liability calculated</div><div class="ci-desc">Lease liability at commencement date has been calculated as the present value of future lease payments.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Discount rate determined</div><div class="ci-desc">The implicit rate in the lease (or incremental borrowing rate if implicit rate not available) has been determined.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Right-of-Use asset recognised</div><div class="ci-desc">Right-of-Use (ROU) asset has been recognised equal to the lease liability plus initial direct costs and prepayments.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Initial direct costs capitalised</div><div class="ci-desc">Initial direct costs (legal fees, arrangement fees) have been capitalised into the ROU asset.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Lease incentives deducted</div><div class="ci-desc">Any lease incentives received have been deducted from the ROU asset measurement.</div></div></div><div class="section-hdr">Step 4: Subsequent Measurement</div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Effective interest method applied</div><div class="ci-desc">Lease liability interest is unwound using the effective interest method at the determined discount rate.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">ROU asset depreciation policy set</div><div class="ci-desc">ROU asset depreciation policy has been set — straight-line over shorter of lease term or useful life.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Remeasurement triggers identified</div><div class="ci-desc">Events that would require remeasurement (lease modifications, variable payment changes) have been identified.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Variable lease payments classified</div><div class="ci-desc">Variable payments have been classified as lease vs. non-lease components and accounted for appropriately.</div></div></div><div class="section-hdr">Step 5: Lessor Accounting</div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Finance lease receivable recognised</div><div class="ci-desc">For finance leases: net investment in lease recognised as a receivable at commencement.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Operating lease asset retained</div><div class="ci-desc">For operating leases: asset retained on lessor balance sheet and depreciated per normal policy.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Finance income recognised</div><div class="ci-desc">Finance income is recognised over lease term using effective interest method.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Derecognition of asset (finance lease)</div><div class="ci-desc">For finance leases: asset is derecognised from lessor balance sheet at commencement.</div></div></div><div class="section-hdr">Step 6: Kenyan Tax Compliance</div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">KRA deductibility assessed</div><div class="ci-desc">Deductibility of lease payments for income tax purposes has been assessed under Kenyan tax law.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Capital allowances reviewed</div><div class="ci-desc">Where asset is retained by lessor (operating lease), capital allowances for the lessor have been reviewed.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">VAT treatment confirmed</div><div class="ci-desc">VAT treatment of lease rentals has been confirmed — standard rate (16%) applies to most equipment leases.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Withholding tax assessed</div><div class="ci-desc">Where applicable (international lessors), withholding tax obligations have been assessed and complied with.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">Transfer pricing assessment</div><div class="ci-desc">Where the lease is between related parties, transfer pricing rules have been considered.</div></div></div><div class="check-item" onclick="tog4(this)"><input type="checkbox" onchange="score4()"><div><div class="ci-label">IFRS 16 disclosure prepared</div><div class="ci-desc">Required IFRS 16 disclosures have been prepared for inclusion in financial statements.</div></div></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span>Compliance Notes</span></div>
+  <div class="field"><label>Outstanding Items / Actions Required</label><textarea id="d_notes" rows="4" placeholder="Document any outstanding compliance items, legal opinions required, or actions assigned..."></textarea></div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="field"><label>Reviewed By</label><input type="text" id="d_by" placeholder="Name and designation"></div>
+    <div class="field"><label>Compliance Status</label><select id="d_status"><option value="">Select status</option><option value="compliant">Fully Compliant</option><option value="conditional">Compliant — conditions pending</option><option value="non_compliant">Non-Compliant — action required</option></select></div>
+  </div>
+</div>
+
+<button class="btn-primary" onclick="window.print()">🖨 Generate Compliance Report</button>
+<button class="btn-secondary" onclick="clearAll4()">Clear All</button>
+</div>
+<div class="ftr">Velocity Global Leasing &nbsp;|&nbsp; Africa's Leasing Intelligence Platform &nbsp;|&nbsp; Dr. Roselyn Mwaura &nbsp;|&nbsp; www.velocitygloballeasing.com<br><span style="color:#bbb;font-style:italic">For professional development and educational use.</span></div>
+<script>
+var total4=30;
+function tog4(el){var cb=el.querySelector('input');cb.checked=!cb.checked;score4();}
+function score4(){
+  var done=document.querySelectorAll('#d_prog').length>0?document.querySelectorAll('.check-item input:checked').length:0;
+  done=document.querySelectorAll('.check-item input:checked').length;
+  var pct=Math.round((done/total4)*100);
+  document.getElementById('d_prog').style.width=pct+'%';
+  document.getElementById('d_count').textContent=done;
+  document.getElementById('d_score').textContent=pct+'%';
+  var tag=document.getElementById('d_tag');
+  var msg=document.getElementById('d_msg');
+  if(pct<50){tag.innerHTML='<span class="tag red">NON-COMPLIANT</span>';msg.textContent='Critical compliance gaps. Do not process transaction until material items are resolved.';}
+  else if(pct<80){tag.innerHTML='<span class="tag amber">PARTIAL</span>';msg.textContent='Partial compliance. Review unchecked items — some may be material to financial statement accuracy.';}
+  else if(pct<95){tag.innerHTML='<span class="tag amber">NEAR COMPLIANT</span>';msg.textContent='Good compliance posture. Address remaining items before finalising financial reporting.';}
+  else{tag.innerHTML='<span class="tag green">COMPLIANT</span>';msg.textContent='Strong compliance. Transaction is well-documented and properly accounted for under IFRS 16.';}
+}
+function clearAll4(){document.querySelectorAll('.check-item input').forEach(function(c){c.checked=false;});score4();}
+document.getElementById('d_date').value=new Date().toISOString().slice(0,10);
+</script></body></html>

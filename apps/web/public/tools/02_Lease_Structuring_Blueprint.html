@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VGL Tool 2 — Lease Structuring Blueprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#003366;--navy2:#002244;--gold:#C9A84C;--gold2:#e8c96a;--gold-pale:#FFF8E7;--white:#fff;--off:#F7F9FC;--grey:#6B7280;--dark:#1A1A2E;--green:#1A7A4a;--red:#8B1A1A;--amber:#92400E;--border:#E5E7EB;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--dark);min-height:100vh;}
+.hdr{background:var(--navy);position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;top:0;right:0;width:260px;height:100%;background:var(--navy2);clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);}
+.hdr-inner{max-width:1080px;margin:0 auto;padding:22px 36px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2;}
+.hdr-badge{width:5px;height:46px;background:var(--gold);border-radius:3px;margin-right:14px;flex-shrink:0;}
+.hdr-left{display:flex;align-items:center;}
+.hdr-tool{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#fff;line-height:1.1;}
+.hdr-right{text-align:right;}
+.hdr-brand{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:var(--gold);}
+.hdr-tag{font-size:.65rem;color:rgba(255,255,255,.45);font-style:italic;margin-top:2px;}
+.gold-bar{height:4px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));}
+.main{max-width:1080px;margin:0 auto;padding:32px 36px 60px;}
+.card{background:#fff;border-radius:8px;border:1px solid var(--border);padding:26px 30px;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,51,102,.05);}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.card-desc{font-size:.8rem;color:var(--grey);margin-bottom:20px;font-style:italic;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:.7rem;font-weight:600;color:var(--grey);letter-spacing:.05em;text-transform:uppercase;}
+.field label span{color:var(--gold);font-size:.65rem;text-transform:none;letter-spacing:0;font-weight:400;}
+.field input,.field select,.field textarea{padding:10px 13px;border:1.5px solid var(--border);border-radius:6px;font-size:.88rem;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;transition:border-color .2s,box-shadow .2s;outline:none;resize:vertical;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+.field input::placeholder,.field textarea::placeholder{color:#aaa;font-style:italic;}
+.toggle-grp{display:flex;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;}
+.toggle-grp input[type=radio]{display:none;}
+.toggle-grp label{flex:1;text-align:center;padding:9px;cursor:pointer;font-size:.8rem;font-weight:500;color:var(--grey);background:#fff;transition:all .2s;text-transform:none;letter-spacing:0;}
+.toggle-grp input[type=radio]:checked+label{background:var(--navy);color:var(--gold);font-weight:600;}
+.toggle-grp label:hover{background:var(--off);}
+.btn-primary{width:100%;padding:15px 28px;background:var(--navy);color:var(--gold);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:all .2s;margin-top:6px;}
+.btn-primary:hover{background:var(--navy2);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,51,102,.22);}
+.btn-secondary{width:100%;padding:11px;background:transparent;color:var(--grey);border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s;margin-top:9px;}
+.btn-secondary:hover{color:var(--dark);border-color:var(--grey);}
+.results{display:none;animation:fadeUp .4s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.res-hdr{background:var(--navy);border-radius:10px 10px 0 0;padding:20px 28px;display:flex;align-items:center;gap:12px;}
+.res-hdr-icon{width:40px;height:40px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.res-hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:#fff;}
+.res-hdr-sub{font-size:.7rem;color:rgba(255,255,255,.55);margin-top:2px;font-style:italic;}
+.res-body{background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:26px 30px;box-shadow:0 4px 18px rgba(0,51,102,.07);}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.kpi{background:var(--off);border-radius:7px;padding:14px 16px;border-left:4px solid var(--gold);}
+.kpi.hi{background:var(--navy);border-left-color:var(--gold);}
+.kpi-lbl{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:5px;}
+.kpi.hi .kpi-lbl{color:rgba(255,255,255,.55);}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;color:var(--navy);line-height:1;}
+.kpi.hi .kpi-val{color:var(--gold);}
+.kpi-sub{font-size:.65rem;color:var(--grey);margin-top:3px;}
+.kpi.hi .kpi-sub{color:rgba(255,255,255,.45);}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:var(--navy);margin:22px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--gold-pale);display:flex;align-items:center;gap:7px;}
+.sec-title::before{content:'';display:block;width:4px;height:16px;background:var(--gold);border-radius:2px;}
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;background:var(--off);border-radius:5px;font-size:.8rem;}
+.sum-lbl{color:var(--grey);}
+.sum-val{font-weight:600;color:var(--navy);}
+.verdict{border-radius:8px;padding:16px 20px;margin-top:18px;display:flex;align-items:flex-start;gap:12px;}
+.verdict.good{background:#e8f5ee;border-left:5px solid var(--green);}
+.verdict.warn{background:#FFF3E0;border-left:5px solid #d4790a;}
+.verdict.bad{background:#FDF0F0;border-left:5px solid var(--red);}
+.verdict-icon{font-size:1.4rem;flex-shrink:0;margin-top:1px;}
+.verdict-title{font-weight:700;font-size:.9rem;margin-bottom:3px;}
+.verdict.good .verdict-title{color:var(--green);}
+.verdict.warn .verdict-title{color:var(--amber);}
+.verdict.bad .verdict-title{color:var(--red);}
+.verdict-body{font-size:.8rem;color:var(--grey);line-height:1.6;}
+.tbl-wrap{overflow-x:auto;margin-bottom:22px;}
+table{width:100%;border-collapse:collapse;font-size:.8rem;}
+thead th{background:var(--navy);color:var(--gold);padding:9px 13px;text-align:right;font-weight:600;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;}
+thead th:first-child{text-align:left;}
+tbody tr:nth-child(even){background:var(--off);}
+tbody tr:hover{background:var(--gold-pale);}
+tbody td{padding:8px 13px;text-align:right;color:var(--grey);border-bottom:1px solid var(--border);}
+tbody td:first-child{text-align:left;font-weight:600;color:var(--navy);}
+tfoot td{padding:9px 13px;text-align:right;background:var(--navy);color:var(--gold);font-weight:700;font-size:.78rem;}
+tfoot td:first-child{text-align:left;}
+.btn-print{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:transparent;border:1.5px solid var(--gold);color:var(--gold);border-radius:6px;font-size:.75rem;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;transition:all .2s;margin-top:18px;}
+.btn-print:hover{background:var(--gold);color:var(--navy);}
+.ftr{text-align:center;padding:22px;font-size:.68rem;color:var(--grey);border-top:1px solid var(--border);margin-top:36px;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:6px;margin-bottom:6px;cursor:pointer;transition:background .15s;}
+.check-item:hover{background:var(--gold-pale);}
+.check-item input[type=checkbox]{width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--navy);}
+.check-item .ci-label{font-size:.85rem;font-weight:600;color:var(--navy);}
+.check-item .ci-desc{font-size:.75rem;color:var(--grey);margin-top:2px;}
+.section-hdr{background:var(--navy);color:var(--gold);padding:8px 14px;border-radius:5px;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:18px 0 8px;}
+.progress-bar{width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:8px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--gold));border-radius:4px;transition:width .4s ease;}
+.score-display{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--navy);text-align:center;}
+.score-label{font-size:.75rem;color:var(--grey);text-align:center;margin-top:4px;}
+.tag{display:inline-block;padding:3px 9px;border-radius:12px;font-size:.68rem;font-weight:700;margin:2px;}
+.tag.green{background:#e8f5ee;color:var(--green);}
+.tag.amber{background:#FFF3E0;color:var(--amber);}
+.tag.red{background:#FDF0F0;color:var(--red);}
+@media(max-width:768px){.main{padding:18px 16px 40px;}.grid2,.grid3{grid-template-columns:1fr;}.kpi-row{grid-template-columns:1fr 1fr;}.hdr-inner{flex-direction:column;gap:10px;}.sum-grid{grid-template-columns:1fr;}}
+@media print{.btn-primary,.btn-secondary,.btn-print{display:none;}body{background:#fff;}.card{box-shadow:none;}}
+</style></head><body>
+<div class="hdr"><div class="hdr-inner"><div class="hdr-left"><div class="hdr-badge"></div><div><div class="hdr-tool">VGL Tool 02 of 8</div><div class="hdr-title">Lease Structuring Blueprint</div></div></div><div class="hdr-right"><div class="hdr-brand">Velocity Global Leasing</div><div class="hdr-tag">Africa's Leasing Intelligence Platform</div></div></div></div><div class="gold-bar"></div>
+<div class="main">
+<div class="card">
+  <div class="card-title"><span>1</span> Asset & Customer Profile</div>
+  <p class="card-desc">Start with the asset and lessee — the structure flows from these fundamentals</p>
+  <div class="grid3" style="margin-bottom:16px">
+    <div class="field"><label>Asset Type / Description</label><input type="text" id="b_asset" placeholder="e.g. Construction Excavator"></div>
+    <div class="field"><label>Asset Cost (KES)</label><input type="number" id="b_cost" placeholder="e.g. 12000000"></div>
+    <div class="field"><label>Asset Useful Life (months)</label><input type="number" id="b_life" placeholder="e.g. 84" value="60"></div>
+  </div>
+  <div class="grid3">
+    <div class="field"><label>Customer Sector</label><select id="b_sector"><option value="logistics">Logistics / Transport</option><option value="agri">Agriculture</option><option value="construction">Construction</option><option value="health">Healthcare</option><option value="manufacturing">Manufacturing</option><option value="other">Other</option></select></div>
+    <div class="field"><label>Customer Monthly Revenue (KES)</label><input type="number" id="b_rev" placeholder="e.g. 850000"></div>
+    <div class="field"><label>Payment Cycle</label><select id="b_cycle"><option value="monthly">Monthly — stable cash flow</option><option value="seasonal">Seasonal — agri / project</option><option value="quarterly">Quarterly — corporate</option></select></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title"><span>2</span> Structuring Parameters</div>
+  <p class="card-desc">Define the lease variables — the tool will recommend optimal ranges</p>
+  <div class="grid3" style="margin-bottom:16px">
+    <div class="field"><label>Proposed Lease Term (months)</label><select id="b_term"><option value="12">12</option><option value="24">24</option><option value="36" selected>36</option><option value="48">48</option><option value="60">60</option><option value="72">72</option></select></div>
+    <div class="field"><label>Annual Lease Rate (%)</label><input type="number" id="b_rate" placeholder="e.g. 18" step="0.1"></div>
+    <div class="field"><label>Deposit / Advance Rentals</label><select id="b_adv"><option value="0">0 advance</option><option value="1">1 rental advance</option><option value="2" selected>2 rentals advance</option><option value="3">3 rentals advance</option></select></div>
+  </div>
+  <div class="grid3">
+    <div class="field"><label>Residual Value (%  of cost)</label><input type="number" id="b_resid_pct" placeholder="e.g. 15" step="1" value="10" min="0" max="50"></div>
+    <div class="field"><label>End-of-Term Option</label><select id="b_eot"><option value="purchase">Purchase at residual</option><option value="return">Return asset</option><option value="extend">Extend lease</option></select></div>
+    <div class="field"><label>Insurance Embedded?</label><div class="toggle-grp"><input type="radio" name="b_ins" id="b_ins_y" value="yes"><label for="b_ins_y">Yes</label><input type="radio" name="b_ins" id="b_ins_n" value="no" checked><label for="b_ins_n">No</label></div></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title"><span>3</span> Maintenance & Risk Allocation</div>
+  <p class="card-desc">Define who bears maintenance and how the asset is protected</p>
+  <div class="grid3">
+    <div class="field"><label>Maintenance Responsibility</label><select id="b_maint"><option value="lessee">Lessee — full responsibility</option><option value="lessor">Lessor — included in rental</option><option value="split">Split — scheduled vs breakdown</option></select></div>
+    <div class="field"><label>Est. Monthly Maintenance (KES)</label><input type="number" id="b_maint_cost" placeholder="e.g. 45000" value="0"></div>
+    <div class="field"><label>Asset Tracking / GPS?</label><div class="toggle-grp"><input type="radio" name="b_gps" id="b_gps_y" value="yes"><label for="b_gps_y">Yes</label><input type="radio" name="b_gps" id="b_gps_n" value="no" checked><label for="b_gps_n">No</label></div></div>
+  </div>
+</div>
+<button class="btn-primary" onclick="structure()">&#9654;&#160;&#160;Generate Structuring Blueprint</button>
+<button class="btn-secondary" onclick="location.reload()">Reset</button>
+
+<div class="results" id="b_results" style="margin-top:28px">
+  <div class="res-hdr"><div class="res-hdr-icon">🏗</div><div><div class="res-hdr-title" id="b_rtitle">Blueprint</div><div class="res-hdr-sub">VGL Lease Structuring Blueprint</div></div></div>
+  <div class="res-body" id="b_rbody"></div>
+</div>
+</div>
+<div class="ftr">Velocity Global Leasing &nbsp;|&nbsp; Africa's Leasing Intelligence Platform &nbsp;|&nbsp; Dr. Roselyn Mwaura &nbsp;|&nbsp; www.velocitygloballeasing.com<br><span style="color:#bbb;font-style:italic">For professional development and educational use. Validate with a qualified leasing advisor.</span></div>
+<script>
+function structure(){
+  var asset=document.getElementById('b_asset').value.trim()||'Asset';
+  var cost=parseFloat(document.getElementById('b_cost').value);
+  var life=parseInt(document.getElementById('b_life').value)||60;
+  var sector=document.getElementById('b_sector').value;
+  var rev=parseFloat(document.getElementById('b_rev').value)||0;
+  var cycle=document.getElementById('b_cycle').value;
+  var term=parseInt(document.getElementById('b_term').value);
+  var rate=parseFloat(document.getElementById('b_rate').value);
+  var adv=parseInt(document.getElementById('b_adv').value)||0;
+  var residPct=parseFloat(document.getElementById('b_resid_pct').value)||10;
+  var eot=document.getElementById('b_eot').value;
+  var ins=document.querySelector('input[name="b_ins"]:checked').value;
+  var maint=document.getElementById('b_maint').value;
+  var maintCost=parseFloat(document.getElementById('b_maint_cost').value)||0;
+  var gps=document.querySelector('input[name="b_gps"]:checked').value;
+  if(isNaN(cost)||cost<=0){alert('Enter Asset Cost.');return;}
+  if(isNaN(rate)||rate<=0){alert('Enter Lease Rate.');return;}
+  var resid=cost*(residPct/100);
+  var r=(rate/100)/12;
+  var np=term;
+  var pw=Math.pow(1+r,np);
+  var rental=(cost*(1-residPct/100)*r*pw)/(pw-1);
+  if(adv>0){var pvA=(cost-(cost*(1-residPct/100))*(adv/np));rental=(pvA*r*pw-resid*r)/(pw-1);}
+  var totPay=rental*np+resid;
+  var dsr=rev>0?rental/rev*100:null;
+  var payStr=cycle==='seasonal'?'Seasonal (6 payments/year, aligned to harvest/project cycles)':cycle==='quarterly'?'Quarterly (every 3 months)':'Monthly';
+  var termFlag=term>life?'⚠️ Proposed term exceeds asset useful life. Recommend max '+life+' months.':'✅ Term is within asset useful life.';
+  var dsrStr=dsr?p(dsr)+' of monthly revenue':'Revenue not entered — cannot assess';
+  var dsrFlag=dsr&&dsr>40?'⚠️ Debt service ratio above 40% — review affordability':'✅ Debt service ratio within acceptable range';
+  document.getElementById('b_rtitle').textContent='Blueprint: '+asset;
+  var html='<div class="sum-grid">';
+  var items=[['Asset',asset],['Asset Cost','KES '+cost.toLocaleString()],['Lease Term',term+' months'],['Annual Rate',p(rate)],['Monthly Rental','KES '+Math.round(rental).toLocaleString()],['Residual Value','KES '+Math.round(resid).toLocaleString()+' ('+residPct+'%)'],['Total Payments','KES '+Math.round(totPay).toLocaleString()],['Advance Rentals',adv+' rental'+(adv!==1?'s':'')],['End-of-Term',eot.charAt(0).toUpperCase()+eot.slice(1)],['Insurance',ins==='yes'?'Embedded in rental':'Separate — lessee arranges'],['Maintenance',maint==='lessee'?'Full lessee responsibility':maint==='lessor'?'Included in rental':'Split arrangement'],['GPS Tracking',gps==='yes'?'Yes — required':'Not required'],['Payment Structure',payStr]];
+  items.forEach(function(it){html+='<div class="sum-row"><span class="sum-lbl">'+it[0]+'</span><span class="sum-val">'+it[1]+'</span></div>';});
+  html+='</div>';
+  html+='<div class="sec-title">Structuring Alerts</div>';
+  html+='<div style="margin-bottom:8px;padding:10px 14px;border-radius:6px;background:var(--off);font-size:.82rem">'+termFlag+'</div>';
+  html+='<div style="margin-bottom:8px;padding:10px 14px;border-radius:6px;background:var(--off);font-size:.82rem">Debt Service Ratio: <strong>'+dsrStr+'</strong><br>'+dsrFlag+'</div>';
+  if(maintCost>0){html+='<div style="margin-bottom:8px;padding:10px 14px;border-radius:6px;background:var(--off);font-size:.82rem">Maintenance Cost: <strong>KES '+Math.round(maintCost).toLocaleString()+'/month</strong> — '+(maint==='lessee'?'Borne by lessee. Ensure lessee is aware of total operating cost: KES '+Math.round(rental+maintCost).toLocaleString()+'/month including maintenance.':'Embedded in lessor rental pricing.')+'</div>';}
+  html+='<div class="sec-title">Sector-Specific Notes</div>';
+  var sectorNotes={logistics:'Logistics assets: verify route contracts, fuel costs, and driver availability. Recommend GPS tracking. Align rental with route revenue.',agri:'Agriculture: consider seasonal payment structures aligned to crop cycles. Assess irrigation, power supply, and seasonal revenue timing.',construction:'Construction: assess project pipeline and contract duration. Ensure term does not exceed project horizon. Monitor utilisation.',health:'Healthcare: assess patient volume and revenue cycle. Verify equipment certification and service contract. IFRS 16 compliance critical for facility finance.',manufacturing:'Manufacturing: assess production capacity utilisation and order book. Ensure asset aligns with production output and working capital cycle.'};
+  html+='<div style="padding:10px 14px;border-radius:6px;background:var(--gold-pale);border-left:4px solid var(--gold);font-size:.82rem;color:var(--navy)">'+((sectorNotes[sector])||'Assess customer business model, revenue predictability, and operating cost structure carefully.')+'</div>';
+  html+='<button class="btn-print" onclick="window.print()">🖨 Print Blueprint</button>';
+  document.getElementById('b_rbody').innerHTML=html;
+  var res=document.getElementById('b_results');res.style.display='block';res.scrollIntoView({behavior:'smooth'});
+}
+function p(n){return isNaN(n)?'—':n.toFixed(2)+'%';}
+</script></body></html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGL Tool 8 - Lease Committee Presentation Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#003366;--navy2:#002244;--gold:#C9A84C;--gold2:#e8c96a;--gold-pale:#FFF8E7;--off:#F7F9FC;--grey:#6B7280;--dark:#1A1A2E;--green:#1A7A4A;--red:#8B1A1A;--amber:#92400E;--border:#E5E7EB;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--dark);min-height:100vh;}
+.hdr{background:var(--navy);position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;top:0;right:0;width:260px;height:100%;background:var(--navy2);clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);}
+.hdr-inner{max-width:1080px;margin:0 auto;padding:22px 36px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2;}
+.hdr-left{display:flex;align-items:center;}
+.hdr-badge{width:5px;height:46px;background:var(--gold);border-radius:3px;margin-right:14px;}
+.hdr-tool{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#fff;}
+.hdr-right{text-align:right;}
+.hdr-brand{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:var(--gold);}
+.hdr-tag{font-size:.65rem;color:rgba(255,255,255,.45);font-style:italic;margin-top:2px;}
+.gold-bar{height:4px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));}
+.main{max-width:1080px;margin:0 auto;padding:32px 36px 60px;}
+.intro{background:var(--navy);border-radius:8px;padding:16px 22px;margin-bottom:22px;}
+.intro-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:6px;}
+.intro-body{font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.6;}
+.card{background:#fff;border-radius:8px;border:1px solid var(--border);padding:26px 30px;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,51,102,.05);}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:0;}
+.f label{font-size:.7rem;font-weight:600;color:var(--grey);letter-spacing:.05em;text-transform:uppercase;}
+.f input,.f select,.f textarea{padding:10px 13px;border:1.5px solid var(--border);border-radius:6px;font-size:.86rem;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;outline:none;transition:border-color .2s;resize:vertical;}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+.f input::placeholder,.f textarea::placeholder{color:#aaa;font-style:italic;}
+.gap{margin-bottom:14px;}
+.btn{width:100%;padding:15px;background:var(--navy);color:var(--gold);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;margin-top:6px;}
+.btn:hover{background:var(--navy2);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,51,102,.22);}
+.btn2{width:100%;padding:11px;background:transparent;color:var(--grey);border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;cursor:pointer;margin-top:9px;}
+#output{display:none;margin-top:28px;}
+.sec{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:var(--navy);margin:20px 0 10px;padding-bottom:7px;border-bottom:2px solid var(--gold-pale);display:flex;align-items:center;gap:7px;}
+.sec::before{content:'';display:block;width:4px;height:16px;background:var(--gold);border-radius:2px;}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.sr{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;background:var(--off);border-radius:5px;font-size:.8rem;}
+.blk{border-left:4px solid var(--gold);padding:12px 16px;background:#fff;border-radius:0 6px 6px 0;margin-bottom:12px;}
+.blk h3{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.tag-g{background:#e8f5ee;color:var(--green);padding:3px 9px;border-radius:12px;font-size:.7rem;font-weight:700;}
+.tag-a{background:#FFF3E0;color:var(--amber);padding:3px 9px;border-radius:12px;font-size:.7rem;font-weight:700;}
+.tag-r{background:#FDF0F0;color:var(--red);padding:3px 9px;border-radius:12px;font-size:.7rem;font-weight:700;}
+.sig-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;}
+.sig{border-top:2px solid var(--border);padding-top:8px;font-size:.72rem;color:var(--grey);}
+.bp{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:transparent;border:1.5px solid var(--gold);color:var(--gold);border-radius:6px;font-size:.75rem;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;margin-top:18px;}
+.bp:hover{background:var(--gold);color:var(--navy);}
+.ftr{text-align:center;padding:22px;font-size:.68rem;color:var(--grey);border-top:1px solid var(--border);margin-top:36px;}
+@media(max-width:768px){.main{padding:18px 16px 40px;}.g2,.g3{grid-template-columns:1fr;}.hdr-inner{flex-direction:column;gap:10px;}.sg,.sig-row{grid-template-columns:1fr;}}
+@media print{.btn,.btn2,.bp,.intro,.card:not(.out-card){display:none;}#output{display:block!important;}body{background:#fff;}}
+</style>
+</head>
+<body>
+
+<div class="hdr"><div class="hdr-inner"><div class="hdr-left"><div class="hdr-badge"></div><div><div class="hdr-tool">VGL Tool 08 of 8</div><div class="hdr-title">Lease Committee Presentation Template</div></div></div><div class="hdr-right"><div class="hdr-brand">Velocity Global Leasing</div><div class="hdr-tag">Africa's Leasing Intelligence Platform</div></div></div></div>
+<div class="gold-bar"></div>
+
+<div class="main">
+<div class="intro">
+  <div class="intro-title">Present Deals Clearly. Win Credit Approval.</div>
+  <div class="intro-body">A well-structured credit paper is the difference between an approval and a deferral. Complete all sections below to generate a professional lease committee presentation that follows the standard structure expected by credit committees, boards, and senior decision-makers.</div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="card">
+  <div class="card-title">1 &mdash; Transaction Overview</div>
+  <div class="g3 gap">
+    <div class="f"><label>Transaction Reference</label><input type="text" id="p_ref" placeholder="e.g. LC-2025-0042"></div>
+    <div class="f"><label>Presentation Date</label><input type="date" id="p_date"></div>
+    <div class="f"><label>Prepared By</label><input type="text" id="p_by" placeholder="Name and designation"></div>
+  </div>
+  <div class="g2 gap">
+    <div class="f"><label>Lessee Name</label><input type="text" id="p_lessee" placeholder="Full company or individual name"></div>
+    <div class="f"><label>Asset Description</label><input type="text" id="p_asset" placeholder="e.g. 3 x Isuzu FVZ 34 Trucks"></div>
+  </div>
+  <div class="g3 gap">
+    <div class="f"><label>Total Asset Value (KES)</label><input type="number" id="p_cost" placeholder="e.g. 18000000" min="0"></div>
+    <div class="f"><label>Lease Term (months)</label><input type="number" id="p_term" placeholder="e.g. 36" min="1"></div>
+    <div class="f"><label>Monthly Rental (KES)</label><input type="number" id="p_rental" placeholder="e.g. 620000" min="0"></div>
+  </div>
+  <div class="g3 gap">
+    <div class="f"><label>Annual Lease Rate (%)</label><input type="number" id="p_rate" placeholder="e.g. 18" step="0.1" min="0"></div>
+    <div class="f"><label>Advance Rentals</label><input type="number" id="p_adv" placeholder="e.g. 2" min="0"></div>
+    <div class="f"><label>Residual Value (KES)</label><input type="number" id="p_resid" placeholder="e.g. 1800000" min="0" value="0"></div>
+  </div>
+  <div class="g2">
+    <div class="f"><label>Lease Classification</label>
+      <select id="p_class">
+        <option value="finance">Finance Lease</option>
+        <option value="operating">Operating Lease</option>
+      </select>
+    </div>
+    <div class="f"><label>Equipment Supplier</label><input type="text" id="p_supplier" placeholder="e.g. CMC Motors Kenya"></div>
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="card">
+  <div class="card-title">2 &mdash; Customer Background</div>
+  <div class="g2 gap">
+    <div class="f"><label>Business Type / Sector</label><input type="text" id="p_sector" placeholder="e.g. Road freight logistics"></div>
+    <div class="f"><label>Years in Operation</label><input type="number" id="p_years" placeholder="e.g. 7" min="0"></div>
+  </div>
+  <div class="g2 gap">
+    <div class="f"><label>Annual Revenue (KES)</label><input type="number" id="p_revenue" placeholder="e.g. 24000000" min="0"></div>
+    <div class="f"><label>Monthly Net Income (KES)</label><input type="number" id="p_income" placeholder="e.g. 950000" min="0"></div>
+  </div>
+  <div class="f gap"><label>Business Description</label><textarea id="p_bizdes" rows="3" placeholder="What does the business do? How long operating? Key contracts, customers, operational footprint..."></textarea></div>
+  <div class="f"><label>Purpose of Asset / Business Case</label><textarea id="p_purpose" rows="3" placeholder="How will this asset be used? What revenue or cost saving does it generate? Why now?"></textarea></div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="card">
+  <div class="card-title">3 &mdash; Risk Assessment Summary</div>
+  <div class="g3 gap">
+    <div class="f"><label>Customer Scorecard Score</label><input type="text" id="p_score" placeholder="e.g. 36 / 45"></div>
+    <div class="f"><label>Debt Service Ratio (%)</label><input type="number" id="p_dsr" placeholder="e.g. 35" step="0.1" min="0"></div>
+    <div class="f"><label>Credit History</label>
+      <select id="p_credit">
+        <option value="clean">Clean &mdash; no adverse history</option>
+        <option value="minor">Minor issue &mdash; resolved</option>
+        <option value="adverse">Adverse history noted</option>
+      </select>
+    </div>
+  </div>
+  <div class="f gap"><label>Key Risks Identified</label><textarea id="p_risks" rows="3" placeholder="Summarise the key risks — customer, asset, market, legal, operational..."></textarea></div>
+  <div class="f"><label>Mitigating Factors</label><textarea id="p_mitigants" rows="3" placeholder="For each risk, describe the mitigant — security, guarantee, insurance, GPS, covenants..."></textarea></div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="card">
+  <div class="card-title">4 &mdash; Security and Conditions</div>
+  <div class="g2 gap">
+    <div class="f"><label>Primary Security</label><input type="text" id="p_sec1" placeholder="e.g. Legal ownership of 3 x Isuzu FVZ trucks"></div>
+    <div class="f"><label>Additional Security</label><input type="text" id="p_sec2" placeholder="e.g. Personal guarantee from director + comprehensive insurance"></div>
+  </div>
+  <div class="f gap"><label>Conditions Precedent to Drawdown</label><textarea id="p_cps" rows="3" placeholder="e.g. 1. Two advance rentals paid&#10;2. Asset insurance confirmed&#10;3. GPS tracker installed&#10;4. Lease agreement executed"></textarea></div>
+  <div class="f"><label>Ongoing Covenants</label><textarea id="p_cov" rows="2" placeholder="e.g. Maintain insurance throughout lease; provide quarterly management accounts; notify lessor of material business changes..."></textarea></div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="card">
+  <div class="card-title">5 &mdash; Recommendation</div>
+  <div class="g2 gap">
+    <div class="f"><label>Recommendation</label>
+      <select id="p_rec">
+        <option value="approve">Recommend Approval &mdash; risks acceptable</option>
+        <option value="conditional">Recommend Conditional Approval</option>
+        <option value="decline">Recommend Decline</option>
+        <option value="defer">Defer &mdash; additional information required</option>
+      </select>
+    </div>
+    <div class="f"><label>Presenting Officer</label><input type="text" id="p_officer" placeholder="Name and designation"></div>
+  </div>
+  <div class="f"><label>Rationale for Recommendation</label><textarea id="p_rationale" rows="3" placeholder="Summarise the key reasons for your recommendation in 3-5 sentences. Balance the risk against the return and the customer's business case..."></textarea></div>
+</div>
+
+<button class="btn" onclick="generatePaper()">&#9654;&#160;&#160;Generate Lease Committee Presentation</button>
+<button class="btn2" onclick="location.reload()">Clear All Fields</button>
+
+<!-- OUTPUT -->
+<div id="output">
+  <div class="out-card card" id="out_content"></div>
+</div>
+
+</div>
+<div class="ftr">Velocity Global Leasing &nbsp;|&nbsp; Africa's Leasing Intelligence Platform &nbsp;|&nbsp; Dr. Roselyn Mwaura &nbsp;|&nbsp; www.velocitygloballeasing.com</div>
+
+<script>
+function fmtKES(n) {
+  if (!n || isNaN(parseFloat(n))) return "Not entered";
+  return "KES " + Math.round(parseFloat(n)).toLocaleString("en-KE");
+}
+function fmtPct(n) {
+  if (!n || isNaN(parseFloat(n))) return "Not entered";
+  return parseFloat(n).toFixed(1) + "%";
+}
+function val(id) {
+  return document.getElementById(id).value || "";
+}
+
+function getCreditLabel(v) {
+  if (v === "clean") return "Clean — no adverse history";
+  if (v === "minor") return "Minor issue — resolved";
+  return "Adverse history noted";
+}
+
+function getRecLabel(v) {
+  if (v === "approve") return "RECOMMEND APPROVAL";
+  if (v === "conditional") return "RECOMMEND CONDITIONAL APPROVAL";
+  if (v === "decline") return "RECOMMEND DECLINE";
+  return "DEFER — ADDITIONAL INFORMATION REQUIRED";
+}
+
+function getRecTag(v) {
+  if (v === "approve") return "<span class='tag-g'>APPROVE</span>";
+  if (v === "conditional") return "<span class='tag-a'>CONDITIONAL</span>";
+  if (v === "decline") return "<span class='tag-r'>DECLINE</span>";
+  return "<span class='tag-a'>DEFER</span>";
+}
+
+function section(title, rows) {
+  var h = "<div class='blk'><h3>" + title + "</h3>";
+  if (typeof rows === "string") {
+    h += "<div style='font-size:.84rem;color:var(--dark);line-height:1.7;white-space:pre-line'>" + (rows || "—") + "</div>";
+  } else {
+    h += "<div class='sg'>";
+    rows.forEach(function(r) {
+      h += "<div class='sr'><span style='color:var(--grey)'>" + r[0] + "</span><span style='font-weight:600;color:var(--navy)'>" + r[1] + "</span></div>";
+    });
+    h += "</div>";
+  }
+  h += "</div>";
+  return h;
+}
+
+function generatePaper() {
+  var ref      = val("p_ref") || "—";
+  var dt       = val("p_date") || new Date().toISOString().slice(0,10);
+  var by       = val("p_by") || "—";
+  var lessee   = val("p_lessee") || "—";
+  var asset    = val("p_asset") || "—";
+  var cost     = val("p_cost");
+  var term     = val("p_term");
+  var rental   = val("p_rental");
+  var rate     = val("p_rate");
+  var adv      = val("p_adv");
+  var resid    = val("p_resid");
+  var cls      = val("p_class");
+  var supplier = val("p_supplier") || "—";
+  var sector   = val("p_sector") || "—";
+  var years    = val("p_years") || "—";
+  var revenue  = val("p_revenue");
+  var income   = val("p_income");
+  var bizdes   = val("p_bizdes") || "—";
+  var purpose  = val("p_purpose") || "—";
+  var score    = val("p_score") || "—";
+  var dsr      = val("p_dsr");
+  var credit   = val("p_credit");
+  var risks    = val("p_risks") || "—";
+  var mitig    = val("p_mitigants") || "—";
+  var sec1     = val("p_sec1") || "—";
+  var sec2     = val("p_sec2") || "—";
+  var cps      = val("p_cps") || "—";
+  var cov      = val("p_cov") || "—";
+  var rec      = val("p_rec");
+  var officer  = val("p_officer") || "—";
+  var rationale= val("p_rationale") || "—";
+  var clsLabel = cls === "finance" ? "Finance Lease" : "Operating Lease";
+
+  var h = "";
+
+  // Title block
+  h += "<div style='background:var(--navy);padding:20px 26px;border-radius:6px;margin-bottom:24px'>";
+  h += "<div style='font-size:.72rem;color:var(--gold);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px'>LEASE CREDIT COMMITTEE PRESENTATION</div>";
+  h += "<div style='font-family:Georgia,serif;font-size:1.6rem;font-weight:700;color:#fff;margin-bottom:4px'>" + asset + "</div>";
+  h += "<div style='font-size:.85rem;color:rgba(255,255,255,.7)'>Lessee: " + lessee + " &nbsp;|&nbsp; Ref: " + ref + " &nbsp;|&nbsp; Date: " + dt + "</div>";
+  h += "<div style='font-size:.78rem;color:rgba(255,255,255,.55);margin-top:3px'>Prepared by: " + by + "</div>";
+  h += "</div>";
+
+  // Summary grid
+  h += section("Transaction Summary", [
+    ["Asset", asset],
+    ["Lessee", lessee],
+    ["Asset Cost", fmtKES(cost)],
+    ["Lease Term", term ? term + " months" : "—"],
+    ["Monthly Rental", fmtKES(rental)],
+    ["Annual Rate", fmtPct(rate)],
+    ["Advance Rentals", adv ? adv + " rental" + (parseInt(adv) !== 1 ? "s" : "") : "—"],
+    ["Residual Value", fmtKES(resid)],
+    ["Classification", clsLabel],
+    ["Supplier", supplier]
+  ]);
+
+  // Customer background
+  h += section("1. Customer Background",
+    "Sector: " + sector + "  |  Years in Operation: " + years + "\n" +
+    "Annual Revenue: " + fmtKES(revenue) + "  |  Monthly Net Income: " + fmtKES(income) + "\n\n" +
+    bizdes
+  );
+
+  // Business case
+  h += section("2. Purpose of Asset and Business Case", purpose);
+
+  // Financial summary
+  h += section("3. Financial Summary", [
+    ["Annual Revenue", fmtKES(revenue)],
+    ["Monthly Net Income", fmtKES(income)],
+    ["Monthly Rental", fmtKES(rental)],
+    ["Debt Service Ratio", fmtPct(dsr)],
+    ["Customer Score", score],
+    ["Credit History", getCreditLabel(credit)]
+  ]);
+
+  // Risks
+  h += section("4. Key Risks Identified", risks);
+  h += section("5. Mitigating Factors", mitig);
+
+  // Security
+  h += "<div class='blk'><h3>6. Security Package</h3>";
+  h += "<div style='font-size:.84rem;color:var(--dark);margin-bottom:8px'><strong>Primary:</strong> " + sec1 + "</div>";
+  h += "<div style='font-size:.84rem;color:var(--dark)'><strong>Additional:</strong> " + sec2 + "</div>";
+  h += "</div>";
+
+  h += section("7. Conditions Precedent to Drawdown", cps);
+  h += section("8. Ongoing Covenants", cov);
+
+  // Recommendation
+  h += "<div class='blk'><h3>9. Recommendation</h3>";
+  h += "<div style='margin-bottom:12px'>" + getRecTag(rec) + "</div>";
+  h += "<div style='font-size:.84rem;color:var(--dark);line-height:1.7;margin-bottom:16px'>" + rationale + "</div>";
+  h += "<div class='sig-row'>";
+  h += "<div class='sig'>Presenting Officer: " + officer + "</div>";
+  h += "<div class='sig'>Approved By: _______________________</div>";
+  h += "<div class='sig'>Date: _______________________</div>";
+  h += "</div></div>";
+
+  // Confidential footer
+  h += "<div style='text-align:center;margin-top:20px;font-size:.7rem;color:var(--grey)'>Velocity Global Leasing &nbsp;|&nbsp; Africa's Leasing Intelligence Platform &nbsp;|&nbsp; Confidential — For Credit Committee Use Only</div>";
+  h += "<button class='bp' onclick='window.print()'>&#128438; Print Presentation</button>";
+
+  var out = document.getElementById("out_content");
+  out.innerHTML = h;
+  var div = document.getElementById("output");
+  div.style.display = "block";
+  div.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+document.getElementById("p_date").value = new Date().toISOString().slice(0, 10);
+</script>
+</body>
+</html>

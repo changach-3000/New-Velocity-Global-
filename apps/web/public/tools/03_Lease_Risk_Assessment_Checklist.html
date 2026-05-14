@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VGL Tool 3 — Lease Risk Assessment Checklist</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#003366;--navy2:#002244;--gold:#C9A84C;--gold2:#e8c96a;--gold-pale:#FFF8E7;--white:#fff;--off:#F7F9FC;--grey:#6B7280;--dark:#1A1A2E;--green:#1A7A4a;--red:#8B1A1A;--amber:#92400E;--border:#E5E7EB;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--dark);min-height:100vh;}
+.hdr{background:var(--navy);position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;top:0;right:0;width:260px;height:100%;background:var(--navy2);clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);}
+.hdr-inner{max-width:1080px;margin:0 auto;padding:22px 36px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2;}
+.hdr-badge{width:5px;height:46px;background:var(--gold);border-radius:3px;margin-right:14px;flex-shrink:0;}
+.hdr-left{display:flex;align-items:center;}
+.hdr-tool{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#fff;line-height:1.1;}
+.hdr-right{text-align:right;}
+.hdr-brand{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:var(--gold);}
+.hdr-tag{font-size:.65rem;color:rgba(255,255,255,.45);font-style:italic;margin-top:2px;}
+.gold-bar{height:4px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));}
+.main{max-width:1080px;margin:0 auto;padding:32px 36px 60px;}
+.card{background:#fff;border-radius:8px;border:1px solid var(--border);padding:26px 30px;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,51,102,.05);}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.card-desc{font-size:.8rem;color:var(--grey);margin-bottom:20px;font-style:italic;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:.7rem;font-weight:600;color:var(--grey);letter-spacing:.05em;text-transform:uppercase;}
+.field label span{color:var(--gold);font-size:.65rem;text-transform:none;letter-spacing:0;font-weight:400;}
+.field input,.field select,.field textarea{padding:10px 13px;border:1.5px solid var(--border);border-radius:6px;font-size:.88rem;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;transition:border-color .2s,box-shadow .2s;outline:none;resize:vertical;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+.field input::placeholder,.field textarea::placeholder{color:#aaa;font-style:italic;}
+.toggle-grp{display:flex;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;}
+.toggle-grp input[type=radio]{display:none;}
+.toggle-grp label{flex:1;text-align:center;padding:9px;cursor:pointer;font-size:.8rem;font-weight:500;color:var(--grey);background:#fff;transition:all .2s;text-transform:none;letter-spacing:0;}
+.toggle-grp input[type=radio]:checked+label{background:var(--navy);color:var(--gold);font-weight:600;}
+.toggle-grp label:hover{background:var(--off);}
+.btn-primary{width:100%;padding:15px 28px;background:var(--navy);color:var(--gold);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:all .2s;margin-top:6px;}
+.btn-primary:hover{background:var(--navy2);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,51,102,.22);}
+.btn-secondary{width:100%;padding:11px;background:transparent;color:var(--grey);border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s;margin-top:9px;}
+.btn-secondary:hover{color:var(--dark);border-color:var(--grey);}
+.results{display:none;animation:fadeUp .4s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.res-hdr{background:var(--navy);border-radius:10px 10px 0 0;padding:20px 28px;display:flex;align-items:center;gap:12px;}
+.res-hdr-icon{width:40px;height:40px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.res-hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:#fff;}
+.res-hdr-sub{font-size:.7rem;color:rgba(255,255,255,.55);margin-top:2px;font-style:italic;}
+.res-body{background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:26px 30px;box-shadow:0 4px 18px rgba(0,51,102,.07);}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.kpi{background:var(--off);border-radius:7px;padding:14px 16px;border-left:4px solid var(--gold);}
+.kpi.hi{background:var(--navy);border-left-color:var(--gold);}
+.kpi-lbl{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:5px;}
+.kpi.hi .kpi-lbl{color:rgba(255,255,255,.55);}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;color:var(--navy);line-height:1;}
+.kpi.hi .kpi-val{color:var(--gold);}
+.kpi-sub{font-size:.65rem;color:var(--grey);margin-top:3px;}
+.kpi.hi .kpi-sub{color:rgba(255,255,255,.45);}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:var(--navy);margin:22px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--gold-pale);display:flex;align-items:center;gap:7px;}
+.sec-title::before{content:'';display:block;width:4px;height:16px;background:var(--gold);border-radius:2px;}
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;background:var(--off);border-radius:5px;font-size:.8rem;}
+.sum-lbl{color:var(--grey);}
+.sum-val{font-weight:600;color:var(--navy);}
+.verdict{border-radius:8px;padding:16px 20px;margin-top:18px;display:flex;align-items:flex-start;gap:12px;}
+.verdict.good{background:#e8f5ee;border-left:5px solid var(--green);}
+.verdict.warn{background:#FFF3E0;border-left:5px solid #d4790a;}
+.verdict.bad{background:#FDF0F0;border-left:5px solid var(--red);}
+.verdict-icon{font-size:1.4rem;flex-shrink:0;margin-top:1px;}
+.verdict-title{font-weight:700;font-size:.9rem;margin-bottom:3px;}
+.verdict.good .verdict-title{color:var(--green);}
+.verdict.warn .verdict-title{color:var(--amber);}
+.verdict.bad .verdict-title{color:var(--red);}
+.verdict-body{font-size:.8rem;color:var(--grey);line-height:1.6;}
+.tbl-wrap{overflow-x:auto;margin-bottom:22px;}
+table{width:100%;border-collapse:collapse;font-size:.8rem;}
+thead th{background:var(--navy);color:var(--gold);padding:9px 13px;text-align:right;font-weight:600;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;}
+thead th:first-child{text-align:left;}
+tbody tr:nth-child(even){background:var(--off);}
+tbody tr:hover{background:var(--gold-pale);}
+tbody td{padding:8px 13px;text-align:right;color:var(--grey);border-bottom:1px solid var(--border);}
+tbody td:first-child{text-align:left;font-weight:600;color:var(--navy);}
+tfoot td{padding:9px 13px;text-align:right;background:var(--navy);color:var(--gold);font-weight:700;font-size:.78rem;}
+tfoot td:first-child{text-align:left;}
+.btn-print{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:transparent;border:1.5px solid var(--gold);color:var(--gold);border-radius:6px;font-size:.75rem;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;transition:all .2s;margin-top:18px;}
+.btn-print:hover{background:var(--gold);color:var(--navy);}
+.ftr{text-align:center;padding:22px;font-size:.68rem;color:var(--grey);border-top:1px solid var(--border);margin-top:36px;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:6px;margin-bottom:6px;cursor:pointer;transition:background .15s;}
+.check-item:hover{background:var(--gold-pale);}
+.check-item input[type=checkbox]{width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--navy);}
+.check-item .ci-label{font-size:.85rem;font-weight:600;color:var(--navy);}
+.check-item .ci-desc{font-size:.75rem;color:var(--grey);margin-top:2px;}
+.section-hdr{background:var(--navy);color:var(--gold);padding:8px 14px;border-radius:5px;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:18px 0 8px;}
+.progress-bar{width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:8px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--gold));border-radius:4px;transition:width .4s ease;}
+.score-display{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--navy);text-align:center;}
+.score-label{font-size:.75rem;color:var(--grey);text-align:center;margin-top:4px;}
+.tag{display:inline-block;padding:3px 9px;border-radius:12px;font-size:.68rem;font-weight:700;margin:2px;}
+.tag.green{background:#e8f5ee;color:var(--green);}
+.tag.amber{background:#FFF3E0;color:var(--amber);}
+.tag.red{background:#FDF0F0;color:var(--red);}
+@media(max-width:768px){.main{padding:18px 16px 40px;}.grid2,.grid3{grid-template-columns:1fr;}.kpi-row{grid-template-columns:1fr 1fr;}.hdr-inner{flex-direction:column;gap:10px;}.sum-grid{grid-template-columns:1fr;}}
+@media print{.btn-primary,.btn-secondary,.btn-print{display:none;}body{background:#fff;}.card{box-shadow:none;}}
+</style></head><body>
+<div class="hdr"><div class="hdr-inner"><div class="hdr-left"><div class="hdr-badge"></div><div><div class="hdr-tool">VGL Tool 03 of 8</div><div class="hdr-title">Lease Risk Assessment Checklist</div></div></div><div class="hdr-right"><div class="hdr-brand">Velocity Global Leasing</div><div class="hdr-tag">Africa's Leasing Intelligence Platform</div></div></div></div><div class="gold-bar"></div>
+<div class="main">
+<div class="card">
+  <div class="card-title"><span>Deal Information</span></div>
+  <div class="grid3">
+    <div class="field"><label>Lessee Name</label><input type="text" id="c_lessee" placeholder="Company or individual name"></div>
+    <div class="field"><label>Asset Description</label><input type="text" id="c_asset" placeholder="e.g. Isuzu FVZ Truck"></div>
+    <div class="field"><label>Assessment Date</label><input type="date" id="c_date"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span>Risk Progress</span></div>
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:10px">
+    <div style="flex:1">
+      <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+      <div style="font-size:.72rem;color:var(--grey);margin-top:4px"><span id="prog_count">0</span> of 29 checks completed</div>
+    </div>
+    <div style="text-align:center">
+      <div class="score-display" id="score_display">0%</div>
+      <div class="score-label">Completion</div>
+    </div>
+    <div id="risk_tag" style="min-width:80px;text-align:center"></div>
+  </div>
+  <div id="risk_msg" style="font-size:.8rem;color:var(--grey);font-style:italic;padding:8px 12px;background:var(--off);border-radius:5px">Complete the checklist below to generate a risk assessment.</div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span>Risk Assessment Checklist</span></div>
+  <p class="card-desc">Check each item as confirmed. Incomplete items flag potential risk areas requiring attention before approval.</p>
+  <div class="section-hdr">Customer Risk</div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Business case viability</div><div class="ci-desc">Does the customer have a credible, documented business case for using this asset productively?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Cash flow adequacy</div><div class="ci-desc">Can the asset generate or support sufficient cash flow to service the lease payment?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Credit history</div><div class="ci-desc">Has the customer's credit history been reviewed — including previous defaults, restructures, or delinquencies?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Operating experience</div><div class="ci-desc">Does the customer have proven experience operating this type of equipment?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Management quality</div><div class="ci-desc">Is there competent management in place to oversee operations and asset use?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Personal guarantee</div><div class="ci-desc">Has a personal or corporate guarantee been obtained and legally documented?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">References verified</div><div class="ci-desc">Have at least two trade or banking references been verified independently?</div></div></div><div class="section-hdr">Asset Risk</div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Market value confirmed</div><div class="ci-desc">Has the asset's fair market value been independently verified — not just the supplier's invoice?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Resale liquidity assessed</div><div class="ci-desc">Is there an active secondary market for this asset if recovery is required?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Asset age and condition</div><div class="ci-desc">Is the asset age and condition appropriate for the proposed lease term and residual value?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Residual value realistic</div><div class="ci-desc">Is the residual value based on market evidence, not optimistic projections?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Specialisation risk</div><div class="ci-desc">Is the asset generalist (widely usable) or highly specialised (hard to recover value from)?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Serial/chassis number recorded</div><div class="ci-desc">Have the asset's unique identifiers been recorded for tracking and recovery purposes?</div></div></div><div class="section-hdr">Legal & Documentation Risk</div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Ownership structure clear</div><div class="ci-desc">Is legal ownership of the asset clearly established in the name of the lessor?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Lease agreement executed</div><div class="ci-desc">Has the lease agreement been signed by authorised signatories on both sides?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Asset registered/insured</div><div class="ci-desc">Is the asset registered in the lessor's name and fully insured for its replacement value?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Security interest filed</div><div class="ci-desc">Has any applicable security interest or charge been registered with the relevant authority?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Default and recovery clauses</div><div class="ci-desc">Does the lease agreement include clear, enforceable default and recovery provisions?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">KYC/AML completed</div><div class="ci-desc">Have Know Your Customer and Anti-Money Laundering checks been completed and documented?</div></div></div><div class="section-hdr">Usage & Operational Risk</div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Usage location confirmed</div><div class="ci-desc">Has the primary usage location of the asset been confirmed and documented?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">GPS/tracking installed</div><div class="ci-desc">Is real-time asset tracking installed or required under the lease terms?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Maintenance schedule agreed</div><div class="ci-desc">Is there a documented maintenance schedule and responsibility allocation?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Maintenance costs quantified</div><div class="ci-desc">Have monthly maintenance costs been estimated and factored into the lessee's affordability assessment?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Insurance compliance monitored</div><div class="ci-desc">Is there a process to verify the lessee maintains required insurance throughout the lease term?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Site visit conducted</div><div class="ci-desc">Has a site visit or physical inspection of the business been completed before approval?</div></div></div><div class="section-hdr">Portfolio & Concentration Risk</div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Sector concentration checked</div><div class="ci-desc">Does this deal increase sector exposure beyond acceptable portfolio limits?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Geographic concentration checked</div><div class="ci-desc">Is the geographic concentration of the portfolio within acceptable risk parameters?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Single-lessee exposure</div><div class="ci-desc">Does this deal bring total exposure to this customer within approved limits?</div></div></div><div class="check-item" onclick="toggle(this)"><input type="checkbox" onchange="score()"><div><div class="ci-label">Asset class diversification</div><div class="ci-desc">Does adding this asset class maintain appropriate portfolio diversification?</div></div></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span>Risk Notes & Mitigants</span></div>
+  <div class="field"><label>Key Risk Observations</label><textarea id="c_notes" rows="4" placeholder="Document any risk observations, mitigating factors, or conditions precedent to approval..."></textarea></div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="field"><label>Assessed By</label><input type="text" id="c_by" placeholder="Name and designation"></div>
+    <div class="field"><label>Recommended Decision</label><select id="c_decision"><option value="">Select recommendation</option><option value="approve">Approve — risks acceptable</option><option value="conditional">Approve with conditions</option><option value="decline">Decline — risk too high</option><option value="more_info">Request more information</option></select></div>
+  </div>
+</div>
+
+<button class="btn-primary" onclick="printReport()">🖨 Generate Risk Assessment Report</button>
+<button class="btn-secondary" onclick="clearAll()">Clear All</button>
+</div>
+<div class="ftr">Velocity Global Leasing &nbsp;|&nbsp; Africa's Leasing Intelligence Platform &nbsp;|&nbsp; Dr. Roselyn Mwaura &nbsp;|&nbsp; www.velocitygloballeasing.com<br><span style="color:#bbb;font-style:italic">For professional development and educational use.</span></div>
+<script>
+var total=29;
+function toggle(el){var cb=el.querySelector('input[type=checkbox]');cb.checked=!cb.checked;score();}
+function score(){
+  var done=document.querySelectorAll('.check-item input:checked').length;
+  var pct=Math.round((done/total)*100);
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('prog_count').textContent=done;
+  document.getElementById('score_display').textContent=pct+'%';
+  var tag=document.getElementById('risk_tag');
+  var msg=document.getElementById('risk_msg');
+  if(pct<50){tag.innerHTML='<span class="tag red">HIGH RISK</span>';msg.textContent='Less than 50% of risk checks completed. Significant gaps identified. Do not proceed without addressing open items.';}
+  else if(pct<75){tag.innerHTML='<span class="tag amber">MEDIUM RISK</span>';msg.textContent='Moderate completion. Review unchecked items carefully. Consider conditions precedent before approval.';}
+  else if(pct<90){tag.innerHTML='<span class="tag amber">LOW-MED RISK</span>';msg.textContent='Good progress. A few items remain — assess whether these are material to the transaction.';}
+  else{tag.innerHTML='<span class="tag green">LOW RISK</span>';msg.textContent='Strong completion. All material risk areas addressed. Deal is well-structured for presentation to credit.';}
+}
+function clearAll(){document.querySelectorAll('.check-item input[type=checkbox]').forEach(function(c){c.checked=false;});score();}
+function printReport(){window.print();}
+document.getElementById('c_date').value=new Date().toISOString().slice(0,10);
+</script></body></html>
