@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGL Tool 5 - Vendor Partnership Pitch Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#003366;--navy2:#002244;--gold:#C9A84C;--gold2:#e8c96a;--gold-pale:#FFF8E7;--off:#F7F9FC;--grey:#6B7280;--dark:#1A1A2E;--border:#E5E7EB;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--dark);min-height:100vh;}
+.hdr{background:var(--navy);position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;top:0;right:0;width:260px;height:100%;background:var(--navy2);clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);}
+.hdr-inner{max-width:1080px;margin:0 auto;padding:22px 36px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2;}
+.hdr-left{display:flex;align-items:center;}
+.hdr-badge{width:5px;height:46px;background:var(--gold);border-radius:3px;margin-right:14px;}
+.hdr-tool{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.hdr-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#fff;}
+.hdr-right{text-align:right;}
+.hdr-brand{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:var(--gold);}
+.hdr-tag{font-size:.65rem;color:rgba(255,255,255,.45);font-style:italic;margin-top:2px;}
+.gold-bar{height:4px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));}
+.main{max-width:1080px;margin:0 auto;padding:32px 36px 60px;}
+.intro{background:var(--navy);border-radius:8px;padding:16px 22px;margin-bottom:22px;}
+.intro-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:6px;}
+.intro-body{font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.6;}
+.card{background:#fff;border-radius:8px;border:1px solid var(--border);padding:26px 30px;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,51,102,.05);}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.f{display:flex;flex-direction:column;gap:5px;}
+.f label{font-size:.7rem;font-weight:600;color:var(--grey);letter-spacing:.05em;text-transform:uppercase;}
+.f input,.f select{padding:10px 13px;border:1.5px solid var(--border);border-radius:6px;font-size:.88rem;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;outline:none;transition:border-color .2s;}
+.f input:focus,.f select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+.f input::placeholder{color:#aaa;font-style:italic;}
+.btn{width:100%;padding:15px;background:var(--navy);color:var(--gold);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;margin-top:6px;}
+.btn:hover{background:var(--navy2);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,51,102,.22);}
+.btn2{width:100%;padding:11px;background:transparent;color:var(--grey);border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;cursor:pointer;margin-top:9px;}
+#results{display:none;margin-top:28px;}
+.rh{background:var(--navy);border-radius:10px 10px 0 0;padding:20px 28px;display:flex;align-items:center;gap:12px;}
+.rh-icon{width:40px;height:40px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.rh-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:#fff;}
+.rh-sub{font-size:.7rem;color:rgba(255,255,255,.55);margin-top:2px;font-style:italic;}
+.rb{background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:26px 30px;}
+.sec{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:var(--navy);margin:22px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--gold-pale);display:flex;align-items:center;gap:7px;}
+.sec::before{content:'';display:block;width:4px;height:16px;background:var(--gold);border-radius:2px;}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.sr{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;background:var(--off);border-radius:5px;font-size:.8rem;}
+.bg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.bc{padding:12px 15px;background:var(--off);border-radius:6px;border:1px solid var(--border);}
+.bp{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:transparent;border:1.5px solid var(--gold);color:var(--gold);border-radius:6px;font-size:.75rem;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;margin-top:18px;}
+.bp:hover{background:var(--gold);color:var(--navy);}
+.ftr{text-align:center;padding:22px;font-size:.68rem;color:var(--grey);border-top:1px solid var(--border);margin-top:36px;}
+@media(max-width:768px){.main{padding:18px 16px 40px;}.g2,.g3{grid-template-columns:1fr;}.hdr-inner{flex-direction:column;gap:10px;}.sg,.bg{grid-template-columns:1fr;}}
+@media print{.btn,.btn2,.bp,.intro{display:none;}body{background:#fff;}}
+</style>
+</head>
+<body>
+
+<div class="hdr"><div class="hdr-inner"><div class="hdr-left"><div class="hdr-badge"></div><div><div class="hdr-tool">VGL Tool 05 of 8</div><div class="hdr-title">Vendor Partnership Pitch Template</div></div></div><div class="hdr-right"><div class="hdr-brand">Velocity Global Leasing</div><div class="hdr-tag">Africa's Leasing Intelligence Platform</div></div></div></div>
+<div class="gold-bar"></div>
+
+<div class="main">
+<div class="intro">
+  <div class="intro-title">How to Use This Tool</div>
+  <div class="intro-body">Complete the fields below to generate a personalised vendor partnership pitch. Fill in all sections and click Generate to produce a ready-to-print proposal document.</div>
+</div>
+
+<div class="card">
+  <div class="card-title">Your Organisation</div>
+  <div class="g3" style="margin-bottom:14px">
+    <div class="f"><label>Your Name</label><input type="text" id="yn" placeholder="Dr. Roselyn Mwaura"></div>
+    <div class="f"><label>Your Organisation</label><input type="text" id="yo" placeholder="Velocity Global Leasing"></div>
+    <div class="f"><label>Your Role</label><input type="text" id="yr" placeholder="Founder and Director"></div>
+  </div>
+  <div class="g2">
+    <div class="f"><label>Email</label><input type="email" id="em" placeholder="email@velocitygloballeasing.com"></div>
+    <div class="f"><label>Phone</label><input type="tel" id="ph" placeholder="+254 700 000 000"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Vendor / Partner Details</div>
+  <div class="g3" style="margin-bottom:14px">
+    <div class="f"><label>Vendor Company Name</label><input type="text" id="vn" placeholder="e.g. CMC Motors Kenya"></div>
+    <div class="f"><label>Contact Person</label><input type="text" id="vp" placeholder="e.g. Mr. John Kamau"></div>
+    <div class="f"><label>Equipment Category</label>
+      <select id="vc">
+        <option value="trucks">Trucks and Commercial Vehicles</option>
+        <option value="agri">Agricultural Equipment</option>
+        <option value="construction">Construction Equipment</option>
+        <option value="medical">Medical Equipment</option>
+        <option value="manufacturing">Manufacturing Machinery</option>
+        <option value="tech">Technology and ICT Equipment</option>
+        <option value="energy">Renewable Energy Equipment</option>
+        <option value="other">Other Equipment</option>
+      </select>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="f"><label>Average Equipment Value (KES)</label><input type="number" id="av" placeholder="e.g. 5000000" min="0"></div>
+    <div class="f"><label>Monthly Units Sold (approx)</label><input type="number" id="mu" placeholder="e.g. 8" min="0"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Partnership Structure</div>
+  <div class="g3">
+    <div class="f"><label>Partnership Type</label>
+      <select id="pt">
+        <option value="referral">Referral Programme</option>
+        <option value="white_label">White-Label Leasing</option>
+        <option value="pos">Point-of-Sale Financing</option>
+        <option value="floor_plan">Floor Plan / Inventory Finance</option>
+      </select>
+    </div>
+    <div class="f"><label>Commission / Revenue Share (%)</label><input type="number" id="cm" value="2.5" step="0.5" min="0"></div>
+    <div class="f"><label>Target Launch Timeline</label>
+      <select id="tl">
+        <option value="30">Within 30 days</option>
+        <option value="60">Within 60 days</option>
+        <option value="90">Within 90 days</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<button class="btn" onclick="go()">&#9654;&#160;&#160;Generate Partnership Pitch</button>
+<button class="btn2" onclick="location.reload()">Clear All</button>
+
+<div id="results">
+  <div class="rh"><div class="rh-icon">🤝</div><div><div class="rh-title">Vendor Partnership Proposal</div><div class="rh-sub" id="rsub">Generated by VGL Tool 5</div></div></div>
+  <div class="rb" id="rbody"></div>
+</div>
+</div>
+
+<div class="ftr">Velocity Global Leasing &nbsp;|&nbsp; Africa's Leasing Intelligence Platform &nbsp;|&nbsp; Dr. Roselyn Mwaura &nbsp;|&nbsp; www.velocitygloballeasing.com</div>
+
+<script>
+function fmtKES(n) {
+  if (!n || isNaN(n)) return "0";
+  return "KES " + Math.round(parseFloat(n)).toLocaleString("en-KE");
+}
+
+var catMap = {
+  trucks:"trucks and commercial vehicles", agri:"agricultural equipment",
+  construction:"construction and heavy equipment", medical:"medical and diagnostic equipment",
+  manufacturing:"manufacturing machinery", tech:"technology and ICT equipment",
+  energy:"renewable energy equipment", other:"equipment"
+};
+
+var ptypeMap = {
+  referral:"Referral Programme", white_label:"White-Label Leasing",
+  pos:"Point-of-Sale Financing", floor_plan:"Floor Plan and Inventory Finance"
+};
+
+function getDesc(ptype, comm) {
+  if (ptype === "referral") {
+    return "We propose a structured referral programme where your sales team refers customers who need financing to us. For every successful lease transaction, you earn a commission of " + comm + "% of the financed value — with zero credit risk on your side. You sell the equipment. We manage the financing relationship.";
+  } else if (ptype === "white_label") {
+    return "We propose a white-label leasing product co-branded under your company name. Your customers see a seamless financing solution at the point of sale — powered by our leasing expertise and credit infrastructure. You maintain the customer relationship. We manage the credit and compliance.";
+  } else if (ptype === "pos") {
+    return "We propose embedding a leasing finance option directly into your sales process. At the point of sale, your team presents the customer with a lease payment option alongside the cash price. This removes the affordability barrier and increases your conversion rate significantly.";
+  } else {
+    return "We propose a floor plan financing arrangement where we finance your equipment inventory, freeing your working capital while ensuring your showroom is always fully stocked. You draw down as you need stock and repay as units are sold.";
+  }
+}
+
+function getSteps(ptype, tl) {
+  if (ptype === "referral") {
+    return ["Meet to review the referral framework — 30 minutes is sufficient", "Sign a simple referral agreement — straightforward and transparent", "Brief your sales team on how to present the lease option to customers", "Launch within " + tl + " days with the first qualified referrals moving through our process"];
+  } else if (ptype === "white_label") {
+    return ["Meet to agree co-branding guidelines and product structure", "Sign a white-label partnership agreement", "Train your customer-facing team on the product", "Soft-launch within " + tl + " days"];
+  } else if (ptype === "pos") {
+    return ["Meet to design the point-of-sale presentation flow", "Integrate the lease option into your sales quotation process", "Train sales staff — we provide the session", "Go live at the point of sale within " + tl + " days"];
+  } else {
+    return ["Meet to review your inventory levels and financing needs", "Agree a floor plan credit limit appropriate to your stock levels", "Sign the floor plan facility agreement", "Draw down the first facility within " + tl + " days"];
+  }
+}
+
+function go() {
+  var yourName = document.getElementById("yn").value.trim() || "[Your Name]";
+  var yourOrg  = document.getElementById("yo").value.trim() || "Velocity Global Leasing";
+  var yourRole = document.getElementById("yr").value.trim() || "";
+  var email    = document.getElementById("em").value.trim() || "";
+  var phone    = document.getElementById("ph").value.trim() || "";
+  var vName    = document.getElementById("vn").value.trim() || "[Vendor Name]";
+  var vPerson  = document.getElementById("vp").value.trim() || "[Contact]";
+  var cat      = document.getElementById("vc").value;
+  var avgVal   = parseFloat(document.getElementById("av").value) || 0;
+  var units    = parseInt(document.getElementById("mu").value) || 0;
+  var ptype    = document.getElementById("pt").value;
+  var comm     = parseFloat(document.getElementById("cm").value) || 2.5;
+  var timeline = document.getElementById("tl").value;
+
+  var catLbl   = catMap[cat] || "equipment";
+  var ptypeLbl = ptypeMap[ptype] || "partnership";
+  var desc     = getDesc(ptype, comm);
+  var steps    = getSteps(ptype, timeline);
+  var potMo    = avgVal * units;
+  var potComm  = potMo * (comm / 100);
+
+  document.getElementById("rsub").textContent = "Prepared for " + vPerson + " | " + vName + " | " + new Date().toLocaleDateString("en-KE");
+
+  var h = "";
+
+  // Header
+  h += "<div style='border-left:5px solid var(--gold);padding:18px 22px;background:var(--gold-pale);border-radius:0 8px 8px 0;margin-bottom:24px'>";
+  h += "<div style='font-family:Georgia,serif;font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:4px'>A Partnership Proposal</div>";
+  h += "<div style='font-size:.82rem;color:var(--grey)'>Prepared by " + yourName + (yourRole ? ", " + yourRole : "") + " | " + yourOrg + "</div>";
+  h += "<div style='font-size:.82rem;color:var(--grey)'>For the attention of: " + vPerson + ", " + vName + "</div>";
+  h += "</div>";
+
+  // Opening
+  h += "<div style='font-size:.9rem;color:var(--dark);line-height:1.85;margin-bottom:24px'>";
+  h += "<p style='margin-bottom:12px'>Dear " + vPerson + ",</p>";
+  h += "<p style='margin-bottom:12px'>Thank you for taking the time to explore this opportunity. I am reaching out because I believe we can build something meaningful together — a partnership that helps more of your customers access the " + catLbl + " they need, faster and more affordably than they can through traditional financing.</p>";
+  h += "<p style='margin-bottom:12px'>Many of your customers want to buy your equipment. The barrier is not desire — it is access to financing that fits their cash flow and business model. Equipment leasing solves that problem. And when structured properly, it helps your customers say yes — which means you close more sales.</p>";
+  h += "</div>";
+
+  // Opportunity
+  if (units > 0 && avgVal > 0) {
+    h += "<div class='sec'>The Opportunity</div>";
+    h += "<div class='sg'>";
+    h += "<div class='sr'><span style='color:var(--grey)'>Monthly Sales Volume</span><span style='font-weight:600;color:var(--navy)'>" + fmtKES(potMo) + "</span></div>";
+    h += "<div class='sr'><span style='color:var(--grey)'>Partnership Model</span><span style='font-weight:600;color:var(--navy)'>" + ptypeLbl + "</span></div>";
+    h += "<div class='sr'><span style='color:var(--grey)'>Commission Rate</span><span style='font-weight:600;color:var(--navy)'>" + comm + "% of financed value</span></div>";
+    h += "<div class='sr'><span style='color:var(--grey)'>Estimated Monthly Commission</span><span style='font-weight:600;color:var(--navy)'>" + fmtKES(potComm) + "</span></div>";
+    h += "</div>";
+  }
+
+  // What we propose
+  h += "<div class='sec'>What We Are Proposing</div>";
+  h += "<div style='padding:14px 18px;background:var(--off);border-radius:6px;border-left:4px solid var(--navy);font-size:.86rem;color:var(--dark);line-height:1.7;margin-bottom:20px'>" + desc + "</div>";
+
+  // Why it works
+  h += "<div class='sec'>Why This Works for " + vName + "</div>";
+  h += "<div class='bg'>";
+  var benefits = [
+    ["More Sales", "Customers who could not afford to buy outright can now lease — expanding your addressable market."],
+    ["Faster Decisions", "We process lease applications rapidly. Your customers get a decision quickly, not weeks later."],
+    ["No Credit Risk", "We carry the credit risk. Your commission is earned on successful placement, not on collection."],
+    ["Stronger Relationships", "Customers who lease through you stay engaged throughout the lease term — creating repeat business."]
+  ];
+  benefits.forEach(function(b) {
+    h += "<div class='bc'><div style='font-weight:700;color:var(--navy);font-size:.85rem;margin-bottom:4px'>&#10003; " + b[0] + "</div><div style='font-size:.78rem;color:var(--grey)'>" + b[1] + "</div></div>";
+  });
+  h += "</div>";
+
+  // Next steps
+  h += "<div class='sec'>Proposed Next Steps</div>";
+  h += "<ol style='margin-left:18px;font-size:.86rem;color:var(--dark);line-height:2'>";
+  steps.forEach(function(s) { h += "<li>" + s + "</li>"; });
+  h += "</ol>";
+
+  // Quote
+  h += "<div style='margin-top:20px;padding:14px 18px;background:var(--navy);border-radius:6px;color:var(--gold);font-family:Georgia,serif;font-size:1rem;font-style:italic;line-height:1.6'>";
+  h += "Africa's equipment access gap will not be closed by finance alone. It will be closed by partnerships like this one.";
+  h += "</div>";
+
+  // Contact
+  if (email || phone) {
+    h += "<div style='margin-top:18px;font-size:.84rem;color:var(--grey);line-height:1.8'>";
+    h += "<strong style='color:var(--navy)'>Get in touch:</strong><br>";
+    if (email) h += "Email: " + email + "<br>";
+    if (phone) h += "Phone: " + phone;
+    h += "</div>";
+  }
+
+  h += "<button class='bp' onclick='window.print()'>&#128438; Print Partnership Pitch</button>";
+
+  document.getElementById("rbody").innerHTML = h;
+  var res = document.getElementById("results");
+  res.style.display = "block";
+  res.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+</script>
+</body>
+</html>
