@@ -90,7 +90,7 @@ const HomePage = () => {
       </section>
 
     {/* Upcoming Events Section */}
-    <UpcomingEvents />
+    {/* <UpcomingEvents /> */}
 
       {/* Roles Section (New) */}
       <RolesSection />
